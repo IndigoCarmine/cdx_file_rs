@@ -1,0 +1,46 @@
+Fragment Object
+CDXML Name:	fragment
+CDX Constant Name:	kCDXObj_Fragment
+CDX Constant Value:	0x8003
+Contained by objects:	kCDXObj_Page, kCDXObj_Group, kCDXObj_Node, kCDXObj_NamedAlternativeGroup
+First written/read in:	ChemDraw 4.0
+Description:
+
+Fragment object is a collection of nodes and their connectivity (bonds). Generally, all nodes within a fragment will be connected, but this is not strictly guaranteed. For example, a cyclopentadienyl anion might be represented as a single fragment containing five nodes, five bonds, a curve (an ellipse, to represent delocalization), and a graphic (a circled minus charge, to represent the delocalized charge).
+
+Unlike with Group objects, Fragment objects are guaranteed to be chemically meaningful.
+
+A Fragment has no required objects or properties, but a Fragment without any objects is pretty useless.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8004	kCDXObj_Node	n
+The basic building block of chemical objects, usually referring to a single atom
+0x8005	kCDXObj_Bond	b
+A connection between two Node objects.
+0x8007	kCDXObj_Graphic	graphic
+A (generally non-chemical) graphic object such as a line, arc, circle, or rectangle.
+0x8008	kCDXObj_Curve	curve
+A Bézier curve.
+0x8011	kCDXObj_ObjectTag	objecttag
+Arbitrarily named property, one or more of which can be attached to any ChemDraw object.
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+0x0204	kCDXProp_BoundingBox	BoundingBox	CDXRectangle
+The smallest rectangle that encloses the graphical representation of the object.
+0x0500	kCDXProp_Mole_Racemic	Racemic	CDXBoolean
+Indicates that the molecule is a racemic mixture.
+0x0501	kCDXProp_Mole_Absolute	Absolute	CDXBoolean
+Indicates that the molecule has known absolute configuration.
+0x0502	kCDXProp_Mole_Relative	Relative	CDXBoolean
+Indicates that the molecule has known relative stereochemistry, but unknown absolute configuration.
+0x0503	kCDXProp_Mole_Formula	Formula	CDXFormula
+The molecular formula representation of a molecule object.
+0x0504	kCDXProp_Mole_Weight	Weight	FLOAT64
+The average molecular weight of a molecule object.
+0x0505	kCDXProp_Frag_ConnectionOrder	ConnectionOrder	CDXObjectIDArray
+An ordered list of attachment points within a fragment.

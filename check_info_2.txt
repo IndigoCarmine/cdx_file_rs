@@ -1,0 +1,13 @@
+warning: field `is_dragging` is never read
+  --> src\modes.rs:20:9
+   |
+12 | pub struct ModeContext<'a> {
+   |            ----------- field in this struct
+...
+20 |     pub is_dragging: bool,
+   |         ^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: `cdx_file_rs` (bin "cdx_file_rs") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.36s

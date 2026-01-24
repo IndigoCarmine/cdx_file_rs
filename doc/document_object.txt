@@ -1,0 +1,128 @@
+Document Object
+CDXML Name:	CDXML
+CDX Constant Name:	kCDXObj_Document
+CDX Constant Value:	0x8000
+Contained by objects:	
+First written/read in:	ChemDraw 4.0
+Description:
+
+A Document is the top-level CDX object. It contains all CDX propertys and objects. It is necessary (by definition) for any valid CDX or CDXML file.
+
+A Document must contain at least one Page object, but it has no required properties.
+
+In versions of ChemDraw prior to 6.0, the bounding box property was read and written as a member of the Document object, but its use is discouraged unless you need to maintain maximum compatibility with those older versions. Starting with ChemDraw 6.0, the data that used to be stored in the Document's bounding box property is now stored in the bounding box property of the relevent Page object.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8001	kCDXObj_Page	page
+A drawing space that can contain other objects.
+0x800B	kCDXObj_TemplateGrid	templategrid
+A TemplateGrid indicates how multiple CDX page objects should be arranged in a Template document.
+0x0300	kCDXProp_ColorTable	colortable
+The color palette used throughout the document. Color indexes 0 and 1 always correspond to black and white and are not saved in the color table. The first and second RGB values (color indexes 2 and 3) are the default background and foreground colors, and other colors are numbered sequentially.
+0x0100	kCDXProp_FontTable	fonttable
+A list of fonts used in the document.
+
+Properties:
+Value	Name	CDXML Name	Type
+0x0001	kCDXProp_CreationUserName	CreationUserName	CDXString
+The name of the creator (program user's name) of the document.
+0x0002	kCDXProp_CreationDate	CreationDate	CDXDate
+The time of object creation.
+0x0003	kCDXProp_CreationProgram	CreationProgram	CDXString
+The name of the program, including version and platform, that created the associated CDX object. ChemDraw 4.0 uses "ChemDraw 4.0" as the value of CreationProgram.
+0x0004	kCDXProp_ModificationUserName	ModificationUserName	CDXString
+The name of the last modifier (program user's name) of the document.
+0x0005	kCDXProp_ModificationDate	ModificationDate	CDXDate
+Time of the last modification.
+0x0006	kCDXProp_ModificationProgram	ModificationProgram	CDXString
+The name of the program, including version and platform, of the last program to perform a modification. ChemDraw 4.0 uses "ChemDraw 4.0" as the value of CreationProgram.
+0x0008	kCDXProp_Name	Name	CDXString
+Required for objecttags. Name of an object.
+0x0009	kCDXProp_Comment	Comment	CDXString
+An arbitrary string intended to be meaningful to a user.
+0x0100	kCDXProp_FontTable	fonttable	CDXFontTable
+Required if fonts are used. A list of fonts used in the document.
+0x0204	kCDXProp_BoundingBox	BoundingBox	CDXRectangle
+The smallest rectangle that encloses the graphical representation of the object.
+0x0300	kCDXProp_ColorTable	colortable	CDXColorTable
+The color palette used throughout the document.
+0x043A	kCDXProp_Atom_ShowQuery	ShowAtomQuery	CDXBoolean
+Show the query indicator if non-zero.
+0x043B	kCDXProp_Atom_ShowStereo	ShowAtomStereo	CDXBoolean
+Show the stereochemistry indicator if non-zero.
+0x043C	kCDXProp_Atom_ShowAtomNumber	ShowAtomNumber	CDXBoolean
+Show the atom number if non-zero.
+0x060C	kCDXProp_Bond_ShowQuery	ShowBondQuery	CDXBoolean
+Show the query indicator if non-zero.
+0x060D	kCDXProp_Bond_ShowStereo	ShowBondStereo	CDXBoolean
+Show the stereochemistry indicator if non-zero.
+0x060F	kCDXProp_Bond_ShowRxn	ShowBondRxn	CDXBoolean
+Show the reaction-change indicator if non-zero.
+0x0706	kCDXProp_LabelLineHeight	LabelLineHeight	INT16
+Text line height for atom labels
+0x0707	kCDXProp_CaptionLineHeight	CaptionLineHeight	INT16
+Text line height for non-atomlabel text objects
+0x0708	kCDXProp_InterpretChemically	InterpretChemically	CDXBooleanImplied
+Signifies whether to the text label should be interpreted chemically (if possible).
+0x0800	kCDXProp_MacPrintInfo	MacPrintInfo	Unformatted
+The 120 byte Macintosh TPrint data associated with the CDX document object. Refer to Macintosh Toolbox manual for detailed description.
+0x0801	kCDXProp_WinPrintInfo	WinPrintInfo	Unformatted
+The Windows DEVMODE structure associated with the CDX document object.
+0x0802	kCDXProp_PrintMargins	PrintMargins	CDXRectangle
+The outer margins of the Document.
+0x0803	kCDXProp_ChainAngle	ChainAngle	INT32
+The default chain angle setting in degrees * 65536.
+0x0804	kCDXProp_BondSpacing	BondSpacing	INT16
+The spacing between segments of a multiple bond, measured relative to bond length.
+0x0805	kCDXProp_BondLength	BondLength	CDXCoordinate
+The default bond length.
+0x0806	kCDXProp_BoldWidth	BoldWidth	CDXCoordinate
+The default bold bond width.
+0x0807	kCDXProp_LineWidth	LineWidth	CDXCoordinate
+The default line width.
+0x0808	kCDXProp_MarginWidth	MarginWidth	CDXCoordinate
+The default amount of space surrounding atom labels.
+0x0809	kCDXProp_HashSpacing	HashSpacing	CDXCoordinate
+The default spacing between hashed lines used in wedged hashed bonds.
+0x080A	kCDXProp_LabelStyle	(not used)	CDXFontStyle
+The default style for atom labels..
+0x080B	kCDXProp_CaptionStyle	(not used)	CDXFontStyle
+The default style for non-atomlabel text objects..
+0x080C	kCDXProp_CaptionJustification	CaptionJustification	INT8
+The horizontal justification of a caption (non-atomlabel text object) This is an enumerated property.
+0x080D	kCDXProp_FractionalWidths	FractionalWidths	CDXBooleanImplied
+Signifies whether to use fractional width information when drawing text.
+0x080E	kCDXProp_Magnification	Magnification	INT16
+The view magnification factor
+0x081A	kCDXProp_LabelStyleFont	LabelFont	INT16
+The default font family for atom labels.
+0x081B	kCDXProp_CaptionStyleFont	CaptionFont	INT16
+The default font style for captions (non-atom-label text objects).
+0x081C	kCDXProp_LabelStyleSize	LabelSize	INT16
+The default font size for atom labels.
+0x081D	kCDXProp_CaptionStyleSize	CaptionSize	INT16
+The default font size for captions (non-atom-label text objects).
+0x081E	kCDXProp_LabelStyleFace	LabelFace	INT16
+The default font style for atom labels.
+0x081F	kCDXProp_CaptionStyleFace	CaptionFace	INT16
+The default font face for captions (non-atom-label text objects).
+0x0820	kCDXProp_LabelStyleColor	LabelColor	INT16
+The default color for atom labels
+0x0821	kCDXProp_CaptionStyleColor	CaptionColor	INT16
+The default color for captions (non-atom-label text objects).
+0x0823	kCDXProp_LabelJustification	LabelJustification	INT8
+The default justification for atom labels. This is an enumerated property.
+0x0824	kCDXProp_FixInplaceExtent	FixInPlaceExtent	CDXPoint2D
+Defines a size for OLE In-Place editing.
+0x0826	kCDXProp_FixInplaceGap	FixInPlaceGap	CDXPoint2D
+Defines a padding for OLE In-Place editing.
+0x0827	kCDXProp_CartridgeData	CartridgeData	Unformatted
+Transient data used by the CambridgeSoft Oracle Cartridge.
+0x0900	kCDXProp_Window_IsZoomed	WindowIsZoomed	CDXBooleanImplied
+Signifies whether the main viewing window is zoomed (maximized).
+0x0901	kCDXProp_Window_Position	WindowPosition	CDXPoint2D
+The top-left position of the main viewing window.
+0x0902	kCDXProp_Window_Size	WindowSize	CDXPoint2D
+Height and width of the document window.
