@@ -1,14 +1,13 @@
 [package]
-name = "cdx_file_rs"
+name = "cdx-file-rs"
 version = "0.1.0"
 edition = "2024"
 authors = ["taman"]
 description = "A Rust library for reading and writing ChemDraw CDX files"
-default-run = "cdx_file_rs"
 
 [dependencies]
-binrw = "0.14"
-thiserror = "1.0"
+binrw = "0.15.0"
+thiserror = "2.0.18"
 indexmap = { version = "2.2", features = ["serde"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
@@ -19,12 +18,10 @@ resvg = "0.43.0"
 tiny-skia = "0.11.0"
 usvg = "0.43.0"
 toml = "0.9.11"
+paste = "1.0"
+dendron = "0.1.5"
 
+[lib]
+name = "cdx_file_rs"
+path = "src/lib.rs"
 
-[[bin]]
-name = "validation"
-path = "src/validation.rs"
-
-[[bin]]
-name = "dump"
-path = "src/dump.rs"

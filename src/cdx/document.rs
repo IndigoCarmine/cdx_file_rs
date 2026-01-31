@@ -1,170 +1,134 @@
-use crate::cdx::nodes::{CdxNode, CdxObject};
-use crate::cdx::tags;
 use serde::{Deserialize, Serialize};
-
-/// The entire CDX Document
+use crate::cdx::values::{Point2d, Rectangle, CDXString};
+use crate::cdx::color_table::ColorTable;
+/// Document Object: The top-level CDX object
+/// A Document is the top-level CDX object. It contains all CDX properties and objects.
+/// It is necessary (by definition) for any valid CDX or CDXML file.
+/// A Document must contain at least one Page object, but it has no required properties.
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct CdxDocument {
-    pub header: crate::CdxHeader,
-    pub root: Vec<CdxNode>,
+pub struct Document {
+    pub id: u32,
+    
+    // Creation/Modification metadata
+    pub creation_user_name: Option<CDXString>,
+    pub creation_date: Option<u32>,
+    pub creation_program: Option<CDXString>,
+    pub modification_user_name: Option<CDXString>,
+    pub modification_date: Option<u32>,
+    pub modification_program: Option<CDXString>,
+    
+    // Document metadata
+    pub name: Option<CDXString>,
+    pub comment: Option<CDXString>,
+    
+    // Geometry / Appearance
+    pub bounding_box: Option<Rectangle>,
+    pub color_table: Option<ColorTable>,
+    pub atom_show_query: Option<bool>,
+    pub atom_show_stereo: Option<bool>,
+    pub atom_show_atom_number: Option<bool>,
+    pub bond_show_query: Option<bool>,
+    pub bond_show_stereo: Option<bool>,
+    pub bond_show_rxn: Option<bool>,
+    
+    // Text/Line Height settings
+    pub label_line_height: Option<i16>,
+    pub caption_line_height: Option<i16>,
+    pub interpret_chemically: Option<bool>,
+    
+    // Printing / Layout
+    pub mac_print_info: Option<Vec<u8>>,
+    pub win_print_info: Option<Vec<u8>>,
+    pub print_margins: Option<Rectangle>,
+    
+    // Bond/Chain defaults
+    pub chain_angle: Option<i32>,
+    pub bond_spacing: Option<i16>,
+    pub bond_length: Option<f64>,
+    pub bold_width: Option<f64>,
+    pub line_width: Option<f64>,
+    pub margin_width: Option<f64>,
+    pub hash_spacing: Option<f64>,
+    
+    // Justification/Width settings
+    pub caption_justification: Option<i8>,
+    pub fractional_widths: Option<bool>,
+    pub magnification: Option<i16>,
+    
+    // Font Defaults
+    pub label_font: Option<i16>,
+    pub caption_font: Option<i16>,
+    pub label_size: Option<i16>,
+    pub caption_size: Option<i16>,
+    pub label_face: Option<i16>,
+    pub caption_face: Option<i16>,
+    pub label_color: Option<i16>,
+    pub caption_color: Option<i16>,
+    pub label_justification: Option<i8>,
+    
+    // OLE / External Data
+    pub fix_inplace_extent: Option<Point2d>,
+    pub fix_inplace_gap: Option<Point2d>,
+    pub cartridge_data: Option<Vec<u8>>,
+    
+    // Window State
+    pub window_is_zoomed: Option<bool>,
+    pub window_position: Option<Point2d>,
+    pub window_size: Option<Point2d>,
 }
 
-impl CdxDocument {
-    pub fn document_object(&self) -> Option<&CdxObject> {
-        for node in &self.root {
-            if let CdxNode::Object(obj) = node
-                && obj.tag == tags::DOCUMENT {
-                    return Some(obj);
-                }
+impl Document {
+    /// Create a new Document with no properties set
+    pub fn new(id: u32) -> Self {
+        Document {
+            id,
+            creation_user_name: None,
+            creation_date: None,
+            creation_program: None,
+            modification_user_name: None,
+            modification_date: None,
+            modification_program: None,
+            name: None,
+            comment: None,
+            bounding_box: None,
+            color_table: None,
+            atom_show_query: None,
+            atom_show_stereo: None,
+            atom_show_atom_number: None,
+            bond_show_query: None,
+            bond_show_stereo: None,
+            bond_show_rxn: None,
+            label_line_height: None,
+            caption_line_height: None,
+            interpret_chemically: None,
+            mac_print_info: None,
+            win_print_info: None,
+            print_margins: None,
+            chain_angle: None,
+            bond_spacing: None,
+            bond_length: None,
+            bold_width: None,
+            line_width: None,
+            margin_width: None,
+            hash_spacing: None,
+            caption_justification: None,
+            fractional_widths: None,
+            magnification: None,
+            label_font: None,
+            caption_font: None,
+            label_size: None,
+            caption_size: None,
+            label_face: None,
+            caption_face: None,
+            label_color: None,
+            caption_color: None,
+            label_justification: None,
+            fix_inplace_extent: None,
+            fix_inplace_gap: None,
+            cartridge_data: None,
+            window_is_zoomed: None,
+            window_position: None,
+            window_size: None,
         }
-        None
-    }
-
-    pub fn document_object_mut(&mut self) -> Option<&mut CdxObject> {
-        for node in &mut self.root {
-            if let CdxNode::Object(obj) = node
-                && obj.tag == tags::DOCUMENT {
-                    return Some(obj);
-                }
-        }
-        None
-    }
-
-    pub fn find_object(&self, id: u32) -> Option<&CdxObject> {
-        for node in &self.root {
-            if let Some(found) = Self::find_in_node(node, id) {
-                return Some(found);
-            }
-        }
-        None
-    }
-
-    fn find_in_node(node: &CdxNode, id: u32) -> Option<&CdxObject> {
-        if let CdxNode::Object(obj) = node {
-            if obj.id == id {
-                return Some(obj);
-            }
-            for child in &obj.children {
-                if let Some(found) = Self::find_in_node(child, id) {
-                    return Some(found);
-                }
-            }
-        }
-        None
-    }
-
-    pub fn find_object_mut(&mut self, id: u32) -> Option<&mut CdxObject> {
-        for node in &mut self.root {
-            if let Some(found) = Self::find_in_node_mut(node, id) {
-                return Some(found);
-            }
-        }
-        None
-    }
-
-    fn find_in_node_mut(node: &mut CdxNode, id: u32) -> Option<&mut CdxObject> {
-        if let CdxNode::Object(obj) = node {
-            if obj.id == id {
-                return Some(obj);
-            }
-            for child in &mut obj.children {
-                if let Some(found) = Self::find_in_node_mut(child, id) {
-                    return Some(found);
-                }
-            }
-        }
-        None
-    }
-
-    pub fn max_id(&self) -> u32 {
-        let mut max = 0;
-        for node in &self.root {
-            max = max.max(Self::max_id_node(node));
-        }
-        max
-    }
-
-    fn max_id_node(node: &CdxNode) -> u32 {
-        if let CdxNode::Object(obj) = node {
-            let mut max = obj.id;
-            for child in &obj.children {
-                max = max.max(Self::max_id_node(child));
-            }
-            max
-        } else {
-            0
-        }
-    }
-
-    pub fn add_to_parent_of(&mut self, target_id: u32, new_node: CdxNode) -> bool {
-        for node in &mut self.root {
-            if Self::add_to_parent_recursive(node, target_id, &new_node) {
-                return true;
-            }
-        }
-        self.root.push(new_node);
-        true
-    }
-
-    fn add_to_parent_recursive(node: &mut CdxNode, target_id: u32, new_node: &CdxNode) -> bool {
-        if let CdxNode::Object(obj) = node {
-            for child in &obj.children {
-                if let CdxNode::Object(child_obj) = child
-                    && child_obj.id == target_id {
-                        obj.children.push(new_node.clone());
-                        return true;
-                    }
-            }
-            for child in &mut obj.children {
-                if Self::add_to_parent_recursive(child, target_id, new_node) {
-                    return true;
-                }
-            }
-        }
-        false
-    }
-
-    pub fn delete_object(&mut self, id: u32) -> bool {
-        let mut found = false;
-        self.root.retain(|node| {
-            if let CdxNode::Object(obj) = node
-                && obj.id == id {
-                    found = true;
-                    return false;
-                }
-            true
-        });
-        if found {
-            return true;
-        }
-        for node in &mut self.root {
-            if Self::delete_recursive(node, id) {
-                return true;
-            }
-        }
-        false
-    }
-
-    fn delete_recursive(node: &mut CdxNode, id: u32) -> bool {
-        if let CdxNode::Object(obj) = node {
-            let mut found = false;
-            obj.children.retain(|child| {
-                if let CdxNode::Object(child_obj) = child
-                    && child_obj.id == id {
-                        found = true;
-                        return false;
-                    }
-                true
-            });
-            if found {
-                return true;
-            }
-            for child in &mut obj.children {
-                if Self::delete_recursive(child, id) {
-                    return true;
-                }
-            }
-        }
-        false
     }
 }

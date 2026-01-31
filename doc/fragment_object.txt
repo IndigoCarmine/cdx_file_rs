@@ -38,8 +38,6 @@ Indicates that the molecule is a racemic mixture.
 Indicates that the molecule has known absolute configuration.
 0x0502	kCDXProp_Mole_Relative	Relative	CDXBoolean
 Indicates that the molecule has known relative stereochemistry, but unknown absolute configuration.
-0x0503	kCDXProp_Mole_Formula	Formula	CDXFormula
-The molecular formula representation of a molecule object.
 0x0504	kCDXProp_Mole_Weight	Weight	FLOAT64
 The average molecular weight of a molecule object.
 0x0505	kCDXProp_Frag_ConnectionOrder	ConnectionOrder	CDXObjectIDArray

@@ -1,0 +1,84 @@
+Text Object
+CDXML Name:	t
+CDX Constant Name:	kCDXObj_Text
+CDX Constant Value:	0x8006
+Contained by objects:	kCDXObj_Page, kCDXObj_Group, kCDXObj_Node, kCDXObj_NamedAlternativeGroup, kCDXObj_ObjectTag
+First written/read in:	ChemDraw 4.0
+Description:
+
+An arbitrary block of (possibly styled) text.
+
+An isolated text object has unspecified chemical meaning; it may or may not be interpreted chemically depending on the behavior of the program that reads the file. For example, a text object containing the text "CH3CH2CH3" might be considered to represent propane, or it might be considered simply to be a sequence of 9 characters. If chemical meaning is desired, a Node object should be created instead, where that node object would itself contain an appropriate Text object, plus an additional Fragment object to describe the chemical meaning.
+
+In CDX files, a Text object must contain a kCDXProp_Text property; in CDXML files it must contain at least one s subobject. Until ChemDraw 6.0, a Text object also required a bounding box.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8011	kCDXObj_ObjectTag	objecttag
+Arbitrarily named property, one or more of which can be attached to any ChemDraw object.
+n/a	n/a	s
+A string of text in exactly one style.
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+0x000A	kCDXProp_ZOrder	Z	INT16
+Back-to-front ordering index in 2D drawing.
+0x000F	kCDXProp_IgnoreWarnings	IgnoreWarnings	CDXBooleanImplied
+Signifies whether chemical warnings should be suppressed on this object.
+0x0010	kCDXProp_ChemicalWarning	Warning	CDXString
+A warning concerning possible chemical problems with this object.
+0x0011	kCDXProp_Visible	Visible	CDXBoolean
+The object is visible if non-zero.
+0x0200	kCDXProp_2DPosition	p	CDXPoint2D
+The 2D location (in the order of vertical and horizontal locations) of an object.
+0x0204	kCDXProp_BoundingBox	BoundingBox	CDXRectangle
+Required for pictures and spectra. Required for graphics and text until 6.0. The smallest rectangle that encloses the graphical representation of the object.
+0x0205	kCDXProp_RotationAngle	RotationAngle	INT32
+The angular orientation of an object in degrees * 65536.
+0x0700	kCDXProp_Text	(not used)	CDXString
+Required for text objects. The text of a text object.
+0x0701	kCDXProp_Justification	Justification	INT8
+The horizontal justification of a text object. This is an enumerated property.
+0x0702	kCDXProp_LineHeight	LineHeight	UINT16
+The line height of a text object.
+0x0703	kCDXProp_WordWrapWidth	WordWrapWidth	INT16
+The word-wrap width of a text object.
+0x0704	kCDXProp_LineStarts	LineStarts	INT16ListWithCounts
+The number of lines of a text object followed by that many values indicating the zero-based text position of each line start.
+0x0705	kCDXProp_LabelAlignment	LabelAlignment	INT8
+The alignment of the text with respect to the node position. This is an enumerated property.
+0x0706	kCDXProp_LabelLineHeight	LabelLineHeight	INT16
+Text line height for atom labels
+0x0707	kCDXProp_CaptionLineHeight	CaptionLineHeight	INT16
+Text line height for non-atomlabel text objects
+0x0708	kCDXProp_InterpretChemically	InterpretChemically	CDXBooleanImplied
+Signifies whether to the text label should be interpreted chemically (if possible).
+0x080A	kCDXProp_LabelStyle	(not used)	CDXFontStyle
+The default style for atom labels..
+0x080B	kCDXProp_CaptionStyle	(not used)	CDXFontStyle
+The default style for non-atomlabel text objects..
+0x080C	kCDXProp_CaptionJustification	CaptionJustification	INT8
+The horizontal justification of a caption (non-atomlabel text object) This is an enumerated property.
+0x081A	kCDXProp_LabelStyleFont	LabelFont	INT16
+The default font family for atom labels.
+0x081B	kCDXProp_CaptionStyleFont	CaptionFont	INT16
+The default font style for captions (non-atom-label text objects).
+0x081C	kCDXProp_LabelStyleSize	LabelSize	INT16
+The default font size for atom labels.
+0x081D	kCDXProp_CaptionStyleSize	CaptionSize	INT16
+The default font size for captions (non-atom-label text objects).
+0x081E	kCDXProp_LabelStyleFace	LabelFace	INT16
+The default font style for atom labels.
+0x081F	kCDXProp_CaptionStyleFace	CaptionFace	INT16
+The default font face for captions (non-atom-label text objects).
+0x0820	kCDXProp_LabelStyleColor	LabelColor	INT16
+The default color for atom labels
+0x0821	kCDXProp_CaptionStyleColor	CaptionColor	INT16
+The default color for captions (non-atom-label text objects).
+0x0823	kCDXProp_LabelJustification	LabelJustification	INT8
+The default justification for atom labels. This is an enumerated property.
+
+ 

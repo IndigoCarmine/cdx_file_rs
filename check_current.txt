@@ -1,0 +1,631 @@
+    Checking cdx_file_rs v0.1.0 (C:\Users\taman\repo\cdx_file_rs)
+error[E0425]: cannot find type `Rectangle` in this scope
+  --> src\cdx\geometry.rs:20:30
+   |
+20 |     pub bounding_box: Option<Rectangle>,
+   |                              ^^^^^^^^^ not found in this scope
+   |
+help: consider importing this struct through its public re-export
+   |
+ 1 + use crate::Rectangle;
+   |
+
+error[E0425]: cannot find type `Point2d` in this scope
+  --> src\cdx\geometry.rs:21:26
+   |
+21 |     pub position: Option<Point2d>,
+   |                          ^^^^^^^ not found in this scope
+   |
+help: consider importing this struct through its public re-export
+   |
+ 1 + use crate::Point2d;
+   |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+  --> src\cdx\group.rs:56:24
+   |
+56 |                 value: CdxValue::Rectangle(val.clone()),
+   |                        ^^^^^^^^ use of undeclared type `CdxValue`
+   |
+help: consider importing this enum through its public re-export
+   |
+ 1 + use crate::CdxValue;
+   |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+  --> src\cdx\group.rs:62:24
+   |
+62 |                 value: CdxValue::BooleanImplied(val),
+   |                        ^^^^^^^^ use of undeclared type `CdxValue`
+   |
+help: consider importing this enum through its public re-export
+   |
+ 1 + use crate::CdxValue;
+   |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:456:24
+    |
+456 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:462:24
+    |
+462 |                 value: CdxValue::BooleanImplied(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:468:24
+    |
+468 |                 value: CdxValue::String(crate::cdx::text::StyledString {
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:477:24
+    |
+477 |                 value: CdxValue::Boolean(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:483:24
+    |
+483 |                 value: CdxValue::Point2d(val.clone()),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:489:24
+    |
+489 |                 value: CdxValue::Point3d(val.clone()),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:495:24
+    |
+495 |                 value: CdxValue::Uint16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:501:24
+    |
+501 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:507:24
+    |
+507 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:513:24
+    |
+513 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:519:24
+    |
+519 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:525:24
+    |
+525 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:531:24
+    |
+531 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:537:24
+    |
+537 |                 value: CdxValue::Uint8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:543:24
+    |
+543 |                 value: CdxValue::Uint8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:549:24
+    |
+549 |                 value: CdxValue::BooleanImplied(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:555:24
+    |
+555 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:561:24
+    |
+561 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:567:24
+    |
+567 |                 value: CdxValue::BooleanImplied(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:573:24
+    |
+573 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:579:24
+    |
+579 |                 value: CdxValue::BooleanImplied(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:585:24
+    |
+585 |                 value: CdxValue::Uint16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:591:24
+    |
+591 |                 value: CdxValue::BooleanImplied(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:597:24
+    |
+597 |                 value: CdxValue::BooleanImplied(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:603:24
+    |
+603 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:609:24
+    |
+609 |                 value: CdxValue::ObjectIDArray(val.clone()),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:615:24
+    |
+615 |                 value: CdxValue::ObjectIDArray(val.clone()),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:621:24
+    |
+621 |                 value: CdxValue::String(crate::cdx::text::StyledString {
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:630:24
+    |
+630 |                 value: CdxValue::Uint32(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:636:24
+    |
+636 |                 value: CdxValue::Uint8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:642:24
+    |
+642 |                 value: CdxValue::Uint8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:648:24
+    |
+648 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:654:24
+    |
+654 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:660:24
+    |
+660 |                 value: CdxValue::Uint16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:666:24
+    |
+666 |                 value: CdxValue::Boolean(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:672:24
+    |
+672 |                 value: CdxValue::Boolean(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:678:24
+    |
+678 |                 value: CdxValue::Boolean(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:684:24
+    |
+684 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:690:24
+    |
+690 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:696:24
+    |
+696 |                 value: CdxValue::Float64(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:702:24
+    |
+702 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:708:24
+    |
+708 |                 value: CdxValue::String(crate::cdx::text::StyledString {
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:717:24
+    |
+717 |                 value: CdxValue::Boolean(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:723:24
+    |
+723 |                 value: CdxValue::Int8(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:729:24
+    |
+729 |                 value: CdxValue::Uint16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:735:24
+    |
+735 |                 value: CdxValue::Coordinate(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:741:24
+    |
+741 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:747:24
+    |
+747 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+error[E0433]: failed to resolve: use of undeclared type `CdxValue`
+   --> src\cdx\node_impl.rs:753:24
+    |
+753 |                 value: CdxValue::Int16(val),
+    |                        ^^^^^^^^ use of undeclared type `CdxValue`
+    |
+help: consider importing this enum through its public re-export
+    |
+  1 + use crate::CdxValue;
+    |
+
+warning: unused import: `RawCdxProperty`
+ --> src\cdx\bond_tagged.rs:3:43
+  |
+3 | use crate::cdx::raw_nodes::{RawCdxObject, RawCdxProperty};
+  |                                           ^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused doc comment
+   --> src\cdx\node.rs:108:13
+    |
+108 |               /// Get a reference to the inner object if it matches the type
+    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ rustdoc does not generate documentation for macro invocations
+...
+132 | / define_objects!(
+133 | |     Bond,
+134 | |     Document,
+135 | |     Fragment,
+...   |
+141 | |     TLCPlate,
+142 | | );
+    | |_- in this macro invocation
+    |
+    = help: to document an item produced by a macro, the macro must produce the documentation as part of its expansion
+    = note: `#[warn(unused_doc_comments)]` (part of `#[warn(unused)]`) on by default
+    = note: this warning originates in the macro `define_objects` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+error[E0599]: no function or associated item named `decode` found for struct `Point3d` in the current scope
+   --> src\cdx\node_impl.rs:176:36
+    |
+176 |             .and_then(|v| Point3d::decode(v).ok());
+    |                                    ^^^^^^ function or associated item not found in `Point3d`
+    |
+   ::: src\cdx\values.rs:37:1
+    |
+ 37 | pub struct Point3d {
+    | ------------------ function or associated item `decode` not found for this struct
+    |
+    = help: items from traits can only be used if the trait is implemented and in scope
+    = note: the following traits define an item `decode`, perhaps you need to implement one of them:
+            candidate #1: `BinaryCodec`
+            candidate #2: `base64::Engine`
+
+Some errors have detailed explanations: E0425, E0433, E0599.
+For more information about an error, try `rustc --explain E0425`.
+warning: `cdx_file_rs` (lib) generated 2 warnings
+error: could not compile `cdx_file_rs` (lib) due to 54 previous errors; 2 warnings emitted

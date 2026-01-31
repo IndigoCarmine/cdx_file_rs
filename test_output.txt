@@ -1,0 +1,1242 @@
+warning: unused import: `crate::error::CdxError`
+ --> src\cdx\fragment.rs:1:5
+  |
+1 | use crate::error::CdxError;
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `crate::error::CdxError`
+ --> src\cdx\group.rs:1:5
+  |
+1 | use crate::error::CdxError;
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: `cdx-file-rs` (lib) generated 2 warnings (run `cargo fix --lib -p cdx-file-rs` to apply 2 suggestions)
+warning: unused import: `eframe::egui`
+ --> src\renderer\mod.rs:1:9
+  |
+1 | pub use eframe::egui;
+  |         ^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` (part of `#[warn(unused)]`) on by default
+
+warning: unused import: `crate::error::CdxError`
+ --> src\cdx\fragment.rs:1:5
+  |
+1 | use crate::error::CdxError;
+  |     ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `cdx_file` is never read
+  --> src\renderer\renderer.rs:60:9
+   |
+57 | pub struct CdxRenderer<'a> {
+   |            ----------- field in this struct
+...
+60 |     pub cdx_file: &'a CdxFile,
+   |         ^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+
+warning: methods `get_color` and `foreground_color` are never used
+   --> src\renderer\renderer.rs:88:12
+    |
+ 86 | impl<'a> CdxRenderer<'a> {
+    | ------------------------ methods in this implementation
+ 87 |     /// Get color from color table by index
+ 88 |     pub fn get_color(&self, index: usize) -> Color32 {
+    |            ^^^^^^^^^
+...
+113 |     pub fn foreground_color(&self) -> Color32 {
+    |            ^^^^^^^^^^^^^^^^
+
+warning: methods `default_bond_length`, `default_bold_width`, `default_label_color`, `default_caption_size`, and `default_caption_color` are never used
+   --> src\renderer\renderer.rs:331:12
+    |
+271 | impl<'a> RenderContext<'a> {
+    | -------------------------- methods in this implementation
+...
+331 |     pub fn default_bond_length(&self) -> f64 {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+341 |     pub fn default_bold_width(&self) -> f64 {
+    |            ^^^^^^^^^^^^^^^^^^
+...
+356 |     pub fn default_label_color(&self) -> Color32 {
+    |            ^^^^^^^^^^^^^^^^^^^
+...
+367 |     pub fn default_caption_size(&self) -> f32 {
+    |            ^^^^^^^^^^^^^^^^^^^^
+...
+372 |     pub fn default_caption_color(&self) -> Color32 {
+    |            ^^^^^^^^^^^^^^^^^^^^^
+
+warning: method `to_raw` is never used
+ --> src\cdx_parse_impl\tagged_object.rs:8:8
+  |
+5 | pub trait TaggedObject: Sized {
+  |           ------------ method in this trait
+...
+8 |     fn to_raw(&self) -> Result<RawCdxObject, CdxError>;
+  |        ^^^^^^
+
+warning: methods `get_property_mut`, `set_property`, and `find_objects` are never used
+  --> src\cdx_parse_impl\raw_nodes.rs:33:12
+   |
+23 | impl RawCdxObject {
+   | ----------------- methods in this implementation
+...
+33 |     pub fn get_property_mut(&mut self, target_tag: u16) -> Option<&mut Vec<u8>> {
+   |            ^^^^^^^^^^^^^^^^
+...
+42 |     pub fn set_property(&mut self, tag: u16, value: Vec<u8>) {
+   |            ^^^^^^^^^^^^
+...
+51 |     pub fn find_objects(&self, target_tag: u16) -> Vec<&RawCdxObject> {
+   |            ^^^^^^^^^^^^
+
+warning: method `to_raw` is never used
+  --> src\cdx_parse_impl\file.rs:23:20
+   |
+12 |           impl NodePayload {
+   |           ---------------- method in this implementation
+...
+23 |               pub fn to_raw(&self) -> Result<RawCdxObject, CdxError> {
+   |                      ^^^^^^
+...
+36 | / define_node_payload!(
+37 | |     Bond,
+38 | |     Document,
+39 | |     Fragment,
+...  |
+45 | |     TLCPlate,
+46 | | );
+   | |_- in this macro invocation
+   |
+   = note: this warning originates in the macro `define_node_payload` (in Nightly builds, run with -Z macro-backtrace for more info)
+
+warning: struct `CdxWriter` is never constructed
+ --> src\cdx_parse_impl\writer.rs:6:12
+  |
+6 | pub struct CdxWriter<W: Write + Seek> {
+  |            ^^^^^^^^^
+
+warning: associated items `new`, `into_inner`, `write`, `write_object`, and `write_property` are never used
+  --> src\cdx_parse_impl\writer.rs:11:12
+   |
+10 | impl<W: Write + Seek> CdxWriter<W> {
+   | ---------------------------------- associated items in this implementation
+11 |     pub fn new(writer: W) -> Self {
+   |            ^^^
+...
+15 |     pub fn into_inner(self) -> W {
+   |            ^^^^^^^^^^
+...
+19 |     pub fn write(&mut self, doc: &RawCdxObject) -> Result<()> {
+   |            ^^^^^
+...
+35 |     fn write_object(&mut self, obj: &RawCdxObject) -> Result<()> {
+   |        ^^^^^^^^^^^^
+...
+48 |     fn write_property(&mut self, prop: &RawCdxProperty) -> Result<()> {
+   |        ^^^^^^^^^^^^^^
+
+warning: method `encode` is never used
+ --> src\cdx\binary_codec.rs:7:8
+  |
+6 | pub trait BinaryCodec: Sized {
+  |           ----------- method in this trait
+7 |     fn encode(&self) -> Result<Vec<u8>, CdxError>;
+  |        ^^^^^^
+
+warning: function `encode_u32_array` is never used
+   --> src\cdx\binary_codec.rs:127:8
+    |
+127 | pub fn encode_u32_array(data: &[u32]) -> Result<Vec<u8>, CdxError> {
+    |        ^^^^^^^^^^^^^^^^
+
+warning: function `encode_object_id_array` is never used
+   --> src\cdx\binary_codec.rs:205:8
+    |
+205 | pub fn encode_object_id_array(data: &[u32]) -> Result<Vec<u8>, CdxError> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `decode_object_id_array` is never used
+   --> src\cdx\binary_codec.rs:213:8
+    |
+213 | pub fn decode_object_id_array(data: &[u8]) -> Result<Vec<u32>, CdxError> {
+    |        ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: function `encode_cdx_string` is never used
+   --> src\cdx\binary_codec.rs:224:8
+    |
+224 | pub fn encode_cdx_string(s: &str) -> Result<Vec<u8>, CdxError> {
+    |        ^^^^^^^^^^^^^^^^^
+
+warning: function `decode_cdx_string` is never used
+   --> src\cdx\binary_codec.rs:228:8
+    |
+228 | pub fn decode_cdx_string(data: &[u8]) -> Result<String, CdxError> {
+    |        ^^^^^^^^^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\bond.rs:78:12
+   |
+76 | impl Bond {
+   | --------- associated function in this implementation
+77 |     /// Create a new Bond with required properties
+78 |     pub fn new(id: u32, begin: u32, end: u32) -> Self {
+   |            ^^^
+
+warning: associated items `new` and `encode` are never used
+  --> src\cdx\color_table.rs:16:12
+   |
+14 | impl RGBColor {
+   | ------------- associated items in this implementation
+15 |     /// Create a new RGB color
+16 |     pub fn new(red: f64, green: f64, blue: f64) -> Self {
+   |            ^^^
+...
+21 |     pub fn encode(&self) -> Result<Vec<u8>, CdxError> {
+   |            ^^^^^^
+
+warning: associated items `default` and `encode` are never used
+  --> src\cdx\color_table.rs:76:12
+   |
+64 | impl ColorTable {
+   | --------------- associated items in this implementation
+...
+76 |     pub fn default() -> Self {
+   |            ^^^^^^^
+...
+91 |     pub fn encode(&self) -> Result<Vec<u8>, CdxError> {
+   |            ^^^^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\document.rs:82:12
+   |
+80 | impl Document {
+   | ------------- associated function in this implementation
+81 |     /// Create a new Document with no properties set
+82 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\fragment.rs:28:12
+   |
+26 | impl Fragment {
+   | ------------- associated function in this implementation
+27 |     /// Create a new Fragment with required properties
+28 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: struct `Geometry` is never constructed
+ --> src\cdx\geometry.rs:9:12
+  |
+9 | pub struct Geometry {
+  |            ^^^^^^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\geometry.rs:28:12
+   |
+26 | impl Geometry {
+   | ------------- associated function in this implementation
+27 |     /// Create a new Geometry with just an ID
+28 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\group.rs:19:12
+   |
+17 | impl Group {
+   | ---------- associated function in this implementation
+18 |     /// Create a new Group
+19 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\page.rs:52:12
+   |
+50 | impl Page {
+   | --------- associated function in this implementation
+51 |     /// Create a new Page with no required properties
+52 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: struct `FontStyle` is never constructed
+ --> src\cdx\text_styles.rs:4:12
+  |
+4 | pub struct FontStyle {
+  |            ^^^^^^^^^
+
+warning: struct `StyleRun` is never constructed
+  --> src\cdx\text_styles.rs:12:12
+   |
+12 | pub struct StyleRun {
+   |            ^^^^^^^^
+
+warning: struct `StyledString` is never constructed
+  --> src\cdx\text_styles.rs:18:12
+   |
+18 | pub struct StyledString {
+   |            ^^^^^^^^^^^^
+
+warning: struct `FontEntry` is never constructed
+  --> src\cdx\text_styles.rs:24:12
+   |
+24 | pub struct FontEntry {
+   |            ^^^^^^^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\tlc_lane.rs:16:12
+   |
+14 | impl TlcLane {
+   | ------------ associated function in this implementation
+15 |     /// Create a new TlcLane with default values
+16 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\tlc_plate.rs:60:12
+   |
+58 | impl TLCPlate {
+   | ------------- associated function in this implementation
+59 |     /// Create a new TLC Plate with no required properties
+60 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: enum `CdxValue` is never used
+ --> src\cdx\values.rs:6:10
+  |
+6 | pub enum CdxValue {
+  |          ^^^^^^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\node.rs:84:12
+   |
+82 | impl Node {
+   | --------- associated function in this implementation
+83 |     /// Create a new Node with just an ID
+84 |     pub fn new(id: u32) -> Self {
+   |            ^^^
+
+warning: associated function `new` is never used
+  --> src\cdx\text.rs:50:12
+   |
+48 | impl TextObject {
+   | --------------- associated function in this implementation
+49 |     /// Create a new Text object with required properties
+50 |     pub fn new(id: u32, text: CDXString) -> Self {
+   |            ^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\bond_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // kCDXObj_ObjectTag: Arbitrarily named property attached to objects.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_STYLE` is never used
+  --> src\cdx_tags\bond_tags.rs:64:11
+   |
+64 | pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Atom label font style (unused).
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_PAGE` is never used
+ --> src\cdx_tags\document_tags.rs:5:11
+  |
+5 | pub const CDXOBJ_PAGE: u16 = 0x8001; // kCDXObj_Page: A drawing space that can contain other objects.
+  |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEMPLATE_GRID` is never used
+ --> src\cdx_tags\document_tags.rs:6:11
+  |
+6 | pub const CDXOBJ_TEMPLATE_GRID: u16 = 0x800B; // kCDXObj_TemplateGrid: Layout definition for template documents.
+  |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_FONT_TABLE` is never used
+ --> src\cdx_tags\document_tags.rs:9:11
+  |
+9 | pub const CDXPROP_FONT_TABLE: u16 = 0x0100; // kCDXProp_FontTable: List of fonts used in the document.
+  |           ^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_STYLE` is never used
+  --> src\cdx_tags\document_tags.rs:57:11
+   |
+57 | pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Default atom label font style (unused).
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_STYLE` is never used
+  --> src\cdx_tags\document_tags.rs:58:11
+   |
+58 | pub const CDXPROP_CAPTION_STYLE: u16 = 0x080B; // Default caption font style (unused).
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_NODE` is never used
+  --> src\cdx_tags\fragment_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_NODE: u16 = 0x8004; // kCDXObj_Node: Atomic node.
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BOND` is never used
+  --> src\cdx_tags\fragment_tags.rs:12:11
+   |
+12 | pub const CDXOBJ_BOND: u16 = 0x8005; // kCDXObj_Bond: Connection between two nodes.
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GRAPHIC` is never used
+  --> src\cdx_tags\fragment_tags.rs:13:11
+   |
+13 | pub const CDXOBJ_GRAPHIC: u16 = 0x8007; // kCDXObj_Graphic: Non-chemical graphic primitive.
+   |           ^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CURVE` is never used
+  --> src\cdx_tags\fragment_tags.rs:14:11
+   |
+14 | pub const CDXOBJ_CURVE: u16 = 0x8008; // kCDXObj_Curve: Bﾃｩzier curve.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\fragment_tags.rs:15:11
+   |
+15 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // kCDXObj_ObjectTag: Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_MOLE_FORMULA` is never used
+  --> src\cdx_tags\fragment_tags.rs:29:11
+   |
+29 | pub const CDXPROP_MOLE_FORMULA: u16 = 0x0503; // Molecular formula.
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GEOMETRY` is never used
+ --> src\cdx_tags\geometry_tags.rs:5:11
+  |
+5 | pub const CDXOBJ_GEOMETRY: u16 = 0x8021; // kCDXObj_Geometry: A geometrical relationship between one or more objects.
+  |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_BOUNDING_BOX` is never used
+  --> src\cdx_tags\geometry_tags.rs:13:11
+   |
+13 | pub const CDXPROP_BOUNDING_BOX: u16 = 0x0204; // The smallest rectangle that encloses the graphical representation of the object.
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_2D_POSITION` is never used
+  --> src\cdx_tags\geometry_tags.rs:14:11
+   |
+14 | pub const CDXPROP_2D_POSITION: u16 = 0x0200; // The 2D location of an object.
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_VISIBLE` is never used
+  --> src\cdx_tags\geometry_tags.rs:15:11
+   |
+15 | pub const CDXPROP_VISIBLE: u16 = 0x0011; // The object is visible if non-zero.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_Z_ORDER` is never used
+  --> src\cdx_tags\geometry_tags.rs:16:11
+   |
+16 | pub const CDXPROP_Z_ORDER: u16 = 0x000A; // Back-to-front ordering index in 2D drawing.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_FOREGROUND_COLOR` is never used
+  --> src\cdx_tags\geometry_tags.rs:17:11
+   |
+17 | pub const CDXPROP_FOREGROUND_COLOR: u16 = 0x0301; // The foreground color of an object.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_BACKGROUND_COLOR` is never used
+  --> src\cdx_tags\geometry_tags.rs:18:11
+   |
+18 | pub const CDXPROP_BACKGROUND_COLOR: u16 = 0x0302; // The background color of an object.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_ROTATION_ANGLE` is never used
+  --> src\cdx_tags\geometry_tags.rs:19:11
+   |
+19 | pub const CDXPROP_ROTATION_ANGLE: u16 = 0x0205; // The angular orientation of an object in degrees * 65536.
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_FRAGMENT` is never used
+  --> src\cdx_tags\group_tag.rs:11:11
+   |
+11 | pub const CDXOBJ_FRAGMENT: u16 = 0x8003; // Chemically meaningful fragment.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEXT` is never used
+  --> src\cdx_tags\group_tag.rs:12:11
+   |
+12 | pub const CDXOBJ_TEXT: u16 = 0x8006; // Text object.
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GRAPHIC` is never used
+  --> src\cdx_tags\group_tag.rs:13:11
+   |
+13 | pub const CDXOBJ_GRAPHIC: u16 = 0x8007; // Graphic primitive.
+   |           ^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CURVE` is never used
+  --> src\cdx_tags\group_tag.rs:14:11
+   |
+14 | pub const CDXOBJ_CURVE: u16 = 0x8008; // Bﾃｩzier curve.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_NAMED_ALTERNATIVE_GROUP` is never used
+  --> src\cdx_tags\group_tag.rs:15:11
+   |
+15 | pub const CDXOBJ_NAMED_ALTERNATIVE_GROUP: u16 = 0x800A; // Alternative substituent container.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_REACTION_STEP` is never used
+  --> src\cdx_tags\group_tag.rs:16:11
+   |
+16 | pub const CDXOBJ_REACTION_STEP: u16 = 0x800E; // Reaction step description.
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SPECTRUM` is never used
+  --> src\cdx_tags\group_tag.rs:17:11
+   |
+17 | pub const CDXOBJ_SPECTRUM: u16 = 0x8010; // Spectral plot.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\group_tag.rs:18:11
+   |
+18 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_FRAGMENT` is never used
+  --> src\cdx_tags\node_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_FRAGMENT: u16 = 0x8003; // Containing fragment.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEXT` is never used
+  --> src\cdx_tags\node_tags.rs:12:11
+   |
+12 | pub const CDXOBJ_TEXT: u16 = 0x8006; // Atom label text.
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\node_tags.rs:13:11
+   |
+13 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_ATOM_ELEMENT_LIST` is never used
+  --> src\cdx_tags\node_tags.rs:39:11
+   |
+39 | pub const CDXPROP_ATOM_ELEMENT_LIST: u16 = 0x0403; // List of allowed elements.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_ATOM_FORMULA` is never used
+  --> src\cdx_tags\node_tags.rs:40:11
+   |
+40 | pub const CDXPROP_ATOM_FORMULA: u16 = 0x0404; // Fragment formula (unknown connectivity).
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_STYLE` is never used
+  --> src\cdx_tags\node_tags.rs:96:11
+   |
+96 | pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Atom label font style (unused).
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_DOCUMENT` is never used
+ --> src\cdx_tags\object_tags.rs:6:11
+  |
+6 | pub const CDXOBJ_DOCUMENT: u16 = 0x8000; // kCDXObj_Document
+  |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_PAGE` is never used
+ --> src\cdx_tags\object_tags.rs:7:11
+  |
+7 | pub const CDXOBJ_PAGE: u16 = 0x8001; // kCDXObj_Page
+  |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GROUP` is never used
+ --> src\cdx_tags\object_tags.rs:8:11
+  |
+8 | pub const CDXOBJ_GROUP: u16 = 0x8002; // kCDXObj_Group
+  |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_FRAGMENT` is never used
+ --> src\cdx_tags\object_tags.rs:9:11
+  |
+9 | pub const CDXOBJ_FRAGMENT: u16 = 0x8003; // kCDXObj_Fragment
+  |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_NODE` is never used
+  --> src\cdx_tags\object_tags.rs:12:11
+   |
+12 | pub const CDXOBJ_NODE: u16 = 0x8004; // kCDXObj_Node
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BOND` is never used
+  --> src\cdx_tags\object_tags.rs:13:11
+   |
+13 | pub const CDXOBJ_BOND: u16 = 0x8005; // kCDXObj_Bond
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEXT` is never used
+  --> src\cdx_tags\object_tags.rs:16:11
+   |
+16 | pub const CDXOBJ_TEXT: u16 = 0x8006; // kCDXObj_Text
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GRAPHIC` is never used
+  --> src\cdx_tags\object_tags.rs:17:11
+   |
+17 | pub const CDXOBJ_GRAPHIC: u16 = 0x8007; // kCDXObj_Graphic
+   |           ^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CURVE` is never used
+  --> src\cdx_tags\object_tags.rs:18:11
+   |
+18 | pub const CDXOBJ_CURVE: u16 = 0x8008; // kCDXObj_Curve
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_EMBEDDED_OBJECT` is never used
+  --> src\cdx_tags\object_tags.rs:19:11
+   |
+19 | pub const CDXOBJ_EMBEDDED_OBJECT: u16 = 0x8009; // kCDXObj_EmbeddedObject
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_NAMED_ALTERNATIVE_GROUP` is never used
+  --> src\cdx_tags\object_tags.rs:22:11
+   |
+22 | pub const CDXOBJ_NAMED_ALTERNATIVE_GROUP: u16 = 0x800A; // kCDXObj_NamedAlternativeGroup
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BRACKETED_GROUP` is never used
+  --> src\cdx_tags\object_tags.rs:23:11
+   |
+23 | pub const CDXOBJ_BRACKETED_GROUP: u16 = 0x8017; // kCDXObj_BracketedGroup
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BRACKET_ATTACHMENT` is never used
+  --> src\cdx_tags\object_tags.rs:24:11
+   |
+24 | pub const CDXOBJ_BRACKET_ATTACHMENT: u16 = 0x8018; // kCDXObj_BracketAttachment
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CROSSING_BOND` is never used
+  --> src\cdx_tags\object_tags.rs:25:11
+   |
+25 | pub const CDXOBJ_CROSSING_BOND: u16 = 0x8019; // kCDXObj_CrossingBond
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TABLE` is never used
+  --> src\cdx_tags\object_tags.rs:28:11
+   |
+28 | pub const CDXOBJ_TABLE: u16 = 0x8016; // kCDXObj_Table
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEMPLATE_GRID` is never used
+  --> src\cdx_tags\object_tags.rs:29:11
+   |
+29 | pub const CDXOBJ_TEMPLATE_GRID: u16 = 0x800B; // kCDXObj_TemplateGrid
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SPLITTER` is never used
+  --> src\cdx_tags\object_tags.rs:30:11
+   |
+30 | pub const CDXOBJ_SPLITTER: u16 = 0x8015; // kCDXObj_Splitter
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BORDER` is never used
+  --> src\cdx_tags\object_tags.rs:31:11
+   |
+31 | pub const CDXOBJ_BORDER: u16 = 0x8020; // kCDXObj_Border
+   |           ^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GEOMETRY` is never used
+  --> src\cdx_tags\object_tags.rs:32:11
+   |
+32 | pub const CDXOBJ_GEOMETRY: u16 = 0x8021; // kCDXObj_Geometry
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CONSTRAINT` is never used
+  --> src\cdx_tags\object_tags.rs:33:11
+   |
+33 | pub const CDXOBJ_CONSTRAINT: u16 = 0x8022; // kCDXObj_Constraint
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_REACTION_SCHEME` is never used
+  --> src\cdx_tags\object_tags.rs:36:11
+   |
+36 | pub const CDXOBJ_REACTION_SCHEME: u16 = 0x800D; // kCDXObj_ReactionScheme
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_REACTION_STEP` is never used
+  --> src\cdx_tags\object_tags.rs:37:11
+   |
+37 | pub const CDXOBJ_REACTION_STEP: u16 = 0x800E; // kCDXObj_ReactionStep
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_ARROW` is never used
+  --> src\cdx_tags\object_tags.rs:38:11
+   |
+38 | pub const CDXOBJ_ARROW: u16 = 0x8027; // kCDXObj_Arrow
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SPECTRUM` is never used
+  --> src\cdx_tags\object_tags.rs:41:11
+   |
+41 | pub const CDXOBJ_SPECTRUM: u16 = 0x8010; // kCDXObj_Spectrum
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CHEMICAL_PROPERTY` is never used
+  --> src\cdx_tags\object_tags.rs:42:11
+   |
+42 | pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8026; // kCDXObj_ChemicalProperty
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_PLATE` is never used
+  --> src\cdx_tags\object_tags.rs:45:11
+   |
+45 | pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // kCDXObj_TLCPlate
+   |           ^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_LANE` is never used
+  --> src\cdx_tags\object_tags.rs:46:11
+   |
+46 | pub const CDXOBJ_TLC_LANE: u16 = 0x8024; // kCDXObj_TLCLane
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_SPOT` is never used
+  --> src\cdx_tags\object_tags.rs:47:11
+   |
+47 | pub const CDXOBJ_TLC_SPOT: u16 = 0x8025; // kCDXObj_TLCSpot
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_REGISTRY_NUMBER` is never used
+  --> src\cdx_tags\object_tags.rs:50:11
+   |
+50 | pub const CDXOBJ_REGISTRY_NUMBER: u16 = 0x800C; // kCDXObj_RegistryNumber
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\object_tags.rs:51:11
+   |
+51 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // kCDXObj_ObjectTag
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SEQUENCE` is never used
+  --> src\cdx_tags\object_tags.rs:52:11
+   |
+52 | pub const CDXOBJ_SEQUENCE: u16 = 0x8013; // kCDXObj_Sequence
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CROSS_REFERENCE` is never used
+  --> src\cdx_tags\object_tags.rs:53:11
+   |
+53 | pub const CDXOBJ_CROSS_REFERENCE: u16 = 0x8014; // kCDXObj_CrossReference
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_COLOR_TABLE` is never used
+  --> src\cdx_tags\object_tags.rs:60:11
+   |
+60 | pub const CDXPROP_COLOR_TABLE: u16 = 0x0300; // kCDXProp_ColorTable
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_FONT_TABLE` is never used
+  --> src\cdx_tags\object_tags.rs:63:11
+   |
+63 | pub const CDXPROP_FONT_TABLE: u16 = 0x0100; // kCDXProp_FontTable
+   |           ^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_REPRESENTS_PROPERTY` is never used
+  --> src\cdx_tags\object_tags.rs:66:11
+   |
+66 | pub const CDXPROP_REPRESENTS_PROPERTY: u16 = 0x000E; // kCDXProp_RepresentsProperty
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GROUP` is never used
+  --> src\cdx_tags\page_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_GROUP: u16 = 0x8002; // Logical collection of objects.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_FRAGMENT` is never used
+  --> src\cdx_tags\page_tags.rs:12:11
+   |
+12 | pub const CDXOBJ_FRAGMENT: u16 = 0x8003; // Chemically meaningful fragment.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEXT` is never used
+  --> src\cdx_tags\page_tags.rs:13:11
+   |
+13 | pub const CDXOBJ_TEXT: u16 = 0x8006; // Text object.
+   |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GRAPHIC` is never used
+  --> src\cdx_tags\page_tags.rs:14:11
+   |
+14 | pub const CDXOBJ_GRAPHIC: u16 = 0x8007; // Graphic primitive.
+   |           ^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BRACKETED_GROUP` is never used
+  --> src\cdx_tags\page_tags.rs:15:11
+   |
+15 | pub const CDXOBJ_BRACKETED_GROUP: u16 = 0x8017; // Bracketed collection of objects.
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CURVE` is never used
+  --> src\cdx_tags\page_tags.rs:16:11
+   |
+16 | pub const CDXOBJ_CURVE: u16 = 0x8008; // Bﾃｩzier curve.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_EMBEDDED_OBJECT` is never used
+  --> src\cdx_tags\page_tags.rs:17:11
+   |
+17 | pub const CDXOBJ_EMBEDDED_OBJECT: u16 = 0x8009; // PICT, Metafile, or OLE object.
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TABLE` is never used
+  --> src\cdx_tags\page_tags.rs:18:11
+   |
+18 | pub const CDXOBJ_TABLE: u16 = 0x8016; // Grid-like arrangement of drawing spaces.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_NAMED_ALTERNATIVE_GROUP` is never used
+  --> src\cdx_tags\page_tags.rs:19:11
+   |
+19 | pub const CDXOBJ_NAMED_ALTERNATIVE_GROUP: u16 = 0x800A; // Alternative substituent container.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_REACTION_SCHEME` is never used
+  --> src\cdx_tags\page_tags.rs:20:11
+   |
+20 | pub const CDXOBJ_REACTION_SCHEME: u16 = 0x800D; // Single- or multi-step reaction scheme.
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_REACTION_STEP` is never used
+  --> src\cdx_tags\page_tags.rs:21:11
+   |
+21 | pub const CDXOBJ_REACTION_STEP: u16 = 0x800E; // One step of a reaction.
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SPECTRUM` is never used
+  --> src\cdx_tags\page_tags.rs:22:11
+   |
+22 | pub const CDXOBJ_SPECTRUM: u16 = 0x8010; // Spectral plot.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SEQUENCE` is never used
+  --> src\cdx_tags\page_tags.rs:23:11
+   |
+23 | pub const CDXOBJ_SEQUENCE: u16 = 0x8013; // Member of an ordered sequence.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CROSS_REFERENCE` is never used
+  --> src\cdx_tags\page_tags.rs:24:11
+   |
+24 | pub const CDXOBJ_CROSS_REFERENCE: u16 = 0x8014; // Link to a sequence.
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_BORDER` is never used
+  --> src\cdx_tags\page_tags.rs:25:11
+   |
+25 | pub const CDXOBJ_BORDER: u16 = 0x8020; // Border definition.
+   |           ^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_GEOMETRY` is never used
+  --> src\cdx_tags\page_tags.rs:26:11
+   |
+26 | pub const CDXOBJ_GEOMETRY: u16 = 0x8021; // Geometrical relationship.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CONSTRAINT` is never used
+  --> src\cdx_tags\page_tags.rs:27:11
+   |
+27 | pub const CDXOBJ_CONSTRAINT: u16 = 0x8022; // Distance or angle constraint.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_PLATE` is never used
+  --> src\cdx_tags\page_tags.rs:28:11
+   |
+28 | pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // TLC plate object.
+   |           ^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_SPLITTER` is never used
+  --> src\cdx_tags\page_tags.rs:29:11
+   |
+29 | pub const CDXOBJ_SPLITTER: u16 = 0x8015; // Horizontal page splitter.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_CHEMICAL_PROPERTY` is never used
+  --> src\cdx_tags\page_tags.rs:30:11
+   |
+30 | pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8026; // Chemical/physical property annotation.
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_ARROW` is never used
+  --> src\cdx_tags\page_tags.rs:31:11
+   |
+31 | pub const CDXOBJ_ARROW: u16 = 0x8027; // Line or arc with optional arrowheads.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\text_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // kCDXObj_ObjectTag: Arbitrarily named property attached to objects.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_STYLE` is never used
+  --> src\cdx_tags\text_tags.rs:50:11
+   |
+50 | pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Default atom label font style (unused).
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_STYLE` is never used
+  --> src\cdx_tags\text_tags.rs:51:11
+   |
+51 | pub const CDXPROP_CAPTION_STYLE: u16 = 0x080B; // Default caption font style (unused).
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\tlc_lane_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_SPOT` is never used
+  --> src\cdx_tags\tlc_lane_tags.rs:12:11
+   |
+12 | pub const CDXOBJ_TLC_SPOT: u16 = 0x8025; // Single TLC spot.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\tlc_plate_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_LANE` is never used
+  --> src\cdx_tags\tlc_plate_tags.rs:12:11
+   |
+12 | pub const CDXOBJ_TLC_LANE: u16 = 0x8024; // TLC lane (vertical series of spots).
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TLC_SPOT` is never used
+ --> src\cdx_tags\tlc_spot_tags.rs:5:11
+  |
+5 | pub const CDXOBJ_TLC_SPOT: u16 = 0x8025; // kCDXObj_TLCSpot: Individual spot on a TLC lane.
+  |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_VISIBLE` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:19:11
+   |
+19 | pub const CDXPROP_VISIBLE: u16 = 0x0011; // Visibility flag.
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_WIDTH` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:21:11
+   |
+21 | pub const CDXPROP_WIDTH: u16 = 0x0812; // Spot width (unrotated reference frame).
+   |           ^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_HEIGHT` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:22:11
+   |
+22 | pub const CDXPROP_HEIGHT: u16 = 0x0813; // Spot height (unrotated reference frame).
+   |           ^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CURVE_TYPE` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:24:11
+   |
+24 | pub const CDXPROP_CURVE_TYPE: u16 = 0x0A08; // Curve type (bit-encoded).
+   |           ^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_TLC_RF` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:26:11
+   |
+26 | pub const CDXPROP_TLC_RF: u16 = 0x0AB0; // Retention factor (Rf).
+   |           ^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_TLC_TAIL` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:27:11
+   |
+27 | pub const CDXPROP_TLC_TAIL: u16 = 0x0AB1; // Tail length.
+   |           ^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_TLC_SHOW_RF` is never used
+  --> src\cdx_tags\tlc_spot_tags.rs:28:11
+   |
+28 | pub const CDXPROP_TLC_SHOW_RF: u16 = 0x0AB2; // Display Rf value.
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXOBJ_TEXT` is never used
+ --> src\cdx_tags\txt_tags.rs:5:11
+  |
+5 | pub const CDXOBJ_TEXT: u16 = 0x8006; // kCDXObj_Text: Arbitrary styled text block.
+  |           ^^^^^^^^^^^
+
+warning: constant `CDXOBJ_OBJECT_TAG` is never used
+  --> src\cdx_tags\txt_tags.rs:11:11
+   |
+11 | pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
+   |           ^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_Z_ORDER` is never used
+  --> src\cdx_tags\txt_tags.rs:20:11
+   |
+20 | pub const CDXPROP_Z_ORDER: u16 = 0x000A;
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_IGNORE_WARNINGS` is never used
+  --> src\cdx_tags\txt_tags.rs:21:11
+   |
+21 | pub const CDXPROP_IGNORE_WARNINGS: u16 = 0x000F;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CHEMICAL_WARNING` is never used
+  --> src\cdx_tags\txt_tags.rs:22:11
+   |
+22 | pub const CDXPROP_CHEMICAL_WARNING: u16 = 0x0010;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_VISIBLE` is never used
+  --> src\cdx_tags\txt_tags.rs:23:11
+   |
+23 | pub const CDXPROP_VISIBLE: u16 = 0x0011;
+   |           ^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_2D_POSITION` is never used
+  --> src\cdx_tags\txt_tags.rs:25:11
+   |
+25 | pub const CDXPROP_2D_POSITION: u16 = 0x0200;
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_BOUNDING_BOX` is never used
+  --> src\cdx_tags\txt_tags.rs:26:11
+   |
+26 | pub const CDXPROP_BOUNDING_BOX: u16 = 0x0204;
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_ROTATION_ANGLE` is never used
+  --> src\cdx_tags\txt_tags.rs:27:11
+   |
+27 | pub const CDXPROP_ROTATION_ANGLE: u16 = 0x0205;
+   |           ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_TEXT` is never used
+  --> src\cdx_tags\txt_tags.rs:29:11
+   |
+29 | pub const CDXPROP_TEXT: u16 = 0x0700; // Required for Text objects.
+   |           ^^^^^^^^^^^^
+
+warning: constant `CDXPROP_JUSTIFICATION` is never used
+  --> src\cdx_tags\txt_tags.rs:30:11
+   |
+30 | pub const CDXPROP_JUSTIFICATION: u16 = 0x0701;
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LINE_HEIGHT` is never used
+  --> src\cdx_tags\txt_tags.rs:31:11
+   |
+31 | pub const CDXPROP_LINE_HEIGHT: u16 = 0x0702;
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_WORD_WRAP_WIDTH` is never used
+  --> src\cdx_tags\txt_tags.rs:32:11
+   |
+32 | pub const CDXPROP_WORD_WRAP_WIDTH: u16 = 0x0703;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LINE_STARTS` is never used
+  --> src\cdx_tags\txt_tags.rs:33:11
+   |
+33 | pub const CDXPROP_LINE_STARTS: u16 = 0x0704;
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_ALIGNMENT` is never used
+  --> src\cdx_tags\txt_tags.rs:34:11
+   |
+34 | pub const CDXPROP_LABEL_ALIGNMENT: u16 = 0x0705;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_LINE_HEIGHT` is never used
+  --> src\cdx_tags\txt_tags.rs:35:11
+   |
+35 | pub const CDXPROP_LABEL_LINE_HEIGHT: u16 = 0x0706;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_LINE_HEIGHT` is never used
+  --> src\cdx_tags\txt_tags.rs:36:11
+   |
+36 | pub const CDXPROP_CAPTION_LINE_HEIGHT: u16 = 0x0707;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_INTERPRET_CHEMICALLY` is never used
+  --> src\cdx_tags\txt_tags.rs:37:11
+   |
+37 | pub const CDXPROP_INTERPRET_CHEMICALLY: u16 = 0x0708;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_STYLE` is never used
+  --> src\cdx_tags\txt_tags.rs:39:11
+   |
+39 | pub const CDXPROP_LABEL_STYLE: u16 = 0x080A;
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_STYLE` is never used
+  --> src\cdx_tags\txt_tags.rs:40:11
+   |
+40 | pub const CDXPROP_CAPTION_STYLE: u16 = 0x080B;
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_JUSTIFICATION` is never used
+  --> src\cdx_tags\txt_tags.rs:41:11
+   |
+41 | pub const CDXPROP_CAPTION_JUSTIFICATION: u16 = 0x080C;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_FONT` is never used
+  --> src\cdx_tags\txt_tags.rs:43:11
+   |
+43 | pub const CDXPROP_LABEL_FONT: u16 = 0x081A;
+   |           ^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_FONT` is never used
+  --> src\cdx_tags\txt_tags.rs:44:11
+   |
+44 | pub const CDXPROP_CAPTION_FONT: u16 = 0x081B;
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_SIZE` is never used
+  --> src\cdx_tags\txt_tags.rs:45:11
+   |
+45 | pub const CDXPROP_LABEL_SIZE: u16 = 0x081C;
+   |           ^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_SIZE` is never used
+  --> src\cdx_tags\txt_tags.rs:46:11
+   |
+46 | pub const CDXPROP_CAPTION_SIZE: u16 = 0x081D;
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_FACE` is never used
+  --> src\cdx_tags\txt_tags.rs:47:11
+   |
+47 | pub const CDXPROP_LABEL_FACE: u16 = 0x081E;
+   |           ^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_FACE` is never used
+  --> src\cdx_tags\txt_tags.rs:48:11
+   |
+48 | pub const CDXPROP_CAPTION_FACE: u16 = 0x081F;
+   |           ^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_COLOR` is never used
+  --> src\cdx_tags\txt_tags.rs:49:11
+   |
+49 | pub const CDXPROP_LABEL_COLOR: u16 = 0x0820;
+   |           ^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_CAPTION_COLOR` is never used
+  --> src\cdx_tags\txt_tags.rs:50:11
+   |
+50 | pub const CDXPROP_CAPTION_COLOR: u16 = 0x0821;
+   |           ^^^^^^^^^^^^^^^^^^^^^
+
+warning: constant `CDXPROP_LABEL_JUSTIFICATION` is never used
+  --> src\cdx_tags\txt_tags.rs:51:11
+   |
+51 | pub const CDXPROP_LABEL_JUSTIFICATION: u16 = 0x0823;
+   |           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: variants `InvalidHeader`, `UnknownTag`, and `EncodeError` are never constructed
+  --> src\error.rs:11:5
+   |
+ 5 | pub enum CdxError {
+   |          -------- variants in this enum
+...
+11 |     InvalidHeader,
+   |     ^^^^^^^^^^^^^
+12 |     #[error("Unknown Tag: {0:#06x}")]
+13 |     UnknownTag(u16),
+   |     ^^^^^^^^^^
+...
+19 |     EncodeError(String),
+   |     ^^^^^^^^^^^
+   |
+   = note: `CdxError` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+
+warning: type alias `Result` is never used
+  --> src\error.rs:22:10
+   |
+22 | pub type Result<T> = std::result::Result<T, CdxError>;
+   |          ^^^^^^
+
+warning: `cdx-file-rs` (bin "cdx-file-rs") generated 174 warnings (1 duplicate) (run `cargo fix --bin "cdx-file-rs" -p cdx-file-rs` to apply 2 suggestions)
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.29s
+     Running tests\simple_node_roundtrip.rs (target\debug\deps\simple_node_roundtrip-1d26729b52c639d1.exe)
+
+running 1 test
+File size: 1555 bytes
+DEBUG: Parsing Node ID=7
+  Properties count: 4
+    Property tag=0x0200, data_len=8
+    Property tag=0x000a, data_len=2
+    Property tag=0x0437, data_len=1
+    Property tag=0x044d, data_len=4
+DEBUG: Parsing Node ID=9
+  Properties count: 4
+    Property tag=0x0200, data_len=8
+    Property tag=0x000a, data_len=2
+    Property tag=0x0437, data_len=1
+    Property tag=0x044d, data_len=4
+DEBUG: Parsing Node ID=11
+  Properties count: 4
+    Property tag=0x0200, data_len=8
+    Property tag=0x000a, data_len=2
+    Property tag=0x0437, data_len=1
+    Property tag=0x044d, data_len=4
+DEBUG: Parsing Node ID=13
+  Properties count: 4
+    Property tag=0x0200, data_len=8
+    Property tag=0x000a, data_len=2
+    Property tag=0x0437, data_len=1
+    Property tag=0x044d, data_len=4
+DEBUG: Parsing Node ID=15
+  Properties count: 4
+    Property tag=0x0200, data_len=8
+    Property tag=0x000a, data_len=2
+    Property tag=0x0437, data_len=1
+    Property tag=0x044d, data_len=4
+DEBUG: Parsing Node ID=17
+  Properties count: 4
+    Property tag=0x0200, data_len=8
+    Property tag=0x000a, data_len=2
+    Property tag=0x0437, data_len=1
+    Property tag=0x044d, data_len=4
+笨・Successfully loaded benzene.cdx
+  Node ID=7, position_2d=None, position_3d=None
+
+=== Document Info ===
+Document ID: 0
+Document Name: benzene.cdx
+
+=== Tree Structure ===
+Root node: Discriminant(1)
+  Node ID=9, position_2d=None, position_3d=None
+  Node ID=11, position_2d=None, position_3d=None
+  Node ID=13, position_2d=None, position_3d=None
+  Node ID=15, position_2d=None, position_3d=None
+  Node ID=17, position_2d=None, position_3d=None
+Total Pages: 1
+Total Fragments: 1
+Total Nodes (atoms): 6
+Total Bonds: 6
+
+笨・benzene.cdx structure validated
+test test_benzene_cdx_loading ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

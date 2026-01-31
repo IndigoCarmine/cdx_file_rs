@@ -1,0 +1,63 @@
+
+
+Color Table Object
+CDXML Name:	colortable
+CDX Constant Name:	kCDXProp_ColorTable
+CDX Constant Value:	0x0300
+Contained by objects:	kCDXObj_Document
+First written/read in:	ChemDraw 4.0
+Description:
+
+The color palette used throughout the document. Color indexes 0 and 1 always correspond to black and white and are not saved in the color table. The first and second RGB values (color indexes 2 and 3) are the default background and foreground colors, and other colors are numbered sequentially.
+
+If no color table is present in the object or any of it's ancestors, only the standard color indexes 0 through 3 may be used. In that case, the background color (2) is assumed to be white, and the foreground color (3) is assumed to be black.
+
+A color table must contain at least one color object.
+
+This object is used only in CDXML files. In CDX files, a kCDXProp_ColorTable property is used instead.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+n/a	n/a	color
+An RGB color.  // following
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+
+
+
+-----------
+
+
+
+Color Object
+CDXML Name:	color
+Contained by objects:	kCDXProp_ColorTable
+First written/read in:	ChemDraw 4.0
+Description:
+
+An RGB color.
+
+Support for other color types might be added in the future, but note that different color spaces can be interconverted fairly easily. See the Color Space FAQ for details.
+
+This object is used only in CDXML files. In CDX files, color information is stored as part of the Color Table property directly.
+
+All three properties of this object are required, but it has no required objects.
+
+
+Subobjects:
+(none)
+
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	b	n/a
+Required for colors. The blue component of an RGB color, in the range 0.0 ... 1.0.
+n/a	n/a	g	n/a
+Required for colors. The green component of an RGB color, in the range 0.0 ... 1.0.
+n/a	n/a	r	n/a
+Required for colors. The red component of an RGB color, in the range 0.0 ... 1.0.
+
+ 
