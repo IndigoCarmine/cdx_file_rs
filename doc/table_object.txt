@@ -1,0 +1,44 @@
+Table Object
+CDXML Name:	table
+CDX Constant Name:	kCDXObj_Table
+CDX Constant Value:	0x8016
+Contained by objects:	kCDXObj_Page
+First written/read in:	ChemDraw 7.0
+Description:
+
+Each cell within a Table is stored as an individual Page object. In ChemDraw 7.0, there are expected to be exactly (rows * colums) number of contained pages, stored rowwise from the top-left. The bounds of the table may be calculated from the union of the kCDXProp_BoundsInParent properties of each contained page, and the positions of each row and column may be derived similarly by looking at the edges of those properties.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8001	kCDXObj_Page	page
+A drawing space that can contain other objects.
+0x8011	kCDXObj_ObjectTag	objecttag
+Arbitrarily named property, one or more of which can be attached to any ChemDraw object.
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+0x000A	kCDXProp_ZOrder	Z	INT16
+Back-to-front ordering index in 2D drawing.
+0x0011	kCDXProp_Visible	Visible	CDXBoolean
+The object is visible if non-zero.
+0x0204	kCDXProp_BoundingBox	BoundingBox	CDXRectangle
+The smallest rectangle that encloses the graphical representation of the object.
+0x0301	kCDXProp_ForegroundColor	color	UINT16
+The foreground color of an object represented as the two-based index into the object's color table.
+0x0302	kCDXProp_BackgroundColor	bgcolor	INT16
+The background color of an object represented as the two-based index into the object's color table.
+0x0806	kCDXProp_BoldWidth	BoldWidth	CDXCoordinate
+The default bold bond width.
+0x0807	kCDXProp_LineWidth	LineWidth	CDXCoordinate
+The default line width.
+0x0808	kCDXProp_MarginWidth	MarginWidth	CDXCoordinate
+The default amount of space surrounding atom labels.
+0x081A	kCDXProp_LabelStyleFont	LabelFont	INT16
+The default font family for atom labels.
+0x081C	kCDXProp_LabelStyleSize	LabelSize	INT16
+The default font size for atom labels.
+0x081E	kCDXProp_LabelStyleFace	LabelFace	INT16
+The default font style for atom labels.

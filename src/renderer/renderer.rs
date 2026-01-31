@@ -38,15 +38,24 @@ macro_rules! define_node_renderer {
 
 
 define_node_renderer!(
+    Arrow,
     Bond,
+    Border,
+    Constraint,
     Document,
     Fragment,
+    Geometry,
+    Graphic,
     Group,
     Node,
+    ObjectTag,
     Page,
+    ReactionScheme,
+    ReactionStep,
     TextObject,
     TlcLane,
     TLCPlate,
+    UnknownObject802B,
 );
 
 
@@ -304,7 +313,9 @@ impl<'a> RenderContext<'a> {
 
     /// Draw text at specified position
     pub fn draw_text(&self, text: &str, pos: Pos2, color: Color32, size: f32) {
-        let font_id = egui::FontId::new(size, egui::FontFamily::Monospace);
+        let scale = self.zoom * self.auto_scale;
+        let scaled_size = size * scale;
+        let font_id = egui::FontId::new(scaled_size, egui::FontFamily::Monospace);
         self.painter.text(
             pos,
             egui::Align2::CENTER_CENTER,
@@ -323,7 +334,9 @@ impl<'a> RenderContext<'a> {
         color: Color32,
         size: f32,
     ) {
-        let font_id = egui::FontId::new(size, egui::FontFamily::Proportional);
+        let scale = self.zoom * self.auto_scale;
+        let scaled_size = size * scale;
+        let font_id = egui::FontId::new(scaled_size, egui::FontFamily::Proportional);
         self.painter.text(pos, align, text, font_id, color);
     }
 

@@ -1,0 +1,90 @@
+Graphic Object
+CDXML Name:	graphic
+CDX Constant Name:	kCDXObj_Graphic
+CDX Constant Value:	0x8007
+Contained by objects:	kCDXObj_Page, kCDXObj_Group, kCDXObj_Fragment
+First written/read in:	ChemDraw 4.0
+Description:
+
+A Graphic object represents a (generally non-chemical) graphic object such as a line, arc, circle, or rectangle.
+
+Since a Graphic object is necessarily visual, it always requires a bounding box property.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8011	kCDXObj_ObjectTag	objecttag
+Arbitrarily named property, one or more of which can be attached to any ChemDraw object.
+0x000e	kCDXProp_RepresentsProperty	represent
+An object used to indicate that its containing object has chemical meaning that is also represented in another object.
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+0x000A	kCDXProp_ZOrder	Z	INT16
+Back-to-front ordering index in 2D drawing.
+0x000F	kCDXProp_IgnoreWarnings	IgnoreWarnings	CDXBooleanImplied
+Signifies whether chemical warnings should be suppressed on this object.
+0x0010	kCDXProp_ChemicalWarning	Warning	CDXString
+A warning concerning possible chemical problems with this object.
+0x0011	kCDXProp_Visible	Visible	CDXBoolean
+The object is visible if non-zero.
+0x0012	kCDXProp_SupersededBy	SupersededBy	CDXObjectID
+The ID of the object that should be read instead of this one.
+0x0204	kCDXProp_BoundingBox	BoundingBox	CDXRectangle
+Required for pictures and spectra. Required for graphics and text until 6.0. The smallest rectangle that encloses the graphical representation of the object.
+0x0207	kCDXProp_3DHead	Head3D	CDXPoint3D
+The 3D location (in the order of X-, Y-, and Z-locations in right-handed coordinate system) of the head of an object in CDX coordinate units.
+0x0208	kCDXProp_3DTail	Tail3D	CDXPoint3D
+The 3D location (in the order of X-, Y-, and Z-locations in right-handed coordinate system) of the tail of an object in CDX coordinate units.
+0x0301	kCDXProp_ForegroundColor	color	UINT16
+The foreground color of an object represented as the two-based index into the object's color table.
+0x0302	kCDXProp_BackgroundColor	bgcolor	INT16
+The background color of an object represented as the two-based index into the object's color table.
+0x0806	kCDXProp_BoldWidth	BoldWidth	CDXCoordinate
+The default bold bond width.
+0x0807	kCDXProp_LineWidth	LineWidth	CDXCoordinate
+The default line width.
+0x080B	kCDXProp_CaptionStyle	(not used)	CDXFontStyle
+The default style for non-atomlabel text objects..
+0x081B	kCDXProp_CaptionStyleFont	CaptionFont	INT16
+The default font style for captions (non-atom-label text objects).
+0x081D	kCDXProp_CaptionStyleSize	CaptionSize	INT16
+The default font size for captions (non-atom-label text objects).
+0x081F	kCDXProp_CaptionStyleFace	CaptionFace	INT16
+The default font face for captions (non-atom-label text objects).
+0x0A00	kCDXProp_Graphic_Type	GraphicType	INT16
+The type of graphical object. This is an enumerated property.
+0x0A01	kCDXProp_Line_Type	LineType	INT16
+The type of a line object. This is an enumerated property.
+0x0A02	kCDXProp_Arrow_Type	ArrowType	INT16
+The type of arrow object, which represents line, arrow, arc, rectangle, or orbital. This is an enumerated property.
+0x0A03	kCDXProp_Rectangle_Type	RectangleType	INT16
+The type of a rectangle object. This is an enumerated property.
+0x0A04	kCDXProp_Oval_Type	OvalType	INT16
+The type of an arrow object that represents a circle or ellipse. This is an enumerated property.
+0x0A05	kCDXProp_Orbital_Type	OrbitalType	INT16
+The type of orbital object. This is an enumerated property.
+0x0A06	kCDXProp_Bracket_Type	BracketType	INT16
+The type of symbol object. This is an enumerated property.
+0x0A07	kCDXProp_Symbol_Type	SymbolType	INT16
+The type of symbol object. This is an enumerated property.
+0x0A20	kCDXProp_Arrowhead_Size	HeadSize	INT16
+The size of the arrow's head.
+0x0A21	kCDXProp_Arc_AngularSize	AngularSize	INT16
+The size of an arc (in degrees * 10, so 90 degrees = 900).
+0x0A22	kCDXProp_Bracket_LipSize	LipSize	INT16
+The size of a bracket.
+0x0A24	kCDXProp_Bracket_Usage	BracketUsage	INT8
+The syntactical chemical meaning of the bracket (SRU, mer, mon, xlink, etc). This is an enumerated property.
+0x0A25	kCDXProp_Polymer_RepeatPattern	PolymerRepeatPattern	INT8
+The head-to-tail connectivity of objects contained within the bracket. This is an enumerated property.
+0x0A26	kCDXProp_Polymer_FlipType	PolymerFlipType	INT8
+The flip state of objects contained within the bracket. This is an enumerated property.
+0x0A3C	kCDXProp_CornerRadius	CornerRadius	INT16
+The radius of the rounded corner of a rounded rectangle.
+0x0A3D	kCDXProp_Frame_Type	FrameType	INT16
+The type of frame on an object. This is an enumerated property.
+
+ 

@@ -47,11 +47,11 @@ impl TaggedObject for TextObject {
                     use byteorder::{LittleEndian, ReadBytesExt};
                     use std::io::Cursor;
                     let mut cursor = Cursor::new(v);
-                    let left = cursor.read_f64::<LittleEndian>().ok()?;
                     let top = cursor.read_f64::<LittleEndian>().ok()?;
-                    let right = cursor.read_f64::<LittleEndian>().ok()?;
+                    let left = cursor.read_f64::<LittleEndian>().ok()?;
                     let bottom = cursor.read_f64::<LittleEndian>().ok()?;
-                    Some((left, top, right, bottom))
+                    let right = cursor.read_f64::<LittleEndian>().ok()?;
+                    Some(Rectangle { top, left, bottom, right })
                 } else {
                     None
                 }
@@ -228,17 +228,17 @@ impl TaggedObject for TextObject {
             });
         }
 
-        if let Some((left, top, right, bottom)) = self.bounding_box {
+        if let Some(rect) = &self.bounding_box {
             use byteorder::{LittleEndian, WriteBytesExt};
             let mut buf = Vec::with_capacity(32);
-            buf.write_f64::<LittleEndian>(left)
-                .map_err(|e| CdxError::EncodeError(format!("Failed to write left: {}", e)))?;
-            buf.write_f64::<LittleEndian>(top)
+            buf.write_f64::<LittleEndian>(rect.top)
                 .map_err(|e| CdxError::EncodeError(format!("Failed to write top: {}", e)))?;
-            buf.write_f64::<LittleEndian>(right)
-                .map_err(|e| CdxError::EncodeError(format!("Failed to write right: {}", e)))?;
-            buf.write_f64::<LittleEndian>(bottom)
+            buf.write_f64::<LittleEndian>(rect.left)
+                .map_err(|e| CdxError::EncodeError(format!("Failed to write left: {}", e)))?;
+            buf.write_f64::<LittleEndian>(rect.bottom)
                 .map_err(|e| CdxError::EncodeError(format!("Failed to write bottom: {}", e)))?;
+            buf.write_f64::<LittleEndian>(rect.right)
+                .map_err(|e| CdxError::EncodeError(format!("Failed to write right: {}", e)))?;
             properties.push(RawCdxProperty {
                 tag: CDXPROP_BOUNDING_BOX,
         value: buf,

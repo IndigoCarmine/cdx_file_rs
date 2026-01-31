@@ -1,0 +1,52 @@
+Constraint Object
+CDXML Name:	constraint
+CDX Constant Name:	kCDXObj_Constraint
+CDX Constant Value:	0x8022
+Contained by objects:	kCDXObj_Page
+First written/read in:	ChemDraw 8.0
+Description:
+
+A distance or angle constraint between one or more objects. The type of the relationship is specified by the kCDXProp_ConstraintType property, and the objects that specify the constraint are listed within the kCDXProp_BasisObjects property.
+
+If present, an Object Tag with the name "distance" will contain a graphic representation of the acceptable values for a Constraint with a kCDXProp_ConstraintType equal to kCDXConstraintType_Distance or kCDXConstraintType_ExclusionSphere. Similarly, an Object Tag with the name "angle", if present will contain a graphic representation of the acceptable values for a Constraint with a kCDXProp_ConstraintType equal to kCDXConstraintType_Angle.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8011	kCDXObj_ObjectTag	objecttag
+Arbitrarily named property, one or more of which can be attached to any ChemDraw object.
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+0x0008	kCDXProp_Name	Name	CDXString
+Required for objecttags. Name of an object.
+0x0301	kCDXProp_ForegroundColor	color	UINT16
+The foreground color of an object represented as the two-based index into the object's color table.
+0x0805	kCDXProp_BondLength	BondLength	CDXCoordinate
+The default bond length.
+0x0807	kCDXProp_LineWidth	LineWidth	CDXCoordinate
+The default line width.
+0x0809	kCDXProp_HashSpacing	HashSpacing	CDXCoordinate
+The default spacing between hashed lines used in wedged hashed bonds.
+0x081A	kCDXProp_LabelStyleFont	LabelFont	INT16
+The default font family for atom labels.
+0x081C	kCDXProp_LabelStyleSize	LabelSize	INT16
+The default font size for atom labels.
+0x081E	kCDXProp_LabelStyleFace	LabelFace	INT16
+The default font style for atom labels.
+0x0820	kCDXProp_LabelStyleColor	LabelColor	INT16
+The default color for atom labels
+0x0B82	kCDXProp_BasisObjects	BasisObjects	CDXObjectIDArray
+Required for geometries and constraints. An ordered list of objects used to define this object.
+0x0B83	kCDXProp_ConstraintType	ConstraintType	INT8
+The constraint type (distance, angle, or exclusion sphere). This is an enumerated property.
+0x0B84	kCDXProp_ConstraintMin	ConstraintMin	FLOAT64
+The minimum value of the constraint.
+0x0B85	kCDXProp_ConstraintMax	ConstraintMax	FLOAT64
+The maximum value of the constraint.
+0x0B86	kCDXProp_IgnoreUnconnectedAtoms	IgnoreUnconnectedAtoms	CDXBooleanImplied
+Signifies whether unconnected atoms should be ignored within the exclusion sphere.
+0x0B87	kCDXProp_DihedralIsChiral	DihedralIsChiral	CDXBooleanImplied
+Signifies whether a dihedral is signed or unsigned.

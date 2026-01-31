@@ -36,6 +36,13 @@ pub const CDXOBJ_ARROW: u16 = 0x8027; // Line or arc with optional arrowheads.
 
 // NOTE: `id` is implicit (UINT16) and not a CDX property constant.
 
+// Common properties (inherited from other objects)
+pub const CDXPROP_Z_ORDER: u16 = 0x000A; // Back-to-front ordering index.
+pub const CDXPROP_IGNORE_WARNINGS: u16 = 0x000F; // Suppress chemical warnings.
+pub const CDXPROP_CHEMICAL_WARNING: u16 = 0x0010; // Chemical warning text.
+pub const CDXPROP_VISIBLE: u16 = 0x0011; // Visibility flag.
+pub const CDXPROP_FOREGROUND_COLOR: u16 = 0x0301; // Foreground color index.
+
 pub const CDXPROP_BOUNDING_BOX: u16 = 0x0204; // Bounding rectangle.
 pub const CDXPROP_BACKGROUND_COLOR: u16 = 0x0302; // Background color index.
 

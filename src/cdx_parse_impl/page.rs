@@ -13,6 +13,11 @@ impl TaggedObject for Page {
     fn from_raw(raw: RawCdxObject) -> Result<Self, CdxError> {
         // Extract optional properties using BinaryCodec
         let bounding_box = raw.get_property(CDXPROP_BOUNDING_BOX).and_then(|v| crate::cdx::values::Rectangle::decode(v).ok());
+        let z_order = raw.get_property(CDXPROP_Z_ORDER).and_then(|v| i16::decode(v).ok());
+        let ignore_warnings = raw.get_property(CDXPROP_IGNORE_WARNINGS).and_then(|v| bool::decode(v).ok());
+        let chemical_warning = raw.get_property(CDXPROP_CHEMICAL_WARNING).and_then(|v| CDXString::decode(v).ok());
+        let visible = raw.get_property(CDXPROP_VISIBLE).and_then(|v| bool::decode(v).ok());
+        let foreground_color = raw.get_property(CDXPROP_FOREGROUND_COLOR).and_then(|v| u16::decode(v).ok());
         let background_color = raw.get_property(CDXPROP_BACKGROUND_COLOR).and_then(|v| i16::decode(v).ok());
         let width_pages = raw.get_property(CDXPROP_WIDTH_PAGES).and_then(|v| i16::decode(v).ok());
         let height_pages = raw.get_property(CDXPROP_HEIGHT_PAGES).and_then(|v| i16::decode(v).ok());
@@ -32,6 +37,11 @@ impl TaggedObject for Page {
         Ok(Page {
             id: raw.id,
             bounding_box,
+            z_order,
+            ignore_warnings,
+            chemical_warning,
+            visible,
+            foreground_color,
             background_color,
             width_pages,
             height_pages,

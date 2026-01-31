@@ -1,0 +1,44 @@
+Bracketed Group Object
+CDXML Name:	bracketedgroup
+CDX Constant Name:	kCDXObj_BracketedGroup
+CDX Constant Value:	0x8017
+Contained by objects:	kCDXObj_Page, kCDXObj_BracketedGroup
+First written/read in:	ChemDraw 7.0 (written only)
+Description:
+
+Bracketed groups generally represent a collection of objects that is repeated some number of times, such as with polymers, mixtures, or other repeating units. Each contained object is listed by its ID in the kCDXProp_BracketedObjects property, and external connections are indicated by kCDXObj_BracketAttachment subobjects.
+
+Bracketed groups may be nested, indicating that one set of brackets fully contains another set.
+
+Each Bracketed Group may contain zero or more Bracket Attachments, indicating which bonds cross from the inside to the outside of the bracket. Although the cdx specification places no limits on the number of Bracket Attachments associated with each Bracketed Group, the presence of more than four Bracket Attachments can be ambiguous or unclear, and so it is recommended that four Bracket Attachments per Bracketed Group be considered a practical maximum.
+
+As of ChemDraw 7.0, Bracketed Groups are written to files as they are saved, but they (and all contained properties and subobjects) are ignored when reading.
+
+Although there are no required properties or objects, a Bracketed Group without any Bracketed Objects is pretty useless.
+
+
+Subobjects:
+Value	Name	CDXML Name	
+0x8017	kCDXObj_BracketedGroup	bracketedgroup
+A collection of objects surrounded by brackets (or braces or parentheses).
+0x8018	kCDXObj_BracketAttachment	bracketattachment
+A linkage that connects a Bracketed Group to some object outside that group.
+
+Properties:
+Value	Name	CDXML Name	Type
+n/a	n/a	id	UINT16
+A unique identifier for an object, used when other objects refer to it.
+0x0A24	kCDXProp_Bracket_Usage	BracketUsage	INT8
+The syntactical chemical meaning of the bracket (SRU, mer, mon, xlink, etc). This is an enumerated property.
+0x0A25	kCDXProp_Polymer_RepeatPattern	PolymerRepeatPattern	INT8
+The head-to-tail connectivity of objects contained within the bracket. This is an enumerated property.
+0x0A26	kCDXProp_Polymer_FlipType	PolymerFlipType	INT8
+The flip state of objects contained within the bracket. This is an enumerated property.
+0x0A27	kCDXProp_BracketedObjects	BracketedObjectIDs	CDXObjectIDArray
+The set of objects contained in a BracketedGroup.
+0x0A28	kCDXProp_Bracket_RepeatCount	RepeatCount	FLOAT64
+The number of times a multiple-group BracketedGroup is repeated.
+0x0A29	kCDXProp_Bracket_ComponentOrder	ComponentOrder	INT16
+The component order associated with a BracketedGroup.
+0x0A2A	kCDXProp_Bracket_SRULabel	SRULabel	CDXString
+The label associated with a BracketedGroup that represents an SRU.

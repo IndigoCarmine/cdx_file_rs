@@ -14,7 +14,7 @@ impl Drawable for Node {
                     .and_then(|ct| ct.get(color_idx as usize))
                     .map(|c| c.to_color32())
                     .unwrap_or(egui::Color32::GREEN),
-                None => egui::Color32::GREEN,
+                None => egui::Color32::YELLOW,
             };
 
             // Draw circle for atom

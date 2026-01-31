@@ -195,15 +195,35 @@ impl BinaryCodec for Rectangle {
         Ok(buf)
     }
     fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.len() < 32 {
-            return Err(CdxError::DecodeError("Not enough bytes for Rectangle".to_string()));
+        // Handle both 32-byte (Rectangle: 4×f64) and 16-byte (2×Point2d: i32 fixed-point) formats
+        match data.len() {
+            32 => {
+                // Standard 32-byte Rectangle format: left, top, right, bottom as f64
+                let mut cursor = Cursor::new(data);
+                let left = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
+                let top = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
+                let right = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
+                let bottom = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
+                Ok(Rectangle { left, top, right, bottom })
+            }
+            16 => {
+                // 16-byte format: 2 Point2d values (head and tail) as i32 fixed-point
+                // This is used for arrow graphics where the bounding box represents line endpoints
+                let head = Point2d::decode(&data[0..8])?;
+                let tail = Point2d::decode(&data[8..16])?;
+                
+                // Create a rectangle from the two points
+                let left = head.x.min(tail.x);
+                let right = head.x.max(tail.x);
+                let top = head.y.min(tail.y);
+                let bottom = head.y.max(tail.y);
+                
+                Ok(Rectangle { left, top, right, bottom })
+            }
+            _ => {
+                Err(CdxError::DecodeError(format!("Invalid Rectangle size: got {}, expected 16 or 32 bytes", data.len())))
+            }
         }
-        let mut cursor = Cursor::new(data);
-        let left = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        let top = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        let right = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        let bottom = cursor.read_f64::<LittleEndian>().map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(Rectangle { left, top, right, bottom })
     }
 }
 

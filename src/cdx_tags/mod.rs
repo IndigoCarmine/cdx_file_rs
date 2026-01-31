@@ -1,4 +1,6 @@
+pub mod arrow_tags;
 pub mod bond_tags;
+pub mod border_tags;
 pub mod document_tags;
 pub mod fragment_tags;
 pub mod geometry_tags;
@@ -6,6 +8,7 @@ pub mod group_tag;
 pub mod node_tags;
 pub mod object_tags;
 pub mod page_tags;
+pub mod reaction_scheme_tags;
 pub mod text_tags;
 pub mod tlc_lane_tags;
 pub mod tlc_plate_tags;

@@ -1,4 +1,4 @@
-use crate::cdx::file::{NodePayload,Bond,Document,Fragment,Group,Node,Page,TextObject,TLCPlate,TlcLane};
+use crate::cdx::file::{NodePayload,Bond,Border,Constraint,Document,Fragment,Geometry,Graphic,Group,Node,ObjectTag,Page,ReactionScheme,ReactionStep,TextObject,TLCPlate,TlcLane,Arrow,UnknownObject802B};
 use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
 use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx::file::CdxFile;
@@ -34,15 +34,24 @@ macro_rules! define_node_payload {
 
 
 define_node_payload!(
+    Arrow,
     Bond,
+    Border,
+    Constraint,
     Document,
     Fragment,
+    Geometry,
+    Graphic,
     Group,
     Node,
+    ObjectTag,
     Page,
+    ReactionScheme,
+    ReactionStep,
     TextObject,
     TlcLane,
     TLCPlate,
+    UnknownObject802B,
 );
 
 
@@ -74,10 +83,17 @@ impl CdxFile {
         raws: Vec<RawCdxObject>,
     ) {
         for raw_child in raws {
-            let payload = NodePayload::from_raw(raw_child.clone()).unwrap();
-            let child = parent.create_as_last_child(grant, payload);
-
-            Self::build_tree(&child, grant, raw_child.children);
+            match NodePayload::from_raw(raw_child.clone()) {
+                Ok(payload) => {
+                    let child = parent.create_as_last_child(grant, payload);
+                    // Recursively build tree for children
+                    Self::build_tree(&child, grant, raw_child.children);
+                },
+                Err(e) => {
+                    // Log unknown tag but continue parsing
+                    eprintln!("Warning: Skipping object due to: {}", e);
+                }
+            }
         }
     }
 }

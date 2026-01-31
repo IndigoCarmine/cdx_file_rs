@@ -172,6 +172,13 @@ impl eframe::App for CdxApp {
                 if ui.button("Open Reaction.cdx").clicked() {
                     self.load_file("sample_cdx/Reaction.cdx");
                 }
+                
+                if ui.button("Open ReactionAnalysis.cdx").clicked() {
+                    self.load_file("sample_cdx/ReactionAnalysis.cdx");
+                }
+                if ui.button("Open Analysis.cdx").clicked() {
+                    self.load_file("sample_cdx/Analysis.cdx");
+                }
             });
 
             ui.horizontal(|ui| {
@@ -200,17 +207,35 @@ impl eframe::App for CdxApp {
                     egui::Sense::drag(),
                 );
 
-                // Handle pan (drag) with middle mouse button
-                if response.dragged_by(egui::PointerButton::Middle) {
+                // Handle pan (drag) with any mouse button
+                if response.dragged() {
                     self.offset += response.drag_delta();
                 }
 
-                // Handle zoom with scroll
+                // Handle zoom with scroll - zoom around mouse position
                 if ui.rect_contains_pointer(rect) {
                     let scroll = ui.input(|i| i.raw_scroll_delta.y);
                     if scroll != 0.0 {
-                        let zoom_factor = if scroll > 0.0 { 1.1 } else { 0.9 };
-                        self.zoom *= zoom_factor;
+                        // Get mouse position in screen coordinates
+                        if let Some(mouse_pos) = ui.input(|i| i.pointer.interact_pos()) {
+                            // Calculate mouse position relative to rect
+                            let mouse_rel = mouse_pos - rect.min;
+                            
+                            // Get current world position of mouse
+                            let origin = egui::Vec2::new(
+                                self.center_offset.x + self.offset.x,
+                                self.center_offset.y + self.offset.y
+                            );
+                            let world_pos = (mouse_rel - origin) / (self.zoom * self.auto_scale);
+                            
+                            // Apply zoom
+                            let zoom_factor = if scroll > 0.0 { 1.1 } else { 0.9 };
+                            self.zoom *= zoom_factor;
+                            
+                            // Adjust offset so the same world position stays under the mouse
+                            let new_origin = mouse_rel - world_pos * self.zoom * self.auto_scale;
+                            self.offset = new_origin - self.center_offset;
+                        }
                     }
                 }
 
