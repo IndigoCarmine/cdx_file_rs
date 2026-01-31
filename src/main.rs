@@ -4,12 +4,34 @@ mod cdx;
 mod cdx_parse_impl;
 mod cdx_tags;
 mod error;
+mod modes;
+mod mode_handlers;
 
 use crate::renderer::CdxRenderer;
 use crate::cdx::file::CdxFile;
+use crate::modes::{ModeContext, ModeHandler};
 use eframe::egui;
 use std::fs;
 use dendron;
+
+struct ModeHandlers {
+    view: mode_handlers::view::ViewMode,
+    select: mode_handlers::select::SelectMode,
+    bond: mode_handlers::bond::BondMode,
+    eraser: mode_handlers::eraser::EraserMode,
+}
+
+impl Default for ModeHandlers {
+    fn default() -> Self {
+        Self {
+            view: mode_handlers::view::ViewMode,
+            select: mode_handlers::select::SelectMode,
+            bond: mode_handlers::bond::BondMode,
+            eraser: mode_handlers::eraser::EraserMode,
+        }
+    }
+}
+
 fn main() -> eframe::Result {
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_inner_size([1200.0, 800.0]),
@@ -28,6 +50,9 @@ fn main() -> eframe::Result {
 #[derive(Debug, PartialEq, Clone, Copy)]
 enum AppMode {
     View,
+    Select,
+    Bond,
+    Eraser,
 }
 
 struct CdxApp {
@@ -37,6 +62,10 @@ struct CdxApp {
     offset: egui::Vec2,
     center_offset: egui::Vec2,  // Store the auto-calculated center offset
     auto_scale: f32,  // Store the auto-calculated scale
+    mode: AppMode,  // Current editing mode
+    selected_ids: std::collections::HashSet<u32>,  // Selected object IDs
+    lasso_path: Vec<egui::Pos2>,  // Lasso selection path
+    mode_handlers: ModeHandlers,  // Mode handlers
 }
 
 impl Default for CdxApp {
@@ -48,6 +77,10 @@ impl Default for CdxApp {
             offset: egui::Vec2::ZERO,
             center_offset: egui::Vec2::ZERO,
             auto_scale: 1.0,
+            mode: AppMode::View,
+            selected_ids: std::collections::HashSet::new(),
+            lasso_path: Vec::new(),
+            mode_handlers: ModeHandlers::default(),
         }
     }
 }
@@ -182,6 +215,14 @@ impl eframe::App for CdxApp {
             });
 
             ui.horizontal(|ui| {
+                ui.label("Mode:");
+                ui.selectable_value(&mut self.mode, AppMode::View, "🔍 View");
+                ui.selectable_value(&mut self.mode, AppMode::Select, "⬚ Select");
+                ui.selectable_value(&mut self.mode, AppMode::Bond, "➖ Bond");
+                ui.selectable_value(&mut self.mode, AppMode::Eraser, "🗑 Eraser");
+            });
+
+            ui.horizontal(|ui| {
                 ui.label(format!("Zoom: {:.2}", self.zoom));
                 if ui.button("Reset View").clicked() {
                     self.zoom = 1.0;
@@ -204,12 +245,68 @@ impl eframe::App for CdxApp {
             if let Some(ref cdx_file) = self.cdx_file {
                 let (rect, response) = ui.allocate_exact_size(
                     ui.available_size(),
-                    egui::Sense::drag(),
+                    egui::Sense::click_and_drag(),
                 );
 
-                // Handle pan (drag) with any mouse button
-                if response.dragged() {
-                    self.offset += response.drag_delta();
+                // Get mouse position
+                let mouse_pos = response.interact_pointer_pos().unwrap_or(egui::Pos2::ZERO);
+                let drag_delta = response.drag_delta();
+                let is_dragging = response.dragged();
+                let clicked = response.clicked();
+                let drag_stopped = response.drag_stopped();
+                
+                // Collect node positions
+                let mut node_positions: std::collections::HashMap<u32, crate::cdx::values::Point2d> = std::collections::HashMap::new();
+                self.collect_node_positions(&cdx_file.tree.root(), &mut node_positions);
+                
+                // Create renderer
+                let window_size = egui::Vec2::new(rect.width(), rect.height());
+                let renderer = CdxRenderer::with_center_offset(
+                    self.zoom, 
+                    self.offset, 
+                    self.center_offset,
+                    self.auto_scale,
+                    cdx_file, 
+                    window_size
+                );
+                
+                // Handle mode-specific input in a separate scope
+                {
+                    let mut mode_ctx = ModeContext {
+                        mouse_pos,
+                        ui,
+                        drag_delta,
+                        view_offset: &mut self.offset,
+                        renderer: &renderer,
+                        node_positions: &node_positions,
+                        selected_ids: &mut self.selected_ids,
+                        lasso_path: &mut self.lasso_path,
+                        is_dragging,
+                    };
+                    
+                    let handler: &mut dyn ModeHandler = match self.mode {
+                        AppMode::View => &mut self.mode_handlers.view,
+                        AppMode::Select => &mut self.mode_handlers.select,
+                        AppMode::Bond => &mut self.mode_handlers.bond,
+                        AppMode::Eraser => &mut self.mode_handlers.eraser,
+                    };
+                    
+                    if clicked {
+                        handler.handle_click(&mut mode_ctx);
+                    }
+                    
+                    if is_dragging {
+                        handler.handle_drag(&mut mode_ctx);
+                    } else if drag_stopped {
+                        handler.handle_drag_end(&mut mode_ctx);
+                    }
+                    
+                    // Handle keyboard input
+                    ui.input(|i| {
+                        for key in &i.keys_down {
+                            handler.handle_key(&mut mode_ctx, *key);
+                        }
+                    });
                 }
 
                 // Handle zoom with scroll - zoom around mouse position
@@ -239,18 +336,33 @@ impl eframe::App for CdxApp {
                     }
                 }
 
+                // Render the document
                 let painter = ui.painter_at(rect);
-                let window_size = egui::Vec2::new(rect.width(), rect.height());
-                let renderer = CdxRenderer::with_center_offset(
-                    self.zoom, 
-                    self.offset, 
-                    self.center_offset,
-                    self.auto_scale,
-                    cdx_file, 
-                    window_size
-                );
-                
                 renderer.render_all(&painter, cdx_file);
+                
+                // Render mode-specific overlay in a separate scope
+                {
+                    let mode_ctx = ModeContext {
+                        mouse_pos,
+                        ui,
+                        drag_delta,
+                        view_offset: &mut self.offset,
+                        renderer: &renderer,
+                        node_positions: &node_positions,
+                        selected_ids: &mut self.selected_ids,
+                        lasso_path: &mut self.lasso_path,
+                        is_dragging,
+                    };
+                    
+                    let handler: &dyn ModeHandler = match self.mode {
+                        AppMode::View => &self.mode_handlers.view,
+                        AppMode::Select => &self.mode_handlers.select,
+                        AppMode::Bond => &self.mode_handlers.bond,
+                        AppMode::Eraser => &self.mode_handlers.eraser,
+                    };
+                    
+                    handler.handle_hover(&mode_ctx, &painter);
+                }
             } else {
                 let rect = ui.available_rect_before_wrap();
                 let painter = ui.painter();

@@ -1,7 +1,7 @@
-mod bond;
-mod eraser;
-mod select;
-mod view;
+pub mod bond;
+pub mod eraser;
+pub mod select;
+pub mod view;
 
 pub use bond::BondMode;
 pub use eraser::EraserMode;
