@@ -25,7 +25,7 @@ impl ModeHandler for SelectMode {
             for (node_id, node_pos) in ctx.node_positions.iter() {
                 let screen_pos = ctx.cdx_to_screen(node_pos);
                 
-                if is_point_in_polygon(screen_pos, &ctx.lasso_path) {
+                if is_point_in_polygon(screen_pos, ctx.lasso_path) {
                     ctx.selected_ids.insert(*node_id);
                 }
             }

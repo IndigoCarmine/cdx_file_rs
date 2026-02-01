@@ -1,5 +1,5 @@
-/// Binary encoding/decoding for TLCPlate
-/// A TLC Plate represents a Thin Layer Chromatography (TLC) plate containing lanes.
+//! Binary encoding/decoding for TLCPlate
+//! A TLC Plate represents a Thin Layer Chromatography (TLC) plate containing lanes.
 
 use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx_parse_impl::raw_nodes::{RawCdxObject,RawCdxProperty};

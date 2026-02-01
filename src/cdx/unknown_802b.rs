@@ -1,5 +1,4 @@
 use serde::{Deserialize, Serialize};
-use crate::cdx::values::*;
 
 /// Unknown object type 0x802B (32811)
 /// This object type is not documented in the CDX specification

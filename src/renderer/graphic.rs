@@ -83,12 +83,10 @@ impl Graphic {
         let stroke = egui::Stroke::new(self.get_line_width(), color);
         
         // Check if filled
-        if let Some(bg_color_idx) = self.background_color {
-            if bg_color_idx >= 0 {
-                let fill_color = self.get_document_color(ctx, bg_color_idx as u16);
-                ctx.painter.rect(rect, 0.0, fill_color, stroke);
-                return;
-            }
+        if let Some(bg_color_idx) = self.background_color.filter(|&idx| idx >= 0) {
+            let fill_color = self.get_document_color(ctx, bg_color_idx as u16);
+            ctx.painter.rect(rect, 0.0, fill_color, stroke);
+            return;
         }
         
         // Just outline

@@ -116,12 +116,12 @@ impl<'a> CdxRenderer<'a> {
         if let NodePayload::Document(doc) = &*root_node {
             if let Some(table) = &doc.color_table {
                 if index < table.colors.len() {
-                    return table.colors[index].to_color32()
-                }else{
-                    return Color32::BLACK
+                    table.colors[index].to_color32()
+                } else {
+                    Color32::BLACK
                 }
-            }else{
-                return Color32::BLACK
+            } else {
+                Color32::BLACK
             }
         } else {
             Color32::BLACK

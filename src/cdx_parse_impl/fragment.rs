@@ -1,6 +1,5 @@
-/// Binary encoding/decoding for Fragment
-/// A Fragment is a collection of nodes and bonds representing chemically meaningful structures.
-
+//! Binary encoding/decoding for Fragment
+//! A Fragment is a collection of nodes and bonds representing chemically meaningful structures.
 
 use crate::cdx::binary_codec::BinaryCodec;
 use crate::cdx_tags::fragment_tags::*;

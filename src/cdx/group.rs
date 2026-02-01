@@ -1,4 +1,3 @@
-use crate::error::CdxError;
 use serde::{Deserialize, Serialize};
 
 /// A Group is a logical collection of objects

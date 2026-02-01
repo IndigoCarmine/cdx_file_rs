@@ -72,20 +72,7 @@ impl ColorTable {
         Ok(ColorTable { colors })
     }
 
-    /// Create a default ColorTable with standard colors
-    pub fn default() -> Self {
-        // Standard colors: background (white) and foreground (black)
-        // Index 0: Black (1.0, 1.0, 1.0 in some systems, but we use 0,0,0)
-        // Index 1: White (0.0, 0.0, 0.0 in some systems, but we use 1,1,1)
-        // Index 2: Default background (white)
-        // Index 3: Default foreground (black)
-        ColorTable {
-            colors: vec![
-                RGBColor::new(1.0, 1.0, 1.0), // White background
-                RGBColor::new(0.0, 0.0, 0.0), // Black foreground
-            ],
-        }
-    }
+
 
     /// Encode the entire color table to binary
     pub fn encode(&self) -> Result<Vec<u8>, CdxError> {
@@ -142,6 +129,23 @@ impl ColorTable {
         }
 
         ColorTable::new(colors)
+    }
+}
+
+impl Default for ColorTable {
+    /// Create a default ColorTable with standard colors
+    fn default() -> Self {
+        // Standard colors: background (white) and foreground (black)
+        // Index 0: Black (1.0, 1.0, 1.0 in some systems, but we use 0,0,0)
+        // Index 1: White (0.0, 0.0, 0.0 in some systems, but we use 1,1,1)
+        // Index 2: Default background (white)
+        // Index 3: Default foreground (black)
+        ColorTable {
+            colors: vec![
+                RGBColor::new(1.0, 1.0, 1.0), // White background
+                RGBColor::new(0.0, 0.0, 0.0), // Black foreground
+            ],
+        }
     }
 }
 

@@ -12,7 +12,6 @@ use crate::cdx::file::CdxFile;
 use crate::modes::{ModeContext, ModeHandler};
 use eframe::egui;
 use std::fs;
-use dendron;
 
 struct ModeHandlers {
     view: mode_handlers::view::ViewMode,

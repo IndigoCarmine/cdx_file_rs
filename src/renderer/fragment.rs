@@ -2,8 +2,8 @@
 // Fragments themselves have no visual representation, only their children (nodes and bonds)
 
 use crate::cdx::fragment::Fragment;
-use crate::renderer::renderer::RenderContext;
-use crate::renderer::renderer::Drawable;
+use crate::renderer::core::RenderContext;
+use crate::renderer::core::Drawable;
 
 impl Drawable for Fragment {
     fn draw(&self, _ctx: &RenderContext) {

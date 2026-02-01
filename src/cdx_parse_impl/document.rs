@@ -1,5 +1,5 @@
-/// Binary encoding/decoding for Document
-/// The Document object is the top-level CDX object containing all document properties and content.
+//! Binary encoding/decoding for Document
+//! The Document object is the top-level CDX object containing all document properties and content.
 
 use crate::cdx::binary_codec::BinaryCodec;
 use crate::cdx_tags::document_tags::*;

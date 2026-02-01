@@ -1,4 +1,3 @@
-use crate::error::CdxError;
 use serde::{Deserialize, Serialize};
 
 /// Fragment Object: Chemically meaningful collection of nodes and bonds

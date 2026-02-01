@@ -14,7 +14,7 @@ impl BinaryCodec for u8 {
         Ok(vec![*self])
     }
     fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.len() < 1 {
+        if data.is_empty() {
             return Err(CdxError::DecodeError("Not enough bytes for u8".to_string()));
         }
         Ok(data[0])
@@ -26,7 +26,7 @@ impl BinaryCodec for i8 {
         Ok(vec![*self as u8])
     }
     fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.len() < 1 {
+        if data.is_empty() {
             return Err(CdxError::DecodeError("Not enough bytes for i8".to_string()));
         }
         Ok(data[0] as i8)
@@ -98,7 +98,7 @@ impl BinaryCodec for bool {
         Ok(vec![if *self { 1 } else { 0 }])
     }
     fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.len() < 1 {
+        if data.is_empty() {
             return Err(CdxError::DecodeError("Not enough bytes for bool".to_string()));
         }
         Ok(data[0] != 0)

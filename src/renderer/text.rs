@@ -109,8 +109,8 @@ impl TextObject {
                 .unwrap_or(egui::Color32::BLACK);
             
             // Parse font_face to determine style
-            let is_bold = (run.font_face & 0x01) != 0;
-            let is_italic = (run.font_face & 0x02) != 0;
+            let _is_bold = (run.font_face & 0x01) != 0;
+            let _is_italic = (run.font_face & 0x02) != 0;
             let is_underline = (run.font_face & 0x04) != 0;
             let is_subscript = (run.font_face & 0x20) != 0;
             let is_superscript = (run.font_face & 0x40) != 0;

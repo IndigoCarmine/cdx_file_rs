@@ -1,5 +1,5 @@
-/// CDX Parsing Implementation Module
-/// Contains the binary encoding/decoding logic for CDX data structures
+//! CDX Parsing Implementation Module
+//! Contains the binary encoding/decoding logic for CDX data structures
 
 pub mod arrow;
 pub mod border;

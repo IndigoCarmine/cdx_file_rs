@@ -1,8 +1,8 @@
-/// Binary encoding/decoding for CDXString
-/// CDXString is a variable-length data type consisting of:
-/// - UINT16: style run count
-/// - N StyleRun structs (10 bytes each)
-/// - Text content (ISO Latin-1 encoding)
+//! Binary encoding/decoding for CDXString
+//! CDXString is a variable-length data type consisting of:
+//! - UINT16: style run count
+//! - N StyleRun structs (10 bytes each)
+//! - Text content (ISO Latin-1 encoding)
 
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use std::io::Cursor;
