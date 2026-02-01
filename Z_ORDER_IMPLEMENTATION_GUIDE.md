@@ -119,6 +119,8 @@ pub trait Drawable {
 **ファイル**: `src/renderer/renderer.rs`
 
 ```rust
+use std::collections::HashSet;
+
 pub struct RenderContext<'a> {
     pub painter: &'a Painter,
     pub origin: Pos2,
@@ -131,6 +133,68 @@ pub struct RenderContext<'a> {
     pub selected_ids: &'a HashSet<u32>,
     pub hovered_id: Option<u32>,
 }
+
+impl<'a> RenderContext<'a> {
+    /// 既存のnewメソッド（後方互換性のため維持）
+    pub fn new(
+        painter: &'a Painter,
+        origin: Pos2,
+        document: &'a Document,
+        node_positions: HashMap<u32, Point2d>,
+        zoom: f32,
+        auto_scale: f32,
+    ) -> Self {
+        // デフォルトはObjectsパス、選択なし
+        static EMPTY_SET: std::sync::LazyLock<HashSet<u32>> = 
+            std::sync::LazyLock::new(HashSet::new);
+        RenderContext {
+            painter,
+            origin,
+            document,
+            node_positions,
+            zoom,
+            auto_scale,
+            current_pass: RenderPass::Objects,
+            selected_ids: &EMPTY_SET,
+            hovered_id: None,
+        }
+    }
+    
+    /// 新しいコンストラクタ（パス・選択情報付き）
+    pub fn new_with_pass(
+        painter: &'a Painter,
+        origin: Pos2,
+        document: &'a Document,
+        node_positions: HashMap<u32, Point2d>,
+        zoom: f32,
+        auto_scale: f32,
+        current_pass: RenderPass,
+        selected_ids: &'a HashSet<u32>,
+        hovered_id: Option<u32>,
+    ) -> Self {
+        RenderContext {
+            painter,
+            origin,
+            document,
+            node_positions,
+            zoom,
+            auto_scale,
+            current_pass,
+            selected_ids,
+            hovered_id,
+        }
+    }
+    
+    /// 現在のオブジェクトが選択されているか確認
+    pub fn is_selected(&self, id: u32) -> bool {
+        self.selected_ids.contains(&id)
+    }
+    
+    /// 現在のオブジェクトがホバー中か確認
+    pub fn is_hovered(&self, id: u32) -> bool {
+        self.hovered_id == Some(id)
+    }
+}
 ```
 
 ---
@@ -142,12 +206,24 @@ pub struct RenderContext<'a> {
 ```rust
 use std::cmp::Ordering;
 
-/// 描画順序を決定するためのラッパー
+/// 描画順序を決定するためのラッパー構造体
+/// 
+/// この構造体は、描画可能オブジェクトをパス、レイヤー、Z-indexの順でソートするために使用される。
+/// ソート後の順序で描画することで、正しいZ順序が保証される。
+/// 
+/// # フィールド
+/// - `node`: 元のNodePayloadを保持するノード
+/// - `pass`: このオブジェクトが描画されるパス
+/// - `layer`: 同一パス内での描画レイヤー
+/// - `z_index`: 将来の拡張用（現在は常に0、明示的なZ-index制御が必要になった場合に使用）
 struct RenderableItem<'a> {
     node: Node<NodePayload>,
     pass: RenderPass,
     layer: RenderLayer,
-    z_index: i32,  // 明示的なZ-index（将来の拡張用）
+    /// 将来の拡張用フィールド。現在は使用されず常に0。
+    /// 明示的なZ-index制御が必要になった場合に、各オブジェクトの
+    /// z_order属性からこの値を設定する。
+    z_index: i32,
     _marker: std::marker::PhantomData<&'a ()>,
 }
 
@@ -162,7 +238,7 @@ impl<'a> RenderableItem<'a> {
             node,
             pass,
             layer,
-            z_index: 0,
+            z_index: 0,  // 現時点では未使用、将来の拡張で活用
             _marker: std::marker::PhantomData,
         }
     }
@@ -296,16 +372,33 @@ impl<'a> CdxRenderer<'a> {
     }
     
     /// Get node ID if available
+    /// 
+    /// 各NodePayloadバリアントからIDを取得する。
+    /// Container types（Document, Page, Fragment, Group）はIDを持たないため
+    /// Noneを返す。これらは選択対象ではないため問題ない。
     fn get_node_id(&self, node: &Node<NodePayload>) -> Option<u32> {
         let data = node.borrow_data();
         match &*data {
+            // 選択可能なオブジェクト（IDを持つ）
             NodePayload::Node(n) => Some(n.id),
             NodePayload::Bond(b) => Some(b.id),
             NodePayload::Arrow(a) => Some(a.id),
             NodePayload::TextObject(t) => Some(t.id),
             NodePayload::Graphic(g) => Some(g.id),
-            // ... other types
-            _ => None,
+            NodePayload::Border(b) => Some(b.id),
+            NodePayload::Constraint(c) => Some(c.id),
+            NodePayload::Geometry(g) => Some(g.id),
+            NodePayload::ObjectTag(o) => Some(o.id),
+            NodePayload::ReactionScheme(r) => Some(r.id),
+            NodePayload::ReactionStep(r) => Some(r.id),
+            NodePayload::TlcLane(t) => Some(t.id),
+            NodePayload::TLCPlate(t) => Some(t.id),
+            NodePayload::UnknownObject802B(u) => Some(u.id),
+            // Container types - IDを持たない、選択対象外
+            NodePayload::Document(_) => None,
+            NodePayload::Page(_) => None,
+            NodePayload::Fragment(_) => None,
+            NodePayload::Group(_) => None,
         }
     }
 }
