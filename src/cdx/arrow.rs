@@ -1,5 +1,5 @@
+use crate::cdx::values::{Point3d, Rectangle};
 use serde::{Deserialize, Serialize};
-use crate::cdx::values::{Rectangle, Point3d};
 
 /// Arrow Object: A line or arc with optional arrowheads
 /// Represents an arrow graphic element in the CDX document.
@@ -7,7 +7,7 @@ use crate::cdx::values::{Rectangle, Point3d};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Arrow {
     pub id: u32,
-    
+
     // Geometry
     /// The smallest rectangle that encloses the graphical representation of the object (Optional)
     pub bounding_box: Option<Rectangle>,
@@ -15,7 +15,7 @@ pub struct Arrow {
     pub z_order: Option<i16>,
     /// Fill type of the arrow (Optional)
     pub fill_type: Option<i16>,
-    
+
     // Arrowhead properties
     /// Arrowhead style at the head end (Optional)
     pub arrowhead_head: Option<i16>,
@@ -23,7 +23,7 @@ pub struct Arrow {
     pub arrowhead_type: Option<i16>,
     /// Size of the arrowhead at the head (Optional)
     pub head_size: Option<i16>,
-    
+
     // 3D coordinates
     /// 3D location of the head point (Optional)
     pub head_3d: Option<Point3d>,
@@ -35,7 +35,7 @@ pub struct Arrow {
     pub major_axis_end_3d: Option<Point3d>,
     /// 3D location of the minor axis endpoint (Optional)
     pub minor_axis_end_3d: Option<Point3d>,
-    
+
     // Styling
     /// Foreground color index (Optional)
     pub foreground_color: Option<u16>,

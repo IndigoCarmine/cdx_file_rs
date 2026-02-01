@@ -1,6 +1,6 @@
-use eframe::egui;
 use crate::cdx::node::Node;
 use crate::renderer::{Drawable, RenderContext, element_to_symbol};
+use eframe::egui;
 
 impl Drawable for Node {
     fn draw(&self, ctx: &RenderContext) {
@@ -10,7 +10,9 @@ impl Drawable for Node {
 
             // Determine color
             let color = match self.foreground_color {
-                Some(color_idx) => ctx.document.get_color_table()
+                Some(color_idx) => ctx
+                    .document
+                    .get_color_table()
                     .and_then(|ct| ct.get(color_idx as usize))
                     .map(|c| c.to_color32())
                     .unwrap_or(egui::Color32::GREEN),
@@ -18,12 +20,18 @@ impl Drawable for Node {
             };
 
             // Draw circle for atom
-            ctx.painter.add(egui::Shape::circle_filled(screen_pos, radius, color));
+            ctx.painter
+                .add(egui::Shape::circle_filled(screen_pos, radius, color));
 
             // Draw element label
             if let Some(element) = self.element {
                 let label = element_to_symbol(element);
-                ctx.draw_text(&label, screen_pos, egui::Color32::WHITE, ctx.default_label_size());
+                ctx.draw_text(
+                    &label,
+                    screen_pos,
+                    egui::Color32::WHITE,
+                    ctx.default_label_size(),
+                );
             }
 
             // Draw charge if present

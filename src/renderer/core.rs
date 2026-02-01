@@ -1,12 +1,11 @@
-
-use dendron::Node;
-use eframe::egui::{self, Painter, Pos2, Color32};
-use std::collections::HashMap;
-use crate::cdx::values::Point2d;
-use crate::cdx::document::Document;
 use crate::cdx::color_table::RGBColor;
+use crate::cdx::document::Document;
 use crate::cdx::file::CdxFile;
 use crate::cdx::file::NodePayload;
+use crate::cdx::values::Point2d;
+use dendron::Node;
+use eframe::egui::{self, Color32, Painter, Pos2};
+use std::collections::HashMap;
 /// Common trait for rendering chemical model objects in egui.
 ///
 /// This trait defines the minimal interface required for drawing
@@ -20,7 +19,7 @@ pub trait Drawable {
 #[macro_export]
 macro_rules! define_node_renderer {
     (
-             $( $ty:ident ),* $(,)? 
+             $( $ty:ident ),* $(,)?
     ) => {
         impl NodePayload {
             pub fn draw(&self, ctx: &RenderContext) {
@@ -28,14 +27,12 @@ macro_rules! define_node_renderer {
                     $(
                         NodePayload::$ty(inner) => inner.draw(ctx),
                     )*
-                    
+
                 }
             }
         }
     };
 }
-
-
 
 define_node_renderer!(
     Arrow,
@@ -58,23 +55,24 @@ define_node_renderer!(
     UnknownObject802B,
 );
 
-
-
-
-
 /// High-level CDX renderer with zoom, offset
 pub struct CdxRenderer<'a> {
     pub zoom: f32,
     pub offset: egui::Vec2,
-    pub center_offset: egui::Vec2,  // Auto-calculated center offset
-    pub auto_scale: f32,  // Auto-calculated scale factor
+    pub center_offset: egui::Vec2, // Auto-calculated center offset
+    pub auto_scale: f32,           // Auto-calculated scale factor
     pub cdx_file: &'a CdxFile,
     pub window_size: egui::Vec2,
 }
 
 impl<'a> CdxRenderer<'a> {
     /// Create a new CDX renderer with specified zoom and offset
-    pub fn new(zoom: f32, offset: egui::Vec2, cdx_file: &'a CdxFile, window_size: egui::Vec2) -> Self {
+    pub fn new(
+        zoom: f32,
+        offset: egui::Vec2,
+        cdx_file: &'a CdxFile,
+        window_size: egui::Vec2,
+    ) -> Self {
         CdxRenderer {
             zoom,
             offset,
@@ -86,7 +84,14 @@ impl<'a> CdxRenderer<'a> {
     }
 
     /// Create a new CDX renderer with center offset and auto_scale calculated
-    pub fn with_center_offset(zoom: f32, offset: egui::Vec2, center_offset: egui::Vec2, auto_scale: f32, cdx_file: &'a CdxFile, window_size: egui::Vec2) -> Self {
+    pub fn with_center_offset(
+        zoom: f32,
+        offset: egui::Vec2,
+        center_offset: egui::Vec2,
+        auto_scale: f32,
+        cdx_file: &'a CdxFile,
+        window_size: egui::Vec2,
+    ) -> Self {
         CdxRenderer {
             zoom,
             offset,
@@ -98,12 +103,16 @@ impl<'a> CdxRenderer<'a> {
     }
 }
 
-impl  RGBColor {
+impl RGBColor {
     pub fn to_color32(&self) -> Color32 {
-        Color32::from_rgb((self.red * 255.0) as u8, (self.green * 255.0) as u8, (self.blue * 255.0) as u8)
+        Color32::from_rgb(
+            (self.red * 255.0) as u8,
+            (self.green * 255.0) as u8,
+            (self.blue * 255.0) as u8,
+        )
     }
 }
-impl Document{
+impl Document {
     pub fn get_color_table(&self) -> Option<&Vec<RGBColor>> {
         self.color_table.as_ref().map(|ct| &ct.colors)
     }
@@ -116,12 +125,12 @@ impl<'a> CdxRenderer<'a> {
         if let NodePayload::Document(doc) = &*root_node {
             if let Some(table) = &doc.color_table {
                 if index < table.colors.len() {
-                    return table.colors[index].to_color32()
-                }else{
-                    return Color32::BLACK
+                    table.colors[index].to_color32()
+                } else {
+                    Color32::BLACK
                 }
-            }else{
-                return Color32::BLACK
+            } else {
+                Color32::BLACK
             }
         } else {
             Color32::BLACK
@@ -140,14 +149,10 @@ impl<'a> CdxRenderer<'a> {
     }
 
     /// Render all objects from a CdxFile
-    /// 
+    ///
     /// This function traverses the CdxFile tree and renders all visual elements
     /// with the current zoom, offset, and color settings.
-    pub fn render_all(
-        &self,
-        painter: &Painter,
-        cdx_file: &crate::cdx::file::CdxFile,
-    ) {
+    pub fn render_all(&self, painter: &Painter, cdx_file: &crate::cdx::file::CdxFile) {
         // For now, just set background and render a simple placeholder
         let bg_color = self.background_color();
         let document = match cdx_file.get_document() {
@@ -162,31 +167,30 @@ impl<'a> CdxRenderer<'a> {
         // Use the pre-calculated center_offset instead of recalculating it
         let ctx = RenderContext::new(
             painter,
-            Pos2 { x: self.center_offset.x + self.offset.x, y: self.center_offset.y + self.offset.y },
+            Pos2 {
+                x: self.center_offset.x + self.offset.x,
+                y: self.center_offset.y + self.offset.y,
+            },
             &document,
             node_positions,
             self.zoom,
-            self.auto_scale,  // Use stored auto_scale
-        ); 
+            self.auto_scale, // Use stored auto_scale
+        );
         // Fill background
         let rect = painter.clip_rect();
         painter.rect_filled(rect, 0.0, bg_color);
 
         let root = tree.root();
         self.render(root, &ctx);
-
-        
-
     }
 
-    fn render(&self,root:Node<crate::cdx::file::NodePayload>,ctx:&RenderContext){
+    fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext) {
         //render
         let data = root.borrow_data();
-        data.draw(ctx); 
-        for child in root.children(){
-            self.render(child,ctx);
+        data.draw(ctx);
+        for child in root.children() {
+            self.render(child, ctx);
         }
-
     }
 
     fn collect_node_positions(
@@ -195,13 +199,16 @@ impl<'a> CdxRenderer<'a> {
         node_positions: &mut HashMap<u32, Point2d>,
     ) {
         let data = root.borrow_data();
-        
+
         if let NodePayload::Node(node_obj) = &*data {
             if let Some(pos) = &node_obj.position_2d {
                 node_positions.insert(node_obj.id, pos.clone());
             } else if let Some(pos3d) = &node_obj.position_3d {
                 // Try to use 3D position if 2D is not available
-                let pos_2d = Point2d { x: pos3d.x, y: pos3d.y };
+                let pos_2d = Point2d {
+                    x: pos3d.x,
+                    y: pos3d.y,
+                };
                 node_positions.insert(node_obj.id, pos_2d);
             }
         }
@@ -262,7 +269,7 @@ impl<'a> CdxRenderer<'a> {
     }
 }
 /// Rendering context that holds the painter, origin, and document defaults
-/// 
+///
 /// The RenderContext provides access to:
 /// - painter: The egui Painter for drawing
 /// - origin: The origin point for coordinate transformation
@@ -287,8 +294,8 @@ impl<'a> RenderContext<'a> {
         zoom: f32,
         auto_scale: f32,
     ) -> Self {
-        RenderContext { 
-            painter, 
+        RenderContext {
+            painter,
             origin,
             document,
             node_positions,
@@ -316,13 +323,8 @@ impl<'a> RenderContext<'a> {
         let scale = self.zoom * self.auto_scale;
         let scaled_size = size * scale;
         let font_id = egui::FontId::new(scaled_size, egui::FontFamily::Monospace);
-        self.painter.text(
-            pos,
-            egui::Align2::CENTER_CENTER,
-            text,
-            font_id,
-            color,
-        );
+        self.painter
+            .text(pos, egui::Align2::CENTER_CENTER, text, font_id, color);
     }
 
     /// Draw text at specified position with custom alignment
@@ -368,7 +370,9 @@ impl<'a> RenderContext<'a> {
     /// Get default label color from document or use fallback
     pub fn default_label_color(&self) -> Color32 {
         match self.document.label_color {
-            Some(idx) => self.document.get_color_table()
+            Some(idx) => self
+                .document
+                .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
                 .map(|c| c.to_color32())
                 .unwrap_or(Color32::BLACK),
@@ -384,7 +388,9 @@ impl<'a> RenderContext<'a> {
     /// Get default caption color from document or use fallback
     pub fn default_caption_color(&self) -> Color32 {
         match self.document.caption_color {
-            Some(idx) => self.document.get_color_table()
+            Some(idx) => self
+                .document
+                .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
                 .map(|c| c.to_color32())
                 .unwrap_or(Color32::BLACK),
@@ -392,8 +398,6 @@ impl<'a> RenderContext<'a> {
         }
     }
 }
-
-
 
 /// Convert CDX element number to chemical symbol
 pub fn element_to_symbol(element: i16) -> String {

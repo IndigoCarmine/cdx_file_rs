@@ -1,9 +1,9 @@
-use crate::cdx::graphic::Graphic;
-use crate::cdx_parse_impl::tagged_object::TaggedObject;
-use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
-use crate::error::CdxError;
-use crate::cdx::values::*;
 use crate::cdx::binary_codec::BinaryCodec;
+use crate::cdx::graphic::Graphic;
+use crate::cdx::values::*;
+use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
+use crate::cdx_parse_impl::tagged_object::TaggedObject;
+use crate::error::CdxError;
 
 pub const CDXOBJ_GRAPHIC: u16 = 0x8007;
 
@@ -48,100 +48,132 @@ impl TaggedObject for Graphic {
         let mut graphic = Graphic::new(raw.id);
 
         // Parse all properties using BinaryCodec
-        graphic.z_order = raw.get_property(CDXPROP_ZORDER)
+        graphic.z_order = raw
+            .get_property(CDXPROP_ZORDER)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.ignore_warnings = raw.get_property(CDXPROP_IGNOREWARNINGS)
+
+        graphic.ignore_warnings = raw
+            .get_property(CDXPROP_IGNOREWARNINGS)
             .and_then(|v| bool::decode(v).ok());
-        
-        graphic.chemical_warning = raw.get_property(CDXPROP_CHEMICALWARNING)
+
+        graphic.chemical_warning = raw
+            .get_property(CDXPROP_CHEMICALWARNING)
             .and_then(|v| String::from_utf8(v.to_vec()).ok());
-        
-        graphic.visible = raw.get_property(CDXPROP_VISIBLE)
+
+        graphic.visible = raw
+            .get_property(CDXPROP_VISIBLE)
             .and_then(|v| bool::decode(v).ok());
-        
-        graphic.superseded_by = raw.get_property(CDXPROP_SUPERSEDEDBY)
+
+        graphic.superseded_by = raw
+            .get_property(CDXPROP_SUPERSEDEDBY)
             .and_then(|v| u32::decode(v).ok());
-        
-        graphic.bounding_box = raw.get_property(CDXPROP_BOUNDINGBOX)
+
+        graphic.bounding_box = raw
+            .get_property(CDXPROP_BOUNDINGBOX)
             .and_then(|v| Rectangle::decode(v).ok());
-        
-        graphic.head_3d = raw.get_property(CDXPROP_3DHEAD)
+
+        graphic.head_3d = raw
+            .get_property(CDXPROP_3DHEAD)
             .and_then(|v| Point3d::decode(v).ok());
-        
-        graphic.tail_3d = raw.get_property(CDXPROP_3DTAIL)
+
+        graphic.tail_3d = raw
+            .get_property(CDXPROP_3DTAIL)
             .and_then(|v| Point3d::decode(v).ok());
-        
-        graphic.foreground_color = raw.get_property(CDXPROP_FOREGROUNDCOLOR)
+
+        graphic.foreground_color = raw
+            .get_property(CDXPROP_FOREGROUNDCOLOR)
             .and_then(|v| u16::decode(v).ok());
-        
-        graphic.background_color = raw.get_property(CDXPROP_BACKGROUNDCOLOR)
+
+        graphic.background_color = raw
+            .get_property(CDXPROP_BACKGROUNDCOLOR)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.bold_width = raw.get_property(CDXPROP_BOLDWIDTH)
+
+        graphic.bold_width = raw
+            .get_property(CDXPROP_BOLDWIDTH)
             .and_then(|v| f64::decode(v).ok());
-        
-        graphic.line_width = raw.get_property(CDXPROP_LINEWIDTH)
+
+        graphic.line_width = raw
+            .get_property(CDXPROP_LINEWIDTH)
             .and_then(|v| f64::decode(v).ok());
-        
-        graphic.caption_style = raw.get_property(CDXPROP_CAPTIONSTYLE)
+
+        graphic.caption_style = raw
+            .get_property(CDXPROP_CAPTIONSTYLE)
             .and_then(|v| u16::decode(v).ok());
-        
-        graphic.caption_style_font = raw.get_property(CDXPROP_CAPTIONSTYLEFONT)
+
+        graphic.caption_style_font = raw
+            .get_property(CDXPROP_CAPTIONSTYLEFONT)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.caption_style_size = raw.get_property(CDXPROP_CAPTIONSTYLESIZE)
+
+        graphic.caption_style_size = raw
+            .get_property(CDXPROP_CAPTIONSTYLESIZE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.caption_style_face = raw.get_property(CDXPROP_CAPTIONSTYLEFACE)
+
+        graphic.caption_style_face = raw
+            .get_property(CDXPROP_CAPTIONSTYLEFACE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.graphic_type = raw.get_property(CDXPROP_GRAPHIC_TYPE)
+
+        graphic.graphic_type = raw
+            .get_property(CDXPROP_GRAPHIC_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.line_type = raw.get_property(CDXPROP_LINE_TYPE)
+
+        graphic.line_type = raw
+            .get_property(CDXPROP_LINE_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.arrow_type = raw.get_property(CDXPROP_ARROW_TYPE)
+
+        graphic.arrow_type = raw
+            .get_property(CDXPROP_ARROW_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.rectangle_type = raw.get_property(CDXPROP_RECTANGLE_TYPE)
+
+        graphic.rectangle_type = raw
+            .get_property(CDXPROP_RECTANGLE_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.oval_type = raw.get_property(CDXPROP_OVAL_TYPE)
+
+        graphic.oval_type = raw
+            .get_property(CDXPROP_OVAL_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.orbital_type = raw.get_property(CDXPROP_ORBITAL_TYPE)
+
+        graphic.orbital_type = raw
+            .get_property(CDXPROP_ORBITAL_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.bracket_type = raw.get_property(CDXPROP_BRACKET_TYPE)
+
+        graphic.bracket_type = raw
+            .get_property(CDXPROP_BRACKET_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.symbol_type = raw.get_property(CDXPROP_SYMBOL_TYPE)
+
+        graphic.symbol_type = raw
+            .get_property(CDXPROP_SYMBOL_TYPE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.arrowhead_size = raw.get_property(CDXPROP_ARROWHEAD_SIZE)
+
+        graphic.arrowhead_size = raw
+            .get_property(CDXPROP_ARROWHEAD_SIZE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.arc_angular_size = raw.get_property(CDXPROP_ARC_ANGULARSIZE)
+
+        graphic.arc_angular_size = raw
+            .get_property(CDXPROP_ARC_ANGULARSIZE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.bracket_lip_size = raw.get_property(CDXPROP_BRACKET_LIPSIZE)
+
+        graphic.bracket_lip_size = raw
+            .get_property(CDXPROP_BRACKET_LIPSIZE)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.bracket_usage = raw.get_property(CDXPROP_BRACKET_USAGE)
+
+        graphic.bracket_usage = raw
+            .get_property(CDXPROP_BRACKET_USAGE)
             .and_then(|v| i8::decode(v).ok());
-        
-        graphic.polymer_repeat_pattern = raw.get_property(CDXPROP_POLYMER_REPEATPATTERN)
+
+        graphic.polymer_repeat_pattern = raw
+            .get_property(CDXPROP_POLYMER_REPEATPATTERN)
             .and_then(|v| i8::decode(v).ok());
-        
-        graphic.polymer_flip_type = raw.get_property(CDXPROP_POLYMER_FLIPTYPE)
+
+        graphic.polymer_flip_type = raw
+            .get_property(CDXPROP_POLYMER_FLIPTYPE)
             .and_then(|v| i8::decode(v).ok());
-        
-        graphic.corner_radius = raw.get_property(CDXPROP_CORNERRADIUS)
+
+        graphic.corner_radius = raw
+            .get_property(CDXPROP_CORNERRADIUS)
             .and_then(|v| i16::decode(v).ok());
-        
-        graphic.frame_type = raw.get_property(CDXPROP_FRAME_TYPE)
+
+        graphic.frame_type = raw
+            .get_property(CDXPROP_FRAME_TYPE)
             .and_then(|v| i16::decode(v).ok());
 
         Ok(graphic)
@@ -149,7 +181,7 @@ impl TaggedObject for Graphic {
 
     fn to_raw(&self) -> Result<RawCdxObject, CdxError> {
         use crate::cdx_parse_impl::raw_nodes::RawCdxProperty;
-        
+
         let mut properties = Vec::new();
 
         if let Some(v) = self.z_order {

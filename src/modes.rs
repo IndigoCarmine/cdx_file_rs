@@ -1,9 +1,9 @@
-use crate::renderer::CdxRenderer;
 use crate::cdx::values::Point2d;
-use crate::cdx::document::Document;
+use crate::renderer::CdxRenderer;
 use eframe::egui;
 use std::collections::{HashMap, HashSet};
 
+#[allow(dead_code)]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Hit {
     pub tag: u16,

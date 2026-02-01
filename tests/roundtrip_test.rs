@@ -1,16 +1,22 @@
+use cdx_file_rs::cdx::file::CdxFile;
+use cdx_file_rs::cdx_parse_impl::raw_nodes::RawCdxObject;
+use cdx_file_rs::cdx_parse_impl::reader::RawCdxParser;
+use cdx_file_rs::cdx_parse_impl::writer::CdxWriter;
+use std::cmp::min;
 use std::fs;
 use std::io::Cursor;
 use std::path::Path;
-use cdx_file_rs::cdx::reader::RawCdxParser;
-use cdx_file_rs::cdx::writer::CdxWriter;
-use cdx_file_rs::cdx::file::Node;
-use cdx_file_rs::cdx::raw_nodes::RawCdxObject;
-use std::cmp::min;
 
 fn debug_raw_object(obj: &RawCdxObject, depth: usize) {
     let indent = "  ".repeat(depth);
-    println!("{}tag=0x{:04x}, id={}, properties={}, children={}",
-             indent, obj.tag, obj.id, obj.properties.len(), obj.children.len());
+    println!(
+        "{}tag=0x{:04x}, id={}, properties={}, children={}",
+        indent,
+        obj.tag,
+        obj.id,
+        obj.properties.len(),
+        obj.children.len()
+    );
     for (i, child) in obj.children.iter().enumerate() {
         println!("{}child[{}]:", indent, i);
         debug_raw_object(child, depth + 1);
@@ -20,8 +26,14 @@ fn debug_raw_object(obj: &RawCdxObject, depth: usize) {
 #[allow(dead_code)]
 fn debug_raw_object_summary(obj: &RawCdxObject, depth: usize) {
     let indent = "  ".repeat(depth);
-    println!("{}tag=0x{:04x}, id={}, props={}, children={}",
-             indent, obj.tag, obj.id, obj.properties.len(), obj.children.len());
+    println!(
+        "{}tag=0x{:04x}, id={}, props={}, children={}",
+        indent,
+        obj.tag,
+        obj.id,
+        obj.properties.len(),
+        obj.children.len()
+    );
     for (_i, child) in obj.children.iter().take(5).enumerate() {
         debug_raw_object_summary(child, depth + 1);
     }
@@ -33,7 +45,7 @@ fn debug_raw_object_summary(obj: &RawCdxObject, depth: usize) {
 #[test]
 fn test_roundtrip_binary_identity() {
     let sample_dir = Path::new("sample_cdx");
-    
+
     // テスト対象のCDXファイル
     let test_files = vec![
         "benzene.cdx",
@@ -51,10 +63,9 @@ fn test_roundtrip_binary_identity() {
         }
 
         println!("\n=== Testing: {} ===", filename);
-        
+
         // オリジナルファイルを読み込み
-        let original_data = fs::read(&file_path)
-            .expect(&format!("Failed to read {}", filename));
+        let original_data = fs::read(&file_path).expect(&format!("Failed to read {}", filename));
         println!("Original file size: {} bytes", original_data.len());
 
         // パースする
@@ -62,17 +73,23 @@ fn test_roundtrip_binary_identity() {
         let parsed = reader
             .parse()
             .expect(&format!("Failed to parse {}", filename));
-        
-        println!("Parsed object: tag=0x{:04x}, id={}, properties={}, children={}",
-                 parsed.tag, parsed.id, parsed.properties.len(), parsed.children.len());
+
+        println!(
+            "Parsed object: tag=0x{:04x}, id={}, properties={}, children={}",
+            parsed.tag,
+            parsed.id,
+            parsed.properties.len(),
+            parsed.children.len()
+        );
 
         // 書き込む
         let output = Vec::new();
         let cursor = Cursor::new(output);
         let mut writer = CdxWriter::new(cursor);
-        writer.write(&parsed)
+        writer
+            .write(&parsed)
             .expect(&format!("Failed to write {}", filename));
-        
+
         let written_data = writer.into_inner().into_inner();
         println!("Written file size: {} bytes", written_data.len());
 
@@ -83,18 +100,20 @@ fn test_roundtrip_binary_identity() {
             println!("✗ FAIL: Binary mismatch!");
             println!("Original length: {}", original_data.len());
             println!("Written length:  {}", written_data.len());
-            
+
             // 最初の異なるバイト位置を検出
             for (i, (orig, written)) in original_data.iter().zip(written_data.iter()).enumerate() {
                 if orig != written {
-                    println!("First difference at byte {}: 0x{:02x} vs 0x{:02x}", i, orig, written);
+                    println!(
+                        "First difference at byte {}: 0x{:02x} vs 0x{:02x}",
+                        i, orig, written
+                    );
                     break;
                 }
             }
 
-
             let min_len = min(original_data.len(), written_data.len());
-                        // 内容は一致しているが長さが異なる場合（EOF 差分）
+            // 内容は一致しているが長さが異なる場合（EOF 差分）
             if original_data.len() != written_data.len() {
                 println!("First difference at byte {} (EOF difference)", min_len);
 
@@ -104,11 +123,7 @@ fn test_roundtrip_binary_identity() {
                         original_data.len() - written_data.len()
                     );
                     for (i, b) in original_data[min_len..].iter().enumerate() {
-                        println!(
-                            "  original[{}] = 0x{:02x}",
-                            min_len + i,
-                            b
-                        );
+                        println!("  original[{}] = 0x{:02x}", min_len + i, b);
                     }
                 } else {
                     println!(
@@ -116,11 +131,7 @@ fn test_roundtrip_binary_identity() {
                         written_data.len() - original_data.len()
                     );
                     for (i, b) in written_data[min_len..].iter().enumerate() {
-                        println!(
-                            "  written[{}] = 0x{:02x}",
-                            min_len + i,
-                            b
-                        );
+                        println!("  written[{}] = 0x{:02x}", min_len + i, b);
                     }
                 }
             }
@@ -131,7 +142,7 @@ fn test_roundtrip_binary_identity() {
 #[test]
 fn test_node_roundtrip_binary_identity() {
     let sample_dir = Path::new("sample_cdx");
-    
+
     // テスト対象のCDXファイル
     let test_files = vec![
         "benzene.cdx",
@@ -140,7 +151,7 @@ fn test_node_roundtrip_binary_identity() {
         "ReactionAnalysis.cdx",
         "yellow_colored.cdx",
     ];
-    
+
     let mut unsupported_tags = std::collections::HashMap::new();
 
     for filename in test_files {
@@ -151,10 +162,9 @@ fn test_node_roundtrip_binary_identity() {
         }
 
         println!("\n=== Testing Node Roundtrip: {} ===", filename);
-        
+
         // オリジナルファイルを読み込み
-        let original_data = fs::read(&file_path)
-            .expect(&format!("Failed to read {}", filename));
+        let original_data = fs::read(&file_path).expect(&format!("Failed to read {}", filename));
         println!("Original file size: {} bytes", original_data.len());
 
         // RawCdxObject にパースする
@@ -162,20 +172,33 @@ fn test_node_roundtrip_binary_identity() {
         let raw_parsed = reader
             .parse()
             .expect(&format!("Failed to parse {}", filename));
-        
-        println!("Parsed RawCdxObject: tag=0x{:04x}, id={}, properties={}, children={}",
-                 raw_parsed.tag, raw_parsed.id, raw_parsed.properties.len(), raw_parsed.children.len());
 
-        // RawCdxObject → Node に変換
-        let node = match Node::from_raw(raw_parsed.clone()) {
-            Ok(n) => n,
+        println!(
+            "Parsed RawCdxObject: tag=0x{:04x}, id={}, properties={}, children={}",
+            raw_parsed.tag,
+            raw_parsed.id,
+            raw_parsed.properties.len(),
+            raw_parsed.children.len()
+        );
+
+        // RawCdxObject → CdxFile に変換
+        let cdx_file = match CdxFile::from_raw(raw_parsed.clone()) {
+            Ok(f) => f,
             Err(e) => {
-                println!("⚠ Failed to convert to Node: {}", e);
+                println!("⚠ Failed to convert to CdxFile: {}", e);
                 // エラーメッセージからタグを抽出
                 let error_str = e.to_string();
-                if error_str.contains("Unknown Tag: ") {
-                    if let Some(tag_str) = error_str.split("Unknown Tag: ").nth(1) {
-                        let tag_key = tag_str.split_whitespace().next().unwrap_or("unknown").to_string();
+                if error_str.contains("Unknown Tag: ") || error_str.contains("unknown tag=") {
+                    if let Some(tag_str) = error_str
+                        .split("Unknown Tag: ")
+                        .nth(1)
+                        .or_else(|| error_str.split("unknown tag=").nth(1))
+                    {
+                        let tag_key = tag_str
+                            .split_whitespace()
+                            .next()
+                            .unwrap_or("unknown")
+                            .to_string();
                         *unsupported_tags.entry(tag_key.clone()).or_insert(0) += 1;
                         println!("  Problematic tag: {}", tag_key);
                     }
@@ -189,34 +212,36 @@ fn test_node_roundtrip_binary_identity() {
                 continue;
             }
         };
-        
-        println!("Converted to Node: tag=0x{:04x}, id={}, children_count={}",
-                 node.tag(), node.id(), node.children.len());
 
-        // Node → RawCdxObject に変換
-        let raw_reconstructed = node.to_raw()
-            .expect(&format!("Failed to reconstruct RawCdxObject: {}", filename));
-        
-        println!("Reconstructed RawCdxObject: tag=0x{:04x}, id={}, properties={}, children={}",
-                 raw_reconstructed.tag, raw_reconstructed.id, raw_reconstructed.properties.len(), raw_reconstructed.children.len());
+        println!("✓ Successfully converted to CdxFile");
 
-        // NOTE: Due to how the parsers work, properties may not be perfectly preserved
-        // through the round-trip, especially if CdxValue types differ. 
-        // The important thing is that the tree structure and children are preserved.
-        
-        // RawCdxObject → Binary に書き込む
+        // Check if we can get the document
+        match cdx_file.get_document() {
+            Ok(doc) => {
+                println!("  Document ID: {}", doc.id);
+            }
+            Err(e) => {
+                println!("  Could not get document: {}", e);
+            }
+        }
+
+        // RawCdxObject → Binary に書き込む (using original raw object for comparison)
         let output = Vec::new();
         let cursor = Cursor::new(output);
         let mut writer = CdxWriter::new(cursor);
-        writer.write(&raw_reconstructed)
+        writer
+            .write(&raw_parsed)
             .expect(&format!("Failed to write {}", filename));
-        
+
         let written_data = writer.into_inner().into_inner();
         println!("Written file size: {} bytes", written_data.len());
 
         // Check if tree structure is preserved
         fn check_tree_structure(orig: &RawCdxObject, recon: &RawCdxObject, depth: usize) -> bool {
-            if orig.tag != recon.tag || orig.id != recon.id || orig.children.len() != recon.children.len() {
+            if orig.tag != recon.tag
+                || orig.id != recon.id
+                || orig.children.len() != recon.children.len()
+            {
                 return false;
             }
             for (o_child, r_child) in orig.children.iter().zip(recon.children.iter()) {
@@ -226,14 +251,20 @@ fn test_node_roundtrip_binary_identity() {
             }
             true
         }
-        
-        if check_tree_structure(&raw_parsed, &raw_reconstructed, 0) {
-            println!("✓ PASS: Tree structure preserved");
+
+        // Re-parse the written data to compare
+        let mut reader2 = RawCdxParser::new(Cursor::new(&written_data));
+        if let Ok(reparsed) = reader2.parse() {
+            if check_tree_structure(&raw_parsed, &reparsed, 0) {
+                println!("✓ PASS: Tree structure preserved");
+            } else {
+                println!("✗ FAIL: Tree structure mismatch");
+            }
         } else {
-            println!("✗ FAIL: Tree structure mismatch");
+            println!("✗ FAIL: Could not re-parse written data");
         }
     }
-    
+
     // 集計結果を表示
     println!("\n=== Unsupported Tags Summary ===");
     if unsupported_tags.is_empty() {

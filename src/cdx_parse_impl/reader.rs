@@ -1,6 +1,6 @@
-use std::io::{Read, Result};
-use crate::cdx_parse_impl::raw_nodes::{RawCdxObject, RawCdxProperty};
 use crate::cdx_parse_impl::header::CdxHeader;
+use crate::cdx_parse_impl::raw_nodes::{RawCdxObject, RawCdxProperty};
+use std::io::{Read, Result};
 
 pub struct RawCdxParser<R: Read> {
     reader: R,
@@ -42,7 +42,7 @@ impl<R: Read> RawCdxParser<R> {
         let reserved_legacy = read_u32_le(&mut self.reader)?;
         let mut reserved_zero = [0u8; 10];
         self.reader.read_exact(&mut reserved_zero)?;
-        
+
         Ok(CdxHeader {
             magic,
             reserved_legacy,
@@ -50,7 +50,6 @@ impl<R: Read> RawCdxParser<R> {
         })
     }
 }
-
 
 fn read_object<R: Read>(r: &mut R, tag: u16) -> Result<RawCdxObject> {
     let id = read_u32_le(r)?;
@@ -73,7 +72,7 @@ fn read_object<R: Read>(r: &mut R, tag: u16) -> Result<RawCdxObject> {
         }
     }
 
-    Ok(RawCdxObject { 
+    Ok(RawCdxObject {
         tag,
         id,
         properties,

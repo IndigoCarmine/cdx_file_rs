@@ -17,4 +17,3 @@ pub const CDXPROP_Z_ORDER: u16 = 0x000A; // Back-to-front ordering index in 2D d
 pub const CDXPROP_FOREGROUND_COLOR: u16 = 0x0301; // The foreground color of an object.
 pub const CDXPROP_BACKGROUND_COLOR: u16 = 0x0302; // The background color of an object.
 pub const CDXPROP_ROTATION_ANGLE: u16 = 0x0205; // The angular orientation of an object in degrees * 65536.
-

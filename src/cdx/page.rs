@@ -1,4 +1,3 @@
-
 use crate::cdx::values::{CDXString, Rectangle};
 use serde::{Deserialize, Serialize};
 
@@ -10,7 +9,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Page {
     pub id: u32,
-    
+
     // Geometry and visibility
     /// The smallest rectangle that encloses the graphical representation (Optional)
     pub bounding_box: Option<Rectangle>,
@@ -22,13 +21,13 @@ pub struct Page {
     pub chemical_warning: Option<CDXString>,
     /// Visibility flag (Optional)
     pub visible: Option<bool>,
-    
+
     // Color properties
     /// The foreground color index (Optional)
     pub foreground_color: Option<u16>,
     /// The background color index (Optional)
     pub background_color: Option<i16>,
-    
+
     // Page dimensions
     /// The width of the document in pages (Optional)
     pub width_pages: Option<i16>,
@@ -42,7 +41,7 @@ pub struct Page {
     pub height: Option<f64>,
     /// The amount of overlap of pages when a poster is tiled (Optional)
     pub page_overlap: Option<f64>,
-    
+
     // Header and footer
     /// The text of the header (Optional)
     pub header: Option<CDXString>,
@@ -52,7 +51,7 @@ pub struct Page {
     pub footer: Option<CDXString>,
     /// The vertical offset of the footer baseline from the bottom (Optional)
     pub footer_position: Option<f64>,
-    
+
     // Printing properties
     /// If present, trim marks are printed in the margins (Optional)
     pub print_trim_marks: Option<bool>,

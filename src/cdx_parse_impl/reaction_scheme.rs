@@ -1,6 +1,6 @@
 use crate::cdx::reaction_scheme::ReactionScheme;
-use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
+use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx_tags::reaction_scheme_tags::*;
 use crate::error::CdxError;
 

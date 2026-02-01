@@ -2,10 +2,9 @@
 // Pages themselves have no visual representation, only their children
 
 use crate::cdx::page::Page;
-use crate::renderer::renderer::RenderContext;
-use crate::renderer::renderer::Drawable;
+use crate::renderer::core::Drawable;
+use crate::renderer::core::RenderContext;
 
 impl Drawable for Page {
-	fn draw(&self, _ctx: &RenderContext) {
-	}
+    fn draw(&self, _ctx: &RenderContext) {}
 }

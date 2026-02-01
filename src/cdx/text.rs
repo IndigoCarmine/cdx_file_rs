@@ -1,6 +1,5 @@
-
+use crate::cdx::values::{CDXString, Point2d, Rectangle};
 use serde::{Deserialize, Serialize};
-use crate::cdx::values::{Point2d, Rectangle, CDXString};
 
 /// Text Object: An arbitrary block of (possibly styled) text
 /// Text objects can be used in various contexts and may or may not have chemical meaning.
@@ -8,11 +7,11 @@ use crate::cdx::values::{Point2d, Rectangle, CDXString};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TextObject {
     pub id: u32,
-    
+
     // Required properties
     /// The text content (CDXPROP_TEXT, 0x0700) - REQUIRED
     pub text: CDXString,
-    
+
     // Optional common properties
     /// Back-to-front ordering index in 2D drawing (Optional)
     pub z_order: Option<i16>,
@@ -22,7 +21,7 @@ pub struct TextObject {
     pub chemical_warning: Option<CDXString>,
     /// Visibility flag (Optional)
     pub visible: Option<bool>,
-    
+
     // Position and geometry
     /// The 2D location of the text (Optional)
     pub position_2d: Option<Point2d>,
@@ -30,7 +29,7 @@ pub struct TextObject {
     pub bounding_box: Option<Rectangle>,
     /// Angular orientation in degrees * 65536 (Optional)
     pub rotation_angle: Option<i32>,
-    
+
     // Text formatting
     /// Horizontal justification (Optional)
     pub justification: Option<i8>,
@@ -48,7 +47,7 @@ pub struct TextObject {
     pub caption_line_height: Option<i16>,
     /// Interpret text chemically (Optional)
     pub interpret_chemically: Option<bool>,
-    
+
     // Font/style properties
     /// Label font index (Optional)
     pub label_font: Option<i16>,
