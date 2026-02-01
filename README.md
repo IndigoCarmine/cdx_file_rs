@@ -1,5 +1,7 @@
 # cdx-file-rs
 
+English | [日本語](README_ja.md)
+
 A Rust library for reading, writing, and rendering ChemDraw CDX files.
 
 ## Overview
