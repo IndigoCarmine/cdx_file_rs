@@ -440,7 +440,7 @@ impl CdxRenderer {
 | 10 | レイヤー/Z-orderサポートの欠如 | 高 |
 
 ### 優先度の高い問題 (直ちに対処を推奨)
-1. **Issue 1**: eGuiへの強い依存 → 将来のSVG/PDF出力対応に必須
+1. **Issue 1**: eguiへの強い依存 → 将来のSVG/PDF出力対応に必須
 2. **Issue 3**: Drawableトレイトの拡張性 → インタラクティブ機能追加に必須
 3. **Issue 10**: Z-orderサポート → 選択/ハイライト機能に必須
 
