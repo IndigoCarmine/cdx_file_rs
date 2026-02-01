@@ -150,7 +150,7 @@ cargo test
 
 ## License
 
-This project is available under the terms specified by the repository owner.
+This project is licensed under the [GNU Lesser General Public License v3.0](LICENSE) (LGPL-3.0).
 
 ## Contributing
 

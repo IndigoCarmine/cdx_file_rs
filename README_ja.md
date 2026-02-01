@@ -150,7 +150,7 @@ cargo test
 
 ## ライセンス
 
-このプロジェクトはリポジトリ所有者が指定する条件の下で利用可能です。
+このプロジェクトは[GNU Lesser General Public License v3.0](LICENSE)（LGPL-3.0）の下でライセンスされています。
 
 ## コントリビューション
 
