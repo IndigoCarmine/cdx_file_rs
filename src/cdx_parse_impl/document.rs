@@ -2,11 +2,11 @@
 //! The Document object is the top-level CDX object containing all document properties and content.
 
 use crate::cdx::binary_codec::BinaryCodec;
+use crate::cdx::document::Document;
+use crate::cdx_parse_impl::raw_nodes::{RawCdxObject, RawCdxProperty};
+use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx_tags::document_tags::*;
 use crate::error::CdxError;
-use crate::cdx::document::Document;
-use crate::cdx_parse_impl::tagged_object::TaggedObject;
-use crate::cdx_parse_impl::raw_nodes::{RawCdxObject, RawCdxProperty};
 
 impl TaggedObject for Document {
     const TAG: u16 = 0x8000; // kCDXObj_Document
@@ -50,7 +50,7 @@ impl TaggedObject for Document {
         let bounding_box = raw
             .get_property(CDXPROP_BOUNDING_BOX)
             .and_then(|v| crate::cdx::values::Rectangle::decode(v).ok());
-        
+
         let color_table = raw
             .get_property(CDXPROP_COLOR_TABLE)
             .and_then(|v| crate::cdx::color_table::ColorTable::decode(v).ok());
@@ -263,9 +263,8 @@ impl TaggedObject for Document {
     }
 
     fn to_raw(&self) -> Result<RawCdxObject, CdxError> {
-        
         let mut properties = Vec::new();
-        
+
         // Optional properties - encode using BinaryCodec
         if let Some(ref val) = self.creation_user_name {
             properties.push(RawCdxProperty {
@@ -543,7 +542,7 @@ impl TaggedObject for Document {
                 value: val.encode()?,
             });
         }
-        
+
         Ok(RawCdxObject {
             tag: Self::TAG,
             id: self.id,

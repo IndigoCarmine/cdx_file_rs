@@ -1,6 +1,6 @@
 use crate::error::CdxError;
-use serde::{Deserialize, Serialize};
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
+use serde::{Deserialize, Serialize};
 use std::io::Cursor;
 
 /// An RGB color with components in the range 0.0 to 1.0
@@ -71,8 +71,6 @@ impl ColorTable {
         }
         Ok(ColorTable { colors })
     }
-
-
 
     /// Encode the entire color table to binary
     pub fn encode(&self) -> Result<Vec<u8>, CdxError> {

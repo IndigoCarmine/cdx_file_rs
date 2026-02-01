@@ -1,6 +1,6 @@
-use eframe::egui;
 use crate::cdx::bond::Bond;
 use crate::renderer::{Drawable, RenderContext};
+use eframe::egui;
 
 impl Drawable for Bond {
     fn draw(&self, _ctx: &RenderContext) {
@@ -22,7 +22,9 @@ impl Drawable for Bond {
         let p2 = _ctx.cdx_to_screen(end);
 
         let color = match self.foreground_color {
-            Some(idx) => _ctx.document.get_color_table()
+            Some(idx) => _ctx
+                .document
+                .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
                 .map(|c| c.to_color32())
                 .unwrap_or(egui::Color32::BLACK),
@@ -33,7 +35,7 @@ impl Drawable for Bond {
         let stroke = egui::Stroke::new(line_width.max(0.5), color);
 
         let order = self.bond_order.unwrap_or(1);
-        
+
         if order <= 1 {
             _ctx.painter.line_segment([p1, p2], stroke);
             return;
@@ -49,26 +51,49 @@ impl Drawable for Bond {
         let nx = -dy / len;
         let ny = dx / len;
 
-        let spacing = self
-            .bond_spacing.unwrap_or(10) as f32;
+        let spacing = self.bond_spacing.unwrap_or(10) as f32;
 
         if order == 2 {
             let ox = nx * spacing * 0.5;
             let oy = ny * spacing * 0.5;
-            let a1 = egui::Pos2 { x: p1.x + ox, y: p1.y + oy };
-            let a2 = egui::Pos2 { x: p2.x + ox, y: p2.y + oy };
-            let b1 = egui::Pos2 { x: p1.x - ox, y: p1.y - oy };
-            let b2 = egui::Pos2 { x: p2.x - ox, y: p2.y - oy };
+            let a1 = egui::Pos2 {
+                x: p1.x + ox,
+                y: p1.y + oy,
+            };
+            let a2 = egui::Pos2 {
+                x: p2.x + ox,
+                y: p2.y + oy,
+            };
+            let b1 = egui::Pos2 {
+                x: p1.x - ox,
+                y: p1.y - oy,
+            };
+            let b2 = egui::Pos2 {
+                x: p2.x - ox,
+                y: p2.y - oy,
+            };
             _ctx.painter.line_segment([a1, a2], stroke);
             _ctx.painter.line_segment([b1, b2], stroke);
         } else {
             _ctx.painter.line_segment([p1, p2], stroke);
             let ox = nx * spacing;
             let oy = ny * spacing;
-            let a1 = egui::Pos2 { x: p1.x + ox, y: p1.y + oy };
-            let a2 = egui::Pos2 { x: p2.x + ox, y: p2.y + oy };
-            let b1 = egui::Pos2 { x: p1.x - ox, y: p1.y - oy };
-            let b2 = egui::Pos2 { x: p2.x - ox, y: p2.y - oy };
+            let a1 = egui::Pos2 {
+                x: p1.x + ox,
+                y: p1.y + oy,
+            };
+            let a2 = egui::Pos2 {
+                x: p2.x + ox,
+                y: p2.y + oy,
+            };
+            let b1 = egui::Pos2 {
+                x: p1.x - ox,
+                y: p1.y - oy,
+            };
+            let b2 = egui::Pos2 {
+                x: p2.x - ox,
+                y: p2.y - oy,
+            };
             _ctx.painter.line_segment([a1, a2], stroke);
             _ctx.painter.line_segment([b1, b2], stroke);
         }

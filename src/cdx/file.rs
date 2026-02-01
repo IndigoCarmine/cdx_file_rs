@@ -1,5 +1,4 @@
-
-use dendron::tree::{Tree};
+use dendron::tree::Tree;
 
 use crate::error::CdxError;
 
@@ -22,9 +21,8 @@ pub use super::tlc_lane::TlcLane;
 pub use super::tlc_plate::TLCPlate;
 pub use super::unknown_802b::UnknownObject802B;
 
-pub struct CdxFile{
-    pub tree:Tree<NodePayload>
-
+pub struct CdxFile {
+    pub tree: Tree<NodePayload>,
 }
 
 impl CdxFile {
@@ -41,8 +39,6 @@ impl CdxFile {
     }
 }
 
-
-
 macro_rules! define_node_payload {
     ( $( $ty:ident ),* $(,)? ) => {
         #[derive(Debug)]
@@ -53,7 +49,6 @@ macro_rules! define_node_payload {
         }
     };
 }
-
 
 define_node_payload!(
     Arrow,

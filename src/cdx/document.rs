@@ -1,6 +1,6 @@
-use serde::{Deserialize, Serialize};
-use crate::cdx::values::{Point2d, Rectangle, CDXString};
 use crate::cdx::color_table::ColorTable;
+use crate::cdx::values::{CDXString, Point2d, Rectangle};
+use serde::{Deserialize, Serialize};
 /// Document Object: The top-level CDX object
 /// A Document is the top-level CDX object. It contains all CDX properties and objects.
 /// It is necessary (by definition) for any valid CDX or CDXML file.
@@ -8,7 +8,7 @@ use crate::cdx::color_table::ColorTable;
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Document {
     pub id: u32,
-    
+
     // Creation/Modification metadata
     pub creation_user_name: Option<CDXString>,
     pub creation_date: Option<u32>,
@@ -16,11 +16,11 @@ pub struct Document {
     pub modification_user_name: Option<CDXString>,
     pub modification_date: Option<u32>,
     pub modification_program: Option<CDXString>,
-    
+
     // Document metadata
     pub name: Option<CDXString>,
     pub comment: Option<CDXString>,
-    
+
     // Geometry / Appearance
     pub bounding_box: Option<Rectangle>,
     pub color_table: Option<ColorTable>,
@@ -30,17 +30,17 @@ pub struct Document {
     pub bond_show_query: Option<bool>,
     pub bond_show_stereo: Option<bool>,
     pub bond_show_rxn: Option<bool>,
-    
+
     // Text/Line Height settings
     pub label_line_height: Option<i16>,
     pub caption_line_height: Option<i16>,
     pub interpret_chemically: Option<bool>,
-    
+
     // Printing / Layout
     pub mac_print_info: Option<Vec<u8>>,
     pub win_print_info: Option<Vec<u8>>,
     pub print_margins: Option<Rectangle>,
-    
+
     // Bond/Chain defaults
     pub chain_angle: Option<i32>,
     pub bond_spacing: Option<i16>,
@@ -49,12 +49,12 @@ pub struct Document {
     pub line_width: Option<f64>,
     pub margin_width: Option<f64>,
     pub hash_spacing: Option<f64>,
-    
+
     // Justification/Width settings
     pub caption_justification: Option<i8>,
     pub fractional_widths: Option<bool>,
     pub magnification: Option<i16>,
-    
+
     // Font Defaults
     pub label_font: Option<i16>,
     pub caption_font: Option<i16>,
@@ -65,12 +65,12 @@ pub struct Document {
     pub label_color: Option<i16>,
     pub caption_color: Option<i16>,
     pub label_justification: Option<i8>,
-    
+
     // OLE / External Data
     pub fix_inplace_extent: Option<Point2d>,
     pub fix_inplace_gap: Option<Point2d>,
     pub cartridge_data: Option<Vec<u8>>,
-    
+
     // Window State
     pub window_is_zoomed: Option<bool>,
     pub window_position: Option<Point2d>,

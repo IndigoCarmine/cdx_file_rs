@@ -1,5 +1,4 @@
-
-use crate::cdx::values::{Point2d, Point3d, CDXString};
+use crate::cdx::values::{CDXString, Point2d, Point3d};
 
 use serde::{Deserialize, Serialize};
 /// Node Object: Basic building block representing atoms or attachment points
@@ -8,26 +7,26 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Node {
     pub id: u32,
-    
+
     // Common properties
     pub z_order: Option<i16>,
     pub ignore_warnings: Option<bool>,
     pub chemical_warning: Option<CDXString>,
     pub visible: Option<bool>,
-    
+
     // Position
     pub position_2d: Option<Point2d>,
     pub position_3d: Option<Point3d>,
-    
+
     // Color
     pub foreground_color: Option<u16>,
     pub background_color: Option<i16>,
-    
+
     // Node identity
     pub node_type: Option<i16>,
     pub label_display: Option<i8>,
     pub element: Option<i16>,
-    
+
     // Atomic properties
     pub isotope: Option<i16>,
     pub charge: Option<i8>,
@@ -45,13 +44,13 @@ pub struct Node {
     pub geometry: Option<i8>,
     pub bond_ordering: Option<Vec<u32>>,
     pub attachments: Option<Vec<u32>>,
-    
+
     // Generic/Alternative properties
     pub generic_nickname: Option<CDXString>,
     pub alt_group_id: Option<u32>,
     pub restrict_substituents_up_to: Option<u8>,
     pub restrict_substituents_exactly: Option<u8>,
-    
+
     // Stereochemistry / Query indicators
     pub cip_stereochemistry: Option<i8>,
     pub atom_translation: Option<i8>,
@@ -59,19 +58,19 @@ pub struct Node {
     pub show_query: Option<bool>,
     pub show_stereo: Option<bool>,
     pub show_atom_number: Option<bool>,
-    
+
     // Link node properties
     pub link_count_low: Option<i16>,
     pub link_count_high: Option<i16>,
     pub isotopic_abundance: Option<f64>,
     pub external_connection_type: Option<i8>,
     pub generic_list: Option<CDXString>,
-    
+
     // Enhanced stereo
     pub show_enhanced_stereo: Option<bool>,
     pub enhanced_stereo_type: Option<i8>,
     pub enhanced_stereo_group_num: Option<u16>,
-    
+
     // Styling
     pub line_width: Option<f64>,
     pub label_font: Option<i16>,

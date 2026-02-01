@@ -1,5 +1,5 @@
-use crate::renderer::CdxRenderer;
 use crate::cdx::values::Point2d;
+use crate::renderer::CdxRenderer;
 use eframe::egui;
 use std::collections::{HashMap, HashSet};
 

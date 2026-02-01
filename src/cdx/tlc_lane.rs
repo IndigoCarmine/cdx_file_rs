@@ -1,4 +1,3 @@
-
 use serde::{Deserialize, Serialize};
 
 /// TLC Lane Object: Lane within a TLC plate
@@ -14,9 +13,6 @@ pub struct TlcLane {
 impl TlcLane {
     /// Create a new TlcLane with default values
     pub fn new(id: u32) -> Self {
-        TlcLane {
-            id,
-            visible: None,
-        }
+        TlcLane { id, visible: None }
     }
 }

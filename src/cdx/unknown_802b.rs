@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct UnknownObject802B {
     pub id: u32,
-    
+
     // Store raw properties for roundtrip compatibility
     pub raw_properties: Vec<(u16, Vec<u8>)>,
 }

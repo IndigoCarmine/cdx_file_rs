@@ -1,5 +1,5 @@
-use serde::{Deserialize, Serialize};
 use crate::cdx::values::CDXString;
+use serde::{Deserialize, Serialize};
 
 /// Bond Object: Defines a connection between Node objects
 /// A Bond object defines a chemical bond connection between two atoms (Node objects).

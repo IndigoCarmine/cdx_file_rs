@@ -1,26 +1,26 @@
-use serde::{Deserialize, Serialize};
 use crate::cdx::values::*;
+use serde::{Deserialize, Serialize};
 
 /// ReactionStep object (0x800E)
 /// A component of a reaction scheme that represents a single chemical transformation
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct ReactionStep {
     pub id: u32,
-    
+
     // Core properties
     pub z_order: Option<i16>,
     pub visible: Option<bool>,
-    
+
     // Positioning
     pub bounding_box: Option<Rectangle>,
-    
+
     // Reaction properties
-    pub reaction_step_reactants: Option<Vec<u32>>,   // Object IDs of reactants
-    pub reaction_step_products: Option<Vec<u32>>,    // Object IDs of products
-    pub reaction_step_plusses: Option<Vec<u32>>,     // Object IDs of plus signs
-    pub reaction_step_arrows: Option<Vec<u32>>,      // Object IDs of arrows
-    pub reaction_step_objectsabovearrow: Option<Vec<u32>>,  // Object IDs above arrow
-    pub reaction_step_objectsbelowarrow: Option<Vec<u32>>,  // Object IDs below arrow
+    pub reaction_step_reactants: Option<Vec<u32>>, // Object IDs of reactants
+    pub reaction_step_products: Option<Vec<u32>>,  // Object IDs of products
+    pub reaction_step_plusses: Option<Vec<u32>>,   // Object IDs of plus signs
+    pub reaction_step_arrows: Option<Vec<u32>>,    // Object IDs of arrows
+    pub reaction_step_objectsabovearrow: Option<Vec<u32>>, // Object IDs above arrow
+    pub reaction_step_objectsbelowarrow: Option<Vec<u32>>, // Object IDs below arrow
 }
 
 impl ReactionStep {

@@ -1,6 +1,5 @@
 use thiserror::Error;
 
-
 #[derive(Error, Debug)]
 pub enum CdxError {
     #[error("IO error: {0}")]
@@ -20,4 +19,3 @@ pub enum CdxError {
 }
 
 pub type Result<T> = std::result::Result<T, CdxError>;
-

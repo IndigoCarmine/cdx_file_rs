@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Group {
     pub id: u32,
-    
+
     // Optional properties
     pub bounding_box: Option<crate::cdx::values::Rectangle>,
     pub integral: Option<bool>,

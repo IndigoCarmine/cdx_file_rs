@@ -1,11 +1,10 @@
 use crate::cdx::binary_codec::BinaryCodec;
+use crate::cdx::node::Node;
+use crate::cdx::values::*;
+use crate::cdx_parse_impl::raw_nodes::{RawCdxObject, RawCdxProperty};
+use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx_tags::node_tags::*;
 use crate::error::CdxError;
-use crate::cdx_parse_impl::tagged_object::TaggedObject;
-use crate::cdx_parse_impl::raw_nodes::{RawCdxObject, RawCdxProperty};
-use crate::cdx::values::*;
-use crate::cdx::node::Node;
-
 
 impl TaggedObject for Node {
     const TAG: u16 = CDXOBJ_NODE;
@@ -311,9 +310,8 @@ impl TaggedObject for Node {
     }
 
     fn to_raw(&self) -> Result<RawCdxObject, CdxError> {
-        
         let mut properties = Vec::new();
-        
+
         // Optional properties
         if let Some(val) = self.z_order {
             properties.push(RawCdxProperty {
@@ -609,7 +607,7 @@ impl TaggedObject for Node {
                 value: val.encode()?,
             });
         }
-        
+
         Ok(RawCdxObject {
             tag: Self::TAG,
             id: self.id,

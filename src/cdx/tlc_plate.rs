@@ -1,4 +1,3 @@
-
 use serde::{Deserialize, Serialize};
 
 /// TLC Plate Object: A rectangular object representing a Thin Layer Chromatography (TLC) plate
@@ -11,7 +10,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct TLCPlate {
     pub id: u32,
-    
+
     // Optional properties
     /// Back-to-front ordering index in 2D drawing (Optional)
     pub z_order: Option<i16>,

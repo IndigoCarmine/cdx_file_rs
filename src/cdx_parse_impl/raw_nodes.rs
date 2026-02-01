@@ -2,11 +2,10 @@
 
 use serde::{Deserialize, Serialize};
 
-
-
 /// CDX Object: Container for other objects and properties
 #[derive(Debug, Serialize, Deserialize, Clone)]
-pub struct RawCdxObject {  // Header is stored with the root object
+pub struct RawCdxObject {
+    // Header is stored with the root object
     pub tag: u16,
     pub id: u32,
     pub properties: Vec<RawCdxProperty>,
@@ -22,18 +21,18 @@ pub struct RawCdxProperty {
 
 impl RawCdxObject {
     pub fn get_property(&self, target_tag: u16) -> Option<&Vec<u8>> {
-        for property in  &self.properties{
-            if property.tag == target_tag{
-                return Some(&property.value)
-            }  
+        for property in &self.properties {
+            if property.tag == target_tag {
+                return Some(&property.value);
+            }
         }
         None
     }
 
     pub fn get_property_mut(&mut self, target_tag: u16) -> Option<&mut Vec<u8>> {
-        for child in &mut self.properties{
-            if child.tag == target_tag{
-                return Some(&mut child.value)
+        for child in &mut self.properties {
+            if child.tag == target_tag {
+                return Some(&mut child.value);
             }
         }
         None
@@ -43,8 +42,7 @@ impl RawCdxObject {
         if let Some(prop) = self.get_property_mut(tag) {
             *prop = value;
         } else {
-            self.properties
-                .push(RawCdxProperty { tag, value });
+            self.properties.push(RawCdxProperty { tag, value });
         }
     }
 
@@ -58,5 +56,4 @@ impl RawCdxObject {
         }
         results
     }
-
 }

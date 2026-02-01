@@ -2,7 +2,7 @@ pub use eframe::egui;
 
 pub mod core;
 
-pub use core::{Drawable, RenderContext, CdxRenderer, element_to_symbol};
+pub use core::{CdxRenderer, Drawable, RenderContext, element_to_symbol};
 
 pub mod arrow;
 pub mod bond;

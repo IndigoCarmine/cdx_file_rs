@@ -1,7 +1,7 @@
-use crate::cdx::border::Border;
-use crate::cdx_parse_impl::tagged_object::TaggedObject;
-use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
 use crate::cdx::binary_codec::BinaryCodec;
+use crate::cdx::border::Border;
+use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
+use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::cdx_tags::border_tags::*;
 use crate::error::CdxError;
 
