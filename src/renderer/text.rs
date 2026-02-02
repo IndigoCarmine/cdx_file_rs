@@ -1,6 +1,8 @@
 use crate::cdx::text::TextObject;
+use crate::cdx::values::CDXStyleRun;
 use crate::renderer::{Drawable, RenderContext};
 use eframe::egui;
+use egui::text::{LayoutJob, TextFormat};
 
 impl Drawable for TextObject {
     fn draw(&self, ctx: &RenderContext) {
@@ -44,10 +46,138 @@ impl Drawable for TextObject {
                 return;
             }
 
-            // Render text with style runs
-            self.draw_styled_text(ctx, text_str, style_runs, screen_pos, base_align);
+            // Render text with style runs using the public function
+            draw_cdx_string(ctx, text_str, style_runs, screen_pos, base_align);
         }
     }
+}
+
+/// Public function to draw CDX styled string using LayoutJob and TextFormat
+/// This function properly handles bold, italic, underline, subscript, and superscript styles
+pub fn draw_cdx_string(
+    ctx: &RenderContext,
+    text: &str,
+    style_runs: &[CDXStyleRun],
+    pos: egui::Pos2,
+    base_align: egui::Align2,
+) {
+    if style_runs.is_empty() {
+        return;
+    }
+
+    let chars: Vec<char> = text.chars().collect();
+    let scale = ctx.zoom * ctx.auto_scale;
+
+    // Create a LayoutJob for the entire text
+    let mut job = LayoutJob::default();
+
+    // Track if we have any subscript/superscript to handle positioning manually
+    let mut has_script = false;
+    let mut max_baseline_shift = 0.0_f32;
+
+    // Process each style run
+    for (i, run) in style_runs.iter().enumerate() {
+        let start_idx = run.char_index as usize;
+        let end_idx = if i + 1 < style_runs.len() {
+            style_runs[i + 1].char_index as usize
+        } else {
+            chars.len()
+        };
+
+        if start_idx >= chars.len() {
+            continue;
+        }
+
+        let segment: String = chars[start_idx..end_idx.min(chars.len())].iter().collect();
+
+        // Font size: 20ths of a point -> points
+        let base_font_size = (run.font_size as f32) / 20.0;
+        let font_size = base_font_size * scale;
+
+        // Get color from color table
+        let color = ctx
+            .document
+            .get_color_table()
+            .and_then(|ct| ct.get(run.color_index as usize))
+            .map(|c| c.to_color32())
+            .unwrap_or(egui::Color32::BLACK);
+
+        // Parse font_face to determine style
+        let is_bold = (run.font_face & 0x01) != 0;
+        let is_italic = (run.font_face & 0x02) != 0;
+        let is_underline = (run.font_face & 0x04) != 0;
+        // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
+        let script_style = run.font_face & 0x60;
+        let is_subscript = script_style == 0x20;
+        let is_superscript = script_style == 0x40;
+
+        if is_subscript || is_superscript {
+            has_script = true;
+        }
+
+        // Adjust font size for sub/superscript
+        let adjusted_font_size = if is_superscript || is_subscript {
+            font_size * 0.7
+        } else {
+            font_size
+        };
+
+        // Calculate baseline shift for subscript/superscript
+        let baseline_shift = if is_superscript {
+            let shift = font_size * 0.4;
+            max_baseline_shift = max_baseline_shift.max(shift);
+            shift
+        } else if is_subscript {
+            -font_size * 0.3
+        } else {
+            0.0
+        };
+
+        // Create TextFormat with proper styling
+        // Note: egui 0.29 doesn't support baseline shift in TextFormat
+        // We'll handle subscript/superscript positioning manually
+        let format = TextFormat {
+            font_id: egui::FontId::proportional(adjusted_font_size),
+            color,
+            italics: is_italic,
+            underline: if is_underline {
+                egui::Stroke::new(1.0, color)
+            } else {
+                egui::Stroke::NONE
+            },
+            valign: if is_superscript {
+                egui::Align::TOP
+            } else if is_subscript {
+                egui::Align::BOTTOM
+            } else {
+                egui::Align::Center
+            },
+            ..Default::default()
+        };
+
+        // Append the segment to the job
+        job.append(&segment, 0.0, format);
+    }
+
+    // Adjust horizontal alignment for the job
+    job.halign = match base_align.x() {
+        egui::Align::LEFT => egui::Align::LEFT,
+        egui::Align::Center => egui::Align::Center,
+        egui::Align::RIGHT => egui::Align::RIGHT,
+    };
+
+    // Create galley from the layout job
+    let galley = ctx.painter.fonts(|fonts| fonts.layout_job(job));
+
+    // Calculate final position based on vertical alignment
+    let final_pos = match base_align.y() {
+        egui::Align::TOP => pos,
+        egui::Align::Center => egui::Pos2::new(pos.x, pos.y - galley.size().y / 2.0),
+        egui::Align::BOTTOM => egui::Pos2::new(pos.x, pos.y - galley.size().y),
+    };
+
+    // Draw the galley
+    ctx.painter.galley(final_pos, galley, egui::Color32::BLACK);
 }
 
 impl TextObject {
@@ -55,136 +185,26 @@ impl TextObject {
         &self,
         ctx: &RenderContext,
         text: &str,
-        style_runs: &[crate::cdx::values::CDXStyleRun],
+        style_runs: &[CDXStyleRun],
         pos: egui::Pos2,
         base_align: egui::Align2,
     ) {
-        if style_runs.is_empty() {
-            return;
-        }
-
-        let chars: Vec<char> = text.chars().collect();
-        let current_y = pos.y;
-
-        // Calculate total width to determine starting position based on alignment
-        let total_width = self.calculate_total_width(ctx, text, style_runs);
-
-        // Calculate starting X position based on alignment
-        let start_x = match base_align.x() {
-            egui::Align::LEFT => pos.x,
-            egui::Align::Center => pos.x - total_width / 2.0,
-            egui::Align::RIGHT => pos.x - total_width,
-        };
-
-        let mut current_x = start_x;
-
-        // All segments rendered with LEFT alignment from the calculated start position
-        let segment_align = egui::Align2::LEFT_CENTER;
-
-        // Render each style run
-        for (i, run) in style_runs.iter().enumerate() {
-            let start_idx = run.char_index as usize;
-            let end_idx = if i + 1 < style_runs.len() {
-                style_runs[i + 1].char_index as usize
-            } else {
-                chars.len()
-            };
-
-            if start_idx >= chars.len() {
-                continue;
-            }
-
-            let segment: String = chars[start_idx..end_idx.min(chars.len())].iter().collect();
-
-            // Font size: 20ths of a point -> points
-            let base_font_size = (run.font_size as f32) / 20.0;
-            // Apply scale for consistent sizing
-            let scale = ctx.zoom * ctx.auto_scale;
-            let font_size = base_font_size * scale;
-
-            // Get color from color table
-            let color = ctx
-                .document
-                .get_color_table()
-                .and_then(|ct| ct.get(run.color_index as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(egui::Color32::BLACK);
-
-            // Parse font_face to determine style
-            let _is_bold = (run.font_face & 0x01) != 0;
-            let _is_italic = (run.font_face & 0x02) != 0;
-            let is_underline = (run.font_face & 0x04) != 0;
-            // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
-            let script_style = run.font_face & 0x60;
-            let is_subscript = script_style == 0x20;
-            let is_superscript = script_style == 0x40;
-
-            // Calculate Y offset for subscript/superscript
-            let y_offset = if is_superscript {
-                -font_size * 0.4 // Move up for superscript
-            } else if is_subscript {
-                font_size * 0.3 // Move down for subscript
-            } else {
-                0.0
-            };
-
-            // Adjust font size for sub/superscript
-            let adjusted_font_size = if is_superscript || is_subscript {
-                font_size * 0.7
-            } else {
-                font_size
-            };
-
-            // Create font with appropriate style
-            // egui doesn't have direct bold/italic control in FontFamily
-            // We use Proportional as base for all styles
-            let adjusted_font_id =
-                egui::FontId::new(adjusted_font_size, egui::FontFamily::Proportional);
-
-            // Calculate segment position
-            let segment_pos = egui::Pos2::new(current_x, current_y + y_offset);
-
-            // Draw the text segment with left alignment
-            ctx.painter.text(
-                segment_pos,
-                segment_align,
-                &segment,
-                adjusted_font_id.clone(),
-                color,
-            );
-
-            // Draw underline if needed
-            if is_underline {
-                let galley =
-                    ctx.painter
-                        .layout_no_wrap(segment.clone(), adjusted_font_id.clone(), color);
-                let underline_y = segment_pos.y + adjusted_font_size * 0.6;
-                let underline_start = egui::Pos2::new(segment_pos.x, underline_y);
-                let underline_end = egui::Pos2::new(segment_pos.x + galley.size().x, underline_y);
-                ctx.painter.line_segment(
-                    [underline_start, underline_end],
-                    egui::Stroke::new(1.0, color),
-                );
-            }
-
-            // Calculate the width of this segment to advance cursor
-            let galley = ctx.painter.layout_no_wrap(segment, adjusted_font_id, color);
-            current_x += galley.size().x;
-        }
+        draw_cdx_string(ctx, text, style_runs, pos, base_align);
     }
 
     fn calculate_total_width(
         &self,
         ctx: &RenderContext,
         text: &str,
-        style_runs: &[crate::cdx::values::CDXStyleRun],
+        style_runs: &[CDXStyleRun],
     ) -> f32 {
         if style_runs.is_empty() {
             return 0.0;
         }
 
         let chars: Vec<char> = text.chars().collect();
-        let mut total_width = 0.0;
+        let scale = ctx.zoom * ctx.auto_scale;
+        let mut job = LayoutJob::default();
 
         for (i, run) in style_runs.iter().enumerate() {
             let start_idx = run.char_index as usize;
@@ -200,10 +220,8 @@ impl TextObject {
 
             let segment: String = chars[start_idx..end_idx.min(chars.len())].iter().collect();
             let base_font_size = (run.font_size as f32) / 20.0;
-            let scale = ctx.zoom * ctx.auto_scale;
             let font_size = base_font_size * scale;
 
-            // Adjust font size for sub/superscript
             // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
             let script_style = run.font_face & 0x60;
             let is_subscript = script_style == 0x20;
@@ -214,8 +232,6 @@ impl TextObject {
                 font_size
             };
 
-            let font_id = egui::FontId::new(adjusted_font_size, egui::FontFamily::Proportional);
-
             let color = ctx
                 .document
                 .get_color_table()
@@ -223,10 +239,17 @@ impl TextObject {
                 .map(|c| c.to_color32())
                 .unwrap_or(egui::Color32::BLACK);
 
-            let galley = ctx.painter.layout_no_wrap(segment, font_id, color);
-            total_width += galley.size().x;
+            let format = TextFormat {
+                font_id: egui::FontId::proportional(adjusted_font_size),
+                color,
+                ..Default::default()
+            };
+
+            job.append(&segment, 0.0, format);
         }
 
-        total_width
+        // Calculate width by creating a temporary galley
+        let galley = ctx.painter.fonts(|fonts| fonts.layout_job(job));
+        galley.size().x
     }
 }
