@@ -14,6 +14,12 @@ use std::collections::HashMap;
 /// coordinate origin, and Document defaults (font, color, etc.).
 pub trait Drawable {
     fn draw(&self, ctx: &RenderContext);
+    
+    /// Draw with access to the tree node (for objects that need child access)
+    /// Default implementation calls draw() for backward compatibility
+    fn draw_with_node(&self, ctx: &RenderContext, _node: &Node<NodePayload>) {
+        self.draw(ctx);
+    }
 }
 
 #[macro_export]
@@ -28,6 +34,14 @@ macro_rules! define_node_renderer {
                         NodePayload::$ty(inner) => inner.draw(ctx),
                     )*
 
+                }
+            }
+            
+            pub fn draw_with_node(&self, ctx: &RenderContext, node: &dendron::Node<NodePayload>) {
+                match self {
+                    $(
+                        NodePayload::$ty(inner) => inner.draw_with_node(ctx, node),
+                    )*
                 }
             }
         }
@@ -49,6 +63,7 @@ define_node_renderer!(
     Page,
     ReactionScheme,
     ReactionStep,
+    Table,
     TextObject,
     TlcLane,
     TLCPlate,
