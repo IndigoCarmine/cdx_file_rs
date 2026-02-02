@@ -1,9 +1,9 @@
 use crate::cdx::text::TextObject;
 use crate::renderer::{Drawable, RenderContext};
-use eframe::egui;
+use crate::renderer::backend::Align2;
 
 impl Drawable for TextObject {
-    fn draw(&self, ctx: &RenderContext) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
         // Check visibility
         if let Some(false) = self.visible {
             return;
@@ -14,10 +14,10 @@ impl Drawable for TextObject {
 
             // Determine base alignment based on justification
             let base_align = match self.justification.or(self.caption_justification) {
-                Some(0) => egui::Align2::LEFT_CENTER,   // Left
-                Some(1) => egui::Align2::CENTER_CENTER, // Center
-                Some(2) => egui::Align2::RIGHT_CENTER,  // Right
-                _ => egui::Align2::LEFT_CENTER,         // Default to left
+                Some(0) => Align2::LEFT_CENTER,   // Left
+                Some(1) => Align2::CENTER_CENTER, // Center
+                Some(2) => Align2::RIGHT_CENTER,  // Right
+                _ => Align2::LEFT_CENTER,         // Default to left
             };
 
             // Get text content from CDXString
@@ -37,19 +37,9 @@ impl Drawable for TextObject {
 
                 // Determine text color (prefer caption color, fallback to label color, then document default)
                 let color = if let Some(idx) = self.caption_color {
-                    ctx
-                        .document
-                        .get_color_table()
-                        .and_then(|ct| ct.get(idx as usize))
-                        .map(|c| c.to_color32())
-                        .unwrap_or_else(|| ctx.default_caption_color())
+                    ctx.resolve_color_i16(Some(idx), ctx.default_caption_color())
                 } else if let Some(idx) = self.label_color {
-                    ctx
-                        .document
-                        .get_color_table()
-                        .and_then(|ct| ct.get(idx as usize))
-                        .map(|c| c.to_color32())
-                        .unwrap_or_else(|| ctx.default_label_color())
+                    ctx.resolve_color_i16(Some(idx), ctx.default_label_color())
                 } else {
                     ctx.default_caption_color()
                 };
@@ -65,14 +55,16 @@ impl Drawable for TextObject {
 }
 
 impl TextObject {
-    fn draw_styled_text(
+    fn draw_styled_text<P: crate::renderer::backend::AbstractPainter>(
         &self,
-        ctx: &RenderContext,
+        ctx: &RenderContext<P>,
         text: &str,
         style_runs: &[crate::cdx::values::CDXStyleRun],
-        pos: egui::Pos2,
-        base_align: egui::Align2,
+        pos: crate::renderer::backend::Point2d,
+        base_align: crate::renderer::backend::Align2,
     ) {
+        use crate::renderer::backend::{Point2d as BackendPoint2d, Align2, Align, FontId, FontFamily, Stroke, Color as BackendColor};
+        
         if style_runs.is_empty() {
             return;
         }
@@ -85,15 +77,15 @@ impl TextObject {
 
         // Calculate starting X position based on alignment
         let start_x = match base_align.x() {
-            egui::Align::LEFT => pos.x,
-            egui::Align::Center => pos.x - total_width / 2.0,
-            egui::Align::RIGHT => pos.x - total_width,
+            Align::LEFT => pos.x,
+            Align::Center => pos.x - total_width / 2.0,
+            Align::RIGHT => pos.x - total_width,
         };
 
         let mut current_x = start_x;
 
         // All segments rendered with LEFT alignment from the calculated start position
-        let segment_align = egui::Align2::LEFT_CENTER;
+        let segment_align = Align2::LEFT_CENTER;
 
         // Render each style run
         for (i, run) in style_runs.iter().enumerate() {
@@ -117,12 +109,8 @@ impl TextObject {
             let font_size = base_font_size * scale;
 
             // Get color from color table or use document default
-            let color = ctx
-                .document
-                .get_color_table()
-                .and_then(|ct| ct.get(run.color_index as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or_else(|| ctx.default_caption_color());
+            let color =
+                ctx.resolve_color(Some(run.color_index), ctx.default_caption_color());
 
             // Parse font_face to determine style
             let _is_bold = (run.font_face & 0x01) != 0;
@@ -151,10 +139,10 @@ impl TextObject {
             // egui doesn't have direct bold/italic control in FontFamily
             // We use Proportional as base for all styles
             let adjusted_font_id =
-                egui::FontId::new(adjusted_font_size, egui::FontFamily::Proportional);
+                FontId::new(adjusted_font_size, FontFamily::Proportional);
 
             // Calculate segment position
-            let segment_pos = egui::Pos2::new(current_x, current_y + y_offset);
+            let segment_pos = BackendPoint2d::new(current_x, current_y + y_offset);
 
             // Draw the text segment with left alignment
             ctx.painter.text(
@@ -171,26 +159,29 @@ impl TextObject {
                     ctx.painter
                         .layout_no_wrap(segment.clone(), adjusted_font_id.clone(), color);
                 let underline_y = segment_pos.y + adjusted_font_size * 0.6;
-                let underline_start = egui::Pos2::new(segment_pos.x, underline_y);
-                let underline_end = egui::Pos2::new(segment_pos.x + galley.size().x, underline_y);
+                let underline_start = BackendPoint2d::new(segment_pos.x, underline_y);
+                let underline_end = BackendPoint2d::new(segment_pos.x + galley.size.0, underline_y);
                 ctx.painter.line_segment(
-                    [underline_start, underline_end],
-                    egui::Stroke::new(1.0, color),
+                    underline_start,
+                    underline_end,
+                    Stroke::new(1.0, color),
                 );
             }
 
             // Calculate the width of this segment to advance cursor
             let galley = ctx.painter.layout_no_wrap(segment, adjusted_font_id, color);
-            current_x += galley.size().x;
+            current_x += galley.size.0;
         }
     }
 
-    fn calculate_total_width(
+    fn calculate_total_width<P: crate::renderer::backend::AbstractPainter>(
         &self,
-        ctx: &RenderContext,
+        ctx: &RenderContext<P>,
         text: &str,
         style_runs: &[crate::cdx::values::CDXStyleRun],
     ) -> f32 {
+        use crate::renderer::backend::{FontId, FontFamily};
+        
         if style_runs.is_empty() {
             return 0.0;
         }
@@ -224,17 +215,13 @@ impl TextObject {
                 font_size
             };
 
-            let font_id = egui::FontId::new(adjusted_font_size, egui::FontFamily::Proportional);
+            let font_id = FontId::new(adjusted_font_size, FontFamily::Proportional);
 
-            let color = ctx
-                .document
-                .get_color_table()
-                .and_then(|ct| ct.get(run.color_index as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or_else(|| ctx.default_caption_color());
+            let color =
+                ctx.resolve_color(Some(run.color_index), ctx.default_caption_color());
 
             let galley = ctx.painter.layout_no_wrap(segment, font_id, color);
-            total_width += galley.size().x;
+            total_width += galley.size.0;
         }
 
         total_width

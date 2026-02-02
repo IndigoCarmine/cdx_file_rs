@@ -2,22 +2,55 @@ use crate::cdx::color_table::RGBColor;
 use crate::cdx::document::Document;
 use crate::cdx::file::CdxFile;
 use crate::cdx::file::NodePayload;
-use crate::cdx::values::Point2d;
+use crate::cdx::values::Point2d as CdxPoint2d;
 use dendron::Node;
 use eframe::egui::{self, Color32, Painter, Pos2};
 use std::collections::HashMap;
-/// Common trait for rendering chemical model objects in egui.
+use super::backend::{AbstractPainter, Color as BackendColor, Point2d as BackendPoint2d, Align2 as BackendAlign2, FontId as BackendFontId};
+use super::egui_backend::EguiBackend;
+
+#[derive(Clone)]
+pub struct RenderStyle {
+    pub default_atom_radius: f32,
+    pub charge_label_size: f32,
+    pub charge_label_offset: f32,
+    pub screen_dpi: f32,
+    pub arrowhead_size_default: f32,
+    pub arrowhead_side_ratio: f32,
+    pub arrowhead_min_length: f32,
+    pub arrowhead_max_screen: f32,
+    pub bracket_lip_ratio: f32,
+    pub arc_segment_degrees: f32,
+}
+
+impl Default for RenderStyle {
+    fn default() -> Self {
+        RenderStyle {
+            default_atom_radius: 10.0,
+            charge_label_size: 8.0,
+            charge_label_offset: 8.0,
+            screen_dpi: 96.0,
+            arrowhead_size_default: 10.0,
+            arrowhead_side_ratio: 0.4,
+            arrowhead_min_length: 0.01,
+            arrowhead_max_screen: 20.0,
+            bracket_lip_ratio: 0.05,
+            arc_segment_degrees: 5.0,
+        }
+    }
+}
+/// Common trait for rendering chemical model objects.
 ///
 /// This trait defines the minimal interface required for drawing
-/// domain objects (e.g., Bond, Node, Fragment) onto a 2D egui canvas.
+/// domain objects (e.g., Bond, Node, Fragment) onto a 2D canvas.
 /// Implementations receive a RenderContext with access to the Painter,
 /// coordinate origin, and Document defaults (font, color, etc.).
 pub trait Drawable {
-    fn draw(&self, ctx: &RenderContext);
+    fn draw<P: AbstractPainter>(&self, ctx: &RenderContext<P>);
     
     /// Draw with access to the tree node (for objects that need child access)
     /// Default implementation calls draw() for backward compatibility
-    fn draw_with_node(&self, ctx: &RenderContext, _node: &Node<NodePayload>) {
+    fn draw_with_node<P: AbstractPainter>(&self, ctx: &RenderContext<P>, _node: &Node<NodePayload>) {
         self.draw(ctx);
     }
 }
@@ -28,7 +61,7 @@ macro_rules! define_node_renderer {
              $( $ty:ident ),* $(,)?
     ) => {
         impl NodePayload {
-            pub fn draw(&self, ctx: &RenderContext) {
+            pub fn draw<P: $crate::renderer::backend::AbstractPainter>(&self, ctx: &$crate::renderer::RenderContext<P>) {
                 match self {
                     $(
                         NodePayload::$ty(inner) => inner.draw(ctx),
@@ -37,7 +70,7 @@ macro_rules! define_node_renderer {
                 }
             }
             
-            pub fn draw_with_node(&self, ctx: &RenderContext, node: &dendron::Node<NodePayload>) {
+            pub fn draw_with_node<P: $crate::renderer::backend::AbstractPainter>(&self, ctx: &$crate::renderer::RenderContext<P>, node: &dendron::Node<NodePayload>) {
                 match self {
                     $(
                         NodePayload::$ty(inner) => inner.draw_with_node(ctx, node),
@@ -141,6 +174,14 @@ impl RGBColor {
             (self.blue * 255.0) as u8,
         )
     }
+    
+    pub fn to_backend_color(&self) -> BackendColor {
+        BackendColor::from_rgb(
+            (self.red * 255.0) as u8,
+            (self.green * 255.0) as u8,
+            (self.blue * 255.0) as u8,
+        )
+    }
 }
 impl Document {
     pub fn get_color_table(&self) -> Option<&Vec<RGBColor>> {
@@ -189,14 +230,15 @@ impl<'a> CdxRenderer<'a> {
             Ok(doc) => doc,
             Err(_) => return, // or handle error appropriately
         };
-        let mut node_positions: HashMap<u32, Point2d> = HashMap::new();
+        let mut node_positions: HashMap<u32, CdxPoint2d> = HashMap::new();
         let tree = &cdx_file.tree;
         let root = tree.root();
         self.collect_node_positions(root, &mut node_positions);
 
         // Use the pre-calculated center_offset instead of recalculating it
+        let egui_backend = EguiBackend::new(painter);
         let ctx = RenderContext::new(
-            painter,
+            &egui_backend,
             Pos2 {
                 x: self.center_offset.x + self.offset.x,
                 y: self.center_offset.y + self.offset.y,
@@ -214,7 +256,7 @@ impl<'a> CdxRenderer<'a> {
         self.render(root, &ctx);
     }
 
-    fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext) {
+    fn render<P: AbstractPainter>(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext<P>) {
         let data = root.borrow_data();
         
         // Draw the current object with its parent's context
@@ -222,31 +264,33 @@ impl<'a> CdxRenderer<'a> {
         
         // Check if this object defines a coordinate offset for its children
         // Currently only Page objects with BoundsInParent need this
-        let child_ctx = if let NodePayload::Page(page) = &*data {
+        let child_ctx; // Declare outside to avoid lifetime issues
+        let ctx_ref: &RenderContext<P> = if let NodePayload::Page(page) = &*data {
             if let Some(bounds) = &page.bounds_in_parent {
                 // Create a child context with offset from the parent's top-left corner
-                let offset = Point2d {
+                let offset = CdxPoint2d {
                     x: bounds.left,
                     y: bounds.top,
                 };
-                ctx.with_offset(&offset)
+                child_ctx = ctx.with_offset(&offset);
+                &child_ctx
             } else {
-                ctx.clone()
+                ctx
             }
         } else {
-            ctx.clone()
+            ctx
         };
         
         // Render children with potentially modified context
         for child in root.children() {
-            self.render(child, &child_ctx);
+            self.render(child, ctx_ref);
         }
     }
 
     fn collect_node_positions(
         &self,
         root: Node<crate::cdx::file::NodePayload>,
-        node_positions: &mut HashMap<u32, Point2d>,
+        node_positions: &mut HashMap<u32, CdxPoint2d>,
     ) {
         let data = root.borrow_data();
 
@@ -255,7 +299,7 @@ impl<'a> CdxRenderer<'a> {
                 node_positions.insert(node_obj.id, pos.clone());
             } else if let Some(pos3d) = &node_obj.position_3d {
                 // Try to use 3D position if 2D is not available
-                let pos_2d = Point2d {
+                let pos_2d = CdxPoint2d {
                     x: pos3d.x,
                     y: pos3d.y,
                 };
@@ -270,7 +314,7 @@ impl<'a> CdxRenderer<'a> {
 
     /// Calculate auto-scale factor to fit document bounds within window
     /// Returns (scale, center_offset)
-    fn calculate_auto_scale(&self, node_positions: &HashMap<u32, Point2d>) -> (f32, egui::Vec2) {
+    fn calculate_auto_scale(&self, node_positions: &HashMap<u32, CdxPoint2d>) -> (f32, egui::Vec2) {
         if node_positions.is_empty() {
             return (1.0, egui::Vec2::ZERO);
         }
@@ -359,12 +403,11 @@ impl<'a> CdxRenderer<'a> {
 /// 4. User zooms to 1.5x: zoom = 1.5
 /// 5. Final scale = 1.5 * 1.0 = 1.5
 /// 6. Node at CDX 100 → Screen 800/2 + 100*1.5 = 550px
-#[derive(Clone)]
-pub struct RenderContext<'a> {
-    pub painter: &'a Painter,
+pub struct RenderContext<'a, P: AbstractPainter> {
+    pub painter: &'a P,
     pub origin: Pos2,
     pub document: &'a Document,
-    pub node_positions: HashMap<u32, Point2d>,
+    pub node_positions: HashMap<u32, CdxPoint2d>,
     /// User-controlled zoom factor for interactive scaling
     /// Multiplied with auto_scale to achieve final screen scale
     pub zoom: f32,
@@ -373,16 +416,17 @@ pub struct RenderContext<'a> {
     pub auto_scale: f32,
     /// Cumulative offset from parent objects (in CDX coordinates)
     /// Applied before scaling to maintain relative positioning in parent containers
-    pub parent_offset: Point2d,
+    pub parent_offset: CdxPoint2d,
+    pub style: RenderStyle,
 }
 
-impl<'a> RenderContext<'a> {
+impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     /// Create a new rendering context
     pub fn new(
-        painter: &'a Painter,
+        painter: &'a P,
         origin: Pos2,
         document: &'a Document,
-        node_positions: HashMap<u32, Point2d>,
+        node_positions: HashMap<u32, CdxPoint2d>,
         zoom: f32,
         auto_scale: f32,
     ) -> Self {
@@ -393,8 +437,14 @@ impl<'a> RenderContext<'a> {
             node_positions,
             zoom,
             auto_scale,
-            parent_offset: Point2d { x: 0.0, y: 0.0 },
+            parent_offset: CdxPoint2d { x: 0.0, y: 0.0 },
+            style: RenderStyle::default(),
         }
+    }
+
+    pub fn with_style(mut self, style: RenderStyle) -> Self {
+        self.style = style;
+        self
     }
 
     /// Create a child rendering context with an additional offset
@@ -425,7 +475,7 @@ impl<'a> RenderContext<'a> {
     /// ## Scaling Note
     /// All scaling (zoom * auto_scale) remains unchanged and is applied uniformly.
     /// The offset accumulation is purely additive in CDX coordinate space.
-    pub fn with_offset(&self, offset: &Point2d) -> Self {
+    pub fn with_offset(&self, offset: &CdxPoint2d) -> Self {
         RenderContext {
             painter: self.painter,
             origin: self.origin,
@@ -433,10 +483,11 @@ impl<'a> RenderContext<'a> {
             node_positions: self.node_positions.clone(),
             zoom: self.zoom,
             auto_scale: self.auto_scale,
-            parent_offset: Point2d {
+            parent_offset: CdxPoint2d {
                 x: self.parent_offset.x + offset.x,
                 y: self.parent_offset.y + offset.y,
             },
+            style: self.style.clone(),
         }
     }
 
@@ -469,43 +520,54 @@ impl<'a> RenderContext<'a> {
     ///   CDX(100, 100) → Screen(600, 100) [twice as far from origin]
     /// - With parent_offset=(50, 50):
     ///   CDX(100, 100) → Screen(550, 150) [offset applied before scaling]
-    pub fn cdx_to_screen(&self, cdx_pos: &Point2d) -> Pos2 {
+    pub fn cdx_to_screen(&self, cdx_pos: &CdxPoint2d) -> BackendPoint2d {
         let scale = self.zoom * self.auto_scale;
         // Apply parent offset to the CDX position
         let adjusted_x = cdx_pos.x + self.parent_offset.x;
         let adjusted_y = cdx_pos.y + self.parent_offset.y;
-        Pos2 {
-            x: self.origin.x + (adjusted_x as f32 * scale),
-            y: self.origin.y - (adjusted_y as f32 * scale), // CDX uses inverted Y-axis
-        }
+        BackendPoint2d::new(
+            self.origin.x + (adjusted_x as f32 * scale),
+            self.origin.y - (adjusted_y as f32 * scale), // CDX uses inverted Y-axis
+        )
+    }
+
+    /// Convert CDX length to screen length (pixels)
+    pub fn cdx_length_to_screen(&self, cdx_length: f64) -> f32 {
+        (cdx_length as f32) * self.zoom * self.auto_scale
+    }
+
+    /// Convert CDX offset to screen offset (pixels), including inverted Y
+    pub fn cdx_offset_to_screen(&self, dx: f64, dy: f64) -> (f32, f32) {
+        let scale = self.zoom * self.auto_scale;
+        (dx as f32 * scale, -(dy as f32 * scale))
     }
 
     /// Get a node position by node id
-    pub fn node_position(&self, node_id: u32) -> Option<&Point2d> {
+    pub fn node_position(&self, node_id: u32) -> Option<&CdxPoint2d> {
         self.node_positions.get(&node_id)
     }
 
     /// Draw text at specified position
-    pub fn draw_text(&self, text: &str, pos: Pos2, color: Color32, size: f32) {
+    pub fn draw_text(&self, text: &str, pos: BackendPoint2d, color: BackendColor, size: f32) {
         let scale = self.zoom * self.auto_scale;
         let scaled_size = size * scale;
-        let font_id = egui::FontId::new(scaled_size, egui::FontFamily::Monospace);
+        let font_id = BackendFontId::new(scaled_size, super::backend::FontFamily::Monospace);
         self.painter
-            .text(pos, egui::Align2::CENTER_CENTER, text, font_id, color);
+            .text(pos, BackendAlign2::CENTER_CENTER, text, font_id, color);
     }
 
     /// Draw text at specified position with custom alignment
     pub fn draw_text_with_align(
         &self,
         text: &str,
-        pos: Pos2,
-        align: egui::Align2,
-        color: Color32,
+        pos: BackendPoint2d,
+        align: BackendAlign2,
+        color: BackendColor,
         size: f32,
     ) {
         let scale = self.zoom * self.auto_scale;
         let scaled_size = size * scale;
-        let font_id = egui::FontId::new(scaled_size, egui::FontFamily::Proportional);
+        let font_id = BackendFontId::new(scaled_size, super::backend::FontFamily::Proportional);
         self.painter.text(pos, align, text, font_id, color);
     }
 
@@ -513,29 +575,50 @@ impl<'a> RenderContext<'a> {
         self.document.bond_length.unwrap_or(30.0)
     }
 
+    /// Resolve a color index using document color table and fallback
+    pub fn resolve_color(&self, color_index: Option<u16>, default: BackendColor) -> BackendColor {
+        match color_index {
+            Some(idx) => self
+                .document
+                .get_color_table()
+                .and_then(|ct| ct.get(idx as usize))
+                .map(|c| c.to_backend_color())
+                .unwrap_or(default),
+            None => default,
+        }
+    }
+
+    /// Resolve a possibly signed color index; negatives fallback
+    pub fn resolve_color_i16(&self, color_index: Option<i16>, default: BackendColor) -> BackendColor {
+        match color_index {
+            Some(idx) if idx >= 0 => self.resolve_color(Some(idx as u16), default),
+            _ => default,
+        }
+    }
+
     /// Get default foreground color from document or use fallback
-    pub fn default_foreground_color(&self) -> Color32 {
+    pub fn default_foreground_color(&self) -> BackendColor {
         //color index 3 is default foreground
         match self.document.label_color {
             Some(idx) => self
                 .document
                 .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(Color32::BLACK),
-            None => Color32::BLACK,
+                .map(|c| c.to_backend_color())
+                .unwrap_or(BackendColor::BLACK),
+            None => BackendColor::BLACK,
         }
     }
-    pub fn default_background_color(&self) -> Color32 {
+    pub fn default_background_color(&self) -> BackendColor {
         //color index 2 is default background
         match self.document.label_color {
             Some(idx) => self
                 .document
                 .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(Color32::WHITE),
-            None => Color32::WHITE,
+                .map(|c| c.to_backend_color())
+                .unwrap_or(BackendColor::WHITE),
+            None => BackendColor::WHITE,
         }
     }
 
@@ -560,15 +643,15 @@ impl<'a> RenderContext<'a> {
     }
 
     /// Get default label color from document or use fallback
-    pub fn default_label_color(&self) -> Color32 {
+    pub fn default_label_color(&self) -> BackendColor {
         match self.document.label_color {
             Some(idx) => self
                 .document
                 .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(Color32::BLACK),
-            None => Color32::BLACK,
+                .map(|c| c.to_backend_color())
+                .unwrap_or(BackendColor::BLACK),
+            None => BackendColor::BLACK,
         }
     }
 
@@ -578,15 +661,15 @@ impl<'a> RenderContext<'a> {
     }
 
     /// Get default caption color from document or use fallback
-    pub fn default_caption_color(&self) -> Color32 {
+    pub fn default_caption_color(&self) -> BackendColor {
         match self.document.caption_color {
             Some(idx) => self
                 .document
                 .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(Color32::BLACK),
-            None => Color32::BLACK,
+                .map(|c| c.to_backend_color())
+                .unwrap_or(BackendColor::BLACK),
+            None => BackendColor::BLACK,
         }
     }
 }

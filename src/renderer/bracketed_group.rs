@@ -2,7 +2,7 @@ use crate::cdx::bracketed_group::BracketedGroup;
 use crate::renderer::{Drawable, RenderContext};
 
 impl Drawable for BracketedGroup {
-    fn draw(&self, _ctx: &RenderContext) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, _ctx: &crate::renderer::RenderContext<P>) {
         // BracketedGroup is a container object that groups other objects
         // The actual visual representation is provided by:
         // 1. BracketAttachment subobjects (which reference Graphic objects for the brackets)

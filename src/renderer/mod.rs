@@ -1,8 +1,12 @@
 pub use eframe::egui;
 
+pub mod backend;
+pub mod egui_backend;
 pub mod core;
 
-pub use core::{CdxRenderer, Drawable, RenderContext, element_to_symbol};
+pub use backend::{AbstractPainter, Color, Point2d, Stroke, Rect, Align, Align2, FontFamily, FontId, Galley};
+pub use egui_backend::EguiBackend;
+pub use core::{CdxRenderer, Drawable, RenderContext, RenderStyle, element_to_symbol};
 
 pub mod arrow;
 pub mod bond;

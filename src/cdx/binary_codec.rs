@@ -163,6 +163,29 @@ pub fn decode_u32_array(data: &[u8]) -> Result<Vec<u32>, CdxError> {
     Ok(result)
 }
 
+// Vector of f64 (for spectrum data points)
+pub fn encode_f64_array(data: &[f64]) -> Result<Vec<u8>, CdxError> {
+    let mut buf = Vec::with_capacity(data.len() * 8);
+    for &val in data {
+        buf.write_f64::<LittleEndian>(val)
+            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+    }
+    Ok(buf)
+}
+
+pub fn decode_f64_array(data: &[u8]) -> Result<Vec<f64>, CdxError> {
+    let mut cursor = Cursor::new(data);
+    let mut result = Vec::new();
+    while cursor.position() < data.len() as u64 {
+        result.push(
+            cursor
+                .read_f64::<LittleEndian>()
+                .map_err(|e| CdxError::DecodeError(e.to_string()))?,
+        );
+    }
+    Ok(result)
+}
+
 impl BinaryCodec for Point2d {
     fn encode(&self) -> Result<Vec<u8>, CdxError> {
         // CDX format uses i32 (fixed point with 16 fractional bits)

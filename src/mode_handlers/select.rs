@@ -51,7 +51,7 @@ impl ModeHandler for SelectMode {
         for node_id in ctx.selected_ids.iter() {
             if let Some(pos) = ctx.node_positions.get(node_id) {
                 let screen_pos = ctx.cdx_to_screen(pos);
-                let radius = 20.0 * ctx.renderer.zoom;
+                let radius = 20.0 * ctx.zoom;
                 painter.circle_stroke(
                     screen_pos,
                     radius,
@@ -69,8 +69,15 @@ impl ModeHandler for SelectMode {
                 true
             }
             egui::Key::C if ctx.ui.input(|i| i.modifiers.command) => {
-                // TODO: Copy selected objects
-                true
+                // Copy selected objects to clipboard
+                if !ctx.selected_ids.is_empty() {
+                    // TODO: Get cdx_file from context (need to pass it through ModeContext)
+                    // For now, we'll store the clipboard in the context
+                    // ctx.clipboard = Some(cdx_file.extract_selected_subtree(&ctx.selected_ids).ok());
+                    true
+                } else {
+                    false
+                }
             }
             egui::Key::V if ctx.ui.input(|i| i.modifiers.command) => {
                 // TODO: Paste copied objects
