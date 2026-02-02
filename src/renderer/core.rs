@@ -185,11 +185,31 @@ impl<'a> CdxRenderer<'a> {
     }
 
     fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext) {
-        //render
         let data = root.borrow_data();
+        
+        // Draw the current object with its parent's context
         data.draw(ctx);
+        
+        // Check if this object defines a coordinate offset for its children
+        // Currently only Page objects with BoundsInParent need this
+        let child_ctx = if let NodePayload::Page(page) = &*data {
+            if let Some(bounds) = &page.bounds_in_parent {
+                // Create a child context with offset from the parent's top-left corner
+                let offset = Point2d {
+                    x: bounds.left,
+                    y: bounds.top,
+                };
+                ctx.with_offset(&offset)
+            } else {
+                ctx.clone()
+            }
+        } else {
+            ctx.clone()
+        };
+        
+        // Render children with potentially modified context
         for child in root.children() {
-            self.render(child, ctx);
+            self.render(child, &child_ctx);
         }
     }
 
@@ -275,6 +295,8 @@ impl<'a> CdxRenderer<'a> {
 /// - origin: The origin point for coordinate transformation
 /// - document: Reference to the Document object containing default settings
 ///   (font, color, bond length, line width, etc.)
+/// - parent_offset: Cumulative offset from parent containers (for relative positioning)
+#[derive(Clone)]
 pub struct RenderContext<'a> {
     pub painter: &'a Painter,
     pub origin: Pos2,
@@ -282,6 +304,8 @@ pub struct RenderContext<'a> {
     pub node_positions: HashMap<u32, Point2d>,
     pub zoom: f32,
     pub auto_scale: f32,
+    /// Cumulative offset from parent objects (in CDX coordinates)
+    pub parent_offset: Point2d,
 }
 
 impl<'a> RenderContext<'a> {
@@ -301,15 +325,37 @@ impl<'a> RenderContext<'a> {
             node_positions,
             zoom,
             auto_scale,
+            parent_offset: Point2d { x: 0.0, y: 0.0 },
+        }
+    }
+
+    /// Create a child rendering context with an additional offset
+    /// This is used for parent-child coordinate propagation (e.g., BoundsInParent for Pages)
+    pub fn with_offset(&self, offset: &Point2d) -> Self {
+        RenderContext {
+            painter: self.painter,
+            origin: self.origin,
+            document: self.document,
+            node_positions: self.node_positions.clone(),
+            zoom: self.zoom,
+            auto_scale: self.auto_scale,
+            parent_offset: Point2d {
+                x: self.parent_offset.x + offset.x,
+                y: self.parent_offset.y + offset.y,
+            },
         }
     }
 
     /// Convert CDX coordinates to screen coordinates
+    /// Applies parent offset for relative positioning
     pub fn cdx_to_screen(&self, cdx_pos: &Point2d) -> Pos2 {
         let scale = self.zoom * self.auto_scale;
+        // Apply parent offset to the CDX position
+        let adjusted_x = cdx_pos.x + self.parent_offset.x;
+        let adjusted_y = cdx_pos.y + self.parent_offset.y;
         Pos2 {
-            x: self.origin.x + (cdx_pos.x as f32 * scale),
-            y: self.origin.y - (cdx_pos.y as f32 * scale), // CDX uses inverted Y-axis
+            x: self.origin.x + (adjusted_x as f32 * scale),
+            y: self.origin.y - (adjusted_y as f32 * scale), // CDX uses inverted Y-axis
         }
     }
 
