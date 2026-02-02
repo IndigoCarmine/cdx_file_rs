@@ -71,10 +71,6 @@ pub fn draw_cdx_string(
     // Create a LayoutJob for the entire text
     let mut job = LayoutJob::default();
 
-    // Track if we have any subscript/superscript to handle positioning manually
-    let mut has_script = false;
-    let mut max_baseline_shift = 0.0_f32;
-
     // Process each style run
     for (i, run) in style_runs.iter().enumerate() {
         let start_idx = run.char_index as usize;
@@ -111,10 +107,6 @@ pub fn draw_cdx_string(
         let is_subscript = script_style == 0x20;
         let is_superscript = script_style == 0x40;
 
-        if is_subscript || is_superscript {
-            has_script = true;
-        }
-
         // Adjust font size for sub/superscript
         let adjusted_font_size = if is_superscript || is_subscript {
             font_size * 0.7
@@ -122,20 +114,8 @@ pub fn draw_cdx_string(
             font_size
         };
 
-        // Calculate baseline shift for subscript/superscript
-        let baseline_shift = if is_superscript {
-            let shift = font_size * 0.4;
-            max_baseline_shift = max_baseline_shift.max(shift);
-            shift
-        } else if is_subscript {
-            -font_size * 0.3
-        } else {
-            0.0
-        };
-
         // Create TextFormat with proper styling
-        // Note: egui 0.29 doesn't support baseline shift in TextFormat
-        // We'll handle subscript/superscript positioning manually
+        // Subscript/superscript positioning handled via valign field
         let format = TextFormat {
             font_id: egui::FontId::proportional(adjusted_font_size),
             color,
@@ -176,8 +156,8 @@ pub fn draw_cdx_string(
         egui::Align::BOTTOM => egui::Pos2::new(pos.x, pos.y - galley.size().y),
     };
 
-    // Draw the galley
-    ctx.painter.galley(final_pos, galley, egui::Color32::BLACK);
+    // Draw the galley (color is handled by TextFormat for each segment)
+    ctx.painter.galley(final_pos, galley, egui::Color32::TRANSPARENT);
 }
 
 impl TextObject {
