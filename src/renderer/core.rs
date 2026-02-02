@@ -187,6 +187,9 @@ impl<'a> CdxRenderer<'a> {
     fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext) {
         let data = root.borrow_data();
         
+        // Draw the current object with its parent's context
+        data.draw(ctx);
+        
         // Check if this object defines a coordinate offset for its children
         // Currently only Page objects with BoundsInParent need this
         let child_ctx = if let NodePayload::Page(page) = &*data {
@@ -203,9 +206,6 @@ impl<'a> CdxRenderer<'a> {
         } else {
             ctx.clone()
         };
-        
-        // Draw the current object
-        data.draw(&child_ctx);
         
         // Render children with potentially modified context
         for child in root.children() {
