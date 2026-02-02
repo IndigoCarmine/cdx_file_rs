@@ -14,24 +14,7 @@ impl Drawable for Table {
             None => return,
         };
 
-        // Get the line width (default from table or document)
-        let line_width = self.line_width
-            .unwrap_or_else(|| ctx.default_line_width());
-        let scale = ctx.zoom * ctx.auto_scale;
-        let stroke_width = (line_width * scale as f64) as f32;
-
-        // Get the color (use foreground color if available, otherwise default)
-        let color = if let Some(color_idx) = self.foreground_color {
-            ctx.document
-                .get_color_table()
-                .and_then(|ct| ct.get(color_idx as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(egui::Color32::BLACK)
-        } else {
-            ctx.default_label_color()
-        };
-
-        let stroke = egui::Stroke::new(stroke_width, color);
+        let stroke = self.get_stroke(ctx);
 
         // Draw the outer bounding box
         let top_left = ctx.cdx_to_screen(&Point2d {
@@ -58,6 +41,33 @@ impl Drawable for Table {
 }
 
 impl Table {
+    /// Get the stroke width for this table
+    fn get_line_width(&self, ctx: &RenderContext) -> f64 {
+        self.line_width.unwrap_or_else(|| ctx.default_line_width())
+    }
+    
+    /// Get the stroke color for this table
+    fn get_color(&self, ctx: &RenderContext) -> egui::Color32 {
+        if let Some(color_idx) = self.foreground_color {
+            ctx.document
+                .get_color_table()
+                .and_then(|ct| ct.get(color_idx as usize))
+                .map(|c| c.to_color32())
+                .unwrap_or(egui::Color32::BLACK)
+        } else {
+            ctx.default_label_color()
+        }
+    }
+    
+    /// Get the stroke for drawing table lines
+    fn get_stroke(&self, ctx: &RenderContext) -> egui::Stroke {
+        let line_width = self.get_line_width(ctx);
+        let scale = ctx.zoom * ctx.auto_scale;
+        let stroke_width = (line_width * scale as f64) as f32;
+        let color = self.get_color(ctx);
+        egui::Stroke::new(stroke_width, color)
+    }
+    
     /// Draw internal grid lines based on child Page bounds
     fn draw_grid_lines(&self, ctx: &RenderContext, table_node: &Node<NodePayload>) {
         // Collect bounds_in_parent from all child Page objects
@@ -76,23 +86,7 @@ impl Table {
             return;
         }
 
-        // Get the line width and color
-        let line_width = self.line_width
-            .unwrap_or_else(|| ctx.default_line_width());
-        let scale = ctx.zoom * ctx.auto_scale;
-        let stroke_width = (line_width * scale as f64) as f32;
-
-        let color = if let Some(color_idx) = self.foreground_color {
-            ctx.document
-                .get_color_table()
-                .and_then(|ct| ct.get(color_idx as usize))
-                .map(|c| c.to_color32())
-                .unwrap_or(egui::Color32::BLACK)
-        } else {
-            ctx.default_label_color()
-        };
-
-        let stroke = egui::Stroke::new(stroke_width, color);
+        let stroke = self.get_stroke(ctx);
 
         // Collect unique x and y coordinates for grid lines
         let mut x_coords = HashSet::new();
