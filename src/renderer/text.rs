@@ -26,18 +26,32 @@ impl Drawable for TextObject {
 
             // If no style runs, use simple rendering
             if style_runs.is_empty() {
-                // Determine font size (prefer caption size, fallback to label size, then default)
-                let font_size = self.caption_size.or(self.label_size).unwrap_or(10) as f32;
+                // Determine font size (prefer caption size, fallback to label size, then document default)
+                let font_size = if let Some(size) = self.caption_size {
+                    size as f32
+                } else if let Some(size) = self.label_size {
+                    size as f32
+                } else {
+                    ctx.default_caption_size()
+                };
 
-                // Determine text color (prefer caption color, fallback to label color, then default)
-                let color = match self.caption_color.or(self.label_color) {
-                    Some(idx) => ctx
+                // Determine text color (prefer caption color, fallback to label color, then document default)
+                let color = if let Some(idx) = self.caption_color {
+                    ctx
                         .document
                         .get_color_table()
                         .and_then(|ct| ct.get(idx as usize))
                         .map(|c| c.to_color32())
-                        .unwrap_or(egui::Color32::BLACK),
-                    None => egui::Color32::BLACK,
+                        .unwrap_or_else(|| ctx.default_caption_color())
+                } else if let Some(idx) = self.label_color {
+                    ctx
+                        .document
+                        .get_color_table()
+                        .and_then(|ct| ct.get(idx as usize))
+                        .map(|c| c.to_color32())
+                        .unwrap_or_else(|| ctx.default_label_color())
+                } else {
+                    ctx.default_caption_color()
                 };
 
                 ctx.draw_text_with_align(text_str, screen_pos, base_align, color, font_size);
@@ -102,13 +116,13 @@ impl TextObject {
             let scale = ctx.zoom * ctx.auto_scale;
             let font_size = base_font_size * scale;
 
-            // Get color from color table
+            // Get color from color table or use document default
             let color = ctx
                 .document
                 .get_color_table()
                 .and_then(|ct| ct.get(run.color_index as usize))
                 .map(|c| c.to_color32())
-                .unwrap_or(egui::Color32::BLACK);
+                .unwrap_or_else(|| ctx.default_caption_color());
 
             // Parse font_face to determine style
             let _is_bold = (run.font_face & 0x01) != 0;
@@ -217,7 +231,7 @@ impl TextObject {
                 .get_color_table()
                 .and_then(|ct| ct.get(run.color_index as usize))
                 .map(|c| c.to_color32())
-                .unwrap_or(egui::Color32::BLACK);
+                .unwrap_or_else(|| ctx.default_caption_color());
 
             let galley = ctx.painter.layout_no_wrap(segment, font_id, color);
             total_width += galley.size().x;

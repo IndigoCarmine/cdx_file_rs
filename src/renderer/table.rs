@@ -53,9 +53,9 @@ impl Table {
                 .get_color_table()
                 .and_then(|ct| ct.get(color_idx as usize))
                 .map(|c| c.to_color32())
-                .unwrap_or(egui::Color32::BLACK)
+                .unwrap_or_else(|| ctx.default_foreground_color())
         } else {
-            ctx.default_label_color()
+            ctx.default_foreground_color()
         }
     }
     

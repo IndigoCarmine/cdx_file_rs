@@ -9,7 +9,7 @@ mod renderer;
 use crate::cdx::file::CdxFile;
 use crate::modes::{ModeContext, ModeHandler};
 use crate::renderer::CdxRenderer;
-use eframe::egui;
+use eframe::{App, egui};
 use std::fs;
 
 struct ModeHandlers {
@@ -17,6 +17,7 @@ struct ModeHandlers {
     select: mode_handlers::select::SelectMode,
     bond: mode_handlers::bond::BondMode,
     eraser: mode_handlers::eraser::EraserMode,
+    debug: mode_handlers::debug::DebugMode,
 }
 
 impl Default for ModeHandlers {
@@ -26,6 +27,7 @@ impl Default for ModeHandlers {
             select: mode_handlers::select::SelectMode,
             bond: mode_handlers::bond::BondMode,
             eraser: mode_handlers::eraser::EraserMode,
+            debug: mode_handlers::debug::DebugMode::new(),
         }
     }
 }
@@ -51,6 +53,7 @@ enum AppMode {
     Select,
     Bond,
     Eraser,
+    Debug,
 }
 
 struct CdxApp {
@@ -219,6 +222,7 @@ impl eframe::App for CdxApp {
                 ui.selectable_value(&mut self.mode, AppMode::Select, "⬚ Select");
                 ui.selectable_value(&mut self.mode, AppMode::Bond, "➖ Bond");
                 ui.selectable_value(&mut self.mode, AppMode::Eraser, "🗑 Eraser");
+                ui.selectable_value(&mut self.mode, AppMode::Debug, "🐛 Debug");
             });
 
             ui.horizontal(|ui| {
@@ -289,6 +293,7 @@ impl eframe::App for CdxApp {
                         AppMode::Select => &mut self.mode_handlers.select,
                         AppMode::Bond => &mut self.mode_handlers.bond,
                         AppMode::Eraser => &mut self.mode_handlers.eraser,
+                        AppMode::Debug => &mut self.mode_handlers.debug,
                     };
 
                     if clicked {
@@ -359,6 +364,7 @@ impl eframe::App for CdxApp {
                         AppMode::Select => &self.mode_handlers.select,
                         AppMode::Bond => &self.mode_handlers.bond,
                         AppMode::Eraser => &self.mode_handlers.eraser,
+                        AppMode::Debug => &self.mode_handlers.debug,
                     };
 
                     handler.handle_hover(&mode_ctx, &painter);

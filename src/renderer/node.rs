@@ -8,20 +8,29 @@ impl Drawable for Node {
             let screen_pos = ctx.cdx_to_screen(pos);
             let radius = 10.0; // Default atom radius in pixels
 
-            // Determine color
-            let color = match self.foreground_color {
+            // Determine color - use object color or fallback to document foreground color
+            let forground_color = match self.foreground_color {
                 Some(color_idx) => ctx
                     .document
                     .get_color_table()
                     .and_then(|ct| ct.get(color_idx as usize))
                     .map(|c| c.to_color32())
-                    .unwrap_or(egui::Color32::GREEN),
-                None => egui::Color32::YELLOW,
+                    .unwrap_or_else(||ctx.default_foreground_color()),
+                None => ctx.default_foreground_color(),
+            };
+            let background_color = match self.background_color {
+                Some(color_idx) => ctx
+                    .document
+                    .get_color_table()
+                    .and_then(|ct| ct.get(color_idx as usize))
+                    .map(|c| c.to_color32())
+                    .unwrap_or_else(||ctx.default_background_color()),
+                None => ctx.default_background_color(),
             };
 
             // Draw circle for atom
             ctx.painter
-                .add(egui::Shape::circle_filled(screen_pos, radius, color));
+                .add(egui::Shape::circle_filled(screen_pos, radius, background_color));
 
             // Draw element label
             if let Some(element) = self.element {
@@ -29,7 +38,7 @@ impl Drawable for Node {
                 ctx.draw_text(
                     &label,
                     screen_pos,
-                    egui::Color32::WHITE,
+                    forground_color,
                     ctx.default_label_size(),
                 );
             }
