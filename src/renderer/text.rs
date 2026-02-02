@@ -156,8 +156,9 @@ pub fn draw_cdx_string(
         egui::Align::BOTTOM => egui::Pos2::new(pos.x, pos.y - galley.size().y),
     };
 
-    // Draw the galley (color is handled by TextFormat for each segment)
-    ctx.painter.galley(final_pos, galley, egui::Color32::TRANSPARENT);
+    // Draw the galley
+    // Note: The color parameter is a fallback; actual colors are defined in each TextFormat
+    ctx.painter.galley(final_pos, galley, egui::Color32::WHITE);
 }
 
 impl TextObject {
