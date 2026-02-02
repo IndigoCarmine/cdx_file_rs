@@ -114,8 +114,10 @@ impl TextObject {
             let _is_bold = (run.font_face & 0x01) != 0;
             let _is_italic = (run.font_face & 0x02) != 0;
             let is_underline = (run.font_face & 0x04) != 0;
-            let is_subscript = (run.font_face & 0x20) != 0;
-            let is_superscript = (run.font_face & 0x40) != 0;
+            // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
+            let script_style = run.font_face & 0x60;
+            let is_subscript = script_style == 0x20;
+            let is_superscript = script_style == 0x40;
 
             // Calculate Y offset for subscript/superscript
             let y_offset = if is_superscript {
@@ -202,8 +204,10 @@ impl TextObject {
             let font_size = base_font_size * scale;
 
             // Adjust font size for sub/superscript
-            let is_subscript = (run.font_face & 0x20) != 0;
-            let is_superscript = (run.font_face & 0x40) != 0;
+            // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
+            let script_style = run.font_face & 0x60;
+            let is_subscript = script_style == 0x20;
+            let is_superscript = script_style == 0x40;
             let adjusted_font_size = if is_superscript || is_subscript {
                 font_size * 0.7
             } else {
