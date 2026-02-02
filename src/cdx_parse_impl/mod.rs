@@ -17,6 +17,7 @@ pub mod node;
 pub mod object_tag;
 pub mod page;
 pub mod raw_nodes;
+pub mod table;
 pub mod reaction_scheme;
 pub mod reaction_step;
 pub mod reader;

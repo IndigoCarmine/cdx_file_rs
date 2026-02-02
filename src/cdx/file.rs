@@ -16,6 +16,7 @@ pub use super::object_tag::ObjectTag;
 pub use super::page::Page;
 pub use super::reaction_scheme::ReactionScheme;
 pub use super::reaction_step::ReactionStep;
+pub use super::table::Table;
 pub use super::text::TextObject;
 pub use super::tlc_lane::TlcLane;
 pub use super::tlc_plate::TLCPlate;
@@ -65,6 +66,7 @@ define_node_payload!(
     Page,
     ReactionScheme,
     ReactionStep,
+    Table,
     TextObject,
     TlcLane,
     TLCPlate,

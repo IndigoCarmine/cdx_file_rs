@@ -9,6 +9,7 @@ pub mod node_tags;
 pub mod object_tags;
 pub mod page_tags;
 pub mod reaction_scheme_tags;
+pub mod table_tags;
 pub mod text_tags;
 pub mod tlc_lane_tags;
 pub mod tlc_plate_tags;

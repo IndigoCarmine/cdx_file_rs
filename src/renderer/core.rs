@@ -49,6 +49,7 @@ define_node_renderer!(
     Page,
     ReactionScheme,
     ReactionStep,
+    Table,
     TextObject,
     TlcLane,
     TLCPlate,
