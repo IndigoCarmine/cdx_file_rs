@@ -235,7 +235,7 @@ impl<'a> CdxRenderer<'a> {
         table_node: &Node<crate::cdx::file::NodePayload>,
         ctx: &RenderContext,
     ) {
-        use crate::cdx::values::{Point2d, Rectangle};
+        use crate::cdx::values::Point2d;
         use std::collections::HashSet;
 
         // Collect bounds_in_parent from all child Page objects
