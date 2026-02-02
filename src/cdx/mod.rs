@@ -15,6 +15,7 @@ pub mod object_tag;
 pub mod page;
 pub mod reaction_scheme;
 pub mod reaction_step;
+pub mod table;
 pub mod text;
 pub mod text_styles;
 pub mod tlc_lane;

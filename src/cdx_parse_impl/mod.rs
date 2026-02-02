@@ -20,6 +20,7 @@ pub mod raw_nodes;
 pub mod reaction_scheme;
 pub mod reaction_step;
 pub mod reader;
+pub mod table;
 pub mod tagged_object;
 pub mod text;
 pub mod tlc_lane;

@@ -1,8 +1,8 @@
 use crate::cdx::file::CdxFile;
 use crate::cdx::file::{
     Arrow, Bond, Border, Constraint, Document, Fragment, Geometry, Graphic, Group, Node,
-    NodePayload, ObjectTag, Page, ReactionScheme, ReactionStep, TLCPlate, TextObject, TlcLane,
-    UnknownObject802B,
+    NodePayload, ObjectTag, Page, ReactionScheme, ReactionStep, Table, TLCPlate, TextObject,
+    TlcLane, UnknownObject802B,
 };
 use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
 use crate::cdx_parse_impl::tagged_object::TaggedObject;
@@ -50,6 +50,7 @@ define_node_payload!(
     Page,
     ReactionScheme,
     ReactionStep,
+    Table,
     TextObject,
     TlcLane,
     TLCPlate,

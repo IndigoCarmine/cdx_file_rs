@@ -74,6 +74,7 @@ fn count_objects(node: dendron::Node<cdx_file_rs::cdx::file::NodePayload>, depth
             println!("{}ReactionScheme", indent)
         }
         cdx_file_rs::cdx::file::NodePayload::ReactionStep(_) => println!("{}ReactionStep", indent),
+        cdx_file_rs::cdx::file::NodePayload::Table(t) => println!("{}Table (id={})", indent, t.id),
         cdx_file_rs::cdx::file::NodePayload::TlcLane(_) => println!("{}TlcLane", indent),
         cdx_file_rs::cdx::file::NodePayload::TLCPlate(_) => println!("{}TLCPlate", indent),
         cdx_file_rs::cdx::file::NodePayload::UnknownObject802B(_) => {

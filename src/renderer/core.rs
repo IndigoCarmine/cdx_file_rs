@@ -14,6 +14,12 @@ use std::collections::HashMap;
 /// coordinate origin, and Document defaults (font, color, etc.).
 pub trait Drawable {
     fn draw(&self, ctx: &RenderContext);
+    
+    /// Draw with access to the tree node (for objects that need child access)
+    /// Default implementation calls draw() for backward compatibility
+    fn draw_with_node(&self, ctx: &RenderContext, _node: &Node<NodePayload>) {
+        self.draw(ctx);
+    }
 }
 
 #[macro_export]
@@ -28,6 +34,14 @@ macro_rules! define_node_renderer {
                         NodePayload::$ty(inner) => inner.draw(ctx),
                     )*
 
+                }
+            }
+            
+            pub fn draw_with_node(&self, ctx: &RenderContext, node: &dendron::Node<NodePayload>) {
+                match self {
+                    $(
+                        NodePayload::$ty(inner) => inner.draw_with_node(ctx, node),
+                    )*
                 }
             }
         }
@@ -49,6 +63,7 @@ define_node_renderer!(
     Page,
     ReactionScheme,
     ReactionStep,
+    Table,
     TextObject,
     TlcLane,
     TLCPlate,
@@ -185,11 +200,31 @@ impl<'a> CdxRenderer<'a> {
     }
 
     fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext) {
-        //render
         let data = root.borrow_data();
+        
+        // Draw the current object with its parent's context
         data.draw(ctx);
+        
+        // Check if this object defines a coordinate offset for its children
+        // Currently only Page objects with BoundsInParent need this
+        let child_ctx = if let NodePayload::Page(page) = &*data {
+            if let Some(bounds) = &page.bounds_in_parent {
+                // Create a child context with offset from the parent's top-left corner
+                let offset = Point2d {
+                    x: bounds.left,
+                    y: bounds.top,
+                };
+                ctx.with_offset(&offset)
+            } else {
+                ctx.clone()
+            }
+        } else {
+            ctx.clone()
+        };
+        
+        // Render children with potentially modified context
         for child in root.children() {
-            self.render(child, ctx);
+            self.render(child, &child_ctx);
         }
     }
 
@@ -275,13 +310,55 @@ impl<'a> CdxRenderer<'a> {
 /// - origin: The origin point for coordinate transformation
 /// - document: Reference to the Document object containing default settings
 ///   (font, color, bond length, line width, etc.)
+/// - parent_offset: Cumulative offset from parent containers (for relative positioning)
+///
+/// ## Scaling Structure
+/// The RenderContext uses a **two-level scaling system** to transform CDX coordinates to screen coordinates:
+///
+/// 1. **auto_scale**: Automatically calculated scale factor that fits the entire document
+///    within the window while maintaining aspect ratio.
+///    - Calculated based on document bounding box and window size
+///    - Ensures all content is visible (scale = min(available_width / doc_width, available_height / doc_height))
+///    - Applied uniformly to all coordinates
+///
+/// 2. **zoom**: User-controlled zoom factor for interactive magnification/reduction
+///    - Allows users to zoom in/out around the auto-scaled content
+///    - Multiplied by auto_scale for final screen scaling
+///
+/// ## Final Screen Transformation
+/// CDX coordinate → Screen coordinate transformation:
+/// ```
+/// scale = zoom * auto_scale
+/// screen_pos = origin + (cdx_pos + parent_offset) * scale
+/// ```
+///
+/// ## Parent Offset Handling
+/// - parent_offset: Cumulative offset from parent objects (in CDX coordinates)
+/// - Applied BEFORE scaling to maintain relative positioning within parent containers
+/// - Used for Pages with BoundsInParent to establish coordinate system for children
+///
+/// ## Example Scaling Flow
+/// 1. Document has nodes at positions 0-500 in CDX units
+/// 2. Window is 800x600 pixels
+/// 3. auto_scale calculated as ~1.0 (fits with padding)
+/// 4. User zooms to 1.5x: zoom = 1.5
+/// 5. Final scale = 1.5 * 1.0 = 1.5
+/// 6. Node at CDX 100 → Screen 800/2 + 100*1.5 = 550px
+#[derive(Clone)]
 pub struct RenderContext<'a> {
     pub painter: &'a Painter,
     pub origin: Pos2,
     pub document: &'a Document,
     pub node_positions: HashMap<u32, Point2d>,
+    /// User-controlled zoom factor for interactive scaling
+    /// Multiplied with auto_scale to achieve final screen scale
     pub zoom: f32,
+    /// Automatically calculated scale to fit document bounds in window
+    /// Computed from: min(available_width / doc_width, available_height / doc_height)
     pub auto_scale: f32,
+    /// Cumulative offset from parent objects (in CDX coordinates)
+    /// Applied before scaling to maintain relative positioning in parent containers
+    pub parent_offset: Point2d,
 }
 
 impl<'a> RenderContext<'a> {
@@ -301,15 +378,90 @@ impl<'a> RenderContext<'a> {
             node_positions,
             zoom,
             auto_scale,
+            parent_offset: Point2d { x: 0.0, y: 0.0 },
+        }
+    }
+
+    /// Create a child rendering context with an additional offset
+    /// 
+    /// This method creates a new RenderContext for child objects with accumulated parent offsets.
+    /// Used for parent-child coordinate propagation in container objects (e.g., BoundsInParent for Pages).
+    ///
+    /// ## Offset Accumulation
+    /// - The new parent_offset = current parent_offset + provided offset
+    /// - This accumulation ensures that nested containers properly transform their children
+    /// - Offsets are in CDX coordinates and applied BEFORE scaling
+    ///
+    /// ## Usage Pattern
+    /// - Page with BoundsInParent creates child context with top-left offset
+    /// - Group containers create child context with their local origin
+    /// - Nested containers accumulate offsets through the hierarchy
+    ///
+    /// ## Example with Multiple Levels
+    /// ```
+    /// Root context: parent_offset = (0, 0)
+    /// Page1 (bounds at 100, 100):
+    ///   - Child context: parent_offset = (0, 0) + (100, 100) = (100, 100)
+    ///   - Group1 (local origin at 50, 50):
+    ///     - Grandchild context: parent_offset = (100, 100) + (50, 50) = (150, 150)
+    ///     - Node at CDX(10, 10) renders at CDX(160, 160) in root coordinates
+    /// ```
+    ///
+    /// ## Scaling Note
+    /// All scaling (zoom * auto_scale) remains unchanged and is applied uniformly.
+    /// The offset accumulation is purely additive in CDX coordinate space.
+    pub fn with_offset(&self, offset: &Point2d) -> Self {
+        RenderContext {
+            painter: self.painter,
+            origin: self.origin,
+            document: self.document,
+            node_positions: self.node_positions.clone(),
+            zoom: self.zoom,
+            auto_scale: self.auto_scale,
+            parent_offset: Point2d {
+                x: self.parent_offset.x + offset.x,
+                y: self.parent_offset.y + offset.y,
+            },
         }
     }
 
     /// Convert CDX coordinates to screen coordinates
+    /// 
+    /// This method performs a complete coordinate transformation using the two-level scaling system:
+    /// 
+    /// ## Transformation Steps
+    /// 1. Apply parent offset to CDX position (for relative positioning in parent containers)
+    ///    - adjusted_pos = cdx_pos + parent_offset
+    /// 2. Scale by combined zoom factor
+    ///    - scale = zoom * auto_scale
+    /// 3. Translate by origin (window-relative positioning)
+    /// 4. Invert Y-axis (CDX uses inverted Y, screen uses normal Y)
+    ///    - screen_y = origin_y - (adjusted_y * scale)
+    ///
+    /// ## Formula
+    /// ```
+    /// adjusted_x = cdx_pos.x + parent_offset.x
+    /// adjusted_y = cdx_pos.y + parent_offset.y
+    /// scale = zoom * auto_scale
+    /// screen_x = origin.x + adjusted_x * scale
+    /// screen_y = origin.y - adjusted_y * scale
+    /// ```
+    ///
+    /// ## Examples
+    /// - With auto_scale=1.0, zoom=1.0, origin=(400,300):
+    ///   CDX(100, 100) → Screen(500, 200)
+    /// - With zoom=2.0 (user zoomed in):
+    ///   CDX(100, 100) → Screen(600, 100) [twice as far from origin]
+    /// - With parent_offset=(50, 50):
+    ///   CDX(100, 100) → Screen(550, 150) [offset applied before scaling]
     pub fn cdx_to_screen(&self, cdx_pos: &Point2d) -> Pos2 {
         let scale = self.zoom * self.auto_scale;
+        // Apply parent offset to the CDX position
+        let adjusted_x = cdx_pos.x + self.parent_offset.x;
+        let adjusted_y = cdx_pos.y + self.parent_offset.y;
         Pos2 {
-            x: self.origin.x + (cdx_pos.x as f32 * scale),
-            y: self.origin.y - (cdx_pos.y as f32 * scale), // CDX uses inverted Y-axis
+            x: self.origin.x + (adjusted_x as f32 * scale),
+            y: self.origin.y - (adjusted_y as f32 * scale), // CDX uses inverted Y-axis
         }
     }
 
@@ -342,9 +494,34 @@ impl<'a> RenderContext<'a> {
         self.painter.text(pos, align, text, font_id, color);
     }
 
-    /// Get default bond length from document or use fallback
     pub fn default_bond_length(&self) -> f64 {
         self.document.bond_length.unwrap_or(30.0)
+    }
+
+    /// Get default foreground color from document or use fallback
+    pub fn default_foreground_color(&self) -> Color32 {
+        //color index 3 is default foreground
+        match self.document.label_color {
+            Some(idx) => self
+                .document
+                .get_color_table()
+                .and_then(|ct| ct.get(idx as usize))
+                .map(|c| c.to_color32())
+                .unwrap_or(Color32::BLACK),
+            None => Color32::BLACK,
+        }
+    }
+    pub fn default_background_color(&self) -> Color32 {
+        //color index 2 is default background
+        match self.document.label_color {
+            Some(idx) => self
+                .document
+                .get_color_table()
+                .and_then(|ct| ct.get(idx as usize))
+                .map(|c| c.to_color32())
+                .unwrap_or(Color32::WHITE),
+            None => Color32::WHITE,
+        }
     }
 
     /// Get default line width from document or use fallback
