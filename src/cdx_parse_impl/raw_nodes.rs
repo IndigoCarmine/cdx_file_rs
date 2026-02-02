@@ -20,6 +20,19 @@ pub struct RawCdxProperty {
 }
 
 impl RawCdxObject {
+    pub fn new(tag: u16, id: u32) -> Self {
+        Self {
+            tag,
+            id,
+            properties: Vec::new(),
+            children: Vec::new(),
+        }
+    }
+
+    pub fn add_property(&mut self, tag: u16, value: Vec<u8>) {
+        self.properties.push(RawCdxProperty { tag, value });
+    }
+
     pub fn get_property(&self, target_tag: u16) -> Option<&Vec<u8>> {
         for property in &self.properties {
             if property.tag == target_tag {

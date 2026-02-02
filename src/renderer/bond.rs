@@ -53,7 +53,6 @@ impl Drawable for Bond {
         let spacing_default = _ctx.default_bond_spacing() ;
         let bond_length_default = _ctx.default_bond_length();
         let spacing = self.bond_spacing.unwrap_or(spacing_default) as f32;
-        let spacing = self.bond_length.unwrap_or(bond_length_default) as f32 / 1000.0 * spacing;
         let scale = _ctx.zoom * _ctx.auto_scale;
 
         if order == 2 {

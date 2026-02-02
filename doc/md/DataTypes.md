@@ -1,0 +1,37 @@
+CDX Format Specification: Data Types
+## Data Types
+
+- [CDXCoordinate](DataType/CDXCoordinates.htm#CDXCoordinate)
+- [CDXPoint2D](DataType/CDXCoordinates.htm#CDXPoint2D)
+- [CDXPoint3D](DataType/CDXCoordinates.htm#CDXPoint3D)
+- [CDXRectangle](DataType/CDXCoordinates.htm#CDXRectangle)
+- [CDXBoolean](DataType/CDXBoolean.htm#CDXBoolean)
+- [CDXBooleanImplied](DataType/CDXBoolean.htm#CDXBooleanImplied)
+- [CDXColorTable](DataType/CDXColorTable.md)
+- [CDXCurvePoints](DataType/CDXCurvePoints.md)
+- [CDXCurvePoints3D](DataType/CDXCurvePoints3D.md)
+- [CDXElementList](DataType/CDXElementList.md)
+- [CDXFontTable](DataType/CDXFontTable.md)
+- [CDXFormula](DataType/CDXFormula.md)
+- [INT8](DataType/CDXNumeric.md)
+- [UINT32](DataType/CDXNumeric.md)
+- [INT32](DataType/CDXNumeric.md)
+- [UINT16](DataType/CDXNumeric.md)
+- [INT16](DataType/CDXNumeric.md)
+- [UINT8](DataType/CDXNumeric.md)
+- [FLOAT64](DataType/CDXNumeric.md)
+- [CDXObjectIDArray](DataType/CDXObjectID.htm#CDXObjectIDArray)
+- [CDXObjectIDArrayWithCounts](DataType/CDXObjectID.htm#CDXObjectIDArrayWithCounts)
+- [CDXObjectID](DataType/CDXObjectID.htm#CDXObjectID)
+- [CDXRepresentsProperty](DataType/CDXRepresentsProperty.md)
+- [CDXString](DataType/CDXString.md)
+- [CDXFontStyle](DataType/CDXString.htm#FontStyleRun)
+- [CDXDate](DataType/DateAndTime.md)
+- [CDXLineStarts](DataType/INT16ListWithCounts.md)
+- [INT16ListWithCounts](DataType/INT16ListWithCounts.md)
+- [Unformatted](DataType/Unformatted.md)
+- [CDXGenericList](DataType/CDXGenericList.md)
+
+---
+
+[CDX Documentation index](index.md)

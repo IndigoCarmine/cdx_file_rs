@@ -50,17 +50,17 @@ pub const CDXPROP_INTERPRET_CHEMICALLY: u16 = 0x0708; // Whether to interpret te
 pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Default atom label font style (unused).
 pub const CDXPROP_CAPTION_STYLE: u16 = 0x080B; // Default caption font style (unused).
 
-pub const CDXPROP_LABEL_FONT: u16 = 0x081A; // Default font family for atom labels.
-pub const CDXPROP_CAPTION_FONT: u16 = 0x081B; // Default font family for captions.
+pub const CDXPROP_LABEL_STYLE_FONT: u16 = 0x081A; // Default font family for atom labels.
+pub const CDXPROP_CAPTION_STYLE_FONT: u16 = 0x081B; // Default font family for captions.
 
-pub const CDXPROP_LABEL_SIZE: u16 = 0x081C; // Default font size for atom labels.
-pub const CDXPROP_CAPTION_SIZE: u16 = 0x081D; // Default font size for captions.
+pub const CDXPROP_LABEL_STYLE_SIZE: u16 = 0x081C; // Default font size for atom labels.
+pub const CDXPROP_CAPTION_STYLE_SIZE: u16 = 0x081D; // Default font size for captions.
 
-pub const CDXPROP_LABEL_FACE: u16 = 0x081E; // Default font face for atom labels.
-pub const CDXPROP_CAPTION_FACE: u16 = 0x081F; // Default font face for captions.
+pub const CDXPROP_LABEL_STYLE_FACE: u16 = 0x081E; // Default font face for atom labels.
+pub const CDXPROP_CAPTION_STYLE_FACE: u16 = 0x081F; // Default font face for captions.
 
-pub const CDXPROP_LABEL_COLOR: u16 = 0x0820; // Default color for atom labels.
-pub const CDXPROP_CAPTION_COLOR: u16 = 0x0821; // Default color for captions.
+pub const CDXPROP_LABEL_STYLE_COLOR: u16 = 0x0820; // Default color for atom labels.
+pub const CDXPROP_CAPTION_STYLE_COLOR: u16 = 0x0821; // Default color for captions.
 
 pub const CDXPROP_CAPTION_JUSTIFICATION: u16 = 0x080C; // Horizontal justification for captions (enumerated).
 pub const CDXPROP_LABEL_JUSTIFICATION: u16 = 0x0823; // Default justification for atom labels (enumerated).

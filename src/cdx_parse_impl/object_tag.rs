@@ -25,7 +25,7 @@ impl TaggedObject for ObjectTag {
 
         tag.tag_name = raw
             .get_property(CDXPROP_TAGNAME)
-            .and_then(|v| String::from_utf8(v.to_vec()).ok());
+            .and_then(|v| CDXString::decode(v).ok());
 
         tag.z_order = raw
             .get_property(CDXPROP_ZORDER)
@@ -66,7 +66,7 @@ impl TaggedObject for ObjectTag {
         if let Some(ref v) = self.tag_name {
             properties.push(RawCdxProperty {
                 tag: CDXPROP_TAGNAME,
-                value: v.as_bytes().to_vec(),
+                value: v.encode()?,
             });
         }
 

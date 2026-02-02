@@ -178,7 +178,7 @@ impl TaggedObject for Node {
         // Atom number
         let atom_number = raw
             .get_property(CDXPROP_ATOM_NUMBER)
-            .and_then(|v| u16::decode(v).ok());
+            .and_then(|v| CDXString::decode(v).ok());
 
         // Show query
         let show_query = raw
@@ -208,7 +208,7 @@ impl TaggedObject for Node {
         // Isotopic abundance
         let isotopic_abundance = raw
             .get_property(CDXPROP_ATOM_ISOTOPIC_ABUNDANCE)
-            .and_then(|v| f64::decode(v).ok());
+            .and_then(|v| i8::decode(v).ok());
 
         // External connection type
         let external_connection_type = raw
@@ -242,17 +242,17 @@ impl TaggedObject for Node {
 
         // Label font
         let label_font = raw
-            .get_property(CDXPROP_LABEL_FONT)
+            .get_property(CDXPROP_LABEL_STYLE_FONT)
             .and_then(|v| i16::decode(v).ok());
 
         // Label size
         let label_size = raw
-            .get_property(CDXPROP_LABEL_SIZE)
+            .get_property(CDXPROP_LABEL_STYLE_SIZE)
             .and_then(|v| i16::decode(v).ok());
 
         // Label face
         let label_face = raw
-            .get_property(CDXPROP_LABEL_FACE)
+            .get_property(CDXPROP_LABEL_STYLE_FACE)
             .and_then(|v| i16::decode(v).ok());
 
         Ok(Node {
@@ -511,7 +511,7 @@ impl TaggedObject for Node {
                 value: val.encode()?,
             });
         }
-        if let Some(val) = self.atom_number {
+        if let Some(ref val) = self.atom_number {
             properties.push(RawCdxProperty {
                 tag: CDXPROP_ATOM_NUMBER,
                 value: val.encode()?,
@@ -591,19 +591,19 @@ impl TaggedObject for Node {
         }
         if let Some(val) = self.label_font {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_FONT,
+                tag: CDXPROP_LABEL_STYLE_FONT,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_size {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_SIZE,
+                tag: CDXPROP_LABEL_STYLE_SIZE,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_face {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_FACE,
+                tag: CDXPROP_LABEL_STYLE_FACE,
                 value: val.encode()?,
             });
         }

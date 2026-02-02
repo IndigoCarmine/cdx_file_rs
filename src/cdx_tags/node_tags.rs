@@ -94,6 +94,6 @@ pub const CDXPROP_ATOM_ENHANCED_STEREO_GROUP_NUM: u16 = 0x0447; // Enhanced ster
 
 pub const CDXPROP_LINE_WIDTH: u16 = 0x0807; // Line width.
 pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Atom label font style (unused).
-pub const CDXPROP_LABEL_FONT: u16 = 0x081A; // Atom label font family.
-pub const CDXPROP_LABEL_SIZE: u16 = 0x081C; // Atom label font size.
-pub const CDXPROP_LABEL_FACE: u16 = 0x081E; // Atom label font face.
+pub const CDXPROP_LABEL_STYLE_FONT: u16 = 0x081A; // Atom label font family.
+pub const CDXPROP_LABEL_STYLE_SIZE: u16 = 0x081C; // Atom label font size.
+pub const CDXPROP_LABEL_STYLE_FACE: u16 = 0x081E; // Atom label font face.

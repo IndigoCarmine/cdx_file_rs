@@ -1,0 +1,42 @@
+CDX Format Specification: Node_Type Property
+## Node_Type Property
+
+| CDXML Name: | NodeType |
+| --- | --- |
+| CDX Constant Name: | kCDXProp_Node_Type |
+| CDX Constant Value: | 0x0400 |
+| Data Size: | [INT16](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/DataType/CDXNumeric.md) |
+| Property of objects: | [kCDXObj_Node](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Node.md) |
+| First written/read in: | ChemDraw 4.0 |
+| Required? | No |
+
+**Description:**  
+
+The type of a node object.
+
+This is an enumerated property. Acceptible values are shown in the following list:
+
+| Value | CDXML Name | Description |
+| --- | --- | --- |
+| 0 | Unspecified | A node of unspecified type. This may be used in cases where the node has unknown chemical significance. It may also be used when a node has an uninterpretable label. |
+| 1 | Element | A node consisting either of one chemical element or of one heavy element and attached hydrogens. The node property[kCDXProp_Node_Element](Node_Element.md)records the atomic number of the node's element. If the element property is missing, the atom is assumed to be a carbon. |
+| 2 | ElementList | An element list node (e.g. [O,S]) representing a node with alternative elements. The[kCDXProp_Atom_ElementList](Atom_ElementList.md)and/or[kCDXProp_Atom_GenericList](Atom_GenericList.md)attributes must be present as well, to provide the actual list of elements. |
+| 3 | ElementListNickname | A special type of element list node representing a group of elements of a common attribute as a nickname instead of representing each element in a list. For example, DARC uses HAL to represent [F,Cl,Br,I], MX to represent any metal. The[kCDXProp_Atom_ElementList](Atom_ElementList.md)and/or[kCDXProp_Atom_GenericList](Atom_GenericList.md)attributes must be present. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label is required for the node. |
+| 4 | Nickname | A molecular fragment represented by a single symbol, such as Ph. For example, Ph commonly represents a monosubstituted phenyl ring, C6H5. The Node should contain a[Fragment](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Fragment.md)object that contains the set of nodes and bonds that define the nickname. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label is required for the node.A node may be of Nickname type only if it can be represented by asinglesymbol. A node with a label of "OPh" should be considered a Fragment rather than a NicknameIf a label is theoretically interpretable, but that interpretation is not also present in the file (as a Fragment object), the node should be specified as Unknown type instead.As a practical matter, there is very little difference between a Nickname and a Fragment. CDX-reading programs may simply treat a Nickname as a special case of a Fragment. |
+| 5 | Fragment | An interpretable label, such as CH(CH2OH)2, which may include elements, nicknames, or named alternative groups. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label is required for the node. A[Fragment](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Fragment.md)object defining the content of the fragment is also required. If there is more than one bond to this node, a[kCDXProp_Atom_BondOrdering](Atom_BondOrdering.md)attribute should also be given, specifying the order of the bonds to correspond to the ordered external connection nodes in the fragment.If a label is theoretically interpretable, but that interpretation is not also present in the file (as a Fragment object), the node should be specified as Unknown type instead. |
+| 6 | Formula | A labeled node such as C5H10O, representing any or all of the possible isomers. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label is required for the node. A[kCDXProp_Atom_Formula](Atom_Formula.md)property must be present, defining the formula for the fragment. |
+| 7 | GenericNickname | A large or infinite set of alternative fragments, which may be defined by example. For example, DARC uses CHK to represent acyclic hydrocarbons. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label is required for the node. A[kCDXProp_Atom_GenericNickname](Atom_GenericNickname.md)property must be present, giving the name of the generic nickname. |
+| 8 | AnonymousAlternativeGroup | A set of alternative fragments defined by enumeration, such as CH3, CH2OH, Ph. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label is required for the node. This node should contain two or more fragment objects. |
+| 9 | NamedAlternativeGroup | A set of fragments grouped together and given a name. A[Text](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md)object that represents the node label (equivalent to the alternative group name) is required for the node. A[kCDXProp_Atom_AltGroupID](Atom_AltGroupID.md)property must be present. If there is more than one bond to this node, a[kCDXProp_Atom_BondOrdering](Atom_BondOrdering.md)property should be present. See the discussion of the[Named Alternative Group](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/NamedAltGroup.md)object for more details and examples. |
+| 10 | MultiAttachment | The endpoint of a bonding to a set of atoms, such as inp-allyl andp-aryl bonding. The node must contain a[kCDXProp_Node_Attachments](Node_Attachments.md)property that describes the nodes in the set.A multicenter attachment node might also have bonds to other nodes which are not part of the multicenter attachment. For example, in Ferrocene, two multicenter attachment nodes are used, one at the center of each ring Each multicenter attachment node contains the IDs of the five carbons in the Cp ring, but the connection to the iron is represented with a normal bond.A multicenter attachment node can also have charge and radical attributes, which are treated as being distributed over the attached nodes. |
+| 11 | VariableAttachment | A node representing alternative positional isomers. The[kCDXProp_Node_Attachments](Node_Attachments.md)property contains the IDs of the variable attachment positions. For example, to find ortho-, meta-, or para-cresol, you might draw the following. The kCDXProp_Node_Attachments attribute would have the IDs of the five ring atoms to which the methyl group might be attached. Note that the methyl group is not in this list; the bond to the methyl group is represented as a normal bond to this node. |
+| 12 | ExternalConnectionPoint | An external connection point node is used in defining fragments for fragment nicknames and named alternative groups. This node indicates a point at which a fragment is connected to its parent. An external connection point node is represented in ChemDraw with a small filled diamond.An external connection point normally has a single bond of order 1, but it may have more than one bond or a multiple bond to represent certain special cases. Note, however, that use of multiple bonds in either the use or definition of an alternative group can lead to ambiguities in the stereochemistry of the resulting query. For this reason, except in the simplest cases, it is preferable to define attachment points with a single connection. |
+| 13 | LinkNode | A node containing a single element or generic nickname, repeated some number of times in a chain, as in [CH2]1-5(which indicates an alkyl chain of at most 5 carbons). The node must also contain[kCDXProp_Atom_LinkCountLow](Atom_LinkCountLow.md)and[kCDXProp_Atom_LinkCountHigh](Atom_LinkCountHigh.md)properties, indicating the low and high ends of the repeat range. |
+
+**If this property is absent:**  
+
+The node is treated as Element type.
+
+---
+
+[CDX Documentation index](/web/20190819212425/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/index.md)

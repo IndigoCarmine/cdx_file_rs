@@ -50,13 +50,13 @@ impl TaggedObject for TLCPlate {
             .get_property(CDXPROP_MARGIN_WIDTH)
             .and_then(|v| f64::decode(v).ok());
         let label_font = raw
-            .get_property(CDXPROP_LABEL_FONT)
+            .get_property(CDXPROP_LABEL_STYLE_FONT)
             .and_then(|v| i16::decode(v).ok());
         let label_size = raw
-            .get_property(CDXPROP_LABEL_SIZE)
+            .get_property(CDXPROP_LABEL_STYLE_SIZE)
             .and_then(|v| i16::decode(v).ok());
         let label_face = raw
-            .get_property(CDXPROP_LABEL_FACE)
+            .get_property(CDXPROP_LABEL_STYLE_FACE)
             .and_then(|v| i16::decode(v).ok());
         let tlc_origin_fraction = raw
             .get_property(CDXPROP_TLC_ORIGIN_FRACTION)
@@ -177,19 +177,19 @@ impl TaggedObject for TLCPlate {
         }
         if let Some(val) = self.label_font {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_FONT,
+                tag: CDXPROP_LABEL_STYLE_FONT,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_size {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_SIZE,
+                tag: CDXPROP_LABEL_STYLE_SIZE,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_face {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_FACE,
+                tag: CDXPROP_LABEL_STYLE_FACE,
                 value: val.encode()?,
             });
         }
