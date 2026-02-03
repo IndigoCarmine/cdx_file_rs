@@ -1,25 +1,44 @@
 pub use eframe::egui;
 
+pub mod backend;
+pub mod egui_backend;
 pub mod core;
 
-pub use core::{CdxRenderer, Drawable, RenderContext, element_to_symbol};
+pub use backend::{AbstractPainter, Color, Point2d, Stroke, Rect, Align, Align2, FontFamily, FontId, Galley};
+pub use egui_backend::EguiBackend;
+pub use core::{CdxRenderer, Drawable, RenderContext, RenderStyle, element_to_symbol};
 
 pub mod arrow;
 pub mod bond;
 pub mod border;
+pub mod bracket_attachment;
+pub mod bracketed_group;
+pub mod chemical_property;
+pub mod color_table;
 pub mod constraint;
+pub mod cross_reference;
+pub mod crossing_bond;
+pub mod curve;
 pub mod document;
+pub mod embedded_object;
 pub mod fragment;
 pub mod geometry;
 pub mod graphic;
 pub mod group;
+pub mod named_alternative_group;
 pub mod node;
 pub mod object_tag;
 pub mod page;
 pub mod reaction_scheme;
 pub mod reaction_step;
+pub mod registry_number;
+pub mod sequence;
+pub mod spectrum;
+pub mod splitter;
 pub mod table;
+pub mod template_grid;
 pub mod text;
 pub mod tlc_lane;
 pub mod tlc_plate;
+pub mod tlc_spot;
 pub mod unknown_802b;

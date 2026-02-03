@@ -63,8 +63,8 @@ pub const CDXPROP_HASH_SPACING: u16 = 0x0809; // Hashed bond spacing.
 
 pub const CDXPROP_LABEL_STYLE: u16 = 0x080A; // Atom label font style (unused).
 
-pub const CDXPROP_LABEL_FONT: u16 = 0x081A; // Atom label font family.
-pub const CDXPROP_LABEL_SIZE: u16 = 0x081C; // Atom label font size.
-pub const CDXPROP_LABEL_FACE: u16 = 0x081E; // Atom label font face.
+pub const CDXPROP_LABEL_STYLE_FONT: u16 = 0x081A; // Atom label font family.
+pub const CDXPROP_LABEL_STYLE_SIZE: u16 = 0x081C; // Atom label font size.
+pub const CDXPROP_LABEL_STYLE_FACE: u16 = 0x081E; // Atom label font face.
 
 pub const CDXPROP_BOND_SPACING_ABS: u16 = 0x0822; // Absolute spacing of multiple bonds.

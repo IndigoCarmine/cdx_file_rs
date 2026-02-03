@@ -64,14 +64,14 @@ pub const CDXPROP_MAGNIFICATION: u16 = 0x080E; // View magnification factor.
 // Font Defaults
 // =======================
 
-pub const CDXPROP_LABEL_FONT: u16 = 0x081A; // Atom label font family.
-pub const CDXPROP_CAPTION_FONT: u16 = 0x081B; // Caption font family.
-pub const CDXPROP_LABEL_SIZE: u16 = 0x081C; // Atom label font size.
-pub const CDXPROP_CAPTION_SIZE: u16 = 0x081D; // Caption font size.
-pub const CDXPROP_LABEL_FACE: u16 = 0x081E; // Atom label font face.
-pub const CDXPROP_CAPTION_FACE: u16 = 0x081F; // Caption font face.
-pub const CDXPROP_LABEL_COLOR: u16 = 0x0820; // Atom label color.
-pub const CDXPROP_CAPTION_COLOR: u16 = 0x0821; // Caption color.
+pub const CDXPROP_LABEL_STYLE_FONT: u16 = 0x081A; // Atom label font family.
+pub const CDXPROP_CAPTION_STYLE_FONT: u16 = 0x081B; // Caption font family.
+pub const CDXPROP_LABEL_STYLE_SIZE: u16 = 0x081C; // Atom label font size.
+pub const CDXPROP_CAPTION_STYLE_SIZE: u16 = 0x081D; // Caption font size.
+pub const CDXPROP_LABEL_STYLE_FACE: u16 = 0x081E; // Atom label font face.
+pub const CDXPROP_CAPTION_STYLE_FACE: u16 = 0x081F; // Caption font face.
+pub const CDXPROP_LABEL_STYLE_COLOR: u16 = 0x0820; // Atom label color.
+pub const CDXPROP_CAPTION_STYLE_COLOR: u16 = 0x0821; // Caption color.
 pub const CDXPROP_LABEL_JUSTIFICATION: u16 = 0x0823; // Atom label justification.
 
 // =======================

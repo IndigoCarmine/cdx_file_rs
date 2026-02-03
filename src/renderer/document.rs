@@ -5,5 +5,5 @@ use crate::renderer::core::Drawable;
 use crate::renderer::core::RenderContext;
 
 impl Drawable for Document {
-    fn draw(&self, _ctx: &RenderContext) {}
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, _ctx: &RenderContext<P>) {}
 }

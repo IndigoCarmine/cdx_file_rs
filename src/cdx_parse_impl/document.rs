@@ -149,35 +149,35 @@ impl TaggedObject for Document {
 
         // Extract font defaults
         let label_font = raw
-            .get_property(CDXPROP_LABEL_FONT)
+            .get_property(CDXPROP_LABEL_STYLE_FONT)
             .and_then(|v| i16::decode(v).ok());
 
         let caption_font = raw
-            .get_property(CDXPROP_CAPTION_FONT)
+            .get_property(CDXPROP_CAPTION_STYLE_FONT)
             .and_then(|v| i16::decode(v).ok());
 
         let label_size = raw
-            .get_property(CDXPROP_LABEL_SIZE)
+            .get_property(CDXPROP_LABEL_STYLE_SIZE)
             .and_then(|v| i16::decode(v).ok());
 
         let caption_size = raw
-            .get_property(CDXPROP_CAPTION_SIZE)
+            .get_property(CDXPROP_CAPTION_STYLE_SIZE)
             .and_then(|v| i16::decode(v).ok());
 
         let label_face = raw
-            .get_property(CDXPROP_LABEL_FACE)
+            .get_property(CDXPROP_LABEL_STYLE_FACE)
             .and_then(|v| i16::decode(v).ok());
 
         let caption_face = raw
-            .get_property(CDXPROP_CAPTION_FACE)
+            .get_property(CDXPROP_CAPTION_STYLE_FACE)
             .and_then(|v| i16::decode(v).ok());
 
         let label_color = raw
-            .get_property(CDXPROP_LABEL_COLOR)
+            .get_property(CDXPROP_LABEL_STYLE_COLOR)
             .and_then(|v| i16::decode(v).ok());
 
         let caption_color = raw
-            .get_property(CDXPROP_CAPTION_COLOR)
+            .get_property(CDXPROP_CAPTION_STYLE_COLOR)
             .and_then(|v| i16::decode(v).ok());
 
         let label_justification = raw
@@ -454,49 +454,49 @@ impl TaggedObject for Document {
         }
         if let Some(val) = self.label_font {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_FONT,
+                tag: CDXPROP_LABEL_STYLE_FONT,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.caption_font {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_CAPTION_FONT,
+                tag: CDXPROP_CAPTION_STYLE_FONT,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_size {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_SIZE,
+                tag: CDXPROP_LABEL_STYLE_SIZE,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.caption_size {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_CAPTION_SIZE,
+                tag: CDXPROP_CAPTION_STYLE_SIZE,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_face {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_FACE,
+                tag: CDXPROP_LABEL_STYLE_FACE,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.caption_face {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_CAPTION_FACE,
+                tag: CDXPROP_CAPTION_STYLE_FACE,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.label_color {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_LABEL_COLOR,
+                tag: CDXPROP_LABEL_STYLE_COLOR,
                 value: val.encode()?,
             });
         }
         if let Some(val) = self.caption_color {
             properties.push(RawCdxProperty {
-                tag: CDXPROP_CAPTION_COLOR,
+                tag: CDXPROP_CAPTION_STYLE_COLOR,
                 value: val.encode()?,
             });
         }

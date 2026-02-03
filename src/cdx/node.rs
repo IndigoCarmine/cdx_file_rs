@@ -54,7 +54,7 @@ pub struct Node {
     // Stereochemistry / Query indicators
     pub cip_stereochemistry: Option<i8>,
     pub atom_translation: Option<i8>,
-    pub atom_number: Option<u16>,
+    pub atom_number: Option<CDXString>,
     pub show_query: Option<bool>,
     pub show_stereo: Option<bool>,
     pub show_atom_number: Option<bool>,
@@ -62,7 +62,7 @@ pub struct Node {
     // Link node properties
     pub link_count_low: Option<i16>,
     pub link_count_high: Option<i16>,
-    pub isotopic_abundance: Option<f64>,
+    pub isotopic_abundance: Option<i8>,
     pub external_connection_type: Option<i8>,
     pub generic_list: Option<CDXString>,
 

@@ -1,11 +1,9 @@
 use crate::cdx::arrow::Arrow;
-use crate::cdx::values::{Point2d, Point3d, Rectangle};
-use crate::renderer::{Drawable, RenderContext};
-use eframe::egui;
-use egui::{Color32, Pos2, Stroke};
+use crate::cdx::values::{Point2d as CdxPoint2d, Point3d, Rectangle};
+use crate::renderer::{Drawable, RenderContext, backend::{Color, Point2d as BackendPoint2d, Stroke}};
 
 impl Drawable for Arrow {
-    fn draw(&self, ctx: &RenderContext) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
         // Draw arrow based on 3D head and tail positions
         // If 3D coordinates exist, project them to 2D using z as depth
 
@@ -14,8 +12,8 @@ impl Drawable for Arrow {
                 (&self.head_3d, &self.tail_3d)
             {
                 // Use 3D coordinates projected to 2D (ignoring z for now)
-                let hp = Point2d { x: *hx, y: *hy };
-                let tp = Point2d { x: *tx, y: *ty };
+                let hp = CdxPoint2d { x: *hx, y: *hy };
+                let tp = CdxPoint2d { x: *tx, y: *ty };
                 (ctx.cdx_to_screen(&hp), ctx.cdx_to_screen(&tp))
             } else if let Some(Rectangle {
                 left: x1,
@@ -25,8 +23,8 @@ impl Drawable for Arrow {
             }) = &self.bounding_box
             {
                 // Use bounding box as fallback: (x1,y1) is start, (x2,y2) is end
-                let p1 = Point2d { x: *x1, y: *y1 };
-                let p2 = Point2d { x: *x2, y: *y2 };
+                let p1 = CdxPoint2d { x: *x1, y: *y1 };
+                let p2 = CdxPoint2d { x: *x2, y: *y2 };
                 (ctx.cdx_to_screen(&p1), ctx.cdx_to_screen(&p2))
             } else {
                 // Not enough data to draw
@@ -34,19 +32,13 @@ impl Drawable for Arrow {
             };
 
         // Get visual properties
-        let line_width = self.line_width.unwrap_or(1.0) as f32;
-        let color_idx = self.foreground_color.unwrap_or(0) as usize;
-        let color = ctx
-            .document
-            .get_color_table()
-            .and_then(|ct| ct.get(color_idx))
-            .map(|c| c.to_color32())
-            .unwrap_or(Color32::BLACK);
+        let line_width = self.line_width.unwrap_or(ctx.default_line_width()) as f32;
+        let color = ctx.resolve_color(self.foreground_color, Color::BLACK);
 
         let stroke = Stroke::new(line_width, color);
 
         // Draw main line
-        ctx.painter.line_segment([tail_pos, head_pos], stroke);
+        ctx.painter.line_segment(tail_pos, head_pos, stroke);
 
         // Draw arrowhead if specified
         if self.arrowhead_head.is_some() {
@@ -55,18 +47,20 @@ impl Drawable for Arrow {
                 head_pos,
                 tail_pos,
                 stroke,
-                self.head_size.unwrap_or(10) as f32,
+                self.head_size
+                    .map(|v| v as f32)
+                    .unwrap_or(ctx.style.arrowhead_size_default),
             );
         }
     }
 }
 
-fn draw_arrowhead(ctx: &RenderContext, tip: Pos2, tail: Pos2, stroke: Stroke, size: f32) {
+fn draw_arrowhead<P: crate::renderer::backend::AbstractPainter>(ctx: &crate::renderer::RenderContext<P>, tip: BackendPoint2d, tail: BackendPoint2d, stroke: Stroke, size: f32) {
     let dx = tip.x - tail.x;
     let dy = tip.y - tail.y;
     let len = (dx * dx + dy * dy).sqrt();
 
-    if len < 0.01 {
+    if len < ctx.style.arrowhead_min_length {
         return; // Too short
     }
 
@@ -82,17 +76,17 @@ fn draw_arrowhead(ctx: &RenderContext, tip: Pos2, tail: Pos2, stroke: Stroke, si
     let arrow_len = size;
     let arrow_width = size * 0.5;
 
-    let p1 = Pos2::new(
+    let p1 = BackendPoint2d::new(
         tip.x - ux * arrow_len + px * arrow_width,
         tip.y - uy * arrow_len + py * arrow_width,
     );
-    let p2 = Pos2::new(
+    let p2 = BackendPoint2d::new(
         tip.x - ux * arrow_len - px * arrow_width,
         tip.y - uy * arrow_len - py * arrow_width,
     );
 
     // Draw arrowhead as two lines forming a triangle
-    ctx.painter.line_segment([tip, p1], stroke);
-    ctx.painter.line_segment([tip, p2], stroke);
-    ctx.painter.line_segment([p1, p2], stroke);
+    ctx.painter.line_segment(tip, p1, stroke);
+    ctx.painter.line_segment(tip, p2, stroke);
+    ctx.painter.line_segment(p1, p2, stroke);
 }

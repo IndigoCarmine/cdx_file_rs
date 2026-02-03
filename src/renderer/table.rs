@@ -7,7 +7,9 @@ use eframe::egui;
 use std::collections::HashSet;
 
 impl Drawable for Table {
-    fn draw(&self, ctx: &RenderContext) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
+        use crate::renderer::backend::Rect;
+        
         // Get the bounding box - if not available, nothing to draw
         let bbox = match &self.bounding_box {
             Some(b) => b,
@@ -25,13 +27,13 @@ impl Drawable for Table {
             x: bbox.right,
             y: bbox.bottom,
         });
-        let rect = egui::Rect::from_two_pos(top_left, bottom_right);
+        let rect = Rect::from_min_max(top_left, bottom_right);
         
         // Draw the outer rectangle
         ctx.painter.rect_stroke(rect, 0.0, stroke);
     }
     
-    fn draw_with_node(&self, ctx: &RenderContext, node: &Node<NodePayload>) {
+    fn draw_with_node<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>, node: &Node<NodePayload>) {
         // First draw the outer bounding box
         self.draw(ctx);
         
@@ -42,17 +44,19 @@ impl Drawable for Table {
 
 impl Table {
     /// Get the stroke width for this table
-    fn get_line_width(&self, ctx: &RenderContext) -> f64 {
+    fn get_line_width<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> f64 {
         self.line_width.unwrap_or_else(|| ctx.default_line_width())
     }
     
     /// Get the stroke color for this table
-    fn get_color(&self, ctx: &RenderContext) -> egui::Color32 {
+    fn get_color<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> crate::renderer::backend::Color {
+        use crate::renderer::backend::Color as BackendColor;
+        
         if let Some(color_idx) = self.foreground_color {
             ctx.document
                 .get_color_table()
                 .and_then(|ct| ct.get(color_idx as usize))
-                .map(|c| c.to_color32())
+                .map(|c| c.to_backend_color())
                 .unwrap_or_else(|| ctx.default_foreground_color())
         } else {
             ctx.default_foreground_color()
@@ -60,16 +64,18 @@ impl Table {
     }
     
     /// Get the stroke for drawing table lines
-    fn get_stroke(&self, ctx: &RenderContext) -> egui::Stroke {
+    fn get_stroke<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> crate::renderer::backend::Stroke {
+        use crate::renderer::backend::Stroke;
+        
         let line_width = self.get_line_width(ctx);
         let scale = ctx.zoom * ctx.auto_scale;
         let stroke_width = (line_width * scale as f64) as f32;
         let color = self.get_color(ctx);
-        egui::Stroke::new(stroke_width, color)
+        Stroke::new(stroke_width, color)
     }
     
     /// Draw internal grid lines based on child Page bounds
-    fn draw_grid_lines(&self, ctx: &RenderContext, table_node: &Node<NodePayload>) {
+    fn draw_grid_lines<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>, table_node: &Node<NodePayload>) {
         // Collect bounds_in_parent from all child Page objects
         let mut cell_bounds = Vec::new();
         for child in table_node.children() {
@@ -118,14 +124,14 @@ impl Table {
         for &x in &x_sorted {
             let top = ctx.cdx_to_screen(&Point2d { x, y: y_min });
             let bottom = ctx.cdx_to_screen(&Point2d { x, y: y_max });
-            ctx.painter.line_segment([top, bottom], stroke);
+            ctx.painter.line_segment(top, bottom, stroke);
         }
 
         // Draw horizontal lines
         for &y in &y_sorted {
             let left = ctx.cdx_to_screen(&Point2d { x: x_min, y });
             let right = ctx.cdx_to_screen(&Point2d { x: x_max, y });
-            ctx.painter.line_segment([left, right], stroke);
+            ctx.painter.line_segment(left, right, stroke);
         }
     }
 }

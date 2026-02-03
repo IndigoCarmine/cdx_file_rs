@@ -7,15 +7,18 @@ const GRAPHIC_TYPE_LINE: i16 = 1;
 const GRAPHIC_TYPE_ARC: i16 = 2;
 const GRAPHIC_TYPE_RECTANGLE: i16 = 3;
 const GRAPHIC_TYPE_OVAL: i16 = 4;
+#[allow(dead_code)]
 const GRAPHIC_TYPE_ORBITAL: i16 = 5;
 const GRAPHIC_TYPE_BRACKET: i16 = 6;
+#[allow(dead_code)]
 const GRAPHIC_TYPE_SYMBOL: i16 = 7;
 
 impl Drawable for Graphic {
-    fn draw(&self, ctx: &RenderContext) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
         let graphic_type = self.graphic_type.unwrap_or(GRAPHIC_TYPE_LINE);
 
         // Debug: Log if this is an arrow
+        #[cfg(debug_assertions)]
         if self.arrow_type.is_some() {
             eprintln!(
                 "Drawing Graphic id={}: type={}, arrow_type={:?}, bbox={:?}",
@@ -35,7 +38,7 @@ impl Drawable for Graphic {
 }
 
 impl Graphic {
-    fn draw_line(&self, ctx: &RenderContext) {
+    fn draw_line<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) {
         use crate::cdx::values::Point2d;
 
         let (start, end) = if let (Some(head), Some(tail)) = (&self.head_3d, &self.tail_3d) {
@@ -61,6 +64,7 @@ impl Graphic {
             });
 
             // Debug: Log arrow coordinates
+            #[cfg(debug_assertions)]
             if self.arrow_type.is_some() {
                 eprintln!(
                     "Arrow line_seg: start={:?}, end={:?}, bbox={:?}",
@@ -73,10 +77,12 @@ impl Graphic {
             return; // No position data
         };
 
+        use crate::renderer::backend::{Stroke, Color as BackendColor};
+        
         let color = self.get_color(ctx);
-        let stroke = egui::Stroke::new(self.get_line_width(), color);
+        let stroke = Stroke::new(self.get_line_width() as f32, color);
 
-        ctx.painter.line_segment([start, end], stroke);
+        ctx.painter.line_segment(start, end, stroke);
 
         // Draw arrowhead if specified
         if let Some(_arrow_type) = self.arrow_type {
@@ -84,7 +90,7 @@ impl Graphic {
         }
     }
 
-    fn draw_rectangle(&self, ctx: &RenderContext) {
+    fn draw_rectangle<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) {
         use crate::cdx::values::Point2d;
 
         let bbox = match &self.bounding_box {
@@ -100,10 +106,11 @@ impl Graphic {
             x: bbox.right,
             y: bbox.bottom,
         });
-        let rect = egui::Rect::from_two_pos(top_left, bottom_right);
-
+        use crate::renderer::backend::{Rect, Stroke, Color as BackendColor};
+        
+        let rect = Rect::from_min_max(top_left, bottom_right);
         let color = self.get_color(ctx);
-        let stroke = egui::Stroke::new(self.get_line_width(), color);
+        let stroke = Stroke::new(self.get_line_width() as f32, color);
 
         // Check if filled
         if let Some(bg_color_idx) = self.background_color.filter(|&idx| idx >= 0) {
@@ -116,7 +123,7 @@ impl Graphic {
         ctx.painter.rect_stroke(rect, 0.0, stroke);
     }
 
-    fn draw_oval(&self, ctx: &RenderContext) {
+    fn draw_oval<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) {
         use crate::cdx::values::Point2d;
 
         let bbox = match &self.bounding_box {
@@ -133,12 +140,13 @@ impl Graphic {
             x: center_x,
             y: center_y,
         });
-        let scale = ctx.zoom * ctx.auto_scale;
-        let radius_screen_x = (radius_x * scale as f64) as f32;
-        let radius_screen_y = (radius_y * scale as f64) as f32;
+        let radius_screen_x = ctx.cdx_length_to_screen(radius_x);
+        let radius_screen_y = ctx.cdx_length_to_screen(radius_y);
 
+        use crate::renderer::backend::{Stroke, Point2d as BackendPoint2d};
+        
         let color = self.get_color(ctx);
-        let stroke = egui::Stroke::new(self.get_line_width(), color);
+        let stroke = Stroke::new(self.get_line_width() as f32, color);
 
         // Draw ellipse using circle if radii are equal, otherwise approximate
         if (radius_screen_x - radius_screen_y).abs() < 1.0 {
@@ -152,14 +160,13 @@ impl Graphic {
                 let angle = (i as f32 / num_points as f32) * 2.0 * std::f32::consts::PI;
                 let x = center.x + radius_screen_x * angle.cos();
                 let y = center.y + radius_screen_y * angle.sin();
-                points.push(egui::pos2(x, y));
+                points.push(BackendPoint2d::new(x, y));
             }
-            points.push(points[0]); // Close the loop
-            ctx.painter.add(egui::Shape::line(points, stroke));
+            ctx.painter.polyline_closed(&points, stroke);
         }
     }
 
-    fn draw_arc(&self, ctx: &RenderContext) {
+    fn draw_arc<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) {
         use crate::cdx::values::Point2d;
 
         let bbox = match &self.bounding_box {
@@ -175,29 +182,30 @@ impl Graphic {
             x: center_x,
             y: center_y,
         });
-        let scale = ctx.zoom * ctx.auto_scale;
-        let radius_screen = (radius * scale as f64) as f32;
+        let radius_screen = ctx.cdx_length_to_screen(radius);
 
+        use crate::renderer::backend::{Stroke, Point2d as BackendPoint2d};
+        
         let color = self.get_color(ctx);
-        let stroke = egui::Stroke::new(self.get_line_width(), color);
+        let stroke = Stroke::new(self.get_line_width() as f32, color);
 
         // Arc angular size in degrees (default 90)
         let arc_size = self.arc_angular_size.unwrap_or(90) as f32;
         let arc_radians = arc_size.to_radians();
 
         // Draw arc as line segments
-        let num_segments = ((arc_size / 5.0) as usize).max(8);
+        let num_segments = ((arc_size / ctx.style.arc_segment_degrees) as usize).max(8);
         let mut points = Vec::with_capacity(num_segments + 1);
         for i in 0..=num_segments {
             let angle = (i as f32 / num_segments as f32) * arc_radians;
             let x = center.x + radius_screen * angle.cos();
             let y = center.y + radius_screen * angle.sin();
-            points.push(egui::pos2(x, y));
+            points.push(BackendPoint2d::new(x, y));
         }
-        ctx.painter.add(egui::Shape::line(points, stroke));
+        ctx.painter.polyline(&points, stroke);
     }
 
-    fn draw_bracket(&self, ctx: &RenderContext) {
+    fn draw_bracket<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) {
         use crate::cdx::values::Point2d;
 
         let bbox = match &self.bounding_box {
@@ -222,52 +230,54 @@ impl Graphic {
             y: bbox.bottom,
         });
 
+        use crate::renderer::backend::{Stroke, Point2d as BackendPoint2d};
+        
         let color = self.get_color(ctx);
-        let stroke = egui::Stroke::new(self.get_line_width(), color);
+        let stroke = Stroke::new(self.get_line_width() as f32, color);
 
         // Bracket lip size (default 5% of height)
         let height = (bottom_left.y - top_left.y).abs();
         let lip_size = self
             .bracket_lip_size
             .map(|s| s as f32)
-            .unwrap_or(height * 0.05);
+            .unwrap_or(height * ctx.style.bracket_lip_ratio);
 
         // Draw left bracket: [
-        ctx.painter.line_segment([top_left, bottom_left], stroke);
+        ctx.painter.line_segment(top_left, bottom_left, stroke);
         ctx.painter.line_segment(
-            [top_left, egui::pos2(top_left.x + lip_size, top_left.y)],
+            top_left,
+            BackendPoint2d::new(top_left.x + lip_size, top_left.y),
             stroke,
         );
         ctx.painter.line_segment(
-            [
-                bottom_left,
-                egui::pos2(bottom_left.x + lip_size, bottom_left.y),
-            ],
+            bottom_left,
+            BackendPoint2d::new(bottom_left.x + lip_size, bottom_left.y),
             stroke,
         );
 
         // Draw right bracket: ]
-        ctx.painter.line_segment([top_right, bottom_right], stroke);
+        ctx.painter.line_segment(top_right, bottom_right, stroke);
         ctx.painter.line_segment(
-            [top_right, egui::pos2(top_right.x - lip_size, top_right.y)],
+            top_right,
+            BackendPoint2d::new(top_right.x - lip_size, top_right.y),
             stroke,
         );
         ctx.painter.line_segment(
-            [
-                bottom_right,
-                egui::pos2(bottom_right.x - lip_size, bottom_right.y),
-            ],
+            bottom_right,
+            BackendPoint2d::new(bottom_right.x - lip_size, bottom_right.y),
             stroke,
         );
     }
 
-    fn draw_arrowhead(
+    fn draw_arrowhead<P: crate::renderer::backend::AbstractPainter>(
         &self,
-        ctx: &RenderContext,
-        _start: egui::Pos2,
-        end: egui::Pos2,
-        color: egui::Color32,
+        ctx: &RenderContext<P>,
+        _start: crate::renderer::backend::Point2d,
+        end: crate::renderer::backend::Point2d,
+        color: crate::renderer::backend::Color,
     ) {
+        use crate::renderer::backend::Point2d as BackendPoint2d;
+        
         // Simple triangle arrowhead
 
         // Vector pointing from start to end
@@ -275,7 +285,8 @@ impl Graphic {
         let dir_y = end.y - _start.y;
         let length = (dir_x * dir_x + dir_y * dir_y).sqrt();
 
-        if length < 0.001 {
+        if length < ctx.style.arrowhead_min_length {
+            #[cfg(debug_assertions)]
             eprintln!("Arrowhead: line too short, length={}", length);
             return; // Avoid division by zero
         }
@@ -296,12 +307,14 @@ impl Graphic {
             // arrowhead_size is in 0.01 inches, convert to pixels
             // Typical screen DPI is 96, so 0.01 inch = 0.96 pixels
             // But we need to scale by zoom
-            let base_size = (arrow_size as f32) * 0.01 * 96.0 * scale / 100.0;
+            let base_size =
+                (arrow_size as f32) * 0.01 * ctx.style.screen_dpi * scale / 100.0;
             base_size.min(length / 3.0) // Cap at 1/3 of line length
         } else {
-            (length / 5.0).min(20.0 * scale) // Default: 1/5 of line or 20 screen pixels
+            (length / 5.0).min(ctx.style.arrowhead_max_screen * scale)
         };
 
+        #[cfg(debug_assertions)]
         eprintln!(
             "Arrowhead: size={}, arrowhead_size={:?}, scale={}, line_length={}",
             size, self.arrowhead_size, scale, length
@@ -310,36 +323,27 @@ impl Graphic {
         // Arrowhead points
         let base_x = end.x - norm_x * size;
         let base_y = end.y - norm_y * size;
-        let side_offset = size * 0.4;
+        let side_offset = size * ctx.style.arrowhead_side_ratio;
 
         let p1 = end;
-        let p2 = egui::pos2(base_x + perp_x * side_offset, base_y + perp_y * side_offset);
-        let p3 = egui::pos2(base_x - perp_x * side_offset, base_y - perp_y * side_offset);
+        let p2 = BackendPoint2d::new(base_x + perp_x * side_offset, base_y + perp_y * side_offset);
+        let p3 = BackendPoint2d::new(base_x - perp_x * side_offset, base_y - perp_y * side_offset);
 
+        #[cfg(debug_assertions)]
         eprintln!("Arrowhead points: p1={:?}, p2={:?}, p3={:?}", p1, p2, p3);
 
-        ctx.painter.add(egui::Shape::convex_polygon(
-            vec![p1, p2, p3],
+        ctx.painter.convex_polygon(
+            &[p1, p2, p3],
             color,
-            egui::Stroke::NONE,
-        ));
+        );
     }
 
-    fn get_color(&self, ctx: &RenderContext) -> egui::Color32 {
-        if let Some(color_idx) = self.foreground_color {
-            self.get_document_color(ctx, color_idx)
-        } else {
-            egui::Color32::BLACK
-        }
+    fn get_color<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> crate::renderer::backend::Color {
+        ctx.resolve_color(self.foreground_color, crate::renderer::backend::Color::BLACK)
     }
 
-    fn get_document_color(&self, ctx: &RenderContext, index: u16) -> egui::Color32 {
-        if let Some(color_table) = &ctx.document.color_table {
-            if (index as usize) < color_table.colors.len() {
-                return color_table.colors[index as usize].to_color32();
-            }
-        }
-        egui::Color32::BLACK
+    fn get_document_color<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>, index: u16) -> crate::renderer::backend::Color {
+        ctx.resolve_color(Some(index), crate::renderer::backend::Color::BLACK)
     }
 
     fn get_line_width(&self) -> f32 {

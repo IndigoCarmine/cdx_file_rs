@@ -66,17 +66,32 @@ fn count_objects(node: dendron::Node<cdx_file_rs::cdx::file::NodePayload>, depth
         }
         cdx_file_rs::cdx::file::NodePayload::Arrow(_) => println!("{}Arrow", indent),
         cdx_file_rs::cdx::file::NodePayload::Border(_) => println!("{}Border", indent),
+        cdx_file_rs::cdx::file::NodePayload::BracketAttachment(_) => println!("{}BracketAttachment", indent),
+        cdx_file_rs::cdx::file::NodePayload::BracketedGroup(_) => println!("{}BracketedGroup", indent),
+        cdx_file_rs::cdx::file::NodePayload::ChemicalProperty(_) => println!("{}ChemicalProperty", indent),
+        cdx_file_rs::cdx::file::NodePayload::ColorTable(_) => println!("{}ColorTable", indent),
         cdx_file_rs::cdx::file::NodePayload::Constraint(_) => println!("{}Constraint", indent),
+        cdx_file_rs::cdx::file::NodePayload::CrossReference(_) => println!("{}CrossReference", indent),
+        cdx_file_rs::cdx::file::NodePayload::CrossingBond(_) => println!("{}CrossingBond", indent),
+        cdx_file_rs::cdx::file::NodePayload::Curve(_) => println!("{}Curve", indent),
+        cdx_file_rs::cdx::file::NodePayload::EmbeddedObject(_) => println!("{}EmbeddedObject", indent),
         cdx_file_rs::cdx::file::NodePayload::Geometry(_) => println!("{}Geometry", indent),
         cdx_file_rs::cdx::file::NodePayload::Group(g) => println!("{}Group (id={})", indent, g.id),
+        cdx_file_rs::cdx::file::NodePayload::NamedAlternativeGroup(_) => println!("{}NamedAlternativeGroup", indent),
         cdx_file_rs::cdx::file::NodePayload::ObjectTag(_) => println!("{}ObjectTag", indent),
         cdx_file_rs::cdx::file::NodePayload::ReactionScheme(_) => {
             println!("{}ReactionScheme", indent)
         }
         cdx_file_rs::cdx::file::NodePayload::ReactionStep(_) => println!("{}ReactionStep", indent),
+        cdx_file_rs::cdx::file::NodePayload::RegistryNumber(_) => println!("{}RegistryNumber", indent),
+        cdx_file_rs::cdx::file::NodePayload::Sequence(_) => println!("{}Sequence", indent),
+        cdx_file_rs::cdx::file::NodePayload::Spectrum(_) => println!("{}Spectrum", indent),
+        cdx_file_rs::cdx::file::NodePayload::Splitter(_) => println!("{}Splitter", indent),
         cdx_file_rs::cdx::file::NodePayload::Table(t) => println!("{}Table (id={})", indent, t.id),
+        cdx_file_rs::cdx::file::NodePayload::TemplateGrid(_) => println!("{}TemplateGrid", indent),
         cdx_file_rs::cdx::file::NodePayload::TlcLane(_) => println!("{}TlcLane", indent),
         cdx_file_rs::cdx::file::NodePayload::TLCPlate(_) => println!("{}TLCPlate", indent),
+        cdx_file_rs::cdx::file::NodePayload::TLCSpot(_) => println!("{}TLCSpot", indent),
         cdx_file_rs::cdx::file::NodePayload::UnknownObject802B(_) => {
             println!("{}UnknownObject802B", indent)
         }

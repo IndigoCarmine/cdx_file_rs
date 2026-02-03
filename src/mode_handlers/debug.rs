@@ -31,11 +31,11 @@ impl DebugMode {
         cdx_file: &crate::cdx::file::CdxFile,
     ) -> Option<ObjectInfo> {
         let mouse_screen = ctx.mouse_pos;
-        let scale = ctx.renderer.zoom * ctx.renderer.auto_scale;
+        let scale = ctx.zoom * ctx.auto_scale;
         
         // Convert screen position back to CDX coordinates
-        let center_offset = ctx.renderer.center_offset;
-        let offset = ctx.renderer.offset;
+        let center_offset = ctx.center_offset;
+        let offset = ctx.offset;
         let screen_x = mouse_screen.x - center_offset.x - offset.x;
         let screen_y = mouse_screen.y - center_offset.y - offset.y;
         
@@ -280,9 +280,11 @@ impl DebugMode {
 impl ModeHandler for DebugMode {
     fn handle_click(&mut self, ctx: &mut ModeContext) {
         // Select the object under cursor
-        let cdx_file = &ctx.renderer.cdx_file;
-        if let Some(info) = self.get_object_at_position(ctx, cdx_file) {
-            self.selected_object_info = Some(info);
+        let cdx_borrow = ctx.cdx_file.borrow();
+        if let Some(cdx_file) = cdx_borrow.as_ref() {
+            if let Some(info) = self.get_object_at_position(ctx, cdx_file) {
+                self.selected_object_info = Some(info);
+            }
         }
         // Also handle drag like View mode
         *ctx.view_offset += ctx.drag_delta;
@@ -296,7 +298,8 @@ impl ModeHandler for DebugMode {
     fn handle_drag_end(&mut self, _ctx: &mut ModeContext) {}
     
     fn handle_hover(&self, ctx: &ModeContext, painter: &egui::Painter) {
-        let cdx_file = &ctx.renderer.cdx_file;
+        let cdx_borrow = ctx.cdx_file.borrow();
+        let Some(cdx_file) = cdx_borrow.as_ref() else { return };
         
         // Get hovered object
         let hovered = self.get_object_at_position(ctx, cdx_file);

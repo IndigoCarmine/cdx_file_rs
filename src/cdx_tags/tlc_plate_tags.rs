@@ -38,9 +38,9 @@ pub const CDXPROP_BOLD_WIDTH: u16 = 0x0806; // Bold line width.
 pub const CDXPROP_LINE_WIDTH: u16 = 0x0807; // Line width.
 pub const CDXPROP_MARGIN_WIDTH: u16 = 0x0808; // Margin width.
 
-pub const CDXPROP_LABEL_FONT: u16 = 0x081A; // Default font family.
-pub const CDXPROP_LABEL_SIZE: u16 = 0x081C; // Default font size.
-pub const CDXPROP_LABEL_FACE: u16 = 0x081E; // Default font face.
+pub const CDXPROP_LABEL_STYLE_FONT: u16 = 0x081A; // Default font family.
+pub const CDXPROP_LABEL_STYLE_SIZE: u16 = 0x081C; // Default font size.
+pub const CDXPROP_LABEL_STYLE_FACE: u16 = 0x081E; // Default font face.
 
 // =======================
 // TLC-Specific Properties

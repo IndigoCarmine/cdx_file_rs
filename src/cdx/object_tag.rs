@@ -8,7 +8,7 @@ pub struct ObjectTag {
     pub id: u32,
 
     // Required and core properties
-    pub tag_name: Option<String>, // Tag name (e.g., "/CS/CD/assign")
+    pub tag_name: Option<CDXString>, // Tag name (e.g., "/CS/CD/assign")
 
     // Optional properties
     pub visible: Option<bool>,
