@@ -1,4 +1,5 @@
 use crate::cdx::text::TextObject;
+use crate::cdx::values::CDXStyleRun;
 use crate::renderer::{Drawable, RenderContext};
 use crate::renderer::backend::Align2;
 
@@ -59,11 +60,11 @@ impl TextObject {
         &self,
         ctx: &RenderContext<P>,
         text: &str,
-        style_runs: &[crate::cdx::values::CDXStyleRun],
+        style_runs: &[CDXStyleRun],
         pos: crate::renderer::backend::Point2d,
         base_align: crate::renderer::backend::Align2,
     ) {
-        use crate::renderer::backend::{Point2d as BackendPoint2d, Align2, Align, FontId, FontFamily, Stroke, Color as BackendColor};
+        use crate::renderer::backend::{Point2d as BackendPoint2d, Align2, Align, FontId, FontFamily, Stroke};
         
         if style_runs.is_empty() {
             return;
@@ -76,10 +77,10 @@ impl TextObject {
         let total_width = self.calculate_total_width(ctx, text, style_runs);
 
         // Calculate starting X position based on alignment
-        let start_x = match base_align.x() {
-            Align::LEFT => pos.x,
+        let start_x = match base_align.x {
+            Align::Left => pos.x,
             Align::Center => pos.x - total_width / 2.0,
-            Align::RIGHT => pos.x - total_width,
+            Align::Right => pos.x - total_width,
         };
 
         let mut current_x = start_x;
@@ -116,8 +117,10 @@ impl TextObject {
             let _is_bold = (run.font_face & 0x01) != 0;
             let _is_italic = (run.font_face & 0x02) != 0;
             let is_underline = (run.font_face & 0x04) != 0;
-            let is_subscript = (run.font_face & 0x20) != 0;
-            let is_superscript = (run.font_face & 0x40) != 0;
+            // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
+            let script_style = run.font_face & 0x60;
+            let is_subscript = script_style == 0x20;
+            let is_superscript = script_style == 0x40;
 
             // Calculate Y offset for subscript/superscript
             let y_offset = if is_superscript {
@@ -178,7 +181,7 @@ impl TextObject {
         &self,
         ctx: &RenderContext<P>,
         text: &str,
-        style_runs: &[crate::cdx::values::CDXStyleRun],
+        style_runs: &[CDXStyleRun],
     ) -> f32 {
         use crate::renderer::backend::{FontId, FontFamily};
         
@@ -206,9 +209,10 @@ impl TextObject {
             let scale = ctx.zoom * ctx.auto_scale;
             let font_size = base_font_size * scale;
 
-            // Adjust font size for sub/superscript
-            let is_subscript = (run.font_face & 0x20) != 0;
-            let is_superscript = (run.font_face & 0x40) != 0;
+            // Subscript (0x20), superscript (0x40), and formula (0x60) are mutually exclusive
+            let script_style = run.font_face & 0x60;
+            let is_subscript = script_style == 0x20;
+            let is_superscript = script_style == 0x40;
             let adjusted_font_size = if is_superscript || is_subscript {
                 font_size * 0.7
             } else {
