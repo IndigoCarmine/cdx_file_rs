@@ -2,10 +2,16 @@ pub use eframe::egui;
 
 pub mod backend;
 pub mod egui_backend;
+pub mod svg_backend;
+pub mod png_backend;
+pub mod export_utils;
 pub mod core;
 
 pub use backend::{AbstractPainter, Color, Point2d, Stroke, Rect, Align, Align2, FontFamily, FontId, Galley};
 pub use egui_backend::EguiBackend;
+pub use svg_backend::SvgBackend;
+pub use png_backend::PngBackend;
+pub use export_utils::{RenderExportOptions, export_to_svg, export_to_png, render_to_svg};
 pub use core::{CdxRenderer, Drawable, RenderContext, RenderStyle, element_to_symbol};
 
 pub mod arrow;
