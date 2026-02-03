@@ -68,7 +68,7 @@ struct CdxApp {
     selected_ids: std::collections::HashSet<u32>, // Selected object IDs
     lasso_path: Vec<egui::Pos2>, // Lasso selection path
     mode_handlers: ModeHandlers, // Mode handlers
-    clipboard: Option<CdxFile>,  // Clipboard for copy/paste
+    clipboard: Option<CdxFile>, // Clipboard for copy/paste
 }
 
 impl Default for CdxApp {
@@ -203,7 +203,12 @@ impl CdxApp {
             ) {
                 bond_positions.insert(
                     bond_obj.id,
-                    (bond_obj.begin, bond_obj.end, begin_pos.clone(), end_pos.clone()),
+                    (
+                        bond_obj.begin,
+                        bond_obj.end,
+                        begin_pos.clone(),
+                        end_pos.clone(),
+                    ),
                 );
             }
         }
@@ -290,7 +295,7 @@ impl eframe::App for CdxApp {
                 let (node_positions, bond_positions) = {
                     let cdx_borrow = self.cdx_file.borrow();
                     let cdx_file = cdx_borrow.as_ref().unwrap();
-                    
+
                     let mut node_positions: std::collections::HashMap<
                         u32,
                         crate::cdx::values::Point2d,
@@ -301,8 +306,12 @@ impl eframe::App for CdxApp {
                         u32,
                         crate::modes::BondPosition,
                     > = std::collections::HashMap::new();
-                    self.collect_bond_positions(&cdx_file.tree.root(), &node_positions, &mut bond_positions);
-                    
+                    self.collect_bond_positions(
+                        &cdx_file.tree.root(),
+                        &node_positions,
+                        &mut bond_positions,
+                    );
+
                     (node_positions, bond_positions)
                 };
 
@@ -322,15 +331,15 @@ impl eframe::App for CdxApp {
                         cdx_file,
                         window_size,
                     );
-                    
+
                     // Store renderer settings we need for coordinate conversion
                     let zoom = renderer.zoom;
                     let auto_scale = renderer.auto_scale;
                     let center_offset = renderer.center_offset;
                     let offset = renderer.offset;
-                    
+
                     drop(cdx_borrow); // Drop the borrow before calling handlers
-                    
+
                     let mut mode_ctx = ModeContext {
                         mouse_pos,
                         ui,
@@ -375,30 +384,36 @@ impl eframe::App for CdxApp {
                     });
                 }
 
-                // Handle zoom with scroll - zoom around mouse position
+                // Handle zoom (scroll wheel / touchpad / pinch) - zoom around pointer position
                 if ui.rect_contains_pointer(rect) {
-                    let scroll = ui.input(|i| i.raw_scroll_delta.y);
-                    if scroll != 0.0 {
-                        // Get mouse position in screen coordinates
-                        if let Some(mouse_pos) = ui.input(|i| i.pointer.interact_pos()) {
-                            // Calculate mouse position relative to rect
-                            let mouse_rel = mouse_pos - rect.min;
+                    let zoom_delta = ui.input(|i| i.zoom_delta());
+                    let mut zoom_factor = 1.0;
 
-                            // Get current world position of mouse
-                            let origin = egui::Vec2::new(
-                                self.center_offset.x + self.offset.x,
-                                self.center_offset.y + self.offset.y,
-                            );
-                            let world_pos = (mouse_rel - origin) / (self.zoom * self.auto_scale);
-
-                            // Apply zoom
-                            let zoom_factor = if scroll > 0.0 { 1.1 } else { 0.9 };
-                            self.zoom *= zoom_factor;
-
-                            // Adjust offset so the same world position stays under the mouse
-                            let new_origin = mouse_rel - world_pos * self.zoom * self.auto_scale;
-                            self.offset = new_origin - self.center_offset;
+                    if (zoom_delta - 1.0).abs() > f32::EPSILON {
+                        zoom_factor = zoom_delta;
+                    } else {
+                        let scroll = ui.input(|i| i.raw_scroll_delta.y);
+                        if scroll != 0.0 {
+                            zoom_factor = if scroll > 0.0 { 1.1 } else { 0.9 };
                         }
+                    }
+
+                    if (zoom_factor - 1.0).abs() > f32::EPSILON {
+                        let focus_pos = ui
+                            .input(|i| i.pointer.interact_pos())
+                            .unwrap_or(rect.center());
+                        let focus_rel = focus_pos - rect.min;
+
+                        let origin = egui::Vec2::new(
+                            self.center_offset.x + self.offset.x,
+                            self.center_offset.y + self.offset.y,
+                        );
+                        let world_pos = (focus_rel - origin) / (self.zoom * self.auto_scale);
+
+                        self.zoom *= zoom_factor;
+
+                        let new_origin = focus_rel - world_pos * self.zoom * self.auto_scale;
+                        self.offset = new_origin - self.center_offset;
                     }
                 }
 
