@@ -24,6 +24,7 @@ ChemDraw CDXファイルの読み込み、書き込み、レンダリングを�
   - TLCプレート
   - グループとフラグメント
 - `eframe`/`egui`を使用した内蔵GUIビューア
+- 抽象化されたレンダリングシステムを使用したSVGおよびPNG形式へのエクスポート
 
 ## インストール
 
@@ -105,6 +106,46 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
+### SVGとPNGへのエクスポート
+
+ライブラリは、抽象化されたレンダリングシステムを使用してCDXファイルをSVGおよびPNG形式に変換するエクスポート機能を提供します：
+
+```rust
+use std::fs;
+use cdx_file_rs::cdx::file::CdxFile;
+use cdx_file_rs::renderer::{export_to_svg, export_to_png, RenderExportOptions};
+use std::path::Path;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // CDXファイルの読み込みと解析
+    let data = fs::read("molecule.cdx")?;
+    let cdx_file = CdxFile::from_bytes(&data)?;
+    
+    // エクスポートオプションの設定
+    let mut options = RenderExportOptions::default();
+    options.width = 1024;
+    options.height = 768;
+    options.margin = 50.0;
+    
+    // SVGへエクスポート
+    export_to_svg(&cdx_file, Path::new("output.svg"), &options)?;
+    
+    // PNGへエクスポート（高解像度）
+    options.scale = 2.0;
+    export_to_png(&cdx_file, Path::new("output.png"), &options)?;
+    
+    Ok(())
+}
+```
+
+付属のサンプルを実行することもできます：
+
+```bash
+cargo run --example export_cdx -- molecule.cdx output
+```
+
+これにより、`molecule.cdx`から`output.svg`と`output.png`が作成されます。
 
 ## CDXファイルフォーマット
 

@@ -24,6 +24,7 @@ A Rust library for reading, writing, and rendering ChemDraw CDX files.
   - TLC plates
   - Groups and fragments
 - Built-in GUI viewer using `eframe`/`egui`
+- Export to SVG and PNG formats using abstracted rendering system
 
 ## Installation
 
@@ -105,6 +106,46 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     Ok(())
 }
 ```
+
+### Exporting to SVG and PNG
+
+The library provides export functionality to convert CDX files to SVG and PNG formats using the abstracted rendering system:
+
+```rust
+use std::fs;
+use cdx_file_rs::cdx::file::CdxFile;
+use cdx_file_rs::renderer::{export_to_svg, export_to_png, RenderExportOptions};
+use std::path::Path;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Read and parse CDX file
+    let data = fs::read("molecule.cdx")?;
+    let cdx_file = CdxFile::from_bytes(&data)?;
+    
+    // Configure export options
+    let mut options = RenderExportOptions::default();
+    options.width = 1024;
+    options.height = 768;
+    options.margin = 50.0;
+    
+    // Export to SVG
+    export_to_svg(&cdx_file, Path::new("output.svg"), &options)?;
+    
+    // Export to PNG (with higher resolution)
+    options.scale = 2.0;
+    export_to_png(&cdx_file, Path::new("output.png"), &options)?;
+    
+    Ok(())
+}
+```
+
+You can also run the included example:
+
+```bash
+cargo run --example export_cdx -- molecule.cdx output
+```
+
+This will create `output.svg` and `output.png` from `molecule.cdx`.
 
 ## CDX File Format
 
