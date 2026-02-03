@@ -36,7 +36,7 @@ fn test_svg_export() {
     println!("SVG content length: {} bytes", svg_content.len());
 
     // Test export to SVG file
-    let output_path = PathBuf::from("/tmp/test_output.svg");
+    let output_path = std::env::temp_dir().join("test_output.svg");
     export_to_svg(&cdx_file, &output_path, &options).expect("Failed to export to SVG");
 
     // Verify file was created
@@ -71,7 +71,7 @@ fn test_png_export() {
     let cdx_file = cdx_file_rs::cdx::file::CdxFile::from_bytes(&data).expect("Failed to parse CDX file");
 
     // Test export to PNG file
-    let output_path = PathBuf::from("/tmp/test_output.png");
+    let output_path = std::env::temp_dir().join("test_output.png");
     let options = RenderExportOptions::default();
     export_to_png(&cdx_file, &output_path, &options).expect("Failed to export to PNG");
 
