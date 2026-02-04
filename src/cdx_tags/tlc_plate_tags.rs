@@ -2,7 +2,10 @@
 // TLC Plate Object
 // =======================
 
-pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // kCDXObj_TLCPlate: Thin Layer Chromatography plate.
+
+// In the document, this is 0x8023. But actual TLCPlate objects seem to use 0x801D (probably?)
+// pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // kCDXObj_TLCPlate: Thin Layer Chromatography plate.
+pub const CDXOBJ_TLC_PLATE: u16 = 0x801D; // kCDXObj_TLCPlate: Thin Layer Chromatography plate.
 
 // =======================
 // TLC Plate Subobjects

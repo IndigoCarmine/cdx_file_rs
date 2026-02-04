@@ -40,19 +40,19 @@ impl TaggedObject for TextObject {
             .and_then(|v| Point2d::decode(v).ok());
 
         let bounding_box = raw.get_property(CDXPROP_BOUNDING_BOX).and_then(|v| {
-            if v.len() == 32 {
+            if v.len() == 16 {
                 use byteorder::{LittleEndian, ReadBytesExt};
                 use std::io::Cursor;
                 let mut cursor = Cursor::new(v);
-                let top = cursor.read_f64::<LittleEndian>().ok()?;
-                let left = cursor.read_f64::<LittleEndian>().ok()?;
-                let bottom = cursor.read_f64::<LittleEndian>().ok()?;
-                let right = cursor.read_f64::<LittleEndian>().ok()?;
+                let top = cursor.read_i32::<LittleEndian>().ok()?;
+                let left = cursor.read_i32::<LittleEndian>().ok()?;
+                let bottom = cursor.read_i32::<LittleEndian>().ok()?;
+                let right = cursor.read_i32::<LittleEndian>().ok()?;
                 Some(Rectangle {
-                    top,
-                    left,
-                    bottom,
-                    right,
+                    top: top.into(),
+                    left: left.into(),
+                    bottom: bottom.into(),
+                    right: right.into(),
                 })
             } else {
                 None

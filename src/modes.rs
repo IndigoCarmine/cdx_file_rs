@@ -38,7 +38,7 @@ impl<'a> ModeContext<'a> {
         let scale = self.zoom * self.auto_scale;
         egui::Pos2 {
             x: self.center_offset.x + self.offset.x + (cdx_pos.x as f32 * scale),
-            y: self.center_offset.y + self.offset.y - (cdx_pos.y as f32 * scale),
+            y: self.center_offset.y + self.offset.y + (cdx_pos.y as f32 * scale), // CDX Y increases downward (same as screen)
         }
     }
 
@@ -47,7 +47,7 @@ impl<'a> ModeContext<'a> {
         let scale = self.zoom * self.auto_scale;
         Point2d {
             x: ((screen_pos.x - self.center_offset.x - self.offset.x) / scale) as f64,
-            y: -((screen_pos.y - self.center_offset.y - self.offset.y) / scale) as f64,
+            y: ((screen_pos.y - self.center_offset.y - self.offset.y) / scale) as f64, // CDX Y increases downward (same as screen)
         }
     }
 

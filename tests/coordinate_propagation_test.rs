@@ -65,10 +65,10 @@ fn test_coordinate_transformation_logic() {
     let adjusted_y = cdx_y + parent_offset_y;
     
     let screen_x = origin_x + (adjusted_x as f32 * scale);
-    let screen_y = origin_y - (adjusted_y as f32 * scale); // Inverted Y
+    let screen_y = origin_y + (adjusted_y as f32 * scale); // Same direction as CDX
     
     assert_eq!(screen_x, 100.0);
-    assert_eq!(screen_y, -200.0);
+    assert_eq!(screen_y, 200.0);
     
     // Test 2: With parent offset
     let parent_offset_x = 50.0;
@@ -78,10 +78,10 @@ fn test_coordinate_transformation_logic() {
     let adjusted_y = cdx_y + parent_offset_y;
     
     let screen_x = origin_x + (adjusted_x as f32 * scale);
-    let screen_y = origin_y - (adjusted_y as f32 * scale);
+    let screen_y = origin_y + (adjusted_y as f32 * scale);
     
     assert_eq!(screen_x, 150.0);
-    assert_eq!(screen_y, -230.0);
+    assert_eq!(screen_y, 230.0);
 }
 
 #[test]
@@ -112,11 +112,11 @@ fn test_cumulative_offset_transformation() {
     let adjusted_y = cdx_y + cumulative_offset_y;
     
     let screen_x = origin_x + (adjusted_x as f32 * scale);
-    let screen_y = origin_y - (adjusted_y as f32 * scale);
+    let screen_y = origin_y + (adjusted_y as f32 * scale);
     
     // With cumulative offset (50 + 10, 30 + 20) = (60, 50):
     // x = 0 + (100 + 60) * 1.0 = 160
-    // y = 0 - (200 + 50) * 1.0 = -250
+    // y = 0 + (200 + 50) * 1.0 = 250
     assert_eq!(screen_x, 160.0);
-    assert_eq!(screen_y, -250.0);
+    assert_eq!(screen_y, 250.0);
 }

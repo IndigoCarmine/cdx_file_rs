@@ -31,3 +31,4 @@ pub mod tlc_lane_tags;
 pub mod tlc_plate_tags;
 pub mod tlc_spot_tags;
 pub mod txt_tags;
+pub mod anotation_tags;

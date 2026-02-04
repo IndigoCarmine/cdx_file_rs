@@ -5,7 +5,7 @@
 use super::backend::*;
 use std::cell::RefCell;
 use tiny_skia::{
-    Color as SkiaColor, LineCap, LineJoin, Paint, Path, PathBuilder, Pixmap, PixmapMut, Rect as SkiaRect,
+    Color as SkiaColor, LineCap, LineJoin, Paint, PathBuilder, Pixmap, Rect as SkiaRect,
     Stroke as SkiaStroke, Transform,
 };
 
@@ -60,6 +60,7 @@ impl AbstractPainter for PngBackend {
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(stroke.color));
+            paint.anti_alias = true;
 
             let skia_stroke = SkiaStroke {
                 width: stroke.width,
@@ -79,6 +80,7 @@ impl AbstractPainter for PngBackend {
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(color));
+            paint.anti_alias = true;
 
             let mut pixmap = self.pixmap.borrow_mut();
             pixmap.fill_path(&path, &paint, tiny_skia::FillRule::Winding, Transform::identity(), None);
@@ -92,6 +94,7 @@ impl AbstractPainter for PngBackend {
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(stroke.color));
+            paint.anti_alias = true;
 
             let skia_stroke = SkiaStroke {
                 width: stroke.width,
@@ -107,7 +110,6 @@ impl AbstractPainter for PngBackend {
         let mut pb = PathBuilder::new();
         
         if rounding > 0.0 {
-            // Create rounded rectangle
             let x = rect.min.x;
             let y = rect.min.y;
             let w = rect.width();
@@ -124,13 +126,14 @@ impl AbstractPainter for PngBackend {
             pb.line_to(x, y + r);
             pb.quad_to(x, y, x + r, y);
             pb.close();
-        } else {
-            pb.push_rect(SkiaRect::from_xywh(rect.min.x, rect.min.y, rect.width(), rect.height()).unwrap());
+        } else if let Some(skia_rect) = SkiaRect::from_xywh(rect.min.x, rect.min.y, rect.width(), rect.height()) {
+            pb.push_rect(skia_rect);
         }
 
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(color));
+            paint.anti_alias = true;
 
             let mut pixmap = self.pixmap.borrow_mut();
             pixmap.fill_path(&path, &paint, tiny_skia::FillRule::Winding, Transform::identity(), None);
@@ -141,7 +144,6 @@ impl AbstractPainter for PngBackend {
         let mut pb = PathBuilder::new();
         
         if rounding > 0.0 {
-            // Create rounded rectangle
             let x = rect.min.x;
             let y = rect.min.y;
             let w = rect.width();
@@ -158,13 +160,14 @@ impl AbstractPainter for PngBackend {
             pb.line_to(x, y + r);
             pb.quad_to(x, y, x + r, y);
             pb.close();
-        } else {
-            pb.push_rect(SkiaRect::from_xywh(rect.min.x, rect.min.y, rect.width(), rect.height()).unwrap());
+        } else if let Some(skia_rect) = SkiaRect::from_xywh(rect.min.x, rect.min.y, rect.width(), rect.height()) {
+            pb.push_rect(skia_rect);
         }
 
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(stroke.color));
+            paint.anti_alias = true;
 
             let skia_stroke = SkiaStroke {
                 width: stroke.width,
@@ -177,33 +180,10 @@ impl AbstractPainter for PngBackend {
     }
 
     fn rect(&self, rect: Rect, rounding: f32, fill: Color, stroke: Stroke) {
-        // Draw filled first, then stroke
         self.rect_filled(rect, rounding, fill);
         if stroke.width > 0.0 {
             self.rect_stroke(rect, rounding, stroke);
         }
-    }
-
-    fn text(&self, pos: Point2d, _align: Align2, _text: &str, _font: FontId, color: Color) {
-        // Note: tiny-skia doesn't support text rendering directly
-        // For now, we'll render a placeholder or use a font rendering library
-        // This is a simplified implementation that could be enhanced with a font library
-        
-        // As a simple placeholder, we could draw a small rectangle at the text position
-        // In a production implementation, you'd want to integrate with a font rasterizer
-        // like fontdue, ab_glyph, or rusttype
-        
-        // For now, let's just mark the text position with a small dot
-        let marker_radius = 2.0;
-        self.circle_filled(pos, marker_radius, color);
-        
-        // TODO: Implement proper text rendering using a font library
-        // This would involve:
-        // 1. Load font from system or embedded font
-        // 2. Shape the text into glyphs
-        // 3. Rasterize each glyph
-        // 4. Apply alignment transformations
-        // 5. Draw glyphs to pixmap
     }
 
     fn polyline(&self, points: &[Point2d], stroke: Stroke) {
@@ -221,6 +201,7 @@ impl AbstractPainter for PngBackend {
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(stroke.color));
+            paint.anti_alias = true;
 
             let skia_stroke = SkiaStroke {
                 width: stroke.width,
@@ -250,6 +231,7 @@ impl AbstractPainter for PngBackend {
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(stroke.color));
+            paint.anti_alias = true;
 
             let skia_stroke = SkiaStroke {
                 width: stroke.width,
@@ -279,6 +261,7 @@ impl AbstractPainter for PngBackend {
         if let Some(path) = pb.finish() {
             let mut paint = Paint::default();
             paint.set_color(color_to_skia(fill));
+            paint.anti_alias = true;
 
             let mut pixmap = self.pixmap.borrow_mut();
             pixmap.fill_path(&path, &paint, tiny_skia::FillRule::Winding, Transform::identity(), None);
@@ -286,11 +269,9 @@ impl AbstractPainter for PngBackend {
     }
 
     fn layout_no_wrap(&self, text: String, font: FontId, _color: Color) -> Galley {
-        // Simple text width estimation
-        // This is a rough approximation; actual width depends on font metrics
-        let char_width = font.size * 0.6; // Average character width
+        let char_width = font.size * 0.6;
         let width = text.len() as f32 * char_width;
-        let height = font.size * 1.2; // Line height
+        let height = font.size * 1.2;
 
         Galley {
             size: (width, height),
@@ -300,5 +281,17 @@ impl AbstractPainter for PngBackend {
 
     fn clip_rect(&self) -> Rect {
         self.clip_rect
+    }
+
+    fn rich_text(&self, pos: Point2d, _align: Align2, spans: &[super::backend::TextSpan]) {
+        // tiny-skia doesn't support text rendering directly
+        // Mark text position with a small dot as placeholder for each span
+        if spans.is_empty() {
+            return;
+        }
+        
+        let marker_radius = 2.0;
+        let color = spans[0].color;
+        self.circle_filled(pos, marker_radius, color);
     }
 }

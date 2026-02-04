@@ -1,0 +1,435 @@
+Document (id=0)
+  bounding_box: Some(Rectangle { top: 12.171661376953125, left: 50.3599853515625, bottom: 279.2099914550781, right: 343.7349853515625 })
+  magnification: Some(500)
+  Page (id=87)
+    bounding_box: Some(Rectangle { top: 0.0, left: 0.0, bottom: 719.75, right: 540.0 })
+    bounds_in_parent: None
+    width: None, height: None
+    Fragment (id=10)
+      Node (id=7)
+      Node (id=9)
+      Node (id=11)
+      Node (id=13)
+      Node (id=15)
+      Node (id=17)
+      Node (id=25)
+      Node (id=27)
+      Node (id=29)
+      Node (id=31)
+      Node (id=33)
+      Node (id=35)
+      Node (id=43)
+        TextObject (id=0)
+          bounding_box: None
+          position_2d: Some(Point2d { x: 150.89503479003906, y: 35.02998352050781 })
+          text: "S"
+      Node (id=45)
+      Node (id=47)
+        TextObject (id=0)
+          bounding_box: None
+          position_2d: Some(Point2d { x: 150.34083557128906, y: 20.629989624023438 })
+          text: "O"
+      Bond (id=19)
+      Bond (id=20)
+      Bond (id=21)
+      Bond (id=22)
+      Bond (id=23)
+      Bond (id=24)
+      Bond (id=26)
+      Bond (id=37)
+      Bond (id=38)
+      Bond (id=39)
+      Bond (id=40)
+      Bond (id=41)
+      Bond (id=42)
+      Bond (id=44)
+      Bond (id=46)
+      Bond (id=48)
+      Anotation (id=0)
+    Fragment (id=49)
+      Node (id=50)
+      Node (id=51)
+      Node (id=52)
+      Node (id=53)
+      Node (id=54)
+      Node (id=55)
+      Node (id=56)
+      Node (id=57)
+      Node (id=58)
+      Node (id=59)
+      Node (id=60)
+      Node (id=61)
+      Node (id=62)
+        TextObject (id=0)
+          bounding_box: None
+          position_2d: Some(Point2d { x: 299.0350341796875, y: 35.019989013671875 })
+          text: "S"
+      Node (id=63)
+      Node (id=64)
+        TextObject (id=0)
+          bounding_box: None
+          position_2d: Some(Point2d { x: 298.4808349609375, y: 20.629989624023438 })
+          text: "O"
+      Bond (id=65)
+      Bond (id=66)
+      Bond (id=67)
+      Bond (id=68)
+      Bond (id=69)
+      Bond (id=70)
+      Bond (id=71)
+      Bond (id=72)
+      Bond (id=73)
+      Bond (id=74)
+      Bond (id=75)
+      Bond (id=76)
+      Bond (id=77)
+      Bond (id=78)
+      Bond (id=79)
+      Bond (id=80)
+      Anotation (id=0)
+    Graphic (id=85)
+      bounding_box: Some(Rectangle { top: 47.019989013671875, left: 181.9499969482422, bottom: 47.019989013671875, right: 212.14999389648438 })
+    ReactionScheme (id=137)
+      ReactionStep (id=138)
+    Geometry(Geometry { id: 88, visible: None, z_order: Some(132), bounding_box: Some(Rectangle { top: 43.26036071777344, left: 181.9499969482422, bottom: 50.40460205078125, right: 212.14999389648438 }), position: None, rotation_angle: None, foreground_color: None, background_color: None })
+    UnknownObject801E(UnknownObject801E { id: 82, raw_properties: [(512, [194, 53, 99, 0, 40, 92, 50, 0]), (10, [133, 0])] })
+      UnknownObject802B(UnknownObject802B { id: 1, raw_properties: [(2066, [102, 102, 84, 0]), (4611, []), (4612, [])] })
+        UnknownObject801D(UnknownObject801D { id: 65792, raw_properties: [(4608, [4, 0]), (4610, [70, 111, 114, 109, 117, 108, 97]), (4609, [1, 0]), (4614, [])] })
+          ObjectTag (id=89)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 125.45999145507813 })
+              text: "Formula"
+        UnknownObject801D(UnknownObject801D { id: 131328, raw_properties: [(4608, [4, 0]), (4610, [77, 87]), (4609, [2, 0]), (4614, [])] })
+          ObjectTag (id=90)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 140.45999145507813 })
+              text: "MW"
+        UnknownObject801D(UnknownObject801D { id: 327936, raw_properties: [(4608, [4, 0]), (4610, [76, 105, 109, 105, 116, 32, 77, 111, 108, 101, 115]), (4609, [5, 0]), (4614, []), (4613, []), (17, [0])] })
+          ObjectTag (id=91)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 0.0, y: 0.0 })
+              text: "Limit Moles"
+        UnknownObject801D(UnknownObject801D { id: 262400, raw_properties: [(4608, [4, 0]), (4610, [76, 105, 109, 105, 116, 105, 110, 103, 63]), (4609, [4, 0]), (4614, [])] })
+          ObjectTag (id=92)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 155.45999145507813 })
+              text: "Limiting?"
+        UnknownObject801D(UnknownObject801D { id: 393472, raw_properties: [(4608, [4, 0]), (4610, [69, 113, 117, 105, 118, 97, 108, 101, 110, 116, 115]), (4609, [6, 0]), (4614, [])] })
+          ObjectTag (id=93)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 170.45999145507813 })
+              text: "Equivalents"
+        UnknownObject801D(UnknownObject801D { id: 459008, raw_properties: [(4608, [4, 0]), (4610, [83, 97, 109, 112, 108, 101, 32, 77, 97, 115, 115]), (4609, [7, 0]), (4614, [])] })
+          ObjectTag (id=94)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 185.45999145507813 })
+              text: "Sample Mass"
+        UnknownObject801D(UnknownObject801D { id: 524544, raw_properties: [(4608, [4, 0]), (4610, [37, 87, 101, 105, 103, 104, 116]), (4609, [8, 0]), (4614, [])] })
+          ObjectTag (id=95)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 200.45999145507813 })
+              text: "%Weight"
+        UnknownObject801D(UnknownObject801D { id: 655616, raw_properties: [(4608, [4, 0]), (4610, [77, 111, 108, 97, 114, 105, 116, 121]), (4609, [10, 0]), (4614, [])] })
+          ObjectTag (id=96)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 215.45999145507813 })
+              text: "Molarity"
+        UnknownObject801D(UnknownObject801D { id: 786688, raw_properties: [(4608, [4, 0]), (4610, [68, 101, 110, 115, 105, 116, 121]), (4609, [12, 0]), (4614, [])] })
+          ObjectTag (id=97)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 230.45999145507813 })
+              text: "Density"
+        UnknownObject801D(UnknownObject801D { id: 590080, raw_properties: [(4608, [4, 0]), (4610, [86, 111, 108, 117, 109, 101]), (4609, [9, 0]), (4614, [])] })
+          ObjectTag (id=98)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 245.45999145507813 })
+              text: "Volume"
+        UnknownObject801D(UnknownObject801D { id: 852224, raw_properties: [(4608, [4, 0]), (4610, [82, 101, 97, 99, 116, 97, 110, 116, 32, 77, 111, 108, 101, 115]), (4609, [13, 0]), (4614, [])] })
+          ObjectTag (id=99)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 260.4599914550781 })
+              text: "Reactant Moles"
+        UnknownObject801D(UnknownObject801D { id: 917760, raw_properties: [(4608, [4, 0]), (4610, [82, 101, 97, 99, 116, 97, 110, 116, 32, 77, 97, 115, 115]), (4609, [14, 0]), (4614, [])] })
+          ObjectTag (id=100)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 57.8599853515625, y: 275.4599914550781 })
+              text: "Reactant Mass"
+      UnknownObject802B(UnknownObject802B { id: 2, raw_properties: [(2066, [0, 0, 86, 0]), (4612, [])] })
+        UnknownObject801D(UnknownObject801D { id: 66048, raw_properties: [(4608, [4, 0]), (4610, [70, 111, 114, 109, 117, 108, 97]), (4609, [1, 0]), (4614, [])] })
+          ObjectTag (id=101)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 125.45999145507813 })
+              text: "Formula"
+        UnknownObject801D(UnknownObject801D { id: 131584, raw_properties: [(4608, [4, 0]), (4610, [77, 87]), (4609, [2, 0]), (4614, [])] })
+          ObjectTag (id=102)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 140.45999145507813 })
+              text: "MW"
+        UnknownObject801D(UnknownObject801D { id: 328192, raw_properties: [(4608, [4, 0]), (4610, [76, 105, 109, 105, 116, 32, 77, 111, 108, 101, 115]), (4609, [5, 0]), (4614, []), (4613, []), (17, [0])] })
+          ObjectTag (id=103)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 0.0, y: 0.0 })
+              text: "Limit Moles"
+        UnknownObject801D(UnknownObject801D { id: 393728, raw_properties: [(4608, [4, 0]), (4610, [69, 113, 117, 105, 118, 97, 108, 101, 110, 116, 115]), (4609, [6, 0]), (4614, [])] })
+          ObjectTag (id=104)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 155.45999145507813 })
+              text: "Equivalents"
+        UnknownObject801D(UnknownObject801D { id: 1442304, raw_properties: [(4608, [4, 0]), (4610, [37, 67, 111, 109, 112, 108, 101, 116, 105, 111, 110]), (4609, [22, 0]), (4614, [])] })
+          ObjectTag (id=105)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 170.45999145507813 })
+              text: "%Completion"
+        UnknownObject801D(UnknownObject801D { id: 983552, raw_properties: [(4608, [4, 0]), (4610, [69, 120, 112, 101, 99, 116, 101, 100, 32, 77, 97, 115, 115]), (4609, [15, 0]), (4614, [])] })
+          ObjectTag (id=106)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 185.45999145507813 })
+              text: "Expected Mass"
+        UnknownObject801D(UnknownObject801D { id: 1049088, raw_properties: [(4608, [4, 0]), (4610, [69, 120, 112, 101, 99, 116, 101, 100, 32, 77, 111, 108, 101, 115]), (4609, [16, 0]), (4614, [])] })
+          ObjectTag (id=107)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 200.45999145507813 })
+              text: "Expected Moles"
+        UnknownObject801D(UnknownObject801D { id: 1114624, raw_properties: [(4608, [4, 0]), (4610, [77, 101, 97, 115, 117, 114, 101, 100, 32, 77, 97, 115, 115]), (4609, [17, 0]), (4614, [])] })
+          ObjectTag (id=108)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 215.45999145507813 })
+              text: "Measured Mass"
+        UnknownObject801D(UnknownObject801D { id: 1180160, raw_properties: [(4608, [4, 0]), (4610, [80, 117, 114, 105, 116, 121]), (4609, [18, 0]), (4614, [])] })
+          ObjectTag (id=109)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 230.45999145507813 })
+              text: "Purity"
+        UnknownObject801D(UnknownObject801D { id: 1245696, raw_properties: [(4608, [4, 0]), (4610, [80, 114, 111, 100, 117, 99, 116, 32, 77, 97, 115, 115]), (4609, [19, 0]), (4614, [])] })
+          ObjectTag (id=110)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 245.45999145507813 })
+              text: "Product Mass"
+        UnknownObject801D(UnknownObject801D { id: 1311232, raw_properties: [(4608, [4, 0]), (4610, [80, 114, 111, 100, 117, 99, 116, 32, 77, 111, 108, 101, 115]), (4609, [20, 0]), (4614, [])] })
+          ObjectTag (id=111)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 260.4599914550781 })
+              text: "Product Moles"
+        UnknownObject801D(UnknownObject801D { id: 1376768, raw_properties: [(4608, [4, 0]), (4610, [37, 89, 105, 101, 108, 100]), (4609, [21, 0]), (4614, [])] })
+          ObjectTag (id=112)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 204.6849822998047, y: 275.4599914550781 })
+              text: "%Yield"
+      UnknownObject802B(UnknownObject802B { id: 3, raw_properties: [(2066, [204, 140, 60, 0]), (4616, [10, 0]), (4611, [])] })
+        UnknownObject801D(UnknownObject801D { id: 66304, raw_properties: [(4608, [4, 0]), (4610, []), (4609, [1, 0]), (4614, [])] })
+          ObjectTag (id=113)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 125.45999145507813 })
+              text: "C13H12OS"
+        UnknownObject801D(UnknownObject801D { id: 131840, raw_properties: [(4608, [3, 0]), (4610, [168, 198, 75, 55, 137, 9, 107, 64]), (4609, [2, 0]), (4614, [])] })
+          ObjectTag (id=114)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 140.45999145507813 })
+              text: "216.30"
+        UnknownObject801D(UnknownObject801D { id: 328448, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [5, 0]), (4614, []), (4613, []), (17, [0])] })
+          ObjectTag (id=115)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 0.0, y: 0.0 })
+              text: "0.00mol"
+        UnknownObject801D(UnknownObject801D { id: 262912, raw_properties: [(4608, [1, 0]), (4610, [0, 0, 0, 0, 0, 0, 240, 63]), (4609, [4, 0]), (4614, []), (4615, [])] })
+          ObjectTag (id=116)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 155.45999145507813 })
+              text: "Yes"
+        UnknownObject801D(UnknownObject801D { id: 393984, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 240, 63]), (4609, [6, 0])] })
+          ObjectTag (id=117)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 170.45999145507813 })
+              text: "1.00"
+        UnknownObject801D(UnknownObject801D { id: 459520, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [7, 0])] })
+          ObjectTag (id=118)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 185.45999145507813 })
+              text: "0.00g"
+        UnknownObject801D(UnknownObject801D { id: 525056, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 240, 63]), (4609, [8, 0])] })
+          ObjectTag (id=119)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 200.45999145507813 })
+              text: "100.00%"
+        UnknownObject801D(UnknownObject801D { id: 656128, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [10, 0])] })
+          ObjectTag (id=120)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 215.45999145507813 })
+              text: "0.00M"
+        UnknownObject801D(UnknownObject801D { id: 787200, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [12, 0])] })
+          ObjectTag (id=121)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 230.45999145507813 })
+              text: "0.00g/mL"
+        UnknownObject801D(UnknownObject801D { id: 590592, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [9, 0])] })
+          ObjectTag (id=122)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 245.45999145507813 })
+              text: "0.00mL"
+        UnknownObject801D(UnknownObject801D { id: 852736, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [13, 0])] })
+          ObjectTag (id=123)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 260.4599914550781 })
+              text: "0.00mol"
+        UnknownObject801D(UnknownObject801D { id: 918272, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [14, 0])] })
+          ObjectTag (id=124)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 142.25997924804688, y: 275.4599914550781 })
+              text: "0.00g"
+      UnknownObject802B(UnknownObject802B { id: 4, raw_properties: [(2066, [204, 140, 60, 0]), (4616, [49, 0])] })
+        UnknownObject801D(UnknownObject801D { id: 66560, raw_properties: [(4608, [4, 0]), (4610, []), (4609, [1, 0]), (4614, [])] })
+          ObjectTag (id=125)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 125.45999145507813 })
+              text: "C13H12OS"
+        UnknownObject801D(UnknownObject801D { id: 132096, raw_properties: [(4608, [3, 0]), (4610, [168, 198, 75, 55, 137, 9, 107, 64]), (4609, [2, 0]), (4614, [])] })
+          ObjectTag (id=126)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 140.45999145507813 })
+              text: "216.30"
+        UnknownObject801D(UnknownObject801D { id: 328704, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [5, 0]), (4614, []), (4613, []), (17, [0])] })
+          ObjectTag (id=127)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 0.0, y: 0.0 })
+              text: "0.00mol"
+        UnknownObject801D(UnknownObject801D { id: 394240, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 240, 63]), (4609, [6, 0])] })
+          ObjectTag (id=128)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 155.45999145507813 })
+              text: "1.00"
+        UnknownObject801D(UnknownObject801D { id: 1442816, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 240, 63]), (4609, [22, 0])] })        
+          ObjectTag (id=129)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 170.45999145507813 })
+              text: "100.00%"
+        UnknownObject801D(UnknownObject801D { id: 984064, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [15, 0]), (4614, [])] })
+          ObjectTag (id=130)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 185.45999145507813 })
+              text: "0.00g"
+        UnknownObject801D(UnknownObject801D { id: 1049600, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [16, 0]), (4614, [])] })
+          ObjectTag (id=131)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 200.45999145507813 })
+              text: "0.00mol"
+        UnknownObject801D(UnknownObject801D { id: 1115136, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [17, 0])] })
+          ObjectTag (id=132)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 215.45999145507813 })
+              text: "0.00g"
+        UnknownObject801D(UnknownObject801D { id: 1180672, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 240, 63]), (4609, [18, 0])] })        
+          ObjectTag (id=133)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 230.45999145507813 })
+              text: "100.00%"
+        UnknownObject801D(UnknownObject801D { id: 1246208, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [19, 0]), (4614, [])] })
+          ObjectTag (id=134)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 245.45999145507813 })
+              text: "0.00g"
+        UnknownObject801D(UnknownObject801D { id: 1311744, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [20, 0]), (4614, [])] })
+          ObjectTag (id=135)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 260.4599914550781 })
+              text: "0.00mol"
+        UnknownObject801D(UnknownObject801D { id: 1377280, raw_properties: [(4608, [3, 0]), (4610, [0, 0, 0, 0, 0, 0, 0, 0]), (4609, [21, 0]), (4614, [])] })
+          ObjectTag (id=136)
+            tag_name: None
+            TextObject (id=0)
+              bounding_box: None
+              position_2d: Some(Point2d { x: 290.6849822998047, y: 275.4599914550781 })
+              text: "0.00%"

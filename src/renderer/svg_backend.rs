@@ -137,31 +137,6 @@ impl AbstractPainter for SvgBackend {
         self.elements.borrow_mut().push(element);
     }
 
-    fn text(&self, pos: Point2d, align: Align2, text: &str, font: FontId, color: Color) {
-        let text_anchor = match align.x {
-            Align::Left => "start",
-            Align::Center => "middle",
-            Align::Right => "end",
-        };
-
-        let dominant_baseline = match align.y {
-            VerticalAlign::Top => "hanging",
-            VerticalAlign::Center => "middle",
-            VerticalAlign::Bottom => "baseline",
-        };
-
-        let font_family = match font.family {
-            FontFamily::Proportional => "Arial, sans-serif",
-            FontFamily::Monospace => "monospace",
-        };
-
-        let element = format!(
-            r#"<text x="{}" y="{}" fill="{}" font-family="{}" font-size="{}" text-anchor="{}" dominant-baseline="{}">{}</text>"#,
-            pos.x, pos.y, color_to_svg(color), font_family, font.size, text_anchor, dominant_baseline, escape_xml(text)
-        );
-        self.elements.borrow_mut().push(element);
-    }
-
     fn polyline(&self, points: &[Point2d], stroke: Stroke) {
         if points.is_empty() {
             return;
@@ -231,5 +206,67 @@ impl AbstractPainter for SvgBackend {
 
     fn clip_rect(&self) -> Rect {
         self.clip_rect
+    }
+
+    fn rich_text(&self, pos: Point2d, align: Align2, spans: &[super::backend::TextSpan]) {
+        use super::backend::Stroke;
+        
+        if spans.is_empty() {
+            return;
+        }
+
+        // Calculate total width for alignment
+        let total_width: f32 = spans.iter().map(|span| {
+            let char_width = span.font_size * 0.6;
+            span.text.len() as f32 * char_width
+        }).sum();
+
+        // Determine starting X position based on horizontal alignment
+        let start_x = match align.x {
+            Align::Left => pos.x,
+            Align::Center => pos.x - total_width / 2.0,
+            Align::Right => pos.x - total_width,
+        };
+
+        let dominant_baseline = match align.y {
+            VerticalAlign::Top => "hanging",
+            VerticalAlign::Center => "middle",
+            VerticalAlign::Bottom => "baseline",
+        };
+
+        // Draw each span
+        let mut current_x = start_x;
+        for span in spans {
+            // Calculate Y offset for subscript/superscript
+            let y_offset = if span.style.superscript {
+                -span.font_size * 0.3
+            } else if span.style.subscript {
+                span.font_size * 0.3
+            } else {
+                0.0
+            };
+
+            let span_y = pos.y + y_offset;
+
+            // Font weight and style
+            let font_weight = if span.style.bold { "bold" } else { "normal" };
+            let font_style = if span.style.italic { "italic" } else { "normal" };
+
+            // Text decoration for underline
+            let text_decoration = if span.style.underline { "underline" } else { "none" };
+
+            // Font family from span
+            let font_family = span.font_family.to_css_family();
+
+            let element = format!(
+                r#"<text x="{}" y="{}" fill="{}" font-family="{}" font-size="{}" font-weight="{}" font-style="{}" text-decoration="{}" text-anchor="start" dominant-baseline="{}">{}</text>"#,
+                current_x, span_y, color_to_svg(span.color), font_family, span.font_size, font_weight, font_style, text_decoration, dominant_baseline, escape_xml(&span.text)
+            );
+            self.elements.borrow_mut().push(element);
+
+            // Advance X position
+            let char_width = span.font_size * 0.6;
+            current_x += span.text.len() as f32 * char_width;
+        }
     }
 }

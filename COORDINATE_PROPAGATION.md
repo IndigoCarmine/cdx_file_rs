@@ -74,7 +74,7 @@ pub fn cdx_to_screen(&self, cdx_pos: &Point2d) -> Pos2 {
     let adjusted_y = cdx_pos.y + self.parent_offset.y;
     Pos2 {
         x: self.origin.x + (adjusted_x as f32 * scale),
-        y: self.origin.y - (adjusted_y as f32 * scale), // CDX uses inverted Y-axis
+        y: self.origin.y + (adjusted_y as f32 * scale), // CDX Y increases downward (same as screen)
     }
 }
 ```
@@ -114,9 +114,9 @@ fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext)
 ## 座標系 (Coordinate System)
 
 ### CDX座標系
-- 原点: 通常は左上
+- 原点: 左上
 - X軸: 右方向が正
-- Y軸: 下方向が正
+- Y軸: 下方向が正（スクリーン座標と同じ）
 
 ### 画面座標系 (egui)
 - 原点: 左上
@@ -127,7 +127,7 @@ fn render(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext)
 
 ```
 screen_x = origin.x + (cdx_x + parent_offset.x) * scale
-screen_y = origin.y - (cdx_y + parent_offset.y) * scale  // Y軸反転
+screen_y = origin.y + (cdx_y + parent_offset.y) * scale  // CDXと画面のY軸は同じ方向
 ```
 
 ## 後方互換性 (Backward Compatibility)

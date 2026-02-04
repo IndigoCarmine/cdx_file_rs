@@ -20,6 +20,9 @@ usvg = "0.43.0"
 toml = "0.9.11"
 paste = "1.0"
 dendron = "0.1.5"
+image = "0.25"
+imageproc = "0.25"
+ab_glyph = "0.2"
 
 [lib]
 name = "cdx_file_rs"

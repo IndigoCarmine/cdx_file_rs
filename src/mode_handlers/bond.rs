@@ -320,7 +320,7 @@ impl BondMode {
         let scale = ctx.zoom * ctx.auto_scale;
         let cdx_delta = Point2d {
             x: (delta.x / scale) as f64,
-            y: -(delta.y / scale) as f64, // Y is inverted
+            y: (delta.y / scale) as f64, // CDX Y increases downward (same as screen)
         };
 
         let mut cdx_borrow = ctx.cdx_file.borrow_mut();

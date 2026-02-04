@@ -1,11 +1,5 @@
 use crate::cdx::file::CdxFile;
-use crate::cdx::file::{
-    Arrow, Bond, Border, BracketAttachment, BracketedGroup, ChemicalProperty, ColorTable,
-    Constraint, CrossReference, CrossingBond, Curve, Document, EmbeddedObject, Fragment,
-    Geometry, Graphic, Group, NamedAlternativeGroup, Node, NodePayload, ObjectTag, Page,
-    ReactionScheme, ReactionStep, RegistryNumber, Sequence, Spectrum, Splitter, Table,
-    TemplateGrid, TextObject, TlcLane, TLCPlate, TLCSpot, UnknownObject802B,
-};
+use crate::cdx::file::*;
 use crate::cdx_parse_impl::raw_nodes::RawCdxObject;
 use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::error::CdxError;
@@ -71,7 +65,11 @@ define_node_payload!(
     TlcLane,
     TLCPlate,
     TLCSpot,
+    Annotation,
     UnknownObject802B,
+    UnknownObject801D,
+    UnknownObject801E,
+    UnknownObject801F,
 );
 
 use dendron;

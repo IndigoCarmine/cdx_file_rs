@@ -115,7 +115,11 @@ define_node_renderer!(
     TlcLane,
     TLCPlate,
     TLCSpot,
+    Annotation,
     UnknownObject802B,
+    UnknownObject801D,
+    UnknownObject801E,
+    UnknownObject801F,
 );
 
 /// High-level CDX renderer with zoom, offset
@@ -259,8 +263,9 @@ impl<'a> CdxRenderer<'a> {
     fn render<P: AbstractPainter>(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext<P>) {
         let data = root.borrow_data();
         
-        // Draw the current object with its parent's context
-        data.draw(ctx);
+        // Draw the current object with its parent's context and node reference
+        // Using draw_with_node allows objects like Table to access their children for grid rendering
+        data.draw_with_node(ctx, &root);
         
         // Check if this object defines a coordinate offset for its children
         // Currently only Page objects with BoundsInParent need this
@@ -356,7 +361,7 @@ impl<'a> CdxRenderer<'a> {
 
         let center_offset = egui::Vec2::new(
             window_center_x - doc_center_x * auto_scale,
-            window_center_y + doc_center_y * auto_scale, // + because Y is inverted
+            window_center_y - doc_center_y * auto_scale, // CDX Y increases downward (same as screen)
         );
 
         (auto_scale, center_offset)
@@ -386,7 +391,7 @@ impl<'a> CdxRenderer<'a> {
 ///
 /// ## Final Screen Transformation
 /// CDX coordinate → Screen coordinate transformation:
-/// ```
+/// ```text
 /// scale = zoom * auto_scale
 /// screen_pos = origin + (cdx_pos + parent_offset) * scale
 /// ```
@@ -463,7 +468,7 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     /// - Nested containers accumulate offsets through the hierarchy
     ///
     /// ## Example with Multiple Levels
-    /// ```
+    /// ```text
     /// Root context: parent_offset = (0, 0)
     /// Page1 (bounds at 100, 100):
     ///   - Child context: parent_offset = (0, 0) + (100, 100) = (100, 100)
@@ -501,25 +506,25 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     /// 2. Scale by combined zoom factor
     ///    - scale = zoom * auto_scale
     /// 3. Translate by origin (window-relative positioning)
-    /// 4. Invert Y-axis (CDX uses inverted Y, screen uses normal Y)
-    ///    - screen_y = origin_y - (adjusted_y * scale)
+    /// 
+    /// Note: CDX uses the same Y-axis direction as screen coordinates (Y increases downward).
     ///
     /// ## Formula
-    /// ```
+    /// ```text
     /// adjusted_x = cdx_pos.x + parent_offset.x
     /// adjusted_y = cdx_pos.y + parent_offset.y
     /// scale = zoom * auto_scale
     /// screen_x = origin.x + adjusted_x * scale
-    /// screen_y = origin.y - adjusted_y * scale
+    /// screen_y = origin.y + adjusted_y * scale
     /// ```
     ///
     /// ## Examples
     /// - With auto_scale=1.0, zoom=1.0, origin=(400,300):
-    ///   CDX(100, 100) → Screen(500, 200)
+    ///   CDX(100, 100) → Screen(500, 400)
     /// - With zoom=2.0 (user zoomed in):
-    ///   CDX(100, 100) → Screen(600, 100) [twice as far from origin]
+    ///   CDX(100, 100) → Screen(600, 500) [twice as far from origin]
     /// - With parent_offset=(50, 50):
-    ///   CDX(100, 100) → Screen(550, 150) [offset applied before scaling]
+    ///   CDX(100, 100) → Screen(550, 450) [offset applied before scaling]
     pub fn cdx_to_screen(&self, cdx_pos: &CdxPoint2d) -> BackendPoint2d {
         let scale = self.zoom * self.auto_scale;
         // Apply parent offset to the CDX position
@@ -527,7 +532,7 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         let adjusted_y = cdx_pos.y + self.parent_offset.y;
         BackendPoint2d::new(
             self.origin.x + (adjusted_x as f32 * scale),
-            self.origin.y - (adjusted_y as f32 * scale), // CDX uses inverted Y-axis
+            self.origin.y + (adjusted_y as f32 * scale), // CDX Y increases downward (same as screen)
         )
     }
 
@@ -536,10 +541,10 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         (cdx_length as f32) * self.zoom * self.auto_scale
     }
 
-    /// Convert CDX offset to screen offset (pixels), including inverted Y
+    /// Convert CDX offset to screen offset (pixels)
     pub fn cdx_offset_to_screen(&self, dx: f64, dy: f64) -> (f32, f32) {
         let scale = self.zoom * self.auto_scale;
-        (dx as f32 * scale, -(dy as f32 * scale))
+        (dx as f32 * scale, dy as f32 * scale)
     }
 
     /// Get a node position by node id
@@ -549,11 +554,11 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
 
     /// Draw text at specified position
     pub fn draw_text(&self, text: &str, pos: BackendPoint2d, color: BackendColor, size: f32) {
+        use super::backend::TextSpan;
         let scale = self.zoom * self.auto_scale;
         let scaled_size = size * scale;
-        let font_id = BackendFontId::new(scaled_size, super::backend::FontFamily::Monospace);
-        self.painter
-            .text(pos, BackendAlign2::CENTER_CENTER, text, font_id, color);
+        let span = TextSpan::new(text.to_string(), scaled_size, color);
+        self.painter.rich_text(pos, BackendAlign2::CENTER_CENTER, &[span]);
     }
 
     /// Draw text at specified position with custom alignment
@@ -565,10 +570,11 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         color: BackendColor,
         size: f32,
     ) {
+        use super::backend::TextSpan;
         let scale = self.zoom * self.auto_scale;
         let scaled_size = size * scale;
-        let font_id = BackendFontId::new(scaled_size, super::backend::FontFamily::Proportional);
-        self.painter.text(pos, align, text, font_id, color);
+        let span = TextSpan::new(text.to_string(), scaled_size, color);
+        self.painter.rich_text(pos, align, &[span]);
     }
 
     pub fn default_bond_length(&self) -> f64 {

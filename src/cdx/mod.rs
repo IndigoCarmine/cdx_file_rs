@@ -34,5 +34,6 @@ pub mod text_styles;
 pub mod tlc_lane;
 pub mod tlc_plate;
 pub mod tlc_spot;
-pub mod unknown_802b;
+pub mod unknown;
 pub mod values;
+pub mod annotation;

@@ -36,7 +36,55 @@ pub use super::text::TextObject;
 pub use super::tlc_lane::TlcLane;
 pub use super::tlc_plate::TLCPlate;
 pub use super::tlc_spot::TLCSpot;
-pub use super::unknown_802b::UnknownObject802B;
+pub use super::annotation::Annotation;
+pub use super::unknown::*;
+
+macro_rules! extract_id {
+    ($payload:expr) => {
+        match $payload {
+            NodePayload::Arrow(n) => Some(n.id),
+            NodePayload::Bond(n) => Some(n.id),
+            NodePayload::Border(n) => Some(n.id),
+            NodePayload::BracketAttachment(n) => Some(n.id),
+            NodePayload::BracketedGroup(n) => Some(n.id),
+            NodePayload::ChemicalProperty(n) => Some(n.id),
+            NodePayload::ColorTable(_) => None,  // ColorTable has no id field
+            NodePayload::Constraint(n) => Some(n.id),
+            NodePayload::CrossReference(n) => Some(n.id),
+            NodePayload::CrossingBond(n) => Some(n.id),
+            NodePayload::Curve(n) => Some(n.id),
+            NodePayload::Document(n) => Some(n.id),
+            NodePayload::EmbeddedObject(n) => Some(n.id),
+            NodePayload::Fragment(n) => Some(n.id),
+            NodePayload::Geometry(n) => Some(n.id),
+            NodePayload::Graphic(n) => Some(n.id),
+            NodePayload::Group(n) => Some(n.id),
+            NodePayload::NamedAlternativeGroup(n) => Some(n.id),
+            NodePayload::Node(n) => Some(n.id),
+            NodePayload::ObjectTag(n) => Some(n.id),
+            NodePayload::Page(n) => Some(n.id),
+            NodePayload::ReactionScheme(n) => Some(n.id),
+            NodePayload::ReactionStep(n) => Some(n.id),
+            NodePayload::RegistryNumber(n) => Some(n.id),
+            NodePayload::Sequence(n) => Some(n.id),
+            NodePayload::Spectrum(n) => Some(n.id),
+            NodePayload::Splitter(n) => Some(n.id),
+            NodePayload::Table(n) => Some(n.id),
+            NodePayload::TemplateGrid(n) => Some(n.id),
+            NodePayload::TextObject(n) => Some(n.id),
+            NodePayload::TlcLane(n) => Some(n.id),
+            NodePayload::TLCPlate(n) => Some(n.id),
+            NodePayload::TLCSpot(n) => Some(n.id),
+            NodePayload::Annotation(n) => Some(n.id),
+            NodePayload::UnknownObject802B(n) => Some(n.id),
+            NodePayload::UnknownObject801D(n) => Some(n.id),
+            NodePayload::UnknownObject801E(n) => Some(n.id),
+            NodePayload::UnknownObject801F(n) => Some(n.id),
+
+        }
+    };
+}
+
 
 pub struct CdxFile {
     pub tree: Tree<NodePayload>,
@@ -55,6 +103,17 @@ impl CdxFile {
         }
     }
 
+    /// Get the first Page object from the document
+    pub fn get_first_page(&self) -> Option<Page> {
+        let root = self.tree.root();
+        for child in root.children() {
+            if let NodePayload::Page(page) = &*child.borrow_data() {
+                return Some(page.clone());
+            }
+        }
+        None
+    }
+
     /// Generate the next unique ID by finding the maximum ID in the tree and adding 1
     pub fn next_id(&self) -> u32 {
         let mut max_id = 0u32;
@@ -62,42 +121,7 @@ impl CdxFile {
         // Traverse all nodes to find the maximum ID
         let mut queue = vec![self.tree.root()];
         while let Some(node) = queue.pop() {
-            let node_id = match &*node.borrow_data() {
-                NodePayload::Arrow(n) => n.id,
-                NodePayload::Bond(n) => n.id,
-                NodePayload::Border(n) => n.id,
-                NodePayload::BracketAttachment(n) => n.id,
-                NodePayload::BracketedGroup(n) => n.id,
-                NodePayload::ChemicalProperty(n) => n.id,
-                NodePayload::ColorTable(_) => 0,  // ColorTable has no id
-                NodePayload::Constraint(n) => n.id,
-                NodePayload::CrossReference(n) => n.id,
-                NodePayload::CrossingBond(n) => n.id,
-                NodePayload::Curve(n) => n.id,
-                NodePayload::Document(n) => n.id,
-                NodePayload::EmbeddedObject(n) => n.id,
-                NodePayload::Fragment(n) => n.id,
-                NodePayload::Geometry(n) => n.id,
-                NodePayload::Graphic(n) => n.id,
-                NodePayload::Group(n) => n.id,
-                NodePayload::NamedAlternativeGroup(n) => n.id,
-                NodePayload::Node(n) => n.id,
-                NodePayload::ObjectTag(n) => n.id,
-                NodePayload::Page(n) => n.id,
-                NodePayload::ReactionScheme(n) => n.id,
-                NodePayload::ReactionStep(n) => n.id,
-                NodePayload::RegistryNumber(n) => n.id,
-                NodePayload::Sequence(n) => n.id,
-                NodePayload::Spectrum(n) => n.id,
-                NodePayload::Splitter(n) => n.id,
-                NodePayload::Table(n) => n.id,
-                NodePayload::TemplateGrid(n) => n.id,
-                NodePayload::TextObject(n) => n.id,
-                NodePayload::TlcLane(n) => n.id,
-                NodePayload::TLCPlate(n) => n.id,
-                NodePayload::TLCSpot(n) => n.id,
-                NodePayload::UnknownObject802B(n) => n.id,
-            };
+            let node_id = extract_id!(&*node.borrow_data()).unwrap_or(0);
             max_id = max_id.max(node_id);
             
             for child in node.children() {
@@ -112,42 +136,7 @@ impl CdxFile {
     pub fn find_node_by_id(&self, target_id: u32) -> Option<dendron::Node<NodePayload>> {
         let mut queue = vec![self.tree.root()];
         while let Some(node) = queue.pop() {
-            let node_id = match &*node.borrow_data() {
-                NodePayload::Arrow(n) => n.id,
-                NodePayload::Bond(n) => n.id,
-                NodePayload::Border(n) => n.id,
-                NodePayload::BracketAttachment(n) => n.id,
-                NodePayload::BracketedGroup(n) => n.id,
-                NodePayload::ChemicalProperty(n) => n.id,
-                NodePayload::ColorTable(_) => 0,
-                NodePayload::Constraint(n) => n.id,
-                NodePayload::CrossReference(n) => n.id,
-                NodePayload::CrossingBond(n) => n.id,
-                NodePayload::Curve(n) => n.id,
-                NodePayload::Document(n) => n.id,
-                NodePayload::EmbeddedObject(n) => n.id,
-                NodePayload::Fragment(n) => n.id,
-                NodePayload::Geometry(n) => n.id,
-                NodePayload::Graphic(n) => n.id,
-                NodePayload::Group(n) => n.id,
-                NodePayload::NamedAlternativeGroup(n) => n.id,
-                NodePayload::Node(n) => n.id,
-                NodePayload::ObjectTag(n) => n.id,
-                NodePayload::Page(n) => n.id,
-                NodePayload::ReactionScheme(n) => n.id,
-                NodePayload::ReactionStep(n) => n.id,
-                NodePayload::RegistryNumber(n) => n.id,
-                NodePayload::Sequence(n) => n.id,
-                NodePayload::Spectrum(n) => n.id,
-                NodePayload::Splitter(n) => n.id,
-                NodePayload::Table(n) => n.id,
-                NodePayload::TemplateGrid(n) => n.id,
-                NodePayload::TextObject(n) => n.id,
-                NodePayload::TlcLane(n) => n.id,
-                NodePayload::TLCPlate(n) => n.id,
-                NodePayload::TLCSpot(n) => n.id,
-                NodePayload::UnknownObject802B(n) => n.id,
-            };
+            let node_id = extract_id!(&*node.borrow_data()).unwrap_or(0);
             
             if node_id == target_id {
                 return Some(node);
@@ -215,46 +204,7 @@ impl CdxFile {
 
         // First pass: collect all selected nodes and their ancestors
         while let Some(node) = queue.pop() {
-            macro_rules! extract_id {
-                ($payload:expr) => {
-                    match $payload {
-                        NodePayload::Arrow(n) => Some(n.id),
-                        NodePayload::Bond(n) => Some(n.id),
-                        NodePayload::Border(n) => Some(n.id),
-                        NodePayload::BracketAttachment(n) => Some(n.id),
-                        NodePayload::BracketedGroup(n) => Some(n.id),
-                        NodePayload::ChemicalProperty(n) => Some(n.id),
-                        NodePayload::ColorTable(_) => None,  // ColorTable has no id field
-                        NodePayload::Constraint(n) => Some(n.id),
-                        NodePayload::CrossReference(n) => Some(n.id),
-                        NodePayload::CrossingBond(n) => Some(n.id),
-                        NodePayload::Curve(n) => Some(n.id),
-                        NodePayload::Document(n) => Some(n.id),
-                        NodePayload::EmbeddedObject(n) => Some(n.id),
-                        NodePayload::Fragment(n) => Some(n.id),
-                        NodePayload::Geometry(n) => Some(n.id),
-                        NodePayload::Graphic(n) => Some(n.id),
-                        NodePayload::Group(n) => Some(n.id),
-                        NodePayload::NamedAlternativeGroup(n) => Some(n.id),
-                        NodePayload::Node(n) => Some(n.id),
-                        NodePayload::ObjectTag(n) => Some(n.id),
-                        NodePayload::Page(n) => Some(n.id),
-                        NodePayload::ReactionScheme(n) => Some(n.id),
-                        NodePayload::ReactionStep(n) => Some(n.id),
-                        NodePayload::RegistryNumber(n) => Some(n.id),
-                        NodePayload::Sequence(n) => Some(n.id),
-                        NodePayload::Spectrum(n) => Some(n.id),
-                        NodePayload::Splitter(n) => Some(n.id),
-                        NodePayload::Table(n) => Some(n.id),
-                        NodePayload::TemplateGrid(n) => Some(n.id),
-                        NodePayload::TextObject(n) => Some(n.id),
-                        NodePayload::TlcLane(n) => Some(n.id),
-                        NodePayload::TLCPlate(n) => Some(n.id),
-                        NodePayload::TLCSpot(n) => Some(n.id),
-                        NodePayload::UnknownObject802B(n) => Some(n.id),
-                    }
-                };
-            }
+
 
             let node_id = extract_id!(&*node.borrow_data());
 
@@ -265,44 +215,7 @@ impl CdxFile {
                     // Mark all ancestors as needed
                     let mut current = node.clone();
                     while let Some(parent) = current.parent() {
-                        let parent_id = {
-                            match &*parent.borrow_data() {
-                                NodePayload::Arrow(n) => Some(n.id),
-                                NodePayload::Bond(n) => Some(n.id),
-                                NodePayload::Border(n) => Some(n.id),
-                                NodePayload::BracketAttachment(n) => Some(n.id),
-                                NodePayload::BracketedGroup(n) => Some(n.id),
-                                NodePayload::ChemicalProperty(n) => Some(n.id),
-                                NodePayload::ColorTable(_) => None,  // Skip ColorTable - no id
-                                NodePayload::Constraint(n) => Some(n.id),
-                                NodePayload::CrossReference(n) => Some(n.id),
-                                NodePayload::CrossingBond(n) => Some(n.id),
-                                NodePayload::Curve(n) => Some(n.id),
-                                NodePayload::Document(n) => Some(n.id),
-                                NodePayload::EmbeddedObject(n) => Some(n.id),
-                                NodePayload::Fragment(n) => Some(n.id),
-                                NodePayload::Geometry(n) => Some(n.id),
-                                NodePayload::Graphic(n) => Some(n.id),
-                                NodePayload::Group(n) => Some(n.id),
-                                NodePayload::NamedAlternativeGroup(n) => Some(n.id),
-                                NodePayload::Node(n) => Some(n.id),
-                                NodePayload::ObjectTag(n) => Some(n.id),
-                                NodePayload::Page(n) => Some(n.id),
-                                NodePayload::ReactionScheme(n) => Some(n.id),
-                                NodePayload::ReactionStep(n) => Some(n.id),
-                                NodePayload::RegistryNumber(n) => Some(n.id),
-                                NodePayload::Sequence(n) => Some(n.id),
-                                NodePayload::Spectrum(n) => Some(n.id),
-                                NodePayload::Splitter(n) => Some(n.id),
-                                NodePayload::Table(n) => Some(n.id),
-                                NodePayload::TemplateGrid(n) => Some(n.id),
-                                NodePayload::TextObject(n) => Some(n.id),
-                                NodePayload::TlcLane(n) => Some(n.id),
-                                NodePayload::TLCPlate(n) => Some(n.id),
-                                NodePayload::TLCSpot(n) => Some(n.id),
-                                NodePayload::UnknownObject802B(n) => Some(n.id),
-                            }
-                        };
+                        let parent_id = extract_id!(&*parent.borrow_data());
                         if let Some(pid) = parent_id {
                             nodes_to_include.insert(pid);
                         }
@@ -347,42 +260,7 @@ impl CdxFile {
         nodes_to_include: &HashSet<u32>,
     ) {
         for child in source_node.children() {
-            let child_id = match &*child.borrow_data() {
-                NodePayload::Arrow(n) => n.id,
-                NodePayload::Bond(n) => n.id,
-                NodePayload::Border(n) => n.id,
-                NodePayload::BracketAttachment(n) => n.id,
-                NodePayload::BracketedGroup(n) => n.id,
-                NodePayload::ChemicalProperty(n) => n.id,
-                NodePayload::ColorTable(_) => continue,  // Skip ColorTable
-                NodePayload::Constraint(n) => n.id,
-                NodePayload::CrossReference(n) => n.id,
-                NodePayload::CrossingBond(n) => n.id,
-                NodePayload::Curve(n) => n.id,
-                NodePayload::Document(n) => n.id,
-                NodePayload::EmbeddedObject(n) => n.id,
-                NodePayload::Fragment(n) => n.id,
-                NodePayload::Geometry(n) => n.id,
-                NodePayload::Graphic(n) => n.id,
-                NodePayload::Group(n) => n.id,
-                NodePayload::NamedAlternativeGroup(n) => n.id,
-                NodePayload::Node(n) => n.id,
-                NodePayload::ObjectTag(n) => n.id,
-                NodePayload::Page(n) => n.id,
-                NodePayload::ReactionScheme(n) => n.id,
-                NodePayload::ReactionStep(n) => n.id,
-                NodePayload::RegistryNumber(n) => n.id,
-                NodePayload::Sequence(n) => n.id,
-                NodePayload::Spectrum(n) => n.id,
-                NodePayload::Splitter(n) => n.id,
-                NodePayload::Table(n) => n.id,
-                NodePayload::TemplateGrid(n) => n.id,
-                NodePayload::TextObject(n) => n.id,
-                NodePayload::TlcLane(n) => n.id,
-                NodePayload::TLCPlate(n) => n.id,
-                NodePayload::TLCSpot(n) => n.id,
-                NodePayload::UnknownObject802B(n) => n.id,
-            };
+            let child_id = extract_id!(&*child.borrow_data()).unwrap_or(0);
 
             if nodes_to_include.contains(&child_id) {
                 let child_data = (*child.borrow_data()).clone();
@@ -439,4 +317,8 @@ define_node_payload!(
     TLCPlate,
     TLCSpot,
     UnknownObject802B,
+    UnknownObject801D,
+    UnknownObject801E,
+    UnknownObject801F,
+    Annotation,
 );

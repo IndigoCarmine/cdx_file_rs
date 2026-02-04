@@ -4,15 +4,19 @@ pub mod backend;
 pub mod egui_backend;
 pub mod svg_backend;
 pub mod png_backend;
+pub mod image_png_backend;
 pub mod export_utils;
 pub mod core;
+pub mod font_loader;
 
 pub use backend::{AbstractPainter, Color, Point2d, Stroke, Rect, Align, Align2, FontFamily, FontId, Galley};
 pub use egui_backend::EguiBackend;
 pub use svg_backend::SvgBackend;
 pub use png_backend::PngBackend;
+pub use image_png_backend::ImagePngBackend;
 pub use export_utils::{RenderExportOptions, export_to_svg, export_to_png, render_to_svg};
 pub use core::{CdxRenderer, Drawable, RenderContext, RenderStyle, element_to_symbol};
+pub use font_loader::{configure_egui_fonts, get_egui_font_family, get_loaded_font_info};
 
 pub mod arrow;
 pub mod bond;
@@ -47,4 +51,5 @@ pub mod text;
 pub mod tlc_lane;
 pub mod tlc_plate;
 pub mod tlc_spot;
-pub mod unknown_802b;
+pub mod annotation;
+pub mod unknown;

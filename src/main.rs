@@ -12,6 +12,7 @@ use crate::renderer::CdxRenderer;
 use eframe::{App, egui};
 use std::cell::RefCell;
 use std::fs;
+use cdx_file_rs::renderer::font_loader;
 
 struct ModeHandlers {
     view: mode_handlers::view::ViewMode,
@@ -41,7 +42,15 @@ fn main() -> eframe::Result {
     eframe::run_native(
         "CDX Viewer",
         options,
-        Box::new(|_cc| {
+        Box::new(|cc| {
+            // Load system fonts for rich text rendering
+            font_loader::configure_egui_fonts(&cc.egui_ctx);
+            
+            // Print loaded fonts info
+            for info in font_loader::get_loaded_font_info() {
+                println!("{}", info);
+            }
+            
             let app = CdxApp::default();
             Ok(Box::new(app))
         }),
@@ -126,7 +135,7 @@ impl CdxApp {
         // Collect all node positions
         self.collect_node_positions(&cdx_file.tree.root(), &mut node_positions);
 
-        // Calculate bounds
+        // Calculate bounds from node positions (for centering)
         let mut min_x = f64::INFINITY;
         let mut max_x = f64::NEG_INFINITY;
         let mut min_y = f64::INFINITY;
@@ -139,12 +148,38 @@ impl CdxApp {
             max_y = max_y.max(pos.y);
         }
 
-        let doc_width = max_x - min_x;
-        let doc_height = max_y - min_y;
+        // Get document dimensions - priority order:
+        // 1. First Page's width/height properties (most reliable for ChemDraw 6.0+)
+        // 2. First Page's bounding_box
+        // 3. Document's bounding_box (legacy, ChemDraw < 6.0)
+        // 4. Calculated from node positions (fallback)
+        let (doc_width, doc_height) = if let Some(page) = cdx_file.get_first_page() {
+            // Try Page's explicit width/height first
+            if let (Some(w), Some(h)) = (page.width, page.height) {
+                (w, h)
+            } else if let Some(bb) = page.bounding_box {
+                ((bb.right - bb.left) as f64, (bb.bottom - bb.top) as f64)
+            } else if let Some(bb) = cdx_file.get_document().ok().and_then(|d| d.bounding_box) {
+                ((bb.right - bb.left) as f64, (bb.bottom - bb.top) as f64)
+            } else {
+                (max_x - min_x, max_y - min_y)
+            }
+        } else if let Some(bb) = cdx_file.get_document().ok().and_then(|d| d.bounding_box) {
+            ((bb.right - bb.left) as f64, (bb.bottom - bb.top) as f64)
+        } else {
+            (max_x - min_x, max_y - min_y)
+        };
 
         if doc_width <= 0.0 || doc_height <= 0.0 {
             return (egui::Vec2::ZERO, 1.0);
         }
+
+        // Apply magnification from document if available
+        // Magnification is stored as 10 * percent (e.g., 1500 = 150%)
+        let magnification = cdx_file.get_document().ok()
+            .and_then(|d| d.magnification)
+            .map(|m| m as f32 / 1000.0)  // Convert to multiplier (1500 -> 1.5)
+            .unwrap_or(1.0);
 
         // Calculate scale to fit in window with padding
         let padding = 50.0;
@@ -153,7 +188,7 @@ impl CdxApp {
 
         let scale_x = available_width / doc_width as f32;
         let scale_y = available_height / doc_height as f32;
-        let auto_scale = scale_x.min(scale_y);
+        let auto_scale = scale_x.min(scale_y) * magnification;
 
         // Calculate center offset
         let doc_center_x = ((min_x + max_x) / 2.0) as f32;

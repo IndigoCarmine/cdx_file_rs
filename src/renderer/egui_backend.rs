@@ -3,6 +3,7 @@
 /// This module provides an adapter that implements AbstractPainter using egui primitives.
 
 use super::backend::*;
+use super::font_loader;
 use eframe::egui;
 
 /// Convert backend Color to egui::Color32
@@ -137,10 +138,6 @@ impl<'a> AbstractPainter for EguiBackend<'a> {
         self.painter.rect(rect.into(), rounding, egui::Color32::from(fill), egui::Stroke::from(stroke));
     }
     
-    fn text(&self, pos: Point2d, align: Align2, text: &str, font: FontId, color: Color) {
-        self.painter.text(pos.into(), align.into(), text, font.into(), egui::Color32::from(color));
-    }
-    
     fn polyline(&self, points: &[Point2d], stroke: Stroke) {
         let egui_points: Vec<egui::Pos2> = points.iter().map(|&p| p.into()).collect();
         self.painter.add(egui::Shape::line(egui_points, egui::Stroke::from(stroke)));
@@ -173,5 +170,112 @@ impl<'a> AbstractPainter for EguiBackend<'a> {
     
     fn clip_rect(&self) -> Rect {
         self.painter.clip_rect().into()
+    }
+    
+    fn rich_text(&self, pos: Point2d, align: Align2, spans: &[super::backend::TextSpan]) {
+        use super::backend::Stroke;
+        
+        if spans.is_empty() {
+            return;
+        }
+        
+        // Calculate total width and max height for alignment
+        let mut total_width: f32 = 0.0;
+        let mut max_height: f32 = 0.0;
+        for span in spans {
+            let font_family = font_loader::get_egui_font_family(
+                &span.font_family,
+                span.style.bold,
+                span.style.italic,
+            );
+            let font_size = if span.style.subscript || span.style.superscript {
+                span.font_size * 0.7
+            } else {
+                span.font_size
+            };
+            let font_id = egui::FontId::new(font_size, font_family);
+            let galley = self.painter.layout_no_wrap(
+                span.text.clone(),
+                font_id,
+                egui::Color32::from(span.color),
+            );
+            total_width += galley.size().x;
+            if galley.size().y > max_height {
+                max_height = galley.size().y;
+            }
+        }
+        
+        // Determine starting X position based on horizontal alignment
+        let start_x = match align.x {
+            super::backend::Align::Left => pos.x,
+            super::backend::Align::Center => pos.x - total_width / 2.0,
+            super::backend::Align::Right => pos.x - total_width,
+        };
+        
+        // Determine starting Y position based on vertical alignment
+        let start_y = match align.y {
+            super::backend::VerticalAlign::Top => pos.y,
+            super::backend::VerticalAlign::Center => pos.y - max_height / 2.0,
+            super::backend::VerticalAlign::Bottom => pos.y - max_height,
+        };
+        
+        // Draw each span with proper font styling
+        let mut current_x = start_x;
+        for span in spans {
+            // Get the appropriate font family based on style
+            let font_family = font_loader::get_egui_font_family(
+                &span.font_family,
+                span.style.bold,
+                span.style.italic,
+            );
+            
+            // Adjust font size for subscript/superscript
+            let font_size = if span.style.subscript || span.style.superscript {
+                span.font_size * 0.7
+            } else {
+                span.font_size
+            };
+            
+            // Calculate Y offset for subscript/superscript
+            let y_offset = if span.style.superscript {
+                -span.font_size * 0.3
+            } else if span.style.subscript {
+                span.font_size * 0.3
+            } else {
+                0.0
+            };
+            
+            let span_pos = Point2d::new(current_x, start_y + y_offset);
+            let font_id = egui::FontId::new(font_size, font_family);
+            
+            // Create galley for this span
+            let galley = self.painter.layout_no_wrap(
+                span.text.clone(),
+                font_id,
+                egui::Color32::from(span.color),
+            );
+            
+            let text_width = galley.size().x;
+            
+            // Draw the text
+            self.painter.galley(
+                span_pos.into(),
+                galley,
+                egui::Color32::from(span.color),
+            );
+            
+            // Draw underline if needed
+            if span.style.underline {
+                let underline_y = start_y + max_height * 0.9;
+                self.line_segment(
+                    Point2d::new(current_x, underline_y),
+                    Point2d::new(current_x + text_width, underline_y),
+                    Stroke::new(1.0, span.color),
+                );
+            }
+            
+            // Advance X position
+            current_x += text_width;
+        }
     }
 }

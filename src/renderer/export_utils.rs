@@ -6,7 +6,7 @@
 use crate::cdx::document::Document;
 use crate::cdx::file::{CdxFile, NodePayload};
 use crate::cdx::values::Point2d as CdxPoint2d;
-use crate::renderer::{backend::Color, PngBackend, RenderContext, SvgBackend};
+use crate::renderer::{backend::Color, ImagePngBackend, RenderContext, SvgBackend};
 use dendron::Node;
 use eframe::egui::Pos2;
 use std::collections::HashMap;
@@ -75,8 +75,7 @@ pub fn export_to_png(
     let width = (options.width as f32 * options.scale) as u32;
     let height = (options.height as f32 * options.scale) as u32;
 
-    let backend = PngBackend::new(width, height, options.background_color)
-        .ok_or("Failed to create PNG backend")?;
+    let backend = ImagePngBackend::new(width, height, options.background_color);
 
     render_to_backend(cdx_file, &backend, options)?;
 
@@ -225,7 +224,7 @@ fn calculate_auto_scale(
     let window_center_y = height / 2.0;
 
     let center_offset_x = window_center_x - doc_center_x * auto_scale;
-    let center_offset_y = window_center_y + doc_center_y * auto_scale; // + because Y is inverted
+    let center_offset_y = window_center_y - doc_center_y * auto_scale; // CDX Y increases downward (same as screen)
 
     (auto_scale, (center_offset_x, center_offset_y))
 }

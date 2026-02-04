@@ -1,91 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="768" viewBox="0 0 1024 768">
-  <rect x="0" y="0" width="1024" height="768" fill="rgb(255,255,255)" />
-  <circle cx="49.99997" cy="341.59506" r="10" fill="rgb(255,255,255)" />
-  <circle cx="49.99997" cy="285.12054" r="10" fill="rgb(255,255,255)" />
-  <circle cx="98.978546" cy="256.86368" r="10" fill="rgb(255,255,255)" />
-  <circle cx="147.9179" cy="285.12054" r="10" fill="rgb(255,255,255)" />
-  <circle cx="147.9179" cy="341.59506" r="10" fill="rgb(255,255,255)" />
-  <circle cx="98.978546" cy="369.85193" r="10" fill="rgb(255,255,255)" />
-  <circle cx="196.85724" cy="369.85193" r="10" fill="rgb(255,255,255)" />
-  <circle cx="245.7966" cy="341.59506" r="10" fill="rgb(255,255,255)" />
-  <circle cx="294.73596" cy="369.85193" r="10" fill="rgb(255,255,255)" />
-  <circle cx="294.73596" cy="426.36572" r="10" fill="rgb(255,255,255)" />
-  <circle cx="245.7966" cy="454.6226" r="10" fill="rgb(255,255,255)" />
-  <circle cx="196.85724" cy="426.36572" r="10" fill="rgb(255,255,255)" />
-  <circle cx="343.6753" cy="454.6226" r="10" fill="rgb(255,255,255)" />
-  <text x="343.6753" y="454.6226" fill="rgb(0,0,0)" font-family="monospace" font-size="39.245667" text-anchor="middle" dominant-baseline="middle">S</text>
-  <text x="330.58704" y="423.61853" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="27.471966" text-anchor="start" dominant-baseline="middle">S</text>
-  <circle cx="392.61465" cy="426.36572" r="10" fill="rgb(255,255,255)" />
-  <circle cx="343.6753" cy="511.13632" r="10" fill="rgb(255,255,255)" />
-  <text x="343.6753" y="511.13632" fill="rgb(0,0,0)" font-family="monospace" font-size="39.245667" text-anchor="middle" dominant-baseline="middle">O</text>
-  <text x="328.41205" y="480.13226" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="27.471966" text-anchor="start" dominant-baseline="middle">O</text>
-  <line x1="49.99997" y1="341.59506" x2="49.99997" y2="285.12054" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="60.165382" y1="341.59506" x2="60.165382" y2="285.12054" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="49.99997" y1="285.12054" x2="98.978546" y2="256.86368" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="98.978546" y1="256.86368" x2="147.9179" y2="285.12054" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="93.89231" y1="265.67276" x2="142.83165" y2="293.92963" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="147.9179" y1="285.12054" x2="147.9179" y2="341.59506" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="147.9179" y1="341.59506" x2="98.978546" y2="369.85193" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="142.83165" y1="332.78598" x2="93.89231" y2="361.04285" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="98.978546" y1="369.85193" x2="49.99997" y2="341.59506" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="147.9179" y1="341.59506" x2="196.85724" y2="369.85193" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="196.85724" y1="369.85193" x2="245.7966" y2="341.59506" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="201.94348" y1="378.661" x2="250.88284" y2="350.40414" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="245.7966" y1="341.59506" x2="294.73596" y2="369.85193" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="294.73596" y1="369.85193" x2="294.73596" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="284.56348" y1="369.85193" x2="284.56348" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="294.73596" y1="426.36572" x2="245.7966" y2="454.6226" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="245.7966" y1="454.6226" x2="196.85724" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="250.88284" y1="445.8135" x2="201.94348" y2="417.55664" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="196.85724" y1="426.36572" x2="196.85724" y2="369.85193" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="294.73596" y1="426.36572" x2="343.6753" y2="454.6226" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="343.6753" y1="454.6226" x2="392.61465" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="343.6753" y1="454.6226" x2="343.6753" y2="511.13632" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="333.5028" y1="454.6226" x2="333.5028" y2="511.13632" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <circle cx="631.4245" cy="341.59506" r="10" fill="rgb(255,255,255)" />
-  <circle cx="631.4245" cy="285.12054" r="10" fill="rgb(255,255,255)" />
-  <circle cx="680.36383" cy="256.86368" r="10" fill="rgb(255,255,255)" />
-  <circle cx="729.3032" cy="285.12054" r="10" fill="rgb(255,255,255)" />
-  <circle cx="729.3032" cy="341.59506" r="10" fill="rgb(255,255,255)" />
-  <circle cx="680.36383" cy="369.85193" r="10" fill="rgb(255,255,255)" />
-  <circle cx="778.24255" cy="369.8912" r="10" fill="rgb(255,255,255)" />
-  <circle cx="827.18195" cy="341.63428" r="10" fill="rgb(255,255,255)" />
-  <circle cx="876.1213" cy="369.8912" r="10" fill="rgb(255,255,255)" />
-  <circle cx="876.1213" cy="426.36572" r="10" fill="rgb(255,255,255)" />
-  <circle cx="827.18195" cy="454.6226" r="10" fill="rgb(255,255,255)" />
-  <circle cx="778.24255" cy="426.36572" r="10" fill="rgb(255,255,255)" />
-  <circle cx="925.0606" cy="454.6618" r="10" fill="rgb(255,255,255)" />
-  <text x="925.0606" y="454.6618" fill="rgb(0,0,0)" font-family="monospace" font-size="39.245667" text-anchor="middle" dominant-baseline="middle">S</text>
-  <text x="911.97235" y="423.65775" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="27.471966" text-anchor="start" dominant-baseline="middle">S</text>
-  <circle cx="973.99994" cy="426.40494" r="10" fill="rgb(255,255,255)" />
-  <circle cx="925.0606" cy="511.13632" r="10" fill="rgb(255,255,255)" />
-  <text x="925.0606" y="511.13632" fill="rgb(0,0,0)" font-family="monospace" font-size="39.245667" text-anchor="middle" dominant-baseline="middle">O</text>
-  <text x="909.79736" y="480.13226" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="27.471966" text-anchor="start" dominant-baseline="middle">O</text>
-  <line x1="631.4245" y1="341.59506" x2="631.4245" y2="285.12054" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="641.5899" y1="341.59506" x2="641.5899" y2="285.12054" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="631.4245" y1="285.12054" x2="680.36383" y2="256.86368" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="680.36383" y1="256.86368" x2="729.3032" y2="285.12054" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="675.2776" y1="265.67276" x2="724.217" y2="293.92963" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="729.3032" y1="285.12054" x2="729.3032" y2="341.59506" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="729.3032" y1="341.59506" x2="680.36383" y2="369.85193" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="724.217" y1="332.78598" x2="675.2776" y2="361.04285" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="680.36383" y1="369.85193" x2="631.4245" y2="341.59506" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="729.3032" y1="341.59506" x2="778.24255" y2="369.8912" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="778.24255" y1="369.8912" x2="827.18195" y2="341.63428" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="783.3288" y1="378.7003" x2="832.2682" y2="350.44336" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="827.18195" y1="341.63428" x2="876.1213" y2="369.8912" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="876.1213" y1="369.8912" x2="876.1213" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="865.9559" y1="369.8912" x2="865.9559" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="876.1213" y1="426.36572" x2="827.18195" y2="454.6226" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="827.18195" y1="454.6226" x2="778.24255" y2="426.36572" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="832.2682" y1="445.8135" x2="783.3288" y2="417.55664" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="778.24255" y1="426.36572" x2="778.24255" y2="369.8912" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="876.1213" y1="426.36572" x2="925.0606" y2="454.6618" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="925.0606" y1="454.6618" x2="973.99994" y2="426.40494" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="925.0606" y1="454.6618" x2="925.0606" y2="511.13632" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="914.8952" y1="454.6618" x2="914.8952" y2="511.13632" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <text x="185.71149" y="190.93094" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="39.245667" text-anchor="start" dominant-baseline="middle">(I)</text>
-  <text x="767.0968" y="190.93094" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="39.245667" text-anchor="start" dominant-baseline="middle">(I)</text>
-  <line x1="452.4643" y1="392.26123" x2="570.9862" y2="392.26123" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <polygon points="570.9862,392.26123 531.4789,408.06415 531.4789,376.4583" fill="rgb(0,0,0)" />
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect x="0" y="0" width="800" height="600" fill="rgb(255,255,255)" />
+  <circle cx="20.00003" cy="334.87854" r="10" fill="rgb(255,255,255)" />
+  <circle cx="20.00003" cy="381.3294" r="10" fill="rgb(255,255,255)" />
+  <circle cx="60.28543" cy="404.57098" r="10" fill="rgb(255,255,255)" />
+  <circle cx="100.538574" cy="381.3294" r="10" fill="rgb(255,255,255)" />
+  <circle cx="100.538574" cy="334.87854" r="10" fill="rgb(255,255,255)" />
+  <circle cx="60.28543" cy="311.63693" r="10" fill="rgb(255,255,255)" />
+  <circle cx="140.79173" cy="311.63693" r="10" fill="rgb(255,255,255)" />
+  <circle cx="181.04488" cy="334.87854" r="10" fill="rgb(255,255,255)" />
+  <circle cx="221.298" cy="311.63693" r="10" fill="rgb(255,255,255)" />
+  <circle cx="221.298" cy="265.15375" r="10" fill="rgb(255,255,255)" />
+  <circle cx="181.04488" cy="241.91214" r="10" fill="rgb(255,255,255)" />
+  <circle cx="140.79173" cy="265.15375" r="10" fill="rgb(255,255,255)" />
+  <circle cx="261.55115" cy="241.91214" r="10" fill="rgb(255,255,255)" />
+  <text x="258.55115" y="241.91214" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">S</text>
+  <text x="250.78592" y="254.50133" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">S</text>
+  <circle cx="301.80432" cy="265.15375" r="10" fill="rgb(255,255,255)" />
+  <circle cx="261.55115" cy="195.42899" r="10" fill="rgb(255,255,255)" />
+  <text x="258.55115" y="195.42899" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">O</text>
+  <text x="248.99695" y="208.01816" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">O</text>
+  <line x1="20.00003" y1="334.87854" x2="20.00003" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="11.638874" y1="334.87854" x2="11.638874" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="20.00003" y1="381.3294" x2="60.28543" y2="404.57098" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="60.28543" y1="404.57098" x2="100.538574" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="64.46892" y1="411.81656" x2="104.72206" y2="388.57498" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="100.538574" y1="381.3294" x2="100.538574" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="100.538574" y1="334.87854" x2="60.28543" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="104.72206" y1="327.63297" x2="64.46892" y2="304.39136" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="60.28543" y1="311.63693" x2="20.00003" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="100.538574" y1="334.87854" x2="140.79173" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="140.79173" y1="311.63693" x2="181.04488" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="136.60825" y1="318.8825" x2="176.86139" y2="342.1241" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="181.04488" y1="334.87854" x2="221.298" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="221.298" y1="311.63693" x2="221.298" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="229.66498" y1="311.63693" x2="229.66498" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="221.298" y1="265.15375" x2="181.04488" y2="241.91214" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="181.04488" y1="241.91214" x2="140.79173" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="176.86139" y1="234.66658" x2="136.60825" y2="257.90817" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="140.79173" y1="265.15375" x2="140.79173" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="221.298" y1="265.15375" x2="261.55115" y2="241.91214" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="261.55115" y1="241.91214" x2="301.80432" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="261.55115" y1="241.91214" x2="261.55115" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="269.91812" y1="241.91214" x2="269.91812" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <circle cx="498.22797" cy="334.87854" r="10" fill="rgb(255,255,255)" />
+  <circle cx="498.22797" cy="381.3294" r="10" fill="rgb(255,255,255)" />
+  <circle cx="538.48114" cy="404.57098" r="10" fill="rgb(255,255,255)" />
+  <circle cx="578.73425" cy="381.3294" r="10" fill="rgb(255,255,255)" />
+  <circle cx="578.73425" cy="334.87854" r="10" fill="rgb(255,255,255)" />
+  <circle cx="538.48114" cy="311.63693" r="10" fill="rgb(255,255,255)" />
+  <circle cx="618.9874" cy="311.6046" r="10" fill="rgb(255,255,255)" />
+  <circle cx="659.24054" cy="334.84625" r="10" fill="rgb(255,255,255)" />
+  <circle cx="699.4937" cy="311.6046" r="10" fill="rgb(255,255,255)" />
+  <circle cx="699.4937" cy="265.15375" r="10" fill="rgb(255,255,255)" />
+  <circle cx="659.24054" cy="241.91214" r="10" fill="rgb(255,255,255)" />
+  <circle cx="618.9874" cy="265.15375" r="10" fill="rgb(255,255,255)" />
+  <circle cx="739.7468" cy="241.87988" r="10" fill="rgb(255,255,255)" />
+  <text x="736.7468" y="241.87988" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">S</text>
+  <text x="728.9816" y="254.46906" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">S</text>
+  <circle cx="780" cy="265.12146" r="10" fill="rgb(255,255,255)" />
+  <circle cx="739.7468" cy="195.42899" r="10" fill="rgb(255,255,255)" />
+  <text x="736.7468" y="195.42899" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">O</text>
+  <text x="727.1926" y="208.01816" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">O</text>
+  <line x1="498.22797" y1="334.87854" x2="498.22797" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="489.86682" y1="334.87854" x2="489.86682" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="498.22797" y1="381.3294" x2="538.48114" y2="404.57098" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="538.48114" y1="404.57098" x2="578.73425" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="542.6646" y1="411.81656" x2="582.9177" y2="388.57498" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="578.73425" y1="381.3294" x2="578.73425" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="578.73425" y1="334.87854" x2="538.48114" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="582.9177" y1="327.63297" x2="542.6646" y2="304.39136" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="538.48114" y1="311.63693" x2="498.22797" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="578.73425" y1="334.87854" x2="618.9874" y2="311.6046" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="618.9874" y1="311.6046" x2="659.24054" y2="334.84625" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="614.80396" y1="318.8502" x2="655.05707" y2="342.09183" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="659.24054" y1="334.84625" x2="699.4937" y2="311.6046" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="699.4937" y1="311.6046" x2="699.4937" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="707.85486" y1="311.6046" x2="707.85486" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="699.4937" y1="265.15375" x2="659.24054" y2="241.91214" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="659.24054" y1="241.91214" x2="618.9874" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="655.05707" y1="234.66658" x2="614.80396" y2="257.90817" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="618.9874" y1="265.15375" x2="618.9874" y2="311.6046" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="699.4937" y1="265.15375" x2="739.7468" y2="241.87988" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="739.7468" y1="241.87988" x2="780" y2="265.12146" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="739.7468" y1="241.87988" x2="739.7468" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="748.108" y1="241.87988" x2="748.108" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <text x="131.62422" y="458.8014" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">(I)</text>
+  <text x="609.8199" y="458.8014" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">(I)</text>
+  <line x1="351.03128" y1="293.20505" x2="448.51685" y2="293.20505" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <polygon points="448.51685,293.20505 416.02167,306.20313 416.02167,280.20697" fill="rgb(0,0,0)" />
 </svg>

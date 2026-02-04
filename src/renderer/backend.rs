@@ -3,8 +3,6 @@
 /// This module defines backend-agnostic types and traits for rendering,
 /// allowing multiple rendering backends (egui, SVG, PDF, etc.) to be supported.
 
-use std::fmt;
-
 /// Backend-agnostic 2D point
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Point2d {
@@ -144,6 +142,38 @@ pub enum FontFamily {
     Monospace,
 }
 
+/// Specific font families for rich text rendering
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum RichTextFontFamily {
+    /// Arial (sans-serif)
+    #[default]
+    Arial,
+    /// Times New Roman (serif)
+    TimesNewRoman,
+    /// Symbol font (for Greek letters and math symbols)
+    Symbol,
+}
+
+impl RichTextFontFamily {
+    /// Get the CSS/SVG font-family string
+    pub fn to_css_family(&self) -> &'static str {
+        match self {
+            RichTextFontFamily::Arial => "Arial, sans-serif",
+            RichTextFontFamily::TimesNewRoman => "Times New Roman, serif",
+            RichTextFontFamily::Symbol => "Symbol, serif",
+        }
+    }
+    
+    /// Get the font name for system font lookup
+    pub fn font_name(&self) -> &'static str {
+        match self {
+            RichTextFontFamily::Arial => "Arial",
+            RichTextFontFamily::TimesNewRoman => "Times New Roman",
+            RichTextFontFamily::Symbol => "Symbol",
+        }
+    }
+}
+
 /// Font identifier
 #[derive(Debug, Clone, Copy)]
 pub struct FontId {
@@ -162,6 +192,97 @@ impl FontId {
 pub struct Galley {
     pub size: (f32, f32),  // (width, height)
     pub text: String,
+}
+
+/// Text style flags for rich text rendering
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct TextStyle {
+    /// Bold text
+    pub bold: bool,
+    /// Italic text
+    pub italic: bool,
+    /// Underline text
+    pub underline: bool,
+    /// Subscript (lowered position, smaller size)
+    pub subscript: bool,
+    /// Superscript (raised position, smaller size)
+    pub superscript: bool,
+}
+
+impl TextStyle {
+    pub const PLAIN: TextStyle = TextStyle {
+        bold: false,
+        italic: false,
+        underline: false,
+        subscript: false,
+        superscript: false,
+    };
+    
+    pub fn new() -> Self {
+        Self::default()
+    }
+    
+    pub fn bold(mut self) -> Self {
+        self.bold = true;
+        self
+    }
+    
+    pub fn italic(mut self) -> Self {
+        self.italic = true;
+        self
+    }
+    
+    pub fn underline(mut self) -> Self {
+        self.underline = true;
+        self
+    }
+    
+    pub fn subscript(mut self) -> Self {
+        self.subscript = true;
+        self
+    }
+    
+    pub fn superscript(mut self) -> Self {
+        self.superscript = true;
+        self
+    }
+}
+
+/// A span of text with consistent styling for rich text rendering
+#[derive(Debug, Clone)]
+pub struct TextSpan {
+    /// The text content
+    pub text: String,
+    /// Font size (in points)
+    pub font_size: f32,
+    /// Text color
+    pub color: Color,
+    /// Text style flags (bold, italic, etc.)
+    pub style: TextStyle,
+    /// Font family (Arial, Times New Roman, Symbol)
+    pub font_family: RichTextFontFamily,
+}
+
+impl TextSpan {
+    pub fn new(text: impl Into<String>, font_size: f32, color: Color) -> Self {
+        TextSpan {
+            text: text.into(),
+            font_size,
+            color,
+            style: TextStyle::default(),
+            font_family: RichTextFontFamily::default(),
+        }
+    }
+    
+    pub fn with_style(mut self, style: TextStyle) -> Self {
+        self.style = style;
+        self
+    }
+    
+    pub fn with_font_family(mut self, font_family: RichTextFontFamily) -> Self {
+        self.font_family = font_family;
+        self
+    }
 }
 
 /// Abstract painter trait for backend-agnostic rendering
@@ -187,9 +308,6 @@ pub trait AbstractPainter {
     /// Draw both filled and stroked rectangle
     fn rect(&self, rect: Rect, rounding: f32, fill: Color, stroke: Stroke);
     
-    /// Draw text at specified position with alignment
-    fn text(&self, pos: Point2d, align: Align2, text: &str, font: FontId, color: Color);
-    
     /// Draw a polyline (connected line segments)
     fn polyline(&self, points: &[Point2d], stroke: Stroke);
     
@@ -204,4 +322,11 @@ pub trait AbstractPainter {
     
     /// Get the clip rectangle
     fn clip_rect(&self) -> Rect;
+    
+    /// Draw rich text (styled text spans) at specified position
+    /// 
+    /// This method renders a sequence of styled text spans horizontally.
+    /// Each span can have different font size, color, and style (bold, italic, etc.).
+    /// Subscript and superscript are handled via Y-offset (approximately 30% of font size).
+    fn rich_text(&self, pos: Point2d, align: Align2, spans: &[TextSpan]);
 }

@@ -2,8 +2,11 @@
 // Table Object Tags
 // =======================
 
+
+// In the document, this is 0x8016. But actual Table objects seem to use 0x802B (probably?)
 /// Table object (0x8016)
 pub const CDXOBJ_TABLE: u16 = 0x8016;
+// pub const CDXOBJ_TABLE: u16 = 0x8023;
 
 // =======================
 // Property Tags
