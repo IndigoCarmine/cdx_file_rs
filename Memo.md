@@ -1,7 +1,7 @@
 解析の結果
-0x8022 = stoichiometrygrid
+<!-- 0x8022 = stoichiometrygrid
     512 = position Point2D
-    10 = 不明 Raw [133, 0]
+    10 = 不明 Raw [133, 0] -->
 0x8023 = sgcomponent
     2066 = Width?
     4611 = ComponentIsReactant bool?
