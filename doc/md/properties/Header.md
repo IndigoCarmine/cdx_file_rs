@@ -1,4 +1,3 @@
-CDX Format Specification: Header Property
 ## Header Property
 
 | CDXML Name: | Header |
@@ -10,7 +9,7 @@ CDX Format Specification: Header Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The text of the header.
 
@@ -27,7 +26,7 @@ In addition to the raw text, the following special sequences may be used:
 | &c | Text that follows should be centered |
 | &l | Text that follows should be left-justified |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The document has no header.
 

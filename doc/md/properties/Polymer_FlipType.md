@@ -1,4 +1,3 @@
-CDX Format Specification: Polymer_FlipType Property
 ## Polymer_FlipType Property
 
 | CDXML Name: | PolymerFlipType |
@@ -10,7 +9,7 @@ CDX Format Specification: Polymer_FlipType Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The flip state of objects contained within the bracket.
 
@@ -26,7 +25,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 1 | NoFlip | The orientation of the repeating unit does not change between adjacent units |
 | 2 | Flip | The orientation of the repeating unit does change between adjacent units |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The flip type is treated as Unspecified.
 

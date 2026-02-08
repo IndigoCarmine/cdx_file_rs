@@ -1,4 +1,3 @@
-CDX Format Specification: HeaderPosition Property
 ## HeaderPosition Property
 
 | CDXML Name: | HeaderPosition |
@@ -10,11 +9,11 @@ CDX Format Specification: HeaderPosition Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The vertical offset of the header baseline from the top of the page.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The header is not offset at all from the top of the page.
 

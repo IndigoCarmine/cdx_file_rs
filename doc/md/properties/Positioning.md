@@ -1,4 +1,3 @@
-CDX Format Specification: Positioning Property
 ## Positioning Property
 
 | CDXML Name: | PositioningType |
@@ -10,11 +9,11 @@ CDX Format Specification: Positioning Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 How the object should be positioned with respect to its containing object.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -23,7 +22,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 2 | offset | Indicator is positioned by a specified offset (requires[kCDXProp_PositioningOffset](PositioningOffset.md)) |
 | 3 | absolute | Indicator is positioned by a specified offset from the top-left of the page (requires[kCDXProp_PositioningOffset](PositioningOffset.md)) |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The object is positioned automatically.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Oval_Type Property
 ## Oval_Type Property
 
 | CDXML Name: | OvalType |
@@ -10,7 +9,7 @@ CDX Format Specification: Oval_Type Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of an arrow object that represents a circle or ellipse.
 
@@ -27,7 +26,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 16 | Bold | Bold |
 | 32 | Shadowed | Shadowed |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The oval is treated as plain
 

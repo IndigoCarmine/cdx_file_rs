@@ -1,4 +1,3 @@
-CDX Format Specification: FractionalWidths Property
 ## FractionalWidths Property
 
 | CDXML Name: | FractionalWidths |
@@ -10,13 +9,13 @@ CDX Format Specification: FractionalWidths Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Signifies whether to use fractional width information when drawing text.
 
 This is useful only on Macintosh computers.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 Fractional widths are not used
 

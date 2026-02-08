@@ -1,4 +1,3 @@
-CDX Format Specification: Named Alternative Group Object
 ## Named Alternative Group Object
 
 | CDXML Name: | altgroup |

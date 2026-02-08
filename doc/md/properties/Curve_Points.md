@@ -1,4 +1,3 @@
-CDX Format Specification: Curve_Points Property
 ## Curve_Points Property
 
 | CDXML Name: | CurvePoints |
@@ -10,7 +9,7 @@ CDX Format Specification: Curve_Points Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for curves |
 
-**Description:**  
+**Description:**
 
 The Bézier curve's control point locations.
 

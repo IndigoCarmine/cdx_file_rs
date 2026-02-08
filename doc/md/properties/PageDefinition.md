@@ -1,4 +1,3 @@
-CDX Format Specification: PageDefinition Property
 ## PageDefinition Property
 
 | CDXML Name: | PageDefinition |
@@ -10,13 +9,13 @@ CDX Format Specification: PageDefinition Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 A description of the type of formatting used by the page, or by the splitter.
 
 This property is used only for a custom build created for one specific corporation, and not read or written by any public release of ChemDraw.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -32,7 +31,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 9 | MulticolumnNonTL4 |  |
 | 10 | UserDefined |  |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The Page Definition is treated as Undefined.
 

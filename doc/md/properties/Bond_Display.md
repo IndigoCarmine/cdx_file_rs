@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_Display Property
 ## Bond_Display Property
 
 | CDXML Name: | Display |
@@ -10,15 +9,15 @@ CDX Format Specification: Bond_Display Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The display type of a bond object.
 
-ChemDraw does not support all display values (unsupport values are provided for future compatibility). For single bonds, all but Dot and DashDot are supported. For double bonds, Solid, Dash, and Bold are supported, and Wavy is treated as a double-either (crossed) bond. For triple and quadruple bonds, only Solid is supported.
+ChemDraw does not support all display values (unsupported values are provided for future compatibility). For single bonds, all but Dot and DashDot are supported. For double bonds, Solid, Dash, and Bold are supported, and Wavy is treated as a double-either (crossed) bond. For triple and quadruple bonds, only Solid is supported.
 
 See also [kCDXProp_Bond_Display2](Bond_Display2.md).
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -38,7 +37,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 13 | Dot | Dotted bond |
 | 14 | DashDot | Dashed-and-dotted bond |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bond is treated as Solid. Additionally, any unsupported type will also be treated as Solid.
 

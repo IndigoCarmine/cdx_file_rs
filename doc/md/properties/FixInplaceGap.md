@@ -1,4 +1,3 @@
-CDX Format Specification: FixInplaceGap Property
 ## FixInplaceGap Property
 
 | CDXML Name: | FixInPlaceGap |
@@ -10,7 +9,7 @@ CDX Format Specification: FixInplaceGap Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Defines a padding for OLE In-Place editing.
 
@@ -18,7 +17,7 @@ When OLE In-Place editing is activated, the host application has the option of i
 
 This property is meaningful only in an OLE In-Place editing environment. It is not expected that other applications would read or write this value in CDX files. See also the [kCDXProp_FixInPlaceExtent](FixInPlaceExtent.md) property.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The document will behave as if there is no padding between the right and bottom edges of the contained objects and the right and bottom edges of the OLE frame.
 

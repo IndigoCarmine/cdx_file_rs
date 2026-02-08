@@ -1,4 +1,3 @@
-CDX Format Specification: Registry Number Object
 ## Registry Number Object
 
 | CDXML Name: | regnum |
@@ -8,16 +7,17 @@ CDX Format Specification: Registry Number Object
 | Contained by objects: |  |
 | First written/read in: | (not written/read) |
 
-**Description:**  
+**Description:**
 
 A Registry Number represents a registry or catalog number, along with the name of the authority which issued the number.
 
 The Number and Authority properties are required, but there are no required objects.
 
-**Subobjects:**  
+**Subobjects:**
+
 *(none)*
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |

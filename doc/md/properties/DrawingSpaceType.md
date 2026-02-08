@@ -1,4 +1,3 @@
-CDX Format Specification: DrawingSpaceType Property
 ## DrawingSpaceType Property
 
 | CDXML Name: | DrawingSpace |
@@ -10,18 +9,18 @@ CDX Format Specification: DrawingSpaceType Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of drawing space used for this document.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
 | 0 | Pages | Pages |
 | 1 | Poster | Poster |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The drawing space is measured in Pages.
 

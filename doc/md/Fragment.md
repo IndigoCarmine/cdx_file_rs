@@ -1,4 +1,3 @@
-CDX Format Specification: Fragment Object
 ## Fragment Object
 
 | CDXML Name: | fragment |
@@ -8,7 +7,7 @@ CDX Format Specification: Fragment Object
 | Contained by objects: | [kCDXObj_Page](Page.md),[kCDXObj_Group](Group.md),[kCDXObj_Node](Node.md),[kCDXObj_NamedAlternativeGroup](NamedAltGroup.md) |
 | First written/read in: | ChemDraw 4.0 |
 
-**Description:**  
+**Description:**
 
 Fragment object is a collection of nodes and their connectivity (bonds). Generally, all nodes within a fragment will be connected, but this is not strictly guaranteed. For example, a cyclopentadienyl anion might be represented as a single fragment containing five nodes, five bonds, a curve (an ellipse, to represent delocalization), and a graphic (a circled minus charge, to represent the delocalized charge).
 
@@ -16,7 +15,7 @@ Unlike with [Group](Group.md) objects, Fragment objects are guaranteed to be che
 
 A Fragment has no required objects or properties, but a Fragment without any objects is pretty useless.
 
-**Subobjects:**  
+**Subobjects:**
 
 | Value | Name | CDXML Name |  |
 | --- | --- | --- | --- |
@@ -31,7 +30,7 @@ A Fragment has no required objects or properties, but a Fragment without any obj
 | 0x8011 | [kCDXObj_ObjectTag](ObjectTag.md) | objecttag |  |
 |  | Arbitrarily named property, one or more of which can be attached to any ChemDraw object. |  |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |

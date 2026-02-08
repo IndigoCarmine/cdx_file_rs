@@ -1,4 +1,3 @@
-CDX Format Specification: PositioningOffset Property
 ## PositioningOffset Property
 
 | CDXML Name: | PositioningOffset |
@@ -10,15 +9,15 @@ CDX Format Specification: PositioningOffset Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Offset positioning.
 
-This object should be positioned at a given offset from the relevent point (usually the center) of its containing object (for [kCDXProp_Positioning](Positioning.md) = kCDXPositioningType_Offset) or from the top left of the page (for [kCDXProp_Positioning](Positioning.md) = kCDXPositioningType_Absolute).
+This object should be positioned at a given offset from the relevant point (usually the center) of its containing object (for [kCDXProp_Positioning](Positioning.md) = kCDXPositioningType_Offset) or from the top left of the page (for [kCDXProp_Positioning](Positioning.md) = kCDXPositioningType_Absolute).
 
-**If this property is absent:**  
+**If this property is absent:**
 
-This object will be positioned with zero offset from the relevent point of its containing object (that is, at the center of the object).
+This object will be positioned with zero offset from the relevant point of its containing object (that is, at the center of the object).
 
 ---
 

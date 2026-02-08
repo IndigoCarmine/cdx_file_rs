@@ -1,4 +1,3 @@
-CDX Format Specification: CrossReference_Sequence Property
 ## CrossReference_Sequence Property
 
 | CDXML Name: | CrossReferenceSequence |
@@ -10,7 +9,7 @@ CDX Format Specification: CrossReference_Sequence Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | Required for cross-references. |
 
-**Description:**  
+**Description:**
 
 A value matching the SequenceIdentifier of the Sequence object to be referenced.
 

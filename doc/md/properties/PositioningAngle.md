@@ -1,4 +1,3 @@
-CDX Format Specification: PositioningAngle Property
 ## PositioningAngle Property
 
 | CDXML Name: | PositioningAngle |
@@ -10,13 +9,13 @@ CDX Format Specification: PositioningAngle Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Angular positioning, in degrees * 65536.
 
 This object should be positioned along a vector at the appropriate angle, with the zero-degree position being the positive X axis and increasing clockwise.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This object will be positioned at the zero degree position (that is, directly to the right of its containing object)
 

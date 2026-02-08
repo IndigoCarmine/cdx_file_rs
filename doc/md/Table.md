@@ -1,4 +1,3 @@
-CDX Format Specification: Table Object
 ## Table Object
 
 | CDXML Name: | table |
@@ -8,11 +7,11 @@ CDX Format Specification: Table Object
 | Contained by objects: | [kCDXObj_Page](Page.md) |
 | First written/read in: | ChemDraw 7.0 |
 
-**Description:**  
+**Description:**
 
-Each cell within a Table is stored as an individual [Page](Page.md) object. In ChemDraw 7.0, there are expected to be exactly (rows * colums) number of contained pages, stored rowwise from the top-left. The bounds of the table may be calculated from the union of the [kCDXProp_BoundsInParent](properties/BoundsInParent.md) properties of each contained page, and the positions of each row and column may be derived similarly by looking at the edges of those properties.
+Each cell within a Table is stored as an individual [Page](Page.md) object. In ChemDraw 7.0, there are expected to be exactly (rows * columns) number of contained pages, stored rowwise from the top-left. The bounds of the table may be calculated from the union of the [kCDXProp_BoundsInParent](properties/BoundsInParent.md) properties of each contained page, and the positions of each row and column may be derived similarly by looking at the edges of those properties.
 
-**Subobjects:**  
+**Subobjects:**
 
 | Value | Name | CDXML Name |  |
 | --- | --- | --- | --- |
@@ -21,7 +20,7 @@ Each cell within a Table is stored as an individual [Page](Page.md) object. In C
 | 0x8011 | [kCDXObj_ObjectTag](ObjectTag.md) | objecttag |  |
 |  | Arbitrarily named property, one or more of which can be attached to any ChemDraw object. |  |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |

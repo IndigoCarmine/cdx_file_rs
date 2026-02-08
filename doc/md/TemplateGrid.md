@@ -1,4 +1,3 @@
-CDX Format Specification: Template Grid Object
 ## Template Grid Object
 
 | CDXML Name: | templategrid |
@@ -10,7 +9,7 @@ CDX Format Specification: Template Grid Object
 
 **Description:**  
 
-A TemplateGrid is a thumbnail view of multiple CDX page objects in a grid. If a CDX document object has a TemplateGrid object, then the document has the template grid view associated with it when viewed in ChemDraw. The document must also contain exactly Template_NumRows * Template_NumColumns number of page objects, although some pages might be empty.
+A TemplateGrid is a thumbnail view of multiple CDX page objects in a grid. If a CDX document object has a TemplateGrid object, then the document has the template grid view associated with it when viewed in ChemDraw. The document must also contain exactly `Template_NumRows` * `Template_NumColumns` number of page objects, although some pages might be empty.
 
 Since this object is used only for template documents, it will be encountered only rarely.
 
@@ -26,13 +25,13 @@ In versions of ChemDraw prior to 8.0, TemplateGrid objects with IDs other than z
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |
 | 0x0202 | [kCDXProp_2DExtent](properties/2DExtent.md) | extent | [CDXPoint2D](DataType/CDXCoordinates.md) |
-|  | Required for templategrids.The width and height of an object in CDX coordinate units. The precise meaning of this attribute varies depending on the type of object. |  |  |
+|  | Required for templategrids. The width and height of an object in CDX coordinate units. The precise meaning of this attribute varies depending on the type of object. |  |  |
 | 0x1000 | [kCDXProp_Template_PaneHeight](properties/Template_PaneHeight.md) | PaneHeight | [CDXCoordinate](DataType/CDXCoordinates.md) |
-|  | Required for templategrids.The height of the viewing window of a template grid. |  |  |
+|  | Required for templategrids. The height of the viewing window of a template grid. |  |  |
 | 0x1001 | [kCDXProp_Template_NumRows](properties/Template_NumRows.md) | NumRows | [INT16](DataType/CDXNumeric.md) |
-|  | Required for templategrids.The number of rows of the CDX TemplateGrid object. |  |  |
+|  | Required for templategrids. The number of rows of the CDX TemplateGrid object. |  |  |
 | 0x1002 | [kCDXProp_Template_NumColumns](properties/Template_NumColumns.md) | NumColumns | [INT16](DataType/CDXNumeric.md) |
-|  | Required for templategrids.The number of columns of the CDX TemplateGrid object. |  |  |
+|  | Required for templategrids. The number of columns of the CDX TemplateGrid object. |  |  |
 
 ---
 

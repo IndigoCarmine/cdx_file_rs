@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket_RepeatCount Property
 ## Bracket_RepeatCount Property
 
 | CDXML Name: | RepeatCount |
@@ -10,19 +9,19 @@ CDX Format Specification: Bracket_RepeatCount Property
 | First written/read in: | ChemDraw 7.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The number of times a multiple-group BracketedGroup is repeated.
 
 The Repeat Count should be a positive number. Non-positive and non-numeric Repeat Counts have no meaning.
 
-Although fractional Repeat Counts are allowed, it is recommended that integral values be used whereever possible for maximum compatibility.
+Although fractional Repeat Counts are allowed, it is recommended that integral values be used wherever possible for maximum compatibility.
 
-This property is relevent only for objects with a [kCDXProp_Bracket_Usage](Bracket_Usage.md) of kCDXBracketUsage_MultipleGroup.
+This property is relevant only for objects with a [kCDXProp_Bracket_Usage](Bracket_Usage.md) of kCDXBracketUsage_MultipleGroup.
 
-**If this property is absent:**  
+**If this property is absent:**
 
-The bracketed objects are arbitrarily assumed to repeat twice. Since this guess is strictly arbitrary, it is strongly recommended that this property not be omitted from relevent objects.
+The bracketed objects are arbitrarily assumed to repeat twice. Since this guess is strictly arbitrary, it is strongly recommended that this property not be omitted from relevant objects.
 
 ---
 

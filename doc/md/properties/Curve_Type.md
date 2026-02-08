@@ -1,4 +1,3 @@
-CDX Format Specification: Curve_Type Property
 ## Curve_Type Property
 
 | CDXML Name: | CurveType |
@@ -10,7 +9,7 @@ CDX Format Specification: Curve_Type Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of curve object.
 
@@ -32,7 +31,7 @@ This is a bit-encoded property. The values shown in the following list may be co
 | 0x0200 | 512 | Doubled |
 | 0x0000 | 0 | Plain |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The curve is treated as Plain.
 

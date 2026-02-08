@@ -1,4 +1,3 @@
-CDX Format Specification: CaptionStyleColor Property
 ## CaptionStyleColor Property
 
 | CDXML Name: | CaptionColor |
@@ -10,13 +9,13 @@ CDX Format Specification: CaptionStyleColor Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The default color for captions (non-atom-label text objects).
 
 Generally, this property is used to provide a default font color for chemically-*in*significant text.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

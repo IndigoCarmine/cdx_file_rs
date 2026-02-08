@@ -1,4 +1,3 @@
-CDX Format Specification: FontTable Property
 ## FontTable Property
 
 | CDXML Name: | fonttable |
@@ -10,7 +9,7 @@ CDX Format Specification: FontTable Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required if fonts are used |
 
-**Description:**  
+**Description:**
 
 A list of fonts used in the document.
 

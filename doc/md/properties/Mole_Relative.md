@@ -1,4 +1,3 @@
-CDX Format Specification: Mole_Relative Property
 ## Mole_Relative Property
 
 | CDXML Name: | Relative |
@@ -10,11 +9,11 @@ CDX Format Specification: Mole_Relative Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates that the molecule has known relative stereochemistry, but unknown absolute configuration.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

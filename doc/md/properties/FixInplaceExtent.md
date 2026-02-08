@@ -1,4 +1,3 @@
-CDX Format Specification: FixInplaceExtent Property
 ## FixInplaceExtent Property
 
 | CDXML Name: | FixInPlaceExtent |
@@ -20,7 +19,7 @@ This property is meaningful only in an OLE In-Place editing environment. It is n
 
 **If this property is absent:**  
 
-The document will behave as if it has no external constrants imposed on the size of the in-place active area.
+The document will behave as if it has no external constraints imposed on the size of the in-place active area.
 
 ---
 

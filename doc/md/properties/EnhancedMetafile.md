@@ -1,4 +1,3 @@
-CDX Format Specification: EnhancedMetafile Property
 ## EnhancedMetafile Property
 
 | CDXML Name: | EnhancedMetafile |

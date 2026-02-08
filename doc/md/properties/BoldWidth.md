@@ -1,4 +1,3 @@
-CDX Format Specification: BoldWidth Property
 ## BoldWidth Property
 
 | CDXML Name: | BoldWidth |
@@ -10,7 +9,7 @@ CDX Format Specification: BoldWidth Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Until ChemDraw 4.5 |
 
-**Description:**  
+**Description:**
 
 The default bold bond width.
 
@@ -24,7 +23,7 @@ Generally, this property is used to provide a default distance value. ChemDraw u
 - Line thickness in bold curves
 - Spacing between the two lines in doubled curves
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20190327001253/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet.
 

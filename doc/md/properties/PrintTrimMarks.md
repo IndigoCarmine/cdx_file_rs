@@ -1,4 +1,3 @@
-CDX Format Specification: PrintTrimMarks Property
 ## PrintTrimMarks Property
 
 | CDXML Name: | PrintTrimMarks |
@@ -10,11 +9,11 @@ CDX Format Specification: PrintTrimMarks Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-If present, trim marks are to printed in the margins.
+If present, trim marks are to be printed in the margins.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 Trim marks are not printed.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: LabelStyleColor Property
 ## LabelStyleColor Property
 
 | CDXML Name: | LabelColor |
@@ -10,13 +9,13 @@ CDX Format Specification: LabelStyleColor Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The default color for atom labels
 
 Generally, this property is used to provide a default font color for chemically-significant text.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

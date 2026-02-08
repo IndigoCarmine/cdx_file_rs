@@ -1,4 +1,3 @@
-CDX Format Specification: ObjectTag_Value Property
 ## ObjectTag_Value Property
 
 | CDXML Name: | Value |
@@ -10,11 +9,11 @@ CDX Format Specification: ObjectTag_Value Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-The value is a INT32, FLOAT64 or unformatted string depending on the value of ObjectTag_Type.
+The value is a INT32, FLOAT64, or unformatted string depending on the value of ObjectTag_Type.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value will be treated as zero.
 

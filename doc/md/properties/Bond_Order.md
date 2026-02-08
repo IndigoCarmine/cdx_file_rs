@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_Order Property
 ## Bond_Order Property
 
 | CDXML Name: | Order |
@@ -10,11 +9,11 @@ CDX Format Specification: Bond_Order Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The order of a bond object.
 
-Dative and Ionic bonds are specified with the [Bond_Begin](Bond_Begin.md) as the positive end (e.g. the N in pyridine N-oxide). Hydrogen bonds are specified with Bond_Begin as the hydrogen. Three center bonds are specified with two Bond objects, each with Bond_Begin as the center atom.
+Dative and Ionic bonds are specified with the [Bond_Begin](Bond_Begin.md) as the positive end (e.g., the N in pyridine N-oxide). Hydrogen bonds are specified with Bond_Begin as the hydrogen. Three center bonds are specified with two Bond objects, each with Bond_Begin as the center atom.
 
 Bond order values may be combined. For example, a value of 3 would represent a "single or double" bond, which is useful for substructure queries.
 
@@ -42,7 +41,7 @@ This is a bit-encoded property. The values shown in the following list may be co
 | 0x4000 | hydrogen | Hydrogen bond |
 | 0x8000 | threecenter | Three-center-bond (in boranes, for example) |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bond is treated as a single bond.
 

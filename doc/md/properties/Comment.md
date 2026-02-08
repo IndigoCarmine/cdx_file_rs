@@ -1,4 +1,3 @@
-CDX Format Specification: Comment Property
 ## Comment Property
 
 | CDXML Name: | Comment |
@@ -10,11 +9,11 @@ CDX Format Specification: Comment Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 An arbitrary string intended to be meaningful to a user.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The comment is treated as empty ("")
 

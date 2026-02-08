@@ -1,4 +1,3 @@
-CDX Format Specification: CreationUserName Property
 ## CreationUserName Property
 
 | CDXML Name: | CreationUserName |
@@ -10,11 +9,11 @@ CDX Format Specification: CreationUserName Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The name of the creator (program user's name) of the document.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

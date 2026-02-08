@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_Display2 Property
 ## Bond_Display2 Property
 
 | CDXML Name: | Display2 |
@@ -10,15 +9,15 @@ CDX Format Specification: Bond_Display2 Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The display type for the second line of a double bond.
 
-ChemDraw supports only Dashed types for the second line of a double bond (unsupport values are provided for future compatibility).
+ChemDraw supports only Dashed types for the second line of a double bond (unsupported values are provided for future compatibility).
 
 See also [kCDXProp_Bond_Display](Bond_Display.md).
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -38,7 +37,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 13 | Dot | Dotted bond |
 | 14 | DashDot | Dashed-and-dotted bond |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The second line of a double bond is treated as the same as the first line. Additionally, any unsupported type will also be treated as Solid.
 

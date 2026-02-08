@@ -1,4 +1,3 @@
-CDX Format Specification: Footer Property
 ## Footer Property
 
 | CDXML Name: | Footer |
@@ -10,7 +9,7 @@ CDX Format Specification: Footer Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The text of the footer.
 
@@ -27,7 +26,7 @@ In addition to the raw text, the following special sequences may be used:
 | &c | Text that follows should be centered |
 | &l | Text that follows should be left-justified |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The document has no footer
 

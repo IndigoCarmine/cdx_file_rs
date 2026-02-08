@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_EndAttach Property
 ## Bond_EndAttach Property
 
 | CDXML Name: | EndAttach |
@@ -10,7 +9,7 @@ CDX Format Specification: Bond_EndAttach Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates where within the Bond_End node a bond is attached.
 
@@ -18,7 +17,7 @@ The value stored is the zero-based character offset from the beginning of the te
 
 See also [kCDXProp_Bond_BeginAttach](Bond_BeginAttach.md).
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bond is assumed to be attached to the first character in the label.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: FooterPosition Property
 ## FooterPosition Property
 
 | CDXML Name: | FooterPosition |
@@ -10,11 +9,11 @@ CDX Format Specification: FooterPosition Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The vertical offset of the footer baseline from the bottom of the page.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The footer is not offset at all from the top of the page.
 

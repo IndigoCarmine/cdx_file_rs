@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_Begin Property
 ## Bond_Begin Property
 
 | CDXML Name: | B |
@@ -10,7 +9,7 @@ CDX Format Specification: Bond_Begin Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for bonds |
 
-**Description:**  
+**Description:**
 
 The ID of the CDX node object at the first end of a bond.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_End Property
 ## Bond_End Property
 
 | CDXML Name: | E |
@@ -10,7 +9,7 @@ CDX Format Specification: Bond_End Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for bonds |
 
-**Description:**  
+**Description:**
 
 The ID of the CDX node object at the second end of a bond.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: HashSpacing Property
 ## HashSpacing Property
 
 | CDXML Name: | HashSpacing |
@@ -10,7 +9,7 @@ CDX Format Specification: HashSpacing Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Until ChemDraw 4.5 |
 
-**Description:**  
+**Description:**
 
 The default spacing between hashed lines used in wedged hashed bonds.
 
@@ -20,7 +19,7 @@ Generally, this property is used to provide a default value for spacing between 
 - Spacing between dashes in dashed bonds
 - Spacing between dashes in dashed curves
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20160912015812/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet.
 

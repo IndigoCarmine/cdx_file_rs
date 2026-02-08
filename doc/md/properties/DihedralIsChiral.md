@@ -1,4 +1,3 @@
-CDX Format Specification: DihedralIsChiral Property
 ## DihedralIsChiral Property
 
 | CDXML Name: | DihedralIsChiral |
@@ -10,13 +9,13 @@ CDX Format Specification: DihedralIsChiral Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Signifies whether a dihedral is signed or unsigned.
 
 This property is meaningful only for constraints that define a dihedral angle.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The dihedral may be of either sign.
 

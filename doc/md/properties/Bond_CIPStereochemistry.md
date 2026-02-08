@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_CIPStereochemistry Property
 ## Bond_CIPStereochemistry Property
 
 | CDXML Name: | BS |
@@ -10,7 +9,7 @@ CDX Format Specification: Bond_CIPStereochemistry Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The bond's absolute stereochemistry according to the Cahn-Ingold-Prelog system.
 
@@ -33,7 +32,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 2 | E | Asymmetric: (E) |
 | 3 | Z | Asymmetric: (Z) |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bond is treated as having Undetermined stereochemistry.
 

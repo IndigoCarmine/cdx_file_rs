@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_RestrictRxnParticipation Property
 ## Bond_RestrictRxnParticipation Property
 
 | CDXML Name: | RxnParticipation |
@@ -10,13 +9,13 @@ CDX Format Specification: Bond_RestrictRxnParticipation Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Specifies that a bond is affected by a reaction.
 
 The value stored in this property corresponds to the Reacting Center Status property.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -29,7 +28,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 6 | NoChange | Bond does not change in course of reaction, but it is part of the reacting center |
 | 7 | Unmapped | The structure was partially mapped, but the reaction involvement of this bond was not determined |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The reaction participation is treated as Unspecified.
 

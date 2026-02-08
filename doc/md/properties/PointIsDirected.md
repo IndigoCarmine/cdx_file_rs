@@ -1,4 +1,3 @@
-CDX Format Specification: PointIsDirected Property
 ## PointIsDirected Property
 
 | CDXML Name: | PointIsDirected |
@@ -10,11 +9,11 @@ CDX Format Specification: PointIsDirected Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 For a point based on a normal, signifies whether it is in a specific direction relative to the reference point.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The point may be in either direction relative to the reference point.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: LineStarts Property
 ## LineStarts Property
 
 | CDXML Name: | LineStarts |
@@ -10,11 +9,11 @@ CDX Format Specification: LineStarts Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The number of lines of a text object followed by that many values indicating the zero-based text position of each line start.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The line starts are inferred solely from the presence of end-of-line (0x0D) characters in the text.
 
