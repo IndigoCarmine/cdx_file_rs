@@ -49,10 +49,10 @@ impl TaggedObject for TextObject {
                 let bottom = cursor.read_i32::<LittleEndian>().ok()?;
                 let right = cursor.read_i32::<LittleEndian>().ok()?;
                 Some(Rectangle {
-                    top: top.into(),
-                    left: left.into(),
-                    bottom: bottom.into(),
-                    right: right.into(),
+                    top: top as f64 / 65536.0,
+                    left: left as f64 / 65536.0,
+                    bottom: bottom as f64 / 65536.0,
+                    right: right as f64 / 65536.0,
                 })
             } else {
                 None

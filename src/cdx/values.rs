@@ -47,6 +47,43 @@ pub struct Rectangle {
     pub right: f64,
 }
 
+impl Rectangle {
+    pub fn zero() -> Self {
+        Self {
+            top: 0.0,
+            left: 0.0,
+            bottom: 0.0,
+            right: 0.0,
+        }
+    }
+    pub fn from_point(p: &Point2d) -> Self {
+        Self {
+            top: p.y,
+            left: p.x,
+            bottom: p.y,
+            right: p.x,
+        }
+    }
+
+    pub fn from_points(p1: &Point2d, p2: &Point2d) -> Self {
+        Self {
+            top: p1.y.min(p2.y),
+            left: p1.x.min(p2.x),
+            bottom: p1.y.max(p2.y),
+            right: p1.x.max(p2.x),
+        }
+    }
+
+    pub fn union(&self, other: &Self) -> Self {
+        Self {
+            top: self.top.min(other.top),
+            left: self.left.min(other.left),
+            bottom: self.bottom.max(other.bottom),
+            right: self.right.max(other.right),
+        }
+    }
+}
+
 /// Font style run for CDXString
 /// An 8-byte struct describing font styling for a range of text
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]

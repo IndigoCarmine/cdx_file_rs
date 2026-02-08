@@ -37,3 +37,6 @@ pub mod tlc_spot;
 pub mod unknown;
 pub mod values;
 pub mod annotation;
+pub mod seg_datum;
+pub mod segcomponent;
+pub mod stoichiometrygrid;

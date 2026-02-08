@@ -1,13 +1,16 @@
+use super::backend::{
+    AbstractPainter, Align2 as BackendAlign2, Color as BackendColor, Point2d as BackendPoint2d,
+};
+use super::egui_backend::EguiBackend;
 use crate::cdx::color_table::RGBColor;
 use crate::cdx::document::Document;
 use crate::cdx::file::CdxFile;
 use crate::cdx::file::NodePayload;
-use crate::cdx::values::Point2d as CdxPoint2d;
+use crate::cdx::values::{Point2d as CdxPoint2d, Rectangle};
+
 use dendron::Node;
 use eframe::egui::{self, Color32, Painter, Pos2};
 use std::collections::HashMap;
-use super::backend::{AbstractPainter, Color as BackendColor, Point2d as BackendPoint2d, Align2 as BackendAlign2, FontId as BackendFontId};
-use super::egui_backend::EguiBackend;
 
 #[derive(Clone)]
 pub struct RenderStyle {
@@ -47,11 +50,19 @@ impl Default for RenderStyle {
 /// coordinate origin, and Document defaults (font, color, etc.).
 pub trait Drawable {
     fn draw<P: AbstractPainter>(&self, ctx: &RenderContext<P>);
-    
+
     /// Draw with access to the tree node (for objects that need child access)
     /// Default implementation calls draw() for backward compatibility
-    fn draw_with_node<P: AbstractPainter>(&self, ctx: &RenderContext<P>, _node: &Node<NodePayload>) {
+    fn draw_with_node<P: AbstractPainter>(
+        &self,
+        ctx: &RenderContext<P>,
+        _node: &Node<NodePayload>,
+    ) {
         self.draw(ctx);
+    }
+
+    fn get_bounding_box(&self) -> Option<Rectangle> {
+        None
     }
 }
 
@@ -69,11 +80,19 @@ macro_rules! define_node_renderer {
 
                 }
             }
-            
+
             pub fn draw_with_node<P: $crate::renderer::backend::AbstractPainter>(&self, ctx: &$crate::renderer::RenderContext<P>, node: &dendron::Node<NodePayload>) {
                 match self {
                     $(
                         NodePayload::$ty(inner) => inner.draw_with_node(ctx, node),
+                    )*
+                }
+            }
+
+            pub fn get_bounding_box(&self) -> Option<Rectangle> {
+                match self {
+                    $(
+                        NodePayload::$ty(inner) => inner.get_bounding_box(),
                     )*
                 }
             }
@@ -120,6 +139,9 @@ define_node_renderer!(
     UnknownObject801D,
     UnknownObject801E,
     UnknownObject801F,
+    StoichiometryGrid,
+    SegComponent,
+    SegDatum,
 );
 
 /// High-level CDX renderer with zoom, offset
@@ -178,7 +200,7 @@ impl RGBColor {
             (self.blue * 255.0) as u8,
         )
     }
-    
+
     pub fn to_backend_color(&self) -> BackendColor {
         BackendColor::from_rgb(
             (self.red * 255.0) as u8,
@@ -260,15 +282,19 @@ impl<'a> CdxRenderer<'a> {
         self.render(root, &ctx);
     }
 
-    fn render<P: AbstractPainter>(&self, root: Node<crate::cdx::file::NodePayload>, ctx: &RenderContext<P>) {
+    fn render<P: AbstractPainter>(
+        &self,
+        root: Node<crate::cdx::file::NodePayload>,
+        ctx: &RenderContext<P>,
+    ) {
         let data = root.borrow_data();
-        
+
         // Draw the current object with its parent's context and node reference
         // Using draw_with_node allows objects like Table to access their children for grid rendering
         data.draw_with_node(ctx, &root);
-        
-        // Check if this object defines a coordinate offset for its children
-        // Currently only Page objects with BoundsInParent need this
+
+        // // Check if this object defines a coordinate offset for its children
+        // // Currently only Page objects with BoundsInParent need this
         let child_ctx; // Declare outside to avoid lifetime issues
         let ctx_ref: &RenderContext<P> = if let NodePayload::Page(page) = &*data {
             if let Some(bounds) = &page.bounds_in_parent {
@@ -285,7 +311,7 @@ impl<'a> CdxRenderer<'a> {
         } else {
             ctx
         };
-        
+
         // Render children with potentially modified context
         for child in root.children() {
             self.render(child, ctx_ref);
@@ -453,7 +479,7 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     }
 
     /// Create a child rendering context with an additional offset
-    /// 
+    ///
     /// This method creates a new RenderContext for child objects with accumulated parent offsets.
     /// Used for parent-child coordinate propagation in container objects (e.g., BoundsInParent for Pages).
     ///
@@ -497,16 +523,16 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     }
 
     /// Convert CDX coordinates to screen coordinates
-    /// 
+    ///
     /// This method performs a complete coordinate transformation using the two-level scaling system:
-    /// 
+    ///
     /// ## Transformation Steps
     /// 1. Apply parent offset to CDX position (for relative positioning in parent containers)
     ///    - adjusted_pos = cdx_pos + parent_offset
     /// 2. Scale by combined zoom factor
     ///    - scale = zoom * auto_scale
     /// 3. Translate by origin (window-relative positioning)
-    /// 
+    ///
     /// Note: CDX uses the same Y-axis direction as screen coordinates (Y increases downward).
     ///
     /// ## Formula
@@ -536,6 +562,47 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         )
     }
 
+    pub fn accumulate_children_bounding_box(&self, node: &Node<NodePayload>) -> Option<Rectangle> {
+        let mut bbox: Option<Rectangle> = None;
+
+        for child in node.children() {
+            let child_bbox = child.borrow_data().get_bounding_box();
+            if let Some(child_bbox_inner) = child_bbox {
+                if let Some(bbox_inner) = bbox {
+                    bbox = Some(bbox_inner.union(&child_bbox_inner));
+                } else {
+                    bbox = Some(child_bbox_inner);
+                }
+            }
+
+            let inner_bbox = self.accumulate_children_bounding_box(&child);
+            if let Some(inner_bbox_inner) = inner_bbox {
+                if let Some(bbox_inner) = bbox {
+                    bbox = Some(bbox_inner.union(&inner_bbox_inner));
+                } else {
+                    bbox = Some(inner_bbox_inner);
+                }
+            }
+        }
+        bbox
+    }
+
+    /// Convert CDX Rectangle to screen Rect
+    pub fn cdx_rect_to_screen(&self, rect: &Rectangle) -> crate::renderer::backend::Rect {
+        let top_left = CdxPoint2d {
+            x: rect.left,
+            y: rect.top,
+        };
+        let bottom_right = CdxPoint2d {
+            x: rect.right,
+            y: rect.bottom,
+        };
+        crate::renderer::backend::Rect::from_two_pos(
+            self.cdx_to_screen(&top_left),
+            self.cdx_to_screen(&bottom_right),
+        )
+    }
+
     /// Convert CDX length to screen length (pixels)
     pub fn cdx_length_to_screen(&self, cdx_length: f64) -> f32 {
         (cdx_length as f32) * self.zoom * self.auto_scale
@@ -558,7 +625,8 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         let scale = self.zoom * self.auto_scale;
         let scaled_size = size * scale;
         let span = TextSpan::new(text.to_string(), scaled_size, color);
-        self.painter.rich_text(pos, BackendAlign2::CENTER_CENTER, &[span]);
+        self.painter
+            .rich_text(pos, BackendAlign2::CENTER_CENTER, &[span]);
     }
 
     /// Draw text at specified position with custom alignment
@@ -595,7 +663,11 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     }
 
     /// Resolve a possibly signed color index; negatives fallback
-    pub fn resolve_color_i16(&self, color_index: Option<i16>, default: BackendColor) -> BackendColor {
+    pub fn resolve_color_i16(
+        &self,
+        color_index: Option<i16>,
+        default: BackendColor,
+    ) -> BackendColor {
         match color_index {
             Some(idx) if idx >= 0 => self.resolve_color(Some(idx as u16), default),
             _ => default,
@@ -677,6 +749,28 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
                 .unwrap_or(BackendColor::BLACK),
             None => BackendColor::BLACK,
         }
+    }
+
+    pub fn default_stroke(&self) -> super::backend::Stroke {
+        use super::backend::Stroke;
+        let width = self.cdx_length_to_screen(self.default_line_width());
+        Stroke::new(width, self.default_foreground_color())
+    }
+
+    pub fn default_align(&self) -> super::backend::Align2 {
+        super::backend::Align2::CENTER_CENTER
+    }
+
+    pub fn default_font(&self) -> super::backend::FontId {
+        use super::backend::{FontFamily, FontId};
+        FontId::new(
+            self.default_label_size() * self.zoom * self.auto_scale,
+            FontFamily::Proportional,
+        )
+    }
+
+    pub fn default_color(&self) -> super::backend::Color {
+        self.default_foreground_color()
     }
 }
 

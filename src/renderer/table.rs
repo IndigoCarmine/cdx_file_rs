@@ -1,17 +1,21 @@
 use crate::cdx::file::NodePayload;
 use crate::cdx::table::Table;
-use crate::cdx::values::Point2d;
+use crate::cdx::values::{Point2d, Rectangle};
 use crate::renderer::{Drawable, RenderContext};
+
 use dendron::Node;
 use std::collections::HashSet;
 
 impl Drawable for Table {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &crate::renderer::RenderContext<P>,
+    ) {
         // Table outer box drawing - use bounding_box if available
         // If not, we rely on draw_with_node to calculate from children
         if let Some(bbox) = &self.bounding_box {
             use crate::renderer::backend::Rect;
-            
+
             let stroke = self.get_stroke(ctx);
 
             let top_left = ctx.cdx_to_screen(&Point2d {
@@ -23,15 +27,19 @@ impl Drawable for Table {
                 y: bbox.bottom,
             });
             let rect = Rect::from_min_max(top_left, bottom_right);
-            
+
             ctx.painter.rect_stroke(rect, 0.0, stroke);
         }
     }
-    
-    fn draw_with_node<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>, node: &Node<NodePayload>) {
+
+    fn draw_with_node<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &RenderContext<P>,
+        node: &Node<NodePayload>,
+    ) {
         // Collect all cell positions from descendant TextObjects
         let cell_positions = self.collect_cell_positions(node);
-        
+
         if cell_positions.is_empty() {
             // No cells found, just draw outer box if available
             self.draw(ctx);
@@ -39,7 +47,7 @@ impl Drawable for Table {
         }
 
         let stroke = self.get_stroke(ctx);
-        
+
         // Collect unique x and y coordinates for grid lines
         // Use i64 bits for precise HashSet comparison
         let mut x_coords: HashSet<i64> = HashSet::new();
@@ -51,8 +59,14 @@ impl Drawable for Table {
         }
 
         // Convert back to f64 and sort
-        let mut x_sorted: Vec<f64> = x_coords.iter().map(|&bits| f64::from_bits(bits as u64)).collect();
-        let mut y_sorted: Vec<f64> = y_coords.iter().map(|&bits| f64::from_bits(bits as u64)).collect();
+        let mut x_sorted: Vec<f64> = x_coords
+            .iter()
+            .map(|&bits| f64::from_bits(bits as u64))
+            .collect();
+        let mut y_sorted: Vec<f64> = y_coords
+            .iter()
+            .map(|&bits| f64::from_bits(bits as u64))
+            .collect();
         x_sorted.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
         y_sorted.sort_by(|a, b| a.partial_cmp(b).unwrap_or(std::cmp::Ordering::Equal));
 
@@ -73,7 +87,7 @@ impl Drawable for Table {
         } else {
             15.0 // default row height
         };
-        
+
         let col_width = if x_sorted.len() >= 2 {
             x_sorted[1] - x_sorted[0]
         } else {
@@ -83,7 +97,7 @@ impl Drawable for Table {
         // Grid boundaries with padding
         let padding_x = col_width * 0.5;
         let padding_y = row_height * 0.6;
-        
+
         let x_min = *x_sorted.first().unwrap() - padding_x;
         let x_max = *x_sorted.last().unwrap() + padding_x;
         let y_min = *y_sorted.first().unwrap() - padding_y;
@@ -116,29 +130,46 @@ impl Drawable for Table {
         row_boundaries.push(y_max); // bottom edge
 
         // Draw vertical column lines (skip first and last as they're part of outer rect)
-        for &x in col_boundaries.iter().skip(1).take(col_boundaries.len().saturating_sub(2)) {
+        for &x in col_boundaries
+            .iter()
+            .skip(1)
+            .take(col_boundaries.len().saturating_sub(2))
+        {
             let top = ctx.cdx_to_screen(&Point2d { x, y: y_min });
             let bottom = ctx.cdx_to_screen(&Point2d { x, y: y_max });
             ctx.painter.line_segment(top, bottom, stroke);
         }
 
         // Draw horizontal row lines (skip first and last as they're part of outer rect)
-        for &y in row_boundaries.iter().skip(1).take(row_boundaries.len().saturating_sub(2)) {
+        for &y in row_boundaries
+            .iter()
+            .skip(1)
+            .take(row_boundaries.len().saturating_sub(2))
+        {
             let left = ctx.cdx_to_screen(&Point2d { x: x_min, y });
             let right = ctx.cdx_to_screen(&Point2d { x: x_max, y });
             ctx.painter.line_segment(left, right, stroke);
         }
     }
+    fn get_bounding_box(&self) -> Option<Rectangle> {
+        self.bounding_box.clone()
+    }
 }
 
 impl Table {
     /// Get the stroke width for this table
-    fn get_line_width<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> f64 {
+    fn get_line_width<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &RenderContext<P>,
+    ) -> f64 {
         self.line_width.unwrap_or_else(|| ctx.default_line_width())
     }
-    
+
     /// Get the stroke color for this table
-    fn get_color<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> crate::renderer::backend::Color {
+    fn get_color<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &RenderContext<P>,
+    ) -> crate::renderer::backend::Color {
         if let Some(color_idx) = self.foreground_color {
             ctx.document
                 .get_color_table()
@@ -149,18 +180,21 @@ impl Table {
             ctx.default_foreground_color()
         }
     }
-    
+
     /// Get the stroke for drawing table lines
-    fn get_stroke<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) -> crate::renderer::backend::Stroke {
+    fn get_stroke<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &RenderContext<P>,
+    ) -> crate::renderer::backend::Stroke {
         use crate::renderer::backend::Stroke;
-        
+
         let line_width = self.get_line_width(ctx);
         let scale = ctx.zoom * ctx.auto_scale;
         let stroke_width = (line_width * scale as f64) as f32;
         let color = self.get_color(ctx);
         Stroke::new(stroke_width, color)
     }
-    
+
     /// Collect positions from all descendant TextObjects
     /// This is used to determine grid structure for stoichiometrygrid
     fn collect_cell_positions(&self, table_node: &Node<NodePayload>) -> Vec<Point2d> {
@@ -168,19 +202,19 @@ impl Table {
         self.collect_positions_recursive(table_node, &mut positions);
         positions
     }
-    
+
     /// Recursively collect TextObject positions from all descendants
     fn collect_positions_recursive(&self, node: &Node<NodePayload>, positions: &mut Vec<Point2d>) {
         for child in node.children() {
             let child_data = child.borrow_data();
-            
+
             // Extract position from TextObject
             if let NodePayload::TextObject(text) = &*child_data {
                 if let Some(pos) = &text.position_2d {
                     positions.push(pos.clone());
                 }
             }
-            
+
             // Recurse into children
             drop(child_data);
             self.collect_positions_recursive(&child, positions);

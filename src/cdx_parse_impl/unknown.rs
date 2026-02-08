@@ -4,7 +4,7 @@ use crate::error::CdxError;
 
 use crate::cdx::unknown::*;
 
-macro_rules!   generate_tagged_object_impl {
+macro_rules! generate_tagged_object_impl {
     ( $name:ident, $tag:expr ) => {
         impl TaggedObject for $name {
             const TAG: u16 = $tag;
@@ -40,14 +40,10 @@ macro_rules!   generate_tagged_object_impl {
                 })
             }
         }
-    }
+    };
 }
 
-
-
-
-//off
-generate_tagged_object_impl!(UnknownObject801D, 0x8024);
-generate_tagged_object_impl!(UnknownObject802B, 0x8023);
-generate_tagged_object_impl!(UnknownObject801E, 0x8022);
-generate_tagged_object_impl!(UnknownObject801F, 0xFFFF);
+generate_tagged_object_impl!(UnknownObject801D, 0x801D);
+generate_tagged_object_impl!(UnknownObject802B, 0x802B);
+generate_tagged_object_impl!(UnknownObject801E, 0x801E);
+generate_tagged_object_impl!(UnknownObject801F, 0x801F);

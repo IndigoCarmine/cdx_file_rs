@@ -1,0 +1,6 @@
+// Object tag
+pub const CDXOBJ_SEGCOMPONENT: u16 = 0x8023;
+// Property tags
+pub const CDXPROP_SEGCOMPONENT_WIDTH: u16 = 2066; // 0x0812
+pub const CDXPROP_SEGCOMPONENT_IS_REACTANT: u16 = 4611; // 0x1203
+pub const CDXPROP_SEGCOMPONENT_IS_HEADER: u16 = 4612; // 0x1204

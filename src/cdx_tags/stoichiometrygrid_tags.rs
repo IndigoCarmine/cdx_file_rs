@@ -1,0 +1,6 @@
+// Object tag
+pub const CDXOBJ_STOICHIOMETRYGRID: u16 = 0x8022;
+
+// Property tags
+pub const CDXPROP_STOICHIOMETRYGRID_POSITION: u16 = 0x0200; // CDXPoint2D
+pub const CDXPROP_STOICHIOMETRYGRID_RAW: u16 = 0x000A; // Raw data

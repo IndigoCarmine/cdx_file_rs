@@ -1,9 +1,15 @@
 use crate::cdx::arrow::Arrow;
 use crate::cdx::values::{Point2d as CdxPoint2d, Point3d, Rectangle};
-use crate::renderer::{Drawable, RenderContext, backend::{Color, Point2d as BackendPoint2d, Stroke}};
+use crate::renderer::{
+    Drawable, RenderContext,
+    backend::{Color, Point2d as BackendPoint2d, Stroke},
+};
 
 impl Drawable for Arrow {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &crate::renderer::RenderContext<P>,
+    ) {
         // Draw arrow based on 3D head and tail positions
         // If 3D coordinates exist, project them to 2D using z as depth
 
@@ -53,9 +59,19 @@ impl Drawable for Arrow {
             );
         }
     }
+
+    fn get_bounding_box(&self) -> Option<Rectangle> {
+        self.bounding_box.clone()
+    }
 }
 
-fn draw_arrowhead<P: crate::renderer::backend::AbstractPainter>(ctx: &crate::renderer::RenderContext<P>, tip: BackendPoint2d, tail: BackendPoint2d, stroke: Stroke, size: f32) {
+fn draw_arrowhead<P: crate::renderer::backend::AbstractPainter>(
+    ctx: &crate::renderer::RenderContext<P>,
+    tip: BackendPoint2d,
+    tail: BackendPoint2d,
+    stroke: Stroke,
+    size: f32,
+) {
     let dx = tip.x - tail.x;
     let dy = tip.y - tail.y;
     let len = (dx * dx + dy * dy).sqrt();

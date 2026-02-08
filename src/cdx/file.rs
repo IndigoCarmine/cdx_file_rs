@@ -3,6 +3,7 @@ use std::collections::HashSet;
 
 use crate::error::CdxError;
 
+pub use super::annotation::Annotation;
 pub use super::arrow::Arrow;
 pub use super::bond::Bond;
 pub use super::border::Border;
@@ -27,16 +28,18 @@ pub use super::page::Page;
 pub use super::reaction_scheme::ReactionScheme;
 pub use super::reaction_step::ReactionStep;
 pub use super::registry_number::RegistryNumber;
+pub use super::seg_datum::SegDatum;
+pub use super::segcomponent::SegComponent;
 pub use super::sequence::Sequence;
 pub use super::spectrum::Spectrum;
 pub use super::splitter::Splitter;
+pub use super::stoichiometrygrid::StoichiometryGrid;
 pub use super::table::Table;
 pub use super::template_grid::TemplateGrid;
 pub use super::text::TextObject;
 pub use super::tlc_lane::TlcLane;
 pub use super::tlc_plate::TLCPlate;
 pub use super::tlc_spot::TLCSpot;
-pub use super::annotation::Annotation;
 pub use super::unknown::*;
 
 macro_rules! extract_id {
@@ -48,7 +51,7 @@ macro_rules! extract_id {
             NodePayload::BracketAttachment(n) => Some(n.id),
             NodePayload::BracketedGroup(n) => Some(n.id),
             NodePayload::ChemicalProperty(n) => Some(n.id),
-            NodePayload::ColorTable(_) => None,  // ColorTable has no id field
+            NodePayload::ColorTable(_) => None, // ColorTable has no id field
             NodePayload::Constraint(n) => Some(n.id),
             NodePayload::CrossReference(n) => Some(n.id),
             NodePayload::CrossingBond(n) => Some(n.id),
@@ -76,15 +79,16 @@ macro_rules! extract_id {
             NodePayload::TLCPlate(n) => Some(n.id),
             NodePayload::TLCSpot(n) => Some(n.id),
             NodePayload::Annotation(n) => Some(n.id),
+            NodePayload::StoichiometryGrid(n) => Some(n.id),
+            NodePayload::SegComponent(n) => Some(n.id),
+            NodePayload::SegDatum(n) => Some(n.id),
             NodePayload::UnknownObject802B(n) => Some(n.id),
             NodePayload::UnknownObject801D(n) => Some(n.id),
             NodePayload::UnknownObject801E(n) => Some(n.id),
             NodePayload::UnknownObject801F(n) => Some(n.id),
-
         }
     };
 }
-
 
 pub struct CdxFile {
     pub tree: Tree<NodePayload>,
@@ -117,18 +121,18 @@ impl CdxFile {
     /// Generate the next unique ID by finding the maximum ID in the tree and adding 1
     pub fn next_id(&self) -> u32 {
         let mut max_id = 0u32;
-        
+
         // Traverse all nodes to find the maximum ID
         let mut queue = vec![self.tree.root()];
         while let Some(node) = queue.pop() {
             let node_id = extract_id!(&*node.borrow_data()).unwrap_or(0);
             max_id = max_id.max(node_id);
-            
+
             for child in node.children() {
                 queue.push(child);
             }
         }
-        
+
         max_id + 1
     }
 
@@ -137,11 +141,11 @@ impl CdxFile {
         let mut queue = vec![self.tree.root()];
         while let Some(node) = queue.pop() {
             let node_id = extract_id!(&*node.borrow_data()).unwrap_or(0);
-            
+
             if node_id == target_id {
                 return Some(node);
             }
-            
+
             for child in node.children() {
                 queue.push(child);
             }
@@ -204,14 +208,12 @@ impl CdxFile {
 
         // First pass: collect all selected nodes and their ancestors
         while let Some(node) = queue.pop() {
-
-
             let node_id = extract_id!(&*node.borrow_data());
 
             if let Some(id) = node_id {
                 if selected_ids.contains(&id) {
                     nodes_to_include.insert(id);
-                    
+
                     // Mark all ancestors as needed
                     let mut current = node.clone();
                     while let Some(parent) = current.parent() {
@@ -239,12 +241,7 @@ impl CdxFile {
             .grant_hierarchy_edit()
             .map_err(|_| CdxError::Parse("Failed to get tree edit grant".to_string()))?;
 
-        self.copy_subtree_filtered(
-            &new_root,
-            &new_tree_root,
-            &grant,
-            &nodes_to_include,
-        );
+        self.copy_subtree_filtered(&new_root, &new_tree_root, &grant, &nodes_to_include);
 
         Ok(CdxFile {
             tree: new_tree_root.tree().clone(),
@@ -318,7 +315,10 @@ define_node_payload!(
     TLCSpot,
     UnknownObject802B,
     UnknownObject801D,
+    SegComponent,
+    SegDatum,
     UnknownObject801E,
     UnknownObject801F,
     Annotation,
+    StoichiometryGrid,
 );

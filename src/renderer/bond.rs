@@ -1,4 +1,5 @@
 use crate::cdx::bond::Bond;
+use crate::cdx::values::Rectangle;
 use crate::renderer::{
     Drawable, RenderContext,
     backend::{Point2d as BackendPoint2d, Stroke},
@@ -84,7 +85,7 @@ impl Drawable for Bond {
                         BackendPoint2d::new(p2.x - ox, p2.y - oy),
                     )
                 }
-                1 => {
+                2 => {
                     // Right: center line + one line on the right side
                     let offset = spacing_screen;
                     let ox = nx * offset;
@@ -96,7 +97,7 @@ impl Drawable for Bond {
                         BackendPoint2d::new(p2.x + ox, p2.y + oy),
                     )
                 }
-                2 => {
+                1 => {
                     // Left: center line + one line on the left side
                     let offset = spacing_screen;
                     let ox = nx * offset;
@@ -138,5 +139,11 @@ impl Drawable for Bond {
             _ctx.painter.line_segment(a1, a2, stroke);
             _ctx.painter.line_segment(b1, b2, stroke);
         }
+    }
+
+    fn get_bounding_box(&self) -> Option<Rectangle> {
+        // I should calculate the bounding box of the bond. But I cannot ref node position here.
+        // I will implement it later.
+        None
     }
 }

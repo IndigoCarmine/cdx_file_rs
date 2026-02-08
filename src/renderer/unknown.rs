@@ -1,7 +1,6 @@
 use crate::cdx::unknown::*;
 use crate::renderer::{Drawable, RenderContext};
 
-
 macro_rules! generate_render {
     ( $name:ident ) => {
         impl Drawable for $name {
@@ -11,7 +10,6 @@ macro_rules! generate_render {
         }
     };
 }
-
 
 generate_render!(UnknownObject801D);
 generate_render!(UnknownObject802B);

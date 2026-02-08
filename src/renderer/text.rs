@@ -1,10 +1,13 @@
 use crate::cdx::text::TextObject;
-use crate::cdx::values::CDXStyleRun;
-use crate::renderer::{Drawable, RenderContext};
+use crate::cdx::values::{CDXStyleRun, Rectangle};
 use crate::renderer::backend::{Align2, TextSpan, TextStyle};
+use crate::renderer::{Drawable, RenderContext};
 
 impl Drawable for TextObject {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &crate::renderer::RenderContext<P>,
+    ) {
         // Check visibility
         if let Some(false) = self.visible {
             return;
@@ -53,6 +56,9 @@ impl Drawable for TextObject {
             // Render text with style runs using rich_text
             self.draw_styled_text(ctx, text_str, style_runs, screen_pos, base_align);
         }
+    }
+    fn get_bounding_box(&self) -> Option<Rectangle> {
+        self.bounding_box.clone()
     }
 }
 
@@ -144,8 +150,8 @@ impl TextObject {
         text: &str,
         style_runs: &[CDXStyleRun],
     ) -> f32 {
-        use crate::renderer::backend::{FontId, FontFamily};
-        
+        use crate::renderer::backend::{FontFamily, FontId};
+
         if style_runs.is_empty() {
             return 0.0;
         }
@@ -182,8 +188,7 @@ impl TextObject {
 
             let font_id = FontId::new(adjusted_font_size, FontFamily::Proportional);
 
-            let color =
-                ctx.resolve_color(Some(run.color_index), ctx.default_caption_color());
+            let color = ctx.resolve_color(Some(run.color_index), ctx.default_caption_color());
 
             let galley = ctx.painter.layout_no_wrap(segment, font_id, color);
             total_width += galley.size.0;

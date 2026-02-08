@@ -17,8 +17,7 @@ macro_rules! generate_unknown_xxx_struct {
     };
 }
 
-
-generate_unknown_xxx_struct!(UnknownObject801D, 0x801D);
-generate_unknown_xxx_struct!(UnknownObject802B, 0x802B);
-generate_unknown_xxx_struct!(UnknownObject801E, 0x801E);
-generate_unknown_xxx_struct!(UnknownObject801F, 0x801F);
+generate_unknown_xxx_struct!(UnknownObject801D, 0xFFFF);
+generate_unknown_xxx_struct!(UnknownObject802B, 0xFFFF);
+generate_unknown_xxx_struct!(UnknownObject801E, 0xFFFF);
+generate_unknown_xxx_struct!(UnknownObject801F, 0xFFFF);

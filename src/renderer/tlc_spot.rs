@@ -2,7 +2,10 @@ use crate::cdx::tlc_spot::TLCSpot;
 use crate::renderer::{Drawable, RenderContext};
 
 impl Drawable for TLCSpot {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, _ctx: &crate::renderer::RenderContext<P>) {
+    fn draw<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        _ctx: &crate::renderer::RenderContext<P>,
+    ) {
         // TLCSpot represents a spot on a TLC plate
         // TODO: Implement TLC spot rendering based on position and RF value
         // Typically rendered as a circle or ellipse at the appropriate position

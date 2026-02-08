@@ -1,6 +1,7 @@
 //! CDX Parsing Implementation Module
 //! Contains the binary encoding/decoding logic for CDX data structures
 
+pub mod annotation;
 pub mod arrow;
 pub mod bond;
 pub mod border;
@@ -30,9 +31,12 @@ pub mod reaction_scheme;
 pub mod reaction_step;
 pub mod reader;
 pub mod registry_number;
+pub mod segcomponent;
+pub mod segment_datum;
 pub mod sequence;
 pub mod spectrum;
 pub mod splitter;
+pub mod stoichiometrygrid;
 pub mod table;
 pub mod tagged_object;
 pub mod template_grid;
@@ -42,4 +46,3 @@ pub mod tlc_plate;
 pub mod tlc_spot;
 pub mod unknown;
 pub mod writer;
-pub mod annotation;

@@ -6,7 +6,6 @@
 // pub const CDXOBJ_TLC_LANE: u16 = 0x8024; // kCDXObj_TLCLane: Lane within a TLC plate.
 pub const CDXOBJ_TLC_LANE: u16 = 0x801E; // kCDXObj_TLCLane: Lane within a TLC plate.
 
-
 // =======================
 // TLC Lane Subobjects
 // =======================

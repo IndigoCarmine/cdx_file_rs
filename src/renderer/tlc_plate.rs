@@ -1,9 +1,10 @@
 use crate::cdx::tlc_plate::TLCPlate;
-use crate::renderer::core::Drawable;
-use crate::renderer::core::RenderContext;
+use crate::cdx::values::Rectangle;
+use crate::renderer::backend::AbstractPainter;
+use crate::renderer::{Drawable, RenderContext};
 
 impl Drawable for TLCPlate {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
+    fn draw<P: AbstractPainter>(&self, ctx: &RenderContext<P>) {
         use crate::cdx::values::Point2d;
         use crate::renderer::backend::{Point2d as BackendPoint2d, Stroke};
 
@@ -17,13 +18,27 @@ impl Drawable for TLCPlate {
             &self.bottom_right,
             &self.bottom_left,
         ) {
-            (Some(tl), Some(tr), Some(br), Some(bl)) => (tl.clone(), tr.clone(), br.clone(), bl.clone()),
+            (Some(tl), Some(tr), Some(br), Some(bl)) => {
+                (tl.clone(), tr.clone(), br.clone(), bl.clone())
+            }
             _ => match &self.bounding_box {
                 Some(bbox) => (
-                    Point2d { x: bbox.left, y: bbox.top },
-                    Point2d { x: bbox.right, y: bbox.top },
-                    Point2d { x: bbox.right, y: bbox.bottom },
-                    Point2d { x: bbox.left, y: bbox.bottom },
+                    Point2d {
+                        x: bbox.left,
+                        y: bbox.top,
+                    },
+                    Point2d {
+                        x: bbox.right,
+                        y: bbox.top,
+                    },
+                    Point2d {
+                        x: bbox.right,
+                        y: bbox.bottom,
+                    },
+                    Point2d {
+                        x: bbox.left,
+                        y: bbox.bottom,
+                    },
                 ),
                 None => return,
             },
@@ -59,7 +74,8 @@ impl Drawable for TLCPlate {
                 if (0.0..=1.0).contains(&fraction) {
                     let left = lerp(&bottom_left, &top_left, fraction);
                     let right = lerp(&bottom_right, &top_right, fraction);
-                    ctx.painter.line_segment(to_screen(&left), to_screen(&right), stroke);
+                    ctx.painter
+                        .line_segment(to_screen(&left), to_screen(&right), stroke);
                 }
             }
         }
@@ -69,9 +85,14 @@ impl Drawable for TLCPlate {
                 if (0.0..=1.0).contains(&fraction) {
                     let left = lerp(&top_left, &bottom_left, fraction);
                     let right = lerp(&top_right, &bottom_right, fraction);
-                    ctx.painter.line_segment(to_screen(&left), to_screen(&right), stroke);
+                    ctx.painter
+                        .line_segment(to_screen(&left), to_screen(&right), stroke);
                 }
             }
         }
+    }
+
+    fn get_bounding_box(&self) -> Option<Rectangle> {
+        self.bounding_box.clone()
     }
 }

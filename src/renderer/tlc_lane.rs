@@ -1,7 +1,7 @@
 use crate::cdx::tlc_lane::TlcLane;
-use crate::renderer::core::Drawable;
-use crate::renderer::core::RenderContext;
+use crate::renderer::backend::AbstractPainter;
+use crate::renderer::{Drawable, RenderContext};
 
 impl Drawable for TlcLane {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, _ctx: &crate::renderer::RenderContext<P>) {}
+    fn draw<P: AbstractPainter>(&self, _ctx: &RenderContext<P>) {}
 }

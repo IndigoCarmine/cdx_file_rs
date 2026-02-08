@@ -1,4 +1,7 @@
 use cdx_file_rs::cdx::file::CdxFile;
+use cdx_file_rs::cdx::text::TextObject;
+use cdx_file_rs::cdx_parse_impl::tagged_object::TaggedObject;
+use cdx_file_rs::cdx_parse_impl::text;
 use std::fs;
 
 #[test]
@@ -19,57 +22,25 @@ fn debug_raw_cdx() {
             println!("  Children: {}", raw_doc.children.len());
 
             // Find Graphic with id=89
-            find_and_print_graphic(&raw_doc);
+            print_raw_cdx(&raw_doc, 0);
         }
         Err(e) => println!("✗ Parse error: {}", e),
     }
 }
 
-fn find_and_print_graphic(obj: &cdx_file_rs::cdx_parse_impl::raw_nodes::RawCdxObject) {
-    if obj.id == 89 {
-        println!("\n=== Found Graphic (id=89) ===");
-        println!("Tag: 0x{:04x}", obj.tag);
-        println!("Properties ({} total):", obj.properties.len());
-
-        for (i, prop) in obj.properties.iter().enumerate() {
-            println!(
-                "  [{}] Tag=0x{:04x}, Value length={} bytes",
-                i,
-                prop.tag,
-                prop.value.len()
-            );
-
-            // Show hex for first 40 bytes of each property
-            let display_len = std::cmp::min(40, prop.value.len());
-            let hex_str = prop.value[..display_len]
-                .iter()
-                .map(|b| format!("{:02x}", b))
-                .collect::<Vec<_>>()
-                .join(" ");
-            println!("      Data: {}", hex_str);
-
-            // Try to identify common tags
-            match prop.tag {
-                0x0A00 => println!("      -> GraphicType"),
-                0x0A02 => println!("      -> ArrowType"),
-                0x000A => println!("      -> ZOrder"),
-                0x0204 => println!("      -> BoundingBox (should be 4 * f64 = 32 bytes)"),
-                0x0207 => println!("      -> Head3D (should be 3 * f64 = 24 bytes)"),
-                0x0208 => println!("      -> Tail3D (should be 3 * f64 = 24 bytes)"),
-                0x0807 => println!("      -> LineWidth (should be f64 = 8 bytes)"),
-                0x0301 => println!("      -> ForegroundColor (should be u16 = 2 bytes)"),
-                _ => {}
-            }
+fn print_raw_cdx(obj: &cdx_file_rs::cdx_parse_impl::raw_nodes::RawCdxObject, indent: usize) {
+    if obj.tag == 0x8006 {
+        println!("#Tag: 0x{:04x}", obj.tag);
+        println!("ID: {}", obj.id);
+        println!("##Properties:");
+        for prop in &obj.properties {
+            println!("  Tag: 0x{:04x}, Value: {:?}", prop.tag, prop.value);
         }
-
-        println!("Children: {}", obj.children.len());
-        for child in &obj.children {
-            println!("  Child: Tag=0x{:04x}, ID={}", child.tag, child.id);
-        }
+        let text = TextObject::from_raw(obj.clone()).unwrap();
+        println!("##Text: {:#?}", text);
     }
-
-    // Recurse
+    println!("## Children:");
     for child in &obj.children {
-        find_and_print_graphic(child);
+        print_raw_cdx(child, indent + 2);
     }
 }
