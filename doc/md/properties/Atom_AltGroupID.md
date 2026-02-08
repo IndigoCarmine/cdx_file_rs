@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_AltGroupID Property
 ## Atom_AltGroupID Property
 
 | CDXML Name: | AltGroupID |
@@ -10,13 +9,13 @@ CDX Format Specification: Atom_AltGroupID Property
 | First written/read in: | ChemDraw 4.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The ID of the alternative group object that describes this node.
 
-**If this property is absent:**  
+**If this property is absent:**
 
-This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
+This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it. This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 
 ---
 

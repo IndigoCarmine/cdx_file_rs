@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_AtomNumber Property
 ## Atom_AtomNumber Property
 
 | CDXML Name: | AtomNumber |
@@ -10,13 +9,13 @@ CDX Format Specification: Atom_AtomNumber Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Atom number, as text.
 
 ChemDraw is extremely flexible in what it allows for atom numbers: any string is valid, and this property is not limited to numeric values. For example, not only is "2" a valid atom number, but so are 2', 2a, b, and b'.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node does not have an atom number.
 

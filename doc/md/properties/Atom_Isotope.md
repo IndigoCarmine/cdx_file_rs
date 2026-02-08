@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_Isotope Property
 ## Atom_Isotope Property
 
 | CDXML Name: | Isotope |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_Isotope Property
 | First written/read in: | ChemDraw 4.0 / 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The absolute isotopic mass of an atom (2 for deuterium, 14 for carbon-14).
 
@@ -18,7 +17,7 @@ A value of zero indicates natural abundance.
 
 This property is meaningful only for nodes with a [kCDXProp_Node_Type](Node_Type.md) of type Element.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The atom is assumed to be of natural abundance.
 

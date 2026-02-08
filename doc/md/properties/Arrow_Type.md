@@ -1,4 +1,3 @@
-CDX Format Specification: Arrow_Type Property
 ## Arrow_Type Property
 
 | CDXML Name: | ArrowType |
@@ -10,7 +9,7 @@ CDX Format Specification: Arrow_Type Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of arrow object, which represents line, arrow, arc, rectangle, or orbital.
 
@@ -30,7 +29,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 64 | NoGo | Failed reaction (crossed-out arrow); may be combined with other types |
 | 128 | Dipole | Dipole |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The arrow is treated as headless.
 

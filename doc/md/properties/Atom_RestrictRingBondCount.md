@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_RestrictRingBondCount Property
 ## Atom_RestrictRingBondCount Property
 
 | CDXML Name: | RingBondCount |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_RestrictRingBondCount Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The number of ring bonds attached to an atom.
 
@@ -18,7 +17,7 @@ If posed as a structure query in some database, this atom should not match only 
 
 The value stored in this property exactly corresponds to the Ring Bond Count property in ISIS.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -29,7 +28,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 3 | Fusion | Exactly 3 ring bonds |
 | 4 | SpiroOrHigher | 4 or more ring bonds |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The number of ring bonds is unspecified.
 

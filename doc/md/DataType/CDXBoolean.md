@@ -1,4 +1,3 @@
-CDX Format Specification: CDX Boolean Data Types
 ## CDX Boolean Data Types
 
 ### CDXBoolean:

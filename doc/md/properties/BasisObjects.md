@@ -1,4 +1,3 @@
-CDX Format Specification: BasisObjects Property
 ## BasisObjects Property
 
 | CDXML Name: | BasisObjects |
@@ -10,11 +9,11 @@ CDX Format Specification: BasisObjects Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | Required for geometries and constraints |
 
-**Description:**  
+**Description:**
 
 An ordered list of objects used to define this object.
 
-The ordering of the objects may or may not actually be relevent. For example, if the objects consist of three points that define a best-fit plane, the ordering does not matter.
+The ordering of the objects may or may not actually be relevant. For example, if the objects consist of three points that define a best-fit plane, the ordering does not matter.
 
 ---
 

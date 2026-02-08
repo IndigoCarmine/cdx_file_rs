@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_Formula Property
 ## Atom_Formula Property
 
 | CDXML Name: | Formula |
@@ -10,13 +9,13 @@ CDX Format Specification: Atom_Formula Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The composition of a node representing a fragment whose composition is known, but whose connectivity is not. For example, C4H9 represents a mixture of the 4 butyl isomers.
 
 It consists of a series of pairs of UINT16s. Each pair represents an element and a count, for example, 6, 4, 1, 9 for C4H9.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

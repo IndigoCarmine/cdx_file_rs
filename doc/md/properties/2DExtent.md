@@ -1,4 +1,3 @@
-CDX Format Specification: 2DExtent Property
 ## 2DExtent Property
 
 | CDXML Name: | extent |
@@ -10,7 +9,7 @@ CDX Format Specification: 2DExtent Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for templategrids |
 
-**Description:**  
+**Description:**
 
 The width and height of an object in CDX coordinate units. The precise meaning of this attribute varies depending on the type of object.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_RestrictUnsaturatedBonds Property
 ## Atom_RestrictUnsaturatedBonds Property
 
 | CDXML Name: | UnsaturatedBonds |
@@ -10,15 +9,15 @@ CDX Format Specification: Atom_RestrictUnsaturatedBonds Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates whether unsaturation should be present or absent.
 
-For this and similar attributes, it is the responsibility of the reader to deal with conflicting values (for example, an atom attached to a double bond, but which has an "unsaturation must be absent" attribute) gracefully and not to cause failure to read entire document although the writer has the first-hand responsibility to provide valid information.
+For this and similar attributes, it is the responsibility of the reader to deal with conflicting values (for example, an atom attached to a double bond, but which has an "unsaturation must be absent" attribute) gracefully and not to cause failure to read entire document, although the writer has the first-hand responsibility to provide valid information.
 
 The value stored in this property corresponds to the Unsaturated Atom property in ISIS, with the addition of an Unspecified value.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -26,7 +25,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 1 | MustBeAbsent | Node must not have any unsaturated bonds |
 | 2 | MustBePresent | Node must have at least one unsaturated bond |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 Node may or may not be unsaturated.
 

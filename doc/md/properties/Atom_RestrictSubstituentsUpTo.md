@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_RestrictSubstituentsUpTo Property
 ## Atom_RestrictSubstituentsUpTo Property
 
 | CDXML Name: | SubstituentsUpTo |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_RestrictSubstituentsUpTo Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates that substitution is restricted to no more than the specified value.
 
@@ -18,7 +17,7 @@ A substituent is defined as some other non-hydrogen node bonded to this one. It 
 
 Note that it is possible to assign impossible values, for example by saying that one of the atoms in benzene has no more than one substituent (when it already has two, by nature of being part of the benzene ring). Impossibilities of that sort are not forbidden by this specification, but it is assumed that such a structure would match nothing else if posed as a structure query in some database.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as unrestricted in terms of substitution.
 

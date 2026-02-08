@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_CIPStereochemistry Property
 ## Atom_CIPStereochemistry Property
 
 | CDXML Name: | AS |
@@ -10,11 +9,11 @@ CDX Format Specification: Atom_CIPStereochemistry Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The node's absolute stereochemistry according to the Cahn-Ingold-Prelog system.
 
-ChemDraw will preserve any value present in a file without confirming its accuracy -- as long as the structure is not edited in ChemDraw. Any change to a structure has the potential of changing its stereochemical descriptors, and so ChemDraw will recalculate the structure's chemistry after any change. As a practical matter, we are very confident about the accuracy of ChemDraw's calculation of stereochemical descriptors, so this behavior should rarely cause problems.
+ChemDraw will preserve any value present in a file without confirming its accuracy—as long as the structure is not edited in ChemDraw. Any change to a structure has the potential of changing its stereochemical descriptors, and so ChemDraw will recalculate the structure's chemistry after any change. As a practical matter, we are very confident about the accuracy of ChemDraw's calculation of stereochemical descriptors, so this behavior should rarely cause problems.
 
 The Cahn-Ingold-Prelog system for describing absolute stereochemistry is defined in the following references:
 
@@ -36,7 +35,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 5 | s | Pseudoasymmetric: (s) |
 | 6 | u | Unspecified: The node is not symmetric (might be asymmetric or pseudoasymmetric), but lacks a hash/wedge so absolute configuration cannot be determined |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as having Undetermined stereochemistry.
 

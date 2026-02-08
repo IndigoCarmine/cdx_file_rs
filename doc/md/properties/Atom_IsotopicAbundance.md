@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_IsotopicAbundance Property
 ## Atom_IsotopicAbundance Property
 
 | CDXML Name: | IsotopicAbundance |
@@ -10,11 +9,11 @@ CDX Format Specification: Atom_IsotopicAbundance Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Isotopic abundance of this atom's isotope.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -25,9 +24,9 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 4 | Deficient | Node is deficient in the specified isotope. Not valid unless the node also has a specific isotopy |
 | 5 | Nonnatural | Node has a non-natural abundance of the specified isotope (may be either enriched or deficient). Not valid when the node also has a specific isotopy |
 
-**If this property is absent:**  
+**If this property is absent:**
 
-The node is treated as having Unspecified isotopic abundance..
+The node is treated as having Unspecified isotopic abundance.
 
 ---
 

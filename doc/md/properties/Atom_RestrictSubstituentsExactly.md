@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_RestrictSubstituentsExactly Property
 ## Atom_RestrictSubstituentsExactly Property
 
 | CDXML Name: | SubstituentsExactly |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_RestrictSubstituentsExactly Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates that exactly the specified number of substituents must be present.
 
@@ -20,7 +19,7 @@ Note that it is possible to assign impossible values, for example by saying that
 
 The value stored in this property exactly matches the value stored in ISIS's Substitution Count property, with the exception that ISIS accepts a maximum value of 6.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as unrestricted in terms of substitution.
 

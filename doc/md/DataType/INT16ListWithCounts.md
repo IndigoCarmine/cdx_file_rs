@@ -1,4 +1,3 @@
-CDX Format Specification: INT16 List With Counts Data Type
 ## INT16 List With Counts Data Type
 
 This data type consists of a series of [UINT16](CDXNumeric.md) values.

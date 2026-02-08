@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_EnhancedStereoType Property
 ## Atom_EnhancedStereoType Property
 
 | CDXML Name: | EnhancedStereoType |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_EnhancedStereoType Property
 | First written/read in: | ChemDraw 10.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of enhanced stereochemistry present on this atom.
 
@@ -23,10 +22,10 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 0 | Unspecified | Unspecified |
 | 1 | None | None |
 | 2 | Absolute | Absolute |
-| 3 | Or | Or (requires[kCDXProp_Atom_EnhancedStereoGroupNum](Atom_EnhancedStereoGroupNum.md)) |
-| 4 | And | And (requires[kCDXProp_Atom_EnhancedStereoGroupNum](Atom_EnhancedStereoGroupNum.md)) |
+| 3 | Or | Or (requires [kCDXProp_Atom_EnhancedStereoGroupNum](Atom_EnhancedStereoGroupNum.md)) |
+| 4 | And | And (requires [kCDXProp_Atom_EnhancedStereoGroupNum](Atom_EnhancedStereoGroupNum.md)) |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as unspecified in terms of enhanced stereochemistry.
 

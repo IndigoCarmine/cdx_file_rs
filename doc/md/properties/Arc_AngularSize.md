@@ -1,4 +1,3 @@
-CDX Format Specification: Arc_AngularSize Property
 ## Arc_AngularSize Property
 
 | CDXML Name: | AngularSize |
@@ -10,7 +9,7 @@ CDX Format Specification: Arc_AngularSize Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The size of an arc (in degrees * 10, so 90 degrees = 900).
 
@@ -20,7 +19,7 @@ ChemDraw does not support arcs of arbitrary angle size, so this value is quantiz
 
 **In CDXML files**, this value is stored "raw", so 90 degrees = 90.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value is treated as zero, which is then rounded up to 90 degrees by ChemDraw.
 

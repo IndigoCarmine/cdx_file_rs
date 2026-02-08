@@ -1,4 +1,3 @@
-CDX Format Specification: CDX Numeric Data Types
 ## CDX Numeric Data Types
 
 ### INT8, UINT8, INT16, UINT16, INT32, UINT32:
@@ -7,7 +6,7 @@ Signed and unsigned integers of 8-, 16-, or 32-bit size are commonly used as the
 
 **In CDX files**, byte order is Windows byte order (little-endian).
 
-In practice, the size of an integer value in a CDX file is self-documenting since every CDX value is prefixed by the size of that value, in bytes. An integer value stored in 1 byte must be an INT8 (or UNIT8); a similar value stored in 2 bytes must be an INT16 (or UINT16), and when stored in 4 bytes it must be an INT32 (or UINT32). A flexible CDX file format interpreter should not be hardcoded to expect, for example, an INT16 value in a given field. Rather, it should look at the size of the field and treat the value as an INT8, INT16, or IN32 as appropriate. Under no circumstances should the interpreter read past the end of a field that is shorter than expected, nor should it ever start reading the next attribute too early if the previous attribute is longer than expected.
+In practice, the size of an integer value in a CDX file is self-documenting since every CDX value is prefixed by the size of that value, in bytes. An integer value stored in 1 byte must be an INT8 (or UINT8); a similar value stored in 2 bytes must be an INT16 (or UINT16), and when stored in 4 bytes it must be an INT32 (or UINT32). A flexible CDX file format interpreter should not be hardcoded to expect, for example, an INT16 value in a given field. Rather, it should look at the size of the field and treat the value as an INT8, INT16, or INT32 as appropriate. Under no circumstances should the interpreter read past the end of a field that is shorter than expected, nor should it ever start reading the next attribute too early if the previous attribute is longer than expected.
 
 ChemDraw itself is flexible in reading the size of integer values in CDX files as described above. However, programs that produce CDX files should try to honor the data types described in this specification, so that those CDX files can be read by other programs that might not be flexible.
 
@@ -135,15 +134,16 @@ In CDX files, byte order is Windows byte order (little-endian). Floating-point n
 
 ```
 
+```
+
+```
+
 | Data Type | Value |  | CDX | CDXML |
 | --- | --- | --- | --- | --- |
 | INT8 | -1
 0
 10
-127 | :
-:
-:
-: | FF
+127 |  |  | FF
 00
 0A
 7F | "-1"
@@ -153,10 +153,7 @@ In CDX files, byte order is Windows byte order (little-endian). Floating-point n
 | UINT8 | 0
 10
 127
-255 | :
-:
-:
-: | 00
+255 |  |  | 00
 0A
 7F
 FF | "0"
@@ -169,13 +166,7 @@ FF | "0"
 255
 256
 1000
-32767 | :
-:
-:
-:
-:
-:
-: | FF FF
+32767 |  |  | FF FF
 00 00
 0A 00
 FF 00
@@ -194,13 +185,7 @@ FF 7F | "-1"
 256
 1000
 32767
-65535 | :
-:
-:
-:
-:
-:
-: | 00 00
+65535 |  |  | 00 00
 0A 00
 FF 00
 00 01
@@ -220,14 +205,7 @@ FF FF | "0"
 256
 1000
 100000
-2147483647 | :
-:
-:
-:
-:
-:
-:
-: | FF FF FF FF
+2147483647 |  |  | FF FF FF FF
 00 00 00 00
 0A 00 00 00
 FF 00 00 00
@@ -248,13 +226,7 @@ FF FF FF 7F | "-1"
 256
 1000
 100000
-4294967295 | :
-:
-:
-:
-:
-:
-: | 00 00 00 00
+4294967295 |  |  | 00 00 00 00
 0A 00 00 00
 FF 00 00 00
 00 01 00 00
@@ -275,15 +247,7 @@ FF FF FF FF | "0"
 100000.0
 0.5
 0.001
--123.45 | :
-:
-:
-:
-:
-:
-:
-:
-: | 00 00 00 00 00 00 00 00
+-123.45 |  |  | 00 00 00 00 00 00 00 00
 00 00 00 00 00 00 24 40
 00 00 00 00 00 E0 6F 40
 00 00 00 00 00 00 70 40

@@ -1,4 +1,3 @@
-CDX Format Specification: BackgroundColor Property
 ## BackgroundColor Property
 
 | CDXML Name: | bgcolor |
@@ -10,11 +9,11 @@ CDX Format Specification: BackgroundColor Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The background color of an object represented as the two-based index into the object's color table.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 A value of 2 is assumed, that being defined as the default background color in the [color table](ColorTable.md). This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

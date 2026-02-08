@@ -1,4 +1,3 @@
-CDX Format Specification: TLC Spot Object
 ## TLC Spot Object
 
 | CDXML Name: | tlcspot |
@@ -8,22 +7,22 @@ CDX Format Specification: TLC Spot Object
 | Contained by objects: | [kCDXObj_TLCLane](TLCLane.md) |
 | First written/read in: | ChemDraw 8.0 |
 
-**Description:**  
+**Description:**
 
 TLC Lane objects technically have no required properties or objects, but non-zero values for [kCDXProp_Height](properties/Height.md) and [kCDXProp_Width](properties/Width.md) would probably be helpful.
 
-The [kCDXProp_Height](properties/Height.md), [kCDXProp_Width](properties/Width.md), and [kCDXProp_TLC_Tail](properties/TLC_Tail.md) distances refer to the unrotated reference frame. If the spot's parent [TLC Plate](TLCPlate.md) is rotated 90°, the Height value will actuall refer to a horizontal distance, and so on.
+The [kCDXProp_Height](properties/Height.md), [kCDXProp_Width](properties/Width.md), and [kCDXProp_TLC_Tail](properties/TLC_Tail.md) distances refer to the unrotated reference frame. If the spot's parent [TLC Plate](TLCPlate.md) is rotated 90°, the Height value will actually refer to a horizontal distance, and so on.
 
-Spots are displayed as modified ellipsoids. If Height == Width and Tail == 0, then the spot is circular. With Height != Width and Tail == 0, the spot is elliptical. If the Tail value is non-zero, the top half of the spot is drawn as a semiellipse with the height = Height and width = Width, and the bottom half of the spot is draw as a second semiellipse with height = (Height + 2 * Tail) and width = Width.
+Spots are displayed as modified ellipsoids. If Height == Width and Tail == 0, then the spot is circular. With Height != Width and Tail == 0, the spot is elliptical. If the Tail value is non-zero, the top half of the spot is drawn as a semiellipse with the height = Height and width = Width, and the bottom half of the spot is drawn as a second semiellipse with height = (Height + 2 * Tail) and width = Width.
 
-**Subobjects:**  
+**Subobjects:**
 
 | Value | Name | CDXML Name |  |
 | --- | --- | --- | --- |
 | 0x8011 | [kCDXObj_ObjectTag](ObjectTag.md) | objecttag |  |
 |  | Arbitrarily named property, one or more of which can be attached to any ChemDraw object. |  |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |
@@ -43,7 +42,7 @@ This is a bit-encoded property. |  |  |
 | 0x0AB1 | [kCDXProp_TLC_Tail](properties/TLC_Tail.md) | Tail | [CDXCoordinate](DataType/CDXCoordinates.md) |
 |  | The length of the "tail" of an individual spot. |  |  |
 | 0x0AB2 | [kCDXProp_TLC_ShowRf](properties/TLC_ShowRf.md) | ShowRf | [CDXBoolean](DataType/CDXBoolean.md) |
-|  | Show the spot's Retention Fraction (Rf) value if non-zero.. |  |  |
+|  | Show the spot's Retention Fraction (Rf) value if non-zero. |  |  |
 
 ---
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_Geometry Property
 ## Atom_Geometry Property
 
 | CDXML Name: | Geometry |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_Geometry Property
 | First written/read in: | ChemDraw 4.5 / 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The geometry of the bonds about this atom.
 
@@ -42,7 +41,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 15 | 9 | 9 ligands: unspecified |
 | 16 | 10 | 10 ligands: unspecified |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The geometry is treated as Unknown.
 

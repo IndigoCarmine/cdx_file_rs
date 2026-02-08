@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_ExternalConnectionType Property
 ## Atom_ExternalConnectionType Property
 
 | CDXML Name: | ExternalConnectionType |
@@ -10,11 +9,11 @@ CDX Format Specification: Atom_ExternalConnectionType Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Type of external connection, for atoms of type kCDXNodeType_ExternalConnectionPoint.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -24,7 +23,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 3 | PolymerBead | The attachment point is indicated by large shaded sphere at the end of a bond |
 | 4 | Wavy | The attachment point is indicated by a wavy line perpendicular to the end of a bond |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as having Unspecified external connection type, which is then treated as a black diamond by ChemDraw.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_RestrictImplicitHydrogens Property
 ## Atom_RestrictImplicitHydrogens Property
 
 | CDXML Name: | ImplicitHydrogens |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_RestrictImplicitHydrogens Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Signifies that implicit hydrogens are not allowed on this atom.
 
@@ -18,7 +17,7 @@ This property is used when making queries. If implicit hydrogens are not allowed
 
 The value stored in this property exactly corresponds to the H0 property in ISIS.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 Implicit hydrogens are allowed.
 

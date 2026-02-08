@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_LinkCountLow Property
 ## Atom_LinkCountLow Property
 
 | CDXML Name: | LinkCountLow |
@@ -10,13 +9,13 @@ CDX Format Specification: Atom_LinkCountLow Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Low end of repeat count for link nodes.
 
 This property is meaningful only for nodes with a [kCDXProp_Node_Type](Node_Type.md) of type LinkNode.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The LinkCountLow is assumed to be 1.
 

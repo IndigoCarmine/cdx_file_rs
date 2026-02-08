@@ -1,4 +1,3 @@
-CDX Format Specification: 3DTail Property
 ## 3DTail Property
 
 | CDXML Name: | Tail3D |
@@ -10,7 +9,7 @@ CDX Format Specification: 3DTail Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The 3D location (in the order of X-, Y-, and Z-locations in right-handed coordinate system) of the tail of an object in CDX coordinate units.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_NumHydrogens Property
 ## Atom_NumHydrogens Property
 
 | CDXML Name: | NumHydrogens |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_NumHydrogens Property
 | First written/read in: | ChemDraw 4.0 / 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The number of (explicit) hydrogens in a labeled atom consisting of one heavy atom and (optionally) the symbol H (e.g., CH3).
 
@@ -18,7 +17,7 @@ As for an example, an atom with the label "Si" with bonds to CH3, CH3, H, and H 
 
 This property is meaningful only for nodes with a [kCDXProp_Node_Type](Node_Type.md) of type Element.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The number of hydrogens is assumed to be the minimum value necessary to satisfy the valence requirements for the atom.
 

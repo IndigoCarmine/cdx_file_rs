@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_RestrictFreeSites Property
 ## Atom_RestrictFreeSites Property
 
 | CDXML Name: | FreeSites |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_RestrictFreeSites Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates that up to the specified number of additional substituents are permitted on this atom.
 
@@ -18,7 +17,7 @@ A substituent is defined as some other node bonded to this one. It is strictly a
 
 A value of zero indicates that the atom must be matched as drawn.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as unrestricted in terms of free sites.
 

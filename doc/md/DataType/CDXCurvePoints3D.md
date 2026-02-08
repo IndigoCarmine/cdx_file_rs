@@ -1,4 +1,3 @@
-CDX Format Specification: CDX Curve Points 3D Data Type
 ## CDX Curve Points 3D Data Type
 
 This data type consists of a series of [CDXPoint3D](CDXCoordinates.md) values.

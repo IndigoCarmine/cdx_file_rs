@@ -1,4 +1,3 @@
-CDX Format Specification: 3DExtent Property
 ## 3DExtent Property
 
 | CDXML Name: | extent3D |
@@ -10,11 +9,11 @@ CDX Format Specification: 3DExtent Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The width, height, and depth of an object in CDX coordinate units (right-handed coordinate system). The precise meaning of this attribute varies depending on the type of object.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

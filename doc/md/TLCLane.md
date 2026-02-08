@@ -1,4 +1,3 @@
-CDX Format Specification: TLC Lane Object
 ## TLC Lane Object
 
 | CDXML Name: | tlclane |
@@ -8,11 +7,11 @@ CDX Format Specification: TLC Lane Object
 | Contained by objects: | [kCDXObj_TLCPlate](TLCPlate.md) |
 | First written/read in: | ChemDraw 8.0 |
 
-**Description:**  
+**Description:**
 
 TLC Lane objects technically have no required properties or objects, but should probably contain at least one [Spot](TLCSpot.md) if they are to be useful.
 
-**Subobjects:**  
+**Subobjects:**
 
 | Value | Name | CDXML Name |  |
 | --- | --- | --- | --- |
@@ -21,7 +20,7 @@ TLC Lane objects technically have no required properties or objects, but should 
 | 0x8025 | [kCDXObj_TLCSpot](TLCSpot.md) | tlcspot |  |
 |  | A single spot on a TLC plate. |  |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |

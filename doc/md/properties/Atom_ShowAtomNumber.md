@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_ShowAtomNumber Property
 ## Atom_ShowAtomNumber Property
 
 | CDXML Name: | ShowAtomNumber |
@@ -10,11 +9,11 @@ CDX Format Specification: Atom_ShowAtomNumber Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Show the atom number if non-zero.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20190326232852/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet. If no information is found in the Style Sheet either, this value is treated as false (atom numbers are not shown).
 

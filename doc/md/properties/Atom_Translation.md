@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_Translation Property
 ## Atom_Translation Property
 
 | CDXML Name: | Translation |
@@ -10,13 +9,13 @@ CDX Format Specification: Atom_Translation Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Provides for restrictions on whether a given node may match other more- or less-general nodes.
 
 This property corresponds directly to the Translation attribute of Markush DARC.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -25,7 +24,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 2 | Narrow | Generic nickname must match specific atoms or groups of atoms (cannot match another generic nickname) |
 | 3 | Any | Generic nicknames may match other more-general generic nicknames, or may match specific atoms or groups of atoms |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is treated as having Equal translation.
 

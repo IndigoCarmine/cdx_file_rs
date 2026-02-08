@@ -1,4 +1,3 @@
-CDX Format Specification: TLC Plate Object
 ## TLC Plate Object
 
 | CDXML Name: | tlcplate |
@@ -8,15 +7,15 @@ CDX Format Specification: TLC Plate Object
 | Contained by objects: | [kCDXObj_Page](Page.md) |
 | First written/read in: | ChemDraw 8.0 |
 
-**Description:**  
+**Description:**
 
-Each plate contains a series of [Lanes](TLCLane.md). Those lanes should be arranged on the plate from left to right in the order that they appear in the cdx file.
+Each plate contains a series of [Lanes](TLCLane.md). These lanes should be arranged on the plate from left to right in the order that they appear in the cdx file.
 
-TLC Plates should not be assumed to be positioned vertically. The actual orientation can be determined from the four corner properties ([kCDXProp_TopLeft](properties/TopLeft.md), etc). Similarly, they should not be assumed to be orthogonal, although in most practical cases there will be 90° angles at each corner.
+TLC Plates should not be assumed to be positioned vertically. The actual orientation can be determined from the four corner properties ([kCDXProp_TopLeft](properties/TopLeft.md), etc.). Similarly, they should not be assumed to be orthogonal, although in most practical cases there will be 90° angles at each corner.
 
 TLC Plate objects technically have no required properties or objects, but if the four corner properties are omitted, the plate will be assumed to have a zero-by-zero size, which isn't very useful. Similarly, at least one [Lane](TLCLane.md) would be helpful, and that lane should probably contain at least one [Spot](TLCSpot.md).
 
-**Subobjects:**  
+**Subobjects:**
 
 | Value | Name | CDXML Name |  |
 | --- | --- | --- | --- |
@@ -25,7 +24,7 @@ TLC Plate objects technically have no required properties or objects, but if the
 | 0x8024 | [kCDXObj_TLCLane](TLCLane.md) | tlclane |  |
 |  | A logical object representing a series of spots arranged vertically on a TLC plate. |  |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |

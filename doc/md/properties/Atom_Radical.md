@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_Radical Property
 ## Atom_Radical Property
 
 | CDXML Name: | Radical |
@@ -10,13 +9,13 @@ CDX Format Specification: Atom_Radical Property
 | First written/read in: | ChemDraw 4.0 / 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The atomic radical attribute of an atom.
 
 This property is meaningful only for nodes with a [kCDXProp_Node_Type](Node_Type.md) of type Element.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -25,9 +24,9 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 2 | Doublet | Radical doublet (monoradical) |
 | 3 | Triplet | Radical triplet (diradical) |
 
-**If this property is absent:**  
+**If this property is absent:**
 
-The node is assumed not be be a radical.
+The node is assumed not to be a radical.
 
 ---
 
