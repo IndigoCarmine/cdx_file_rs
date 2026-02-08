@@ -72,7 +72,7 @@ fn main() -> std::io::Result<()> {
     let document = parser.parse()?;
     
     // 新しいファイルに書き込み
-    let output = Vec::new();
+    let output: Vec<u8> = Vec::new();
     let mut writer = CdxWriter::new(Cursor::new(output));
     writer.write(&document)?;
     

@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket Attachment Object
 ## Bracket Attachment Object
 
 | CDXML Name: | bracketattachment |
@@ -8,7 +7,7 @@ CDX Format Specification: Bracket Attachment Object
 | Contained by objects: | [kCDXObj_BracketedGroup](BracketedGroup.md) |
 | First written/read in: | ChemDraw 7.0 (written only) |
 
-**Description:**  
+**Description:**
 
 An individual bracket (or brace or parenthesis) that, together with others, defines a [Bracketed Group](BracketedGroup.md).
 
@@ -16,14 +15,14 @@ Each Bracket Attachment may contain zero or more [Crossing Bonds](CrossingBond.m
 
 There are no required properties or objects.
 
-**Subobjects:**  
+**Subobjects:**
 
-| Value | Name | CDXML Name |  |
-| --- | --- | --- | --- |
-| 0x8019 | [kCDXObj_CrossingBond](CrossingBond.md) | crossingbond |  |
-|  | A Bond that connects a Bracketed Group to a Node outside that group. |  |  |
+| Value | Name | CDXML Name |
+| --- | --- | --- |
+| 0x8019 | [kCDXObj_CrossingBond](CrossingBond.md) | crossingbond |
+|  | A Bond that connects a Bracketed Group to a Node outside that group. |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |

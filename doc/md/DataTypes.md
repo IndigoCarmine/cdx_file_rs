@@ -1,4 +1,3 @@
-CDX Format Specification: Data Types
 ## Data Types
 
 - [CDXCoordinate](DataType/CDXCoordinates.htm#CDXCoordinate)

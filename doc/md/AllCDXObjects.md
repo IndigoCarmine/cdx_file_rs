@@ -1,4 +1,3 @@
-CDX Format Specification: Predefined Objects
 ## Predefined Objects
 
 | Object | Value | Name | CDXML Name |
@@ -26,7 +25,7 @@ CDX Format Specification: Predefined Objects
 | [Crossing Bond](CrossingBond.md) | 0x8019 | kCDXObj_CrossingBond | crossingbond |
 | A Bond that connects a Bracketed Group to a Node outside that group. |  |  |  |
 | [Curve](Curve.md) | 0x8008 | kCDXObj_Curve | curve |
-| A B zier curve. |  |  |  |
+| A B-zier curve. |  |  |  |
 | [Embedded Object](EmbeddedObject.md) | 0x8009 | kCDXObj_EmbeddedObject | embeddedobject |
 | A Macintosh PICT, a Windows Metafile, or a Windows OLE Object. |  |  |  |
 | [Table](Table.md) | 0x8016 | kCDXObj_Table | table |
@@ -46,9 +45,7 @@ CDX Format Specification: Predefined Objects
 | [Object Tag](ObjectTag.md) | 0x8011 | kCDXObj_ObjectTag | objecttag |
 | Arbitrarily named property, one or more of which can be attached to any ChemDraw object. |  |  |  |
 | [Sequence](Sequence.md) | 0x8013 | kCDXObj_Sequence | sequence |
-| One member of an ordered series; the contents of its 
-Text object may change as other objects are added to or removed from the
- series. |  |  |  |
+| One member of an ordered series; the contents of its Text object may change as other objects are added to or removed from the series. |  |  |  |
 | [Cross-Reference](CrossReference.md) | 0x8014 | kCDXObj_CrossReference | crossreference |
 | A link to some Sequence object. |  |  |  |
 | [Border](Border.md) | 0x8020 | kCDXObj_Border | border |
@@ -68,11 +65,7 @@ Text object may change as other objects are added to or removed from the
 | [Chemical Property](ChemicalProperty.md) | 0x8026 | kCDXObj_ChemicalProperty | chemicalproperty |
 | A (physical) chemical property associated with a collection of objects, usually atoms and bonds. |  |  |  |
 | [Color Table](ColorTable.md) | 0x0300 | kCDXProp_ColorTable | colortable |
-| The color palette used throughout the document. Color 
-indexes 0 and 1 always correspond to black and white and are not saved 
-in the color table. The first and second RGB values (color indexes 2 and
- 3) are the default background and foreground colors, and other colors 
-are numbered sequentially. |  |  |  |
+| The color palette used throughout the document. Color indexes 0 and 1 always correspond to black and white and are not saved in the color table. The first and second RGB values (color indexes 2 and 3) are the default background and foreground colors, and other colors are numbered sequentially. |  |  |  |
 | [Color](Color.md) | n/a | n/a | color |
 | An RGB color. |  |  |  |
 | [Font Table](FontTable.md) | 0x0100 | kCDXProp_FontTable | fonttable |

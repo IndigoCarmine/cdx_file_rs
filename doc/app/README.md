@@ -2,12 +2,12 @@
 
 ## Purpose
 
-This directory (`doc/app/`) contains **high-level architecture documentation** for the cdx_file_rs library. These documents explain the design philosophy, structure, and extension points to help new developers and AI agents quickly understand the codebase.
+This directory (`doc/app/`) contains **high-level architecture documentation** for the `cdx_file_rs` library. These documents explain the design philosophy, structure, and extension points to help new developers and AI agents quickly understand the codebase.
 
 ## Target Audience
 
 - **New Contributors**: Developers wanting to contribute to the library
-- **Library Users**: Teams building applications on top of cdx_file_rs
+- **Library Users**: Teams building applications on top of `cdx_file_rs`
 - **AI Agents**: Automated systems that need to understand the codebase structure
 - **Maintainers**: Future maintainers who need to grasp design decisions
 
@@ -180,10 +180,10 @@ Good documentation is a collaborative effort!
 
 ## License
 
-These documentation files are part of the cdx_file_rs project and are distributed under the same license as the project (see LICENSE file in repository root).
+These documentation files are part of the `cdx_file_rs` project and are distributed under the same license as the project (see LICENSE file in repository root).
 
 ---
 
-**Document Status**: Created February 2026  
-**Last Updated**: February 2, 2026  
-**Maintained By**: cdx_file_rs core team
+**Document Status**: Created February 2026
+**Last Updated**: February 2, 2026
+**Maintained By**: `cdx_file_rs` core team

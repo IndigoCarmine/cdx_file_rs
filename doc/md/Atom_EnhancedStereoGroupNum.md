@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_EnhancedStereoGroupNum Property
 ## Atom_EnhancedStereoGroupNum Property
 
 | CDXML Name: | EnhancedStereoGroupNum |
@@ -14,11 +13,11 @@ CDX Format Specification: Atom_EnhancedStereoGroupNum Property
 
 The group number associated with Or and And enhanced stereochemistry types.
 
-This property is meaningful only for nodes with a [kCDXProp_Atom_EnhancedStereoType](Atom_EnhancedStereoType.md) of type Or or And. It is required for such node, and must contain a non-negative integer value.
+This property is meaningful only for nodes with a [kCDXProp_Atom_EnhancedStereoType](Atom_EnhancedStereoType.md) of type Or or And. It is required for such node and must contain a non-negative integer value.
 
 **If this property is absent:**  
 
-The node will be assumed to be in the first And or Or group ("or1" or "&1&qout;).
+The node will be assumed to be in the first And or Or group ("or1" or "&1&qout;").
 
 ---
 

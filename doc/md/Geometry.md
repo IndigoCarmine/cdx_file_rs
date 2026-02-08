@@ -1,4 +1,3 @@
-CDX Format Specification: Object Tag Object
 ## Object Tag Object
 
 | CDXML Name: | objecttag |
@@ -8,7 +7,7 @@ CDX Format Specification: Object Tag Object
 | Contained by objects: | [kCDXObj_Group](Group.md),[kCDXObj_Fragment](Fragment.md),[kCDXObj_Node](Node.md),[kCDXObj_Bond](Bond.md),[kCDXObj_Text](Text.md),[kCDXObj_Graphic](Graphic.md),[kCDXObj_Curve](Curve.md),[kCDXObj_EmbeddedObject](EmbeddedObject.md),[kCDXObj_Table](Table.md),[kCDXObj_NamedAlternativeGroup](NamedAltGroup.md),[kCDXObj_Spectrum](Spectrum.md),[kCDXObj_Geometry](Geometry.md),[kCDXObj_Constraint](Constraint.md),[kCDXObj_TLCPlate](TLCPlate.md),[kCDXObj_TLCLane](TLCLane.md),[kCDXObj_TLCSpot](TLCSpot.md) |
 | First written/read in: | ChemDraw 6.0 |
 
-**Description:**  
+**Description:**
 
 Arbitrarily named property, one or more of which can be attached to any ChemDraw object. This object can be used to associate arbitrary data with an object.
 
@@ -22,24 +21,23 @@ Although ChemDraw recognizes the types "unknown", "query" (for query indicators)
 
 Object Tags require a Name, but have no required objects.
 
-**Subobjects:**  
+**Subobjects:**
 
-| Value | Name | CDXML Name |  |
-| --- | --- | --- | --- |
-| 0x8006 | [kCDXObj_Text](Text.md) | t |  |
-|  | An arbitrary block of (possibly styled) text. |  |  |
+| Value | Name | CDXML Name |
+| --- | --- | --- |
+| 0x8006 | [kCDXObj_Text](Text.md) | t |
+|  | An arbitrary block of (possibly styled) text. |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |
 | n/a | n/a | [id](properties/id.md) | [UINT16](DataType/CDXNumeric.md) |
 |  | A unique identifier for an object, used when other objects refer to it. |  |  |
 | 0x0008 | [kCDXProp_Name](properties/Name.md) | Name | [CDXString](DataType/CDXString.md) |
-|  | Required for objecttags.Name of an object. |  |  |
+|  | Required for objecttags. Name of an object. |  |  |
 | 0x0D00 | [kCDXProp_ObjectTag_Type](properties/ObjectTag_Type.md) | TagType | [INT16](DataType/CDXNumeric.md) |
-|  | The tag's data type.
-This is an enumerated property. |  |  |
+|  | The tag's data type. This is an enumerated property. |  |  |
 | 0x0D03 | [kCDXProp_ObjectTag_Tracking](properties/ObjectTag_Tracking.md) | Tracking | [CDXBoolean](DataType/CDXBoolean.md) |
 |  | The tag will participate in tracking if non-zero. |  |  |
 | 0x0D04 | [kCDXProp_ObjectTag_Persistent](properties/ObjectTag_Persistent.md) | Persistent | [CDXBoolean](DataType/CDXBoolean.md) |
@@ -47,8 +45,7 @@ This is an enumerated property. |  |  |
 | 0x0D05 | [kCDXProp_ObjectTag_Value](properties/ObjectTag_Value.md) | Value | varies |
 |  | The value is a INT32, FLOAT64 or unformatted string depending on the value of ObjectTag_Type. |  |  |
 | 0x0D06 | [kCDXProp_Positioning](properties/Positioning.md) | PositioningType | [INT8](DataType/CDXNumeric.md) |
-|  | How the object should be positioned with respect to its containing object.
-This is an enumerated property. |  |  |
+|  | How the object should be positioned with respect to its containing object. This is an enumerated property. |  |  |
 | 0x0D07 | [kCDXProp_PositioningAngle](properties/PositioningAngle.md) | PositioningAngle | [INT32](DataType/CDXNumeric.md) |
 |  | Angular positioning, in degrees * 65536. |  |  |
 | 0x0D08 | [kCDXProp_PositioningOffset](properties/PositioningOffset.md) | PositioningOffset | [CDXPoint2D](DataType/CDXCoordinates.md) |

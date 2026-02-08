@@ -48,11 +48,11 @@ fn main() -> std::io::Result<()> {
     let data = fs::read("molecule.cdx")?;
     let mut parser = RawCdxParser::new(Cursor::new(&data));
     let document = parser.parse()?;
-    
+
     println!("Document tag: 0x{:04x}", document.tag);
     println!("Properties: {}", document.properties.len());
     println!("Children: {}", document.children.len());
-    
+
     Ok(())
 }
 ```
@@ -70,15 +70,15 @@ fn main() -> std::io::Result<()> {
     let data = std::fs::read("input.cdx")?;
     let mut parser = RawCdxParser::new(Cursor::new(&data));
     let document = parser.parse()?;
-    
+
     // Write to a new file
-    let output = Vec::new();
+    let output: Vec<u8> = Vec::new();
     let mut writer = CdxWriter::new(Cursor::new(output));
     writer.write(&document)?;
-    
+
     let written_data = writer.into_inner().into_inner();
     std::fs::write("output.cdx", written_data)?;
-    
+
     Ok(())
 }
 ```
@@ -95,14 +95,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let data = fs::read("molecule.cdx")?;
     let mut parser = RawCdxParser::new(Cursor::new(&data));
     let raw_object = parser.parse()?;
-    
+
     // Convert to high-level Node representation
     let node = Node::from_raw(raw_object)?;
-    
+
     println!("Node tag: 0x{:04x}", node.tag());
     println!("Node ID: {}", node.id());
     println!("Children: {}", node.children.len());
-    
+
     Ok(())
 }
 ```
@@ -121,20 +121,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Read and parse CDX file
     let data = fs::read("molecule.cdx")?;
     let cdx_file = CdxFile::from_bytes(&data)?;
-    
+
     // Configure export options
     let mut options = RenderExportOptions::default();
     options.width = 1024;
     options.height = 768;
     options.margin = 50.0;
-    
+
     // Export to SVG
     export_to_svg(&cdx_file, Path::new("output.svg"), &options)?;
-    
+
     // Export to PNG (with higher resolution)
     options.scale = 2.0;
     export_to_png(&cdx_file, Path::new("output.png"), &options)?;
-    
+
     Ok(())
 }
 ```

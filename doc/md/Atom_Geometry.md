@@ -1,4 +1,3 @@
-CDX Format Specification: Atom_Geometry Property
 ## Atom_Geometry Property
 
 | CDXML Name: | Geometry |
@@ -10,7 +9,7 @@ CDX Format Specification: Atom_Geometry Property
 | First written/read in: | ChemDraw 4.5 / 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The geometry of the bonds about this atom.
 
@@ -20,7 +19,7 @@ Most of the values listed in the table below are provided for future expansion. 
 
 This property is used by ChemDraw only when reading files where no nodes have the [kCDXProp_2DPosition.htm](2DPosition.md) property. In such a case, ChemDraw will use the values in this property and in the [kCDXProp_Atom_BondOrdering](Atom_BondOrdering.md) property to generate appropriate hashes and wedges on the attached bonds. If the generating program is saving positions, it is assumed that it will also be responsible for generating hashes and wedges.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -42,7 +41,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 15 | 9 | 9 ligands: unspecified |
 | 16 | 10 | 10 ligands: unspecified |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The geometry is treated as Unknown.
 

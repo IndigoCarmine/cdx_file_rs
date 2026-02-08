@@ -1,4 +1,3 @@
-CDX Format Specification: Curve Object
 ## Curve Object
 
 | CDXML Name: | curve |
@@ -8,20 +7,20 @@ CDX Format Specification: Curve Object
 | Contained by objects: | [kCDXObj_Page](Page.md),[kCDXObj_Group](Group.md),[kCDXObj_Fragment](Fragment.md) |
 | First written/read in: | ChemDraw 4.0 |
 
-**Description:**  
+**Description:**
 
-A Bézier curve. Bézier curves are a standard mathematical curve type, and are defined in a number of places, including here, here, here, here, and here.
+A Bézier curve. Bézier curves are a standard mathematical curve type, and are defined in a number of places, including [here](here), [here](here), [here](here), [here](here), and [here](here).
 
-A Curve object necessarily requires a CurvePoints property, but it has no required objects.
+A Curve object necessarily requires a `CurvePoints` property, but it has no required objects.
 
-**Subobjects:**  
+**Subobjects:**
 
 | Value | Name | CDXML Name |  |
 | --- | --- | --- | --- |
 | 0x8011 | [kCDXObj_ObjectTag](ObjectTag.md) | objecttag |  |
 |  | Arbitrarily named property, one or more of which can be attached to any ChemDraw object. |  |  |
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |
@@ -47,7 +46,7 @@ This is a bit-encoded property. |  |  |
 | 0x0A20 | [kCDXProp_Arrowhead_Size](properties/Arrowhead_Size.md) | HeadSize | [INT16](DataType/CDXNumeric.md) |
 |  | The size of the arrow's head. |  |  |
 | 0x0A23 | [kCDXProp_Curve_Points](properties/Curve_Points.md) | CurvePoints | [CDXCurvePoints](DataType/CDXCurvePoints.md) |
-|  | Required for curves.The Bézier curve's control point locations. |  |  |
+|  | Required for curves. The Bézier curve's control point locations. |  |  |
 | 0x0A2E | [kCDXProp_Curve_Points3D](properties/Curve_Points3D.md) | CurvePoints3D | [CDXCurvePoints3D](DataType/CDXCurvePoints3D.md) |
 |  | The Bézier curve's control point locations in 3D space. |  |  |
 | 0x0A2F | [kCDXProp_Arrowhead_Type](properties/Arrowhead_Type.md) | ArrowHeadType | [INT16](DataType/CDXNumeric.md) |
@@ -69,7 +68,7 @@ This is an enumerated property. |  |  |
 | 0x0A38 | [kCDXProp_Closed](properties/Closed.md) | Closed | [CDXBoolean](DataType/CDXBoolean.md) |
 |  | Signifies whether object is closed. |  |  |
 | 0x0A38 | [kCDXProp_Curve_Spacing](properties/Curve_Spacing.md) | CurveSpacing | [UINT16](DataType/CDXNumeric.md) |
-|  | The width of the space between a a Doubled curve. |  |  |
+|  | The width of the space between a Doubled curve. |  |  |
 
 ---
 

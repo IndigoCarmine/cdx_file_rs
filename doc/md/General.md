@@ -1,11 +1,10 @@
-CDX Format Specification: General
 ## Introduction
 
 #### What is CDX?
 
 CDX is the native file format of ChemDraw, and is guaranteed to save 
 anything drawn in ChemDraw without loss of data. At the same time, 
-however, its architecture was carefully designed to make it a flexible 
+its architecture was carefully designed to make it a flexible 
 and general-purpose chemical format. It is intended to be a practical 
 choice for use by non-graphical programs, i.e. ones dealing in 
 connection tables rather than desktop publishing. Because of its ability
@@ -35,15 +34,15 @@ efficiently skip over parts they aren't interested in or do not
 recognize, and in fact they are expected to do so. Among other things, 
 this flexibility means that a tagged file format can be expanded without
  invalidating any existing files. We fully expect that ChemDraw 4.0 
-will be able to read files created by ChemDraw 40.0. The older version 
+will be able to read files created by ChemDraw 4.0. The older version 
 surely won't understand any new features added in the meantime, but the 
 basic contents should be intact.
 
 This flexibility also means that the CDX/CDXML formats may be 
 extended by companies other than CambridgeSoft. As a practical matter, 
 we would request that anyone wishing to extend these formats let us 
-know, it isn't strictly *necessary* that they do so. Contacting 
-us simply lets us document any changes publically; the files will be 
+know; it isn't strictly *necessary* that they do so. Contacting 
+us simply lets us document any changes publicly; the files will be 
 readable by ChemDraw whether or not we are notified.
 
 In the simplest view, a CDX file consists of a document header followed by a stream of *tagged items* followed by the *end* of the Document. Each tagged item is self-contained:
@@ -80,9 +79,9 @@ DocumentHeader, Obj(Prop, Prop, Obj(Obj (Prop, Obj(...) )Prop)),
 
 This nesting can be difficult to see in a raw binary file. We have 
 provided a simple program specifically designed to make it easy to view 
-the nesting. CDXHexDumper.exe
+the nesting. `CDXHexDumper.exe`
  is a very crude program that reads a CDX file and dumps it in hex to 
-the file c:\temp\dump.txt. The file is interpreted into objects and 
+the file `c:\temp\dump.txt`. The file is interpreted into objects and 
 properties and shows the complete structure of the CDX file. The program
  does not provide any semantic interpretation; it simply reformats the 
 data to make it easier to see the different objects and properties. It 

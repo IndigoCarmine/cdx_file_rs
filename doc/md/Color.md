@@ -1,4 +1,3 @@
-CDX Format Specification: Color Object
 ## Color Object
 
 | CDXML Name: | color |
@@ -6,7 +5,7 @@ CDX Format Specification: Color Object
 | Contained by objects: | [kCDXProp_ColorTable](ColorTable.md) |
 | First written/read in: | ChemDraw 4.0 |
 
-**Description:**  
+**Description:**
 
 An RGB color.
 
@@ -16,19 +15,19 @@ This object is used only in CDXML files. In CDX files, color information is stor
 
 All three properties of this object are required, but it has no required objects.
 
-**Subobjects:**  
+**Subobjects:**
 *(none)*
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |
 | n/a | n/a | [b](properties/b.md) | n/a |
-|  | Required for colors.The blue component of an RGB color, in the range 0.0 ... 1.0. |  |  |
+| Required for colors.The blue component of an RGB color, in the range 0.0 ... 1.0. |  |  |
 | n/a | n/a | [g](properties/g.md) | n/a |
-|  | Required for colors.The green component of an RGB color, in the range 0.0 ... 1.0. |  |  |
+| Required for colors.The green component of an RGB color, in the range 0.0 ... 1.0. |  |  |
 | n/a | n/a | [r](properties/r.md) | n/a |
-|  | Required for colors.The red component of an RGB color, in the range 0.0 ... 1.0. |  |  |
+| Required for colors.The red component of an RGB color, in the range 0.0 ... 1.0. |  |  |
 
 ---
 

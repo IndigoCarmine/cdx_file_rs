@@ -1,4 +1,3 @@
-CDX Format Specification: Border Object
 ## Border Object
 
 | CDXML Name: | border |
@@ -8,16 +7,16 @@ CDX Format Specification: Border Object
 | Contained by objects: | [kCDXObj_Page](Page.md) |
 | First written/read in: | ChemDraw 7.0 |
 
-**Description:**  
+**Description:**
 
 A collection of information describing one edge of an object. As of ChemDraw 7.0, borders are defined only for rectangular objects, but that restriction may be removed in the future.
 
 Borders have significance in ChemDraw 7.0 only for [Page](Page.md) objects that represent individual cells in a table. In such a case, Pages that represent adjacent cells are expected to have identical objects representing the shared border. If the adjacent pages have contradictory border information, the results are undefined.
 
-**Subobjects:**  
+**Subobjects:**
 *(none)*
 
-**Properties:**  
+**Properties:**
 
 | Value | Name | CDXML Name | Type |
 | --- | --- | --- | --- |
@@ -28,7 +27,7 @@ Borders have significance in ChemDraw 7.0 only for [Page](Page.md) objects that 
 | 0x0807 | [kCDXProp_LineWidth](properties/LineWidth.md) | LineWidth | [CDXCoordinate](DataType/CDXCoordinates.md) |
 |  | The default line width. |  |  |
 | 0x0825 | [kCDXProp_Side](properties/Side.md) | Side | [UINT16](DataType/CDXNumeric.md) |
-|  | Required.A specific side of an object (rectangle).
+|  | Required. A specific side of an object (rectangle).
 This is an enumerated property. |  |  |
 | 0x0A01 | [kCDXProp_Line_Type](properties/Line_Type.md) | LineType | [INT16](DataType/CDXNumeric.md) |
 |  | The type of a line object.
