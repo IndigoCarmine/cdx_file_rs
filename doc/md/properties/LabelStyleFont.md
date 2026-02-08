@@ -1,4 +1,3 @@
-CDX Format Specification: LabelStyleFont Property
 ## LabelStyleFont Property
 
 | CDXML Name: | LabelFont |
@@ -10,7 +9,7 @@ CDX Format Specification: LabelStyleFont Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The default font family for atom labels.
 
@@ -23,7 +22,7 @@ Generally, this property is used to provide a default font family for chemically
 - Atom-Atom map indicators
 - All text labels associated with spectra
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20190326232141/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet.
 

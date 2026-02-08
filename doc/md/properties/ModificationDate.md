@@ -1,4 +1,3 @@
-CDX Format Specification: ModificationDate Property
 ## ModificationDate Property
 
 | CDXML Name: | ModificationDate |
@@ -10,11 +9,11 @@ CDX Format Specification: ModificationDate Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Time of the last modification.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

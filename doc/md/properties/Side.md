@@ -1,4 +1,3 @@
-CDX Format Specification: Side Property
 ## Side Property
 
 | CDXML Name: | Side |
@@ -10,11 +9,11 @@ CDX Format Specification: Side Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | Required |
 
-**Description:**  
+**Description:**
 
 A specific side of an object (rectangle).
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -24,7 +23,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 3 | bottom | Bottom side |
 | 4 | right | Right side |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The side is treated as Undefined. Since that is not particularly useful, it is recommended that this property not be omitted.
 

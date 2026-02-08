@@ -1,4 +1,3 @@
-CDX Format Specification: Mole_Weight Property
 ## Mole_Weight Property
 
 | CDXML Name: | Weight |
@@ -10,11 +9,11 @@ CDX Format Specification: Mole_Weight Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The average molecular weight of a molecule object.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

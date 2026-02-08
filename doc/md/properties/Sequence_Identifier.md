@@ -1,4 +1,3 @@
-CDX Format Specification: Sequence_Identifier Property
 ## Sequence_Identifier Property
 
 | CDXML Name: | SequenceIdentifier |
@@ -10,7 +9,7 @@ CDX Format Specification: Sequence_Identifier Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | Required for sequences |
 
-**Description:**  
+**Description:**
 
 A unique (but otherwise random) identifier for a given Sequence object.
 

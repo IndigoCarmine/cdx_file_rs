@@ -1,4 +1,3 @@
-CDX Format Specification: HeightPages Property
 ## HeightPages Property
 
 | CDXML Name: | HeightPages |
@@ -10,13 +9,13 @@ CDX Format Specification: HeightPages Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The height of the document in pages.
 
 This property is meaningful only for documents with a [DrawingSpaceType](DrawingSpaceType.md) of type Pages.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The document is assumed to be one page tall.
 

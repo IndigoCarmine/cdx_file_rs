@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_XType Property
 ## Spectrum_XType Property
 
 | CDXML Name: | XType |
@@ -14,7 +13,7 @@ CDX Format Specification: Spectrum_XType Property
 
 The type of units the X-axis represents.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |

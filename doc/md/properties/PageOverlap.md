@@ -1,4 +1,3 @@
-CDX Format Specification: PageOverlap Property
 ## PageOverlap Property
 
 | CDXML Name: | PageOverlap |
@@ -10,13 +9,13 @@ CDX Format Specification: PageOverlap Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The amount of overlap of pages when a poster is tiled.
 
 This property is meaningful only for documents with a [DrawingSpaceType](DrawingSpaceType.md) of type Poster.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The pages do not overlap.
 

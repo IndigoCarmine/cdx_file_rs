@@ -1,4 +1,3 @@
-CDX Format Specification: PrintMargins Property
 ## PrintMargins Property
 
 | CDXML Name: | PrintMargins |
@@ -10,13 +9,13 @@ CDX Format Specification: PrintMargins Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The outer margins of the Document.
 
 Although stored as a CDXRectangle, this property does not represent a rectangular object. Rather, it stores the linear distances for the margins on the four sides of the page.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 ChemDraw will use the value from its last-used Style Sheet. If no Style Sheet is found, ChemDraw assumes nominal margins of one-half inch on all four sides.
 

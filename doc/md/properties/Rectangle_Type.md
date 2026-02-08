@@ -1,4 +1,3 @@
-CDX Format Specification: Rectangle_Type Property
 ## Rectangle_Type Property
 
 | CDXML Name: | RectangleType |
@@ -10,7 +9,7 @@ CDX Format Specification: Rectangle_Type Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of a rectangle object.
 
@@ -28,7 +27,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 16 | Dashed | Dashed |
 | 32 | Bold | Bold |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The rectangle is treated as plain.
 

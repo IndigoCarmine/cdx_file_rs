@@ -1,4 +1,3 @@
-CDX Format Specification: ReactionStep_Reactants Property
 ## ReactionStep_Reactants Property
 
 | CDXML Name: | ReactionStepReactants |
@@ -10,11 +9,11 @@ CDX Format Specification: ReactionStep_Reactants Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-An order list of reactants present in the Reaction Step.
+An ordered list of reactants present in the Reaction Step.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 There are no reactants in this Reaction Step.
 

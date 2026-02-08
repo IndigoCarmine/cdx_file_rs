@@ -1,4 +1,3 @@
-CDX Format Specification: Name Property
 ## Name Property
 
 | CDXML Name: | Name |
@@ -10,7 +9,7 @@ CDX Format Specification: Name Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for objecttags |
 
-**Description:**  
+**Description:**
 
 Name of an object.
 

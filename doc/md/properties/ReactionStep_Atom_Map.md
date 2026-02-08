@@ -1,4 +1,3 @@
-CDX Format Specification: ReactionStep_Atom_Map Property
 ## ReactionStep_Atom_Map Property
 
 | CDXML Name: | ReactionStepAtomMap |
@@ -10,13 +9,13 @@ CDX Format Specification: ReactionStep_Atom_Map Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-Represents pairs of mapped atom IDs; each pair is a reactant atom mapped to to a product atom.
+Represents pairs of mapped atom IDs; each pair is a reactant atom mapped to a product atom.
 
 This property is redundant with the two properties [kCDXProp_ReactionStep_Atom_Map_Manual](ReactionStep_Atom_Map_Manual.md) and [kCDXProp_ReactionStep_Atom_Map_Auto](ReactionStep_Atom_Map_Auto.md). A given mapping may be listed in this property and/or in one of the others. Programs that care about the presence of a mapping but not the history of its creation (automatically or manually) should examine this field; programs that care about the automatic/manual history of a mapping should consult the others.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This Reaction Step has no atom-atom mapping.
 

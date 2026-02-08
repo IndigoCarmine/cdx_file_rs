@@ -1,4 +1,3 @@
-CDX Format Specification: CaptionStyleFace Property
 ## CaptionStyleFace Property
 
 | CDXML Name: | CaptionFace |
@@ -10,13 +9,13 @@ CDX Format Specification: CaptionStyleFace Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The default font face for captions (non-atom-label text objects).
 
 Generally, this property is used to provide a default font style for chemically-*in*significant text.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20190327001206/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet.
 

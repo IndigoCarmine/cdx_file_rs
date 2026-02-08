@@ -1,4 +1,3 @@
-CDX Format Specification: RepresentsProperty Property
 ## RepresentsProperty Property
 
 | CDXML Name: | RepresentsProperty |
@@ -10,11 +9,11 @@ CDX Format Specification: RepresentsProperty Property
 | First written/read in: | ChemDraw 4.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Indicates that this object represents some property in some other object.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

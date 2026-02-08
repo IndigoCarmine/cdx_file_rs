@@ -1,4 +1,3 @@
-CDX Format Specification: RotationAngle Property
 ## RotationAngle Property
 
 | CDXML Name: | RotationAngle |

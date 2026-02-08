@@ -1,4 +1,3 @@
-CDX Format Specification: ReactionStep_ObjectsBelowArrow Property
 ## ReactionStep_ObjectsBelowArrow Property
 
 | CDXML Name: | ReactionStepObjectsBelowArrow |
@@ -10,15 +9,15 @@ CDX Format Specification: ReactionStep_ObjectsBelowArrow Property
 | First written/read in: | ChemDraw 6.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-An order list of objects below the arrow in the Reaction Step.
+An ordered list of objects below the arrow in the Reaction Step.
 
-The use of the word "below" in this property name is intended to be reminiscent of a horizontal arrow. If the arrow in question is more vertical than horizontal, then "below" will actually mean "to the right of"
+The use of the word "below" in this property name is intended to be reminiscent of a horizontal arrow. If the arrow in question is more vertical than horizontal, then "below" will actually mean "to the right of."
 
 Logically, objects listed by this property will often be treated the same as those listed by [kCDXProp_ReactionStep_ObjectsAboveArrow](ReactionStep_ObjectsAboveArrow.md), however they are split out in case a reading program wants to treat them differently.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

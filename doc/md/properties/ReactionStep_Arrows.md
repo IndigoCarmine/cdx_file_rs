@@ -1,4 +1,3 @@
-CDX Format Specification: ReactionStep_Arrows Property
 ## ReactionStep_Arrows Property
 
 | CDXML Name: | ReactionStepArrows |
@@ -10,11 +9,11 @@ CDX Format Specification: ReactionStep_Arrows Property
 | First written/read in: | ChemDraw 6.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 An ordered list of arrows used to separate components of the Reaction Step.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

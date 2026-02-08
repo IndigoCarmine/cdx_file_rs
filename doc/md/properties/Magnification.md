@@ -1,4 +1,3 @@
-CDX Format Specification: Magnification Property
 ## Magnification Property
 
 | CDXML Name: | Magnification |
@@ -10,13 +9,13 @@ CDX Format Specification: Magnification Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The view magnification factor
 
 The value stored by this property is 10 * the current magnification value, in percent, so 1500 = 150%.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The document is displayed at 100% magnification.
 

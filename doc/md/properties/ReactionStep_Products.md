@@ -1,4 +1,3 @@
-CDX Format Specification: ReactionStep_Products Property
 ## ReactionStep_Products Property
 
 | CDXML Name: | ReactionStepProducts |
@@ -10,11 +9,11 @@ CDX Format Specification: ReactionStep_Products Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-An order list of products present in the Reaction Step.
+An ordered list of products present in the Reaction Step.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 There are no products in this Reaction Step.
 

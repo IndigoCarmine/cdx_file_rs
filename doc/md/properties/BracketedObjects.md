@@ -1,4 +1,3 @@
-CDX Format Specification: BracketedObjects Property
 ## BracketedObjects Property
 
 | CDXML Name: | BracketedObjectIDs |
@@ -10,11 +9,11 @@ CDX Format Specification: BracketedObjects Property
 | First written/read in: | ChemDraw 7.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The set of objects contained in a BracketedGroup.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bracketed group is considered not to enclose any objects. Since that is not a particularly useful situation, it is strongly encouraged that this property be present.
 

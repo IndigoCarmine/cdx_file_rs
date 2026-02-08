@@ -1,4 +1,3 @@
-CDX Format Specification: NamedAlternativeGroup_Valence Property
 ## NamedAlternativeGroup_Valence Property
 
 | CDXML Name: | Valence |
@@ -10,11 +9,11 @@ CDX Format Specification: NamedAlternativeGroup_Valence Property
 | First written/read in: | ChemDraw 4.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The number of attachment points in each alternative in a named alternative group.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

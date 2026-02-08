@@ -1,4 +1,3 @@
-CDX Format Specification: RelationValue Property
 ## RelationValue Property
 
 | CDXML Name: | RelationValue |
@@ -10,7 +9,7 @@ CDX Format Specification: RelationValue Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The numeric relationship (if any) among the basis objects used to define this object.
 
@@ -20,7 +19,7 @@ For those with a Geometric Feature type of kCDXGeometricFeature_PointFromPointPo
 
 For those with a Geometric Feature type of kCDXGeometricFeature_LineFromPoints or kCDXGeometricFeature_PlaneFromPoints, this value represents the maximum RMS deviation for the line or plane.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value will be treated as zero.
 

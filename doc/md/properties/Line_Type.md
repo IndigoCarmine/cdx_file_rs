@@ -1,4 +1,3 @@
-CDX Format Specification: Line_Type Property
 ## Line_Type Property
 
 | CDXML Name: | LineType |
@@ -10,7 +9,7 @@ CDX Format Specification: Line_Type Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of a line object.
 
@@ -25,7 +24,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 2 | Bold | Bold line |
 | 4 | Wavy | Wavy line |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The line is treated as solid.
 

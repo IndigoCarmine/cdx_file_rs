@@ -1,4 +1,3 @@
-CDX Format Specification: Node_Attachments Property
 ## Node_Attachments Property
 
 | CDXML Name: | Attachments |
@@ -10,7 +9,7 @@ CDX Format Specification: Node_Attachments Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for multi- and variable attached nodes |
 
-**Description:**  
+**Description:**
 
 For multicenter attachment nodes or variable attachment nodes, a list of IDs of the nodes which are multiply or variably attached to this node.
 

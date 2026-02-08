@@ -1,4 +1,3 @@
-CDX Format Specification: CaptionStyleFont Property
 ## CaptionStyleFont Property
 
 | CDXML Name: | CaptionFont |
@@ -10,16 +9,16 @@ CDX Format Specification: CaptionStyleFont Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The default font style for captions (non-atom-label text objects).
 
-Generally, this property is used to provide a default font family for chemically-*in*significant text. ChemDraw uses it to determine default font families for the following:
+Generally, this property is used to provide a default font family for chemically *in*significant text. ChemDraw uses it to determine default font families for the following:
 
 - Text captions
 - Text used for Racemic/Relative/Absolute indicators
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20190327000955/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet.
 

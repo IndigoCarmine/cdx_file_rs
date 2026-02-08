@@ -1,4 +1,3 @@
-CDX Format Specification: LabelAlignment Property
 ## LabelAlignment Property
 
 | CDXML Name: | LabelAlignment |
@@ -10,7 +9,7 @@ CDX Format Specification: LabelAlignment Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The alignment of the text with respect to the node position.
 
@@ -28,7 +27,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 5 | Below | Label is stacked below |
 | 6 | Best | Label is created in the best alignment for the given bonds |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The text is assumed to be automatically aligned.
 

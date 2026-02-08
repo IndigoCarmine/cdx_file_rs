@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_XSpacing Property
 ## Spectrum_XSpacing Property
 
 | CDXML Name: | XSpacing |
@@ -10,7 +9,7 @@ CDX Format Specification: Spectrum_XSpacing Property
 | First written/read in: | ChemDraw 5.0 |
 | Required? | Required for spectra |
 
-**Description:**  
+**Description:**
 
 The spacing in logical units (ppm, Hz, wavenumbers) between points along the X-axis of an evenly-spaced grid.
 

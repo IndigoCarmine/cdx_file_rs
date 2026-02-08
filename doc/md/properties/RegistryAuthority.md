@@ -1,4 +1,3 @@
-CDX Format Specification: RegistryAuthority Property
 ## RegistryAuthority Property
 
 | CDXML Name: | RegistryAuthority |
@@ -10,11 +9,11 @@ CDX Format Specification: RegistryAuthority Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 A string that specifies the authority which issued a registry or catalog number. Some examples of registry authorities are CAS, Beilstein, Aldrich, and Merck.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

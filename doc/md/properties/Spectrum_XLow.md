@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_XLow Property
 ## Spectrum_XLow Property
 
 | CDXML Name: | XLow |
@@ -10,7 +9,7 @@ CDX Format Specification: Spectrum_XLow Property
 | First written/read in: | ChemDraw 5.0 |
 | Required? | Required for spectra |
 
-**Description:**  
+**Description:**
 
 The first data point for the X-axis of an evenly-spaced grid.
 

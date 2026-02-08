@@ -1,4 +1,3 @@
-CDX Format Specification: Node_LabelDisplay Property
 ## Node_LabelDisplay Property
 
 | CDXML Name: | LabelDisplay |
@@ -10,11 +9,11 @@ CDX Format Specification: Node_LabelDisplay Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The characteristics of node label display.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |
@@ -25,7 +24,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 4 | Above | Label is stacked above |
 | 5 | Below | Label is stacked below |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The label is aligned automatically.
 

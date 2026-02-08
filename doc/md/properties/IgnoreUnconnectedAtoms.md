@@ -1,4 +1,3 @@
-CDX Format Specification: IgnoreUnconnectedAtoms Property
 ## IgnoreUnconnectedAtoms Property
 
 | CDXML Name: | IgnoreUnconnectedAtoms |
@@ -10,13 +9,13 @@ CDX Format Specification: IgnoreUnconnectedAtoms Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Signifies whether unconnected atoms should be ignored within the exclusion sphere.
 
 This property is meaningful only for constraints with a [kCDXProp_ConstraintType](ConstraintType.md) of type ExclusionSphere.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 Unconnected atoms will not be ignored.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_YLow Property
 ## Spectrum_YLow Property
 
 | CDXML Name: | YLow |
@@ -10,11 +9,11 @@ CDX Format Specification: Spectrum_YLow Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Y value to be used to offset data when storing XML.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

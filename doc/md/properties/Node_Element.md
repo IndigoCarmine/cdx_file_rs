@@ -1,4 +1,3 @@
-CDX Format Specification: Node_Element Property
 ## Node_Element Property
 
 | CDXML Name: | Element |
@@ -10,13 +9,13 @@ CDX Format Specification: Node_Element Property
 | First written/read in: | ChemDraw 4.0 / 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The atomic number of the atom representing this node.
 
-This property is irrelevent except for nodes with a [kCDXProp_Node_Type](Node_Type.md) of Element.
+This property is irrelevant except for nodes with a [kCDXProp_Node_Type](Node_Type.md) of Element.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The node is assumed to be a carbon atom.
 

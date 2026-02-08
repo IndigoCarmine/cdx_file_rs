@@ -1,4 +1,3 @@
-CDX Format Specification: IgnoreWarnings Property
 ## IgnoreWarnings Property
 
 | CDXML Name: | IgnoreWarnings |
@@ -10,13 +9,13 @@ CDX Format Specification: IgnoreWarnings Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Signifies whether chemical warnings should be suppressed on this object.
 
 ChemDraw will display chemical warnings (in the form of red boxes) on objects that have various types of unusual chemistry. If this property is present, no warnings will be displayed on the object, even if they normally would have been.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 Warnings will be displayed if appropriate.
 

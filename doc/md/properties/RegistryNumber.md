@@ -1,4 +1,3 @@
-CDX Format Specification: RegistryNumber Property
 ## RegistryNumber Property
 
 | CDXML Name: | RegistryNumber |
@@ -10,13 +9,13 @@ CDX Format Specification: RegistryNumber Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 A registry or catalog number of a molecule object.
 
 This attribute and other similar attributes for pre-defined registry numbers are intended for chemical structures in a database. Such attributes might be lost when the reader program has structure editing capability.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

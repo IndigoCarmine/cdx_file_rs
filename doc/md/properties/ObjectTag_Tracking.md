@@ -1,4 +1,3 @@
-CDX Format Specification: ObjectTag_Tracking Property
 ## ObjectTag_Tracking Property
 
 | CDXML Name: | Tracking |
@@ -10,13 +9,13 @@ CDX Format Specification: ObjectTag_Tracking Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The tag will participate in tracking if non-zero.
 
 The exact nature of 'participate in tracking' is currently undefined, and this property is not currently used in any way by ChemDraw. It is provided for future expansion only. Applications creating CDX files should omit this value or leave it at its default (false) value. Applications reading CDX files should ignore this value until its precise meaning is defined.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The tag will not participate in tracking.
 

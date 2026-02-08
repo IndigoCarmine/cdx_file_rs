@@ -1,4 +1,3 @@
-CDX Format Specification: MacPrintInfo Property
 ## MacPrintInfo Property
 
 | CDXML Name: | MacPrintInfo |
@@ -10,7 +9,7 @@ CDX Format Specification: MacPrintInfo Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The 120 byte Macintosh TPrint data associated with the CDX document object. Refer to Macintosh Toolbox manual for detailed description.
 
@@ -33,7 +32,7 @@ Most bytes within this structure are ignored by ChemDraw, and should be written 
 | macPrint[24] | Horizontal scale, in percent. |
 | macPrint[25] | Vertical scale, in percent |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 ChemDraw will use values based on the last-selected Style Sheet, or from the currently-selected printer if no Style Sheet is available. In a last resort, a portrait-orientation, letter-size page will be used.
 

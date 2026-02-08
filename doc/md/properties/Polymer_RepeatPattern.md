@@ -1,4 +1,3 @@
-CDX Format Specification: Polymer_RepeatPattern Property
 ## Polymer_RepeatPattern Property
 
 | CDXML Name: | PolymerRepeatPattern |
@@ -10,7 +9,7 @@ CDX Format Specification: Polymer_RepeatPattern Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The head-to-tail connectivity of objects contained within the bracket.
 
@@ -26,7 +25,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 1 | HeadToHead | One end of the repeating unit is connected to the same end of the adjacent repeating unit |
 | 2 | EitherUnknown | A mixture of the above, or an unknown repeat pattern |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The repeating unit is assumed to connect head-to-tail.
 

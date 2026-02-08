@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_YAxisLabel Property
 ## Spectrum_YAxisLabel Property
 
 | CDXML Name: | YAxisLabel |
@@ -10,11 +9,11 @@ CDX Format Specification: Spectrum_YAxisLabel Property
 | First written/read in: | ChemDraw 5.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 A label for the Y-axis.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

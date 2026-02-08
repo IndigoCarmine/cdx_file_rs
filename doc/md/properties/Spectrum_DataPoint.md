@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_DataPoint Property
 ## Spectrum_DataPoint Property
 
 | CDXML Name: | temp_SpectrumDataPoint |
@@ -10,7 +9,7 @@ CDX Format Specification: Spectrum_DataPoint Property
 | First written/read in: | ChemDraw 5.0 |
 | Required? | Required for spectra |
 
-**Description:**  
+**Description:**
 
 The Y-axis values for the spectrum. It is an array of double values corresponding to X-axis values.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: Spectrum_Class Property
 ## Spectrum_Class Property
 
 | CDXML Name: | Class |
@@ -14,7 +13,7 @@ CDX Format Specification: Spectrum_Class Property
 
 The type of spectrum represented.
 
-This is an enumerated property. Acceptible values are shown in the following list:
+This is an enumerated property. Acceptable values are shown in the following list:
 
 | Value | CDXML Name | Description |
 | --- | --- | --- |

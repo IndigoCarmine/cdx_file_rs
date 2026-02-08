@@ -1,4 +1,3 @@
-CDX Format Specification: BottomRight Property
 ## BottomRight Property
 
 | CDXML Name: | BottomRight |
@@ -10,11 +9,11 @@ CDX Format Specification: BottomRight Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The location of the bottom-right corner of a quadrilateral object, possibly in a rotated or skewed frame.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bottom-right is positioned at (0, 0).
 

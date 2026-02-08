@@ -1,4 +1,3 @@
-CDX Format Specification: ReactionStep_Atom_Map_Auto Property
 ## ReactionStep_Atom_Map_Auto Property
 
 | CDXML Name: | ReactionStepAtomMapAuto |
@@ -12,7 +11,7 @@ CDX Format Specification: ReactionStep_Atom_Map_Auto Property
 
 **Description:**  
 
-Represents pairs of mapped atom IDs; each pair is a reactant atom mapped to to a product atom.
+Represents pairs of mapped atom IDs; each pair is a reactant atom mapped to a product atom.
 
 The combination of this property and [kCDXProp_ReactionStep_Atom_Map_Manual](ReactionStep_Atom_Map_Manual.md) is redundant with the property and [kCDXProp_ReactionStep_Atom_Map](ReactionStep_Atom_Map.md). A given mapping listed in this property may also be listed in kCDXProp_ReactionStep_Atom_Map. Programs should choose which fields to read based on which information they are interested in.
 

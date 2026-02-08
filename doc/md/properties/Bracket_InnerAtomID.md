@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket_InnerAtomID Property
 ## Bracket_InnerAtomID Property
 
 | CDXML Name: | InnerAtomID |
@@ -10,7 +9,7 @@ CDX Format Specification: Bracket_InnerAtomID Property
 | First written/read in: | ChemDraw 7.0 / (not read) |
 | Required? | Required |
 
-**Description:**  
+**Description:**
 
 The ID of the node located within the Bracketed Group and attached to a bond that crosses a Bracket Attachment.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: NamedAlternativeGroup_TextFrame Property
 ## NamedAlternativeGroup_TextFrame Property
 
 | CDXML Name: | TextFrame |
@@ -10,11 +9,11 @@ CDX Format Specification: NamedAlternativeGroup_TextFrame Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Until ChemDraw 6.0 |
 
-**Description:**  
+**Description:**
 
 The bounding box of upper portion of the Named Alternative Group, containing the name of the group.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bounds are calculated appropriately based on the size of the contents of the Named Alternative Group and of the group's name.
 

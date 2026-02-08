@@ -1,4 +1,3 @@
-CDX Format Specification: JPEG Property
 ## JPEG Property
 
 | CDXML Name: | JPEG |
