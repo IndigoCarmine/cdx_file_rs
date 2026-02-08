@@ -1,4 +1,3 @@
-CDX Format Specification: TopLeft Property
 ## TopLeft Property
 
 | CDXML Name: | TopLeft |
@@ -10,11 +9,11 @@ CDX Format Specification: TopLeft Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The location of the top-left corner of a quadrilateral object, possibly in a rotated or skewed frame.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The top-left is positioned at (0, 0).
 

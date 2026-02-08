@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_ShowOrigin Property
 ## TLC_ShowOrigin Property
 
 | CDXML Name: | ShowOrigin |
@@ -10,11 +9,11 @@ CDX Format Specification: TLC_ShowOrigin Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Show the origin line near the base of the TLC Plate if non-zero.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The origin line will not be shown
 

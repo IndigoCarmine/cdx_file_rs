@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_ShowBorders Property
 ## TLC_ShowBorders Property
 
 | CDXML Name: | ShowBorders |
@@ -10,11 +9,11 @@ CDX Format Specification: TLC_ShowBorders Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Show borders around the edges of the TLC Plate if non-zero.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The borders will not be shown.
 

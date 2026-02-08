@@ -1,4 +1,3 @@
-CDX Format Specification: Width Property
 ## Width Property
 
 | CDXML Name: | Width |
@@ -10,13 +9,13 @@ CDX Format Specification: Width Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | Until ChemDraw 7.0 |
 
-**Description:**  
+**Description:**
 
 The width of an object in CDX coordinate units, possibly in a rotated or skewed frame.
 
-When used as a property of a document, this property is meaningful only for documents with a [DrawingSpaceType](DrawingSpaceType.md) of type Poster. This value overrides he default document width will be used as specified in the [kCDXProp_MacPrintInfo](MacPrintInfo.md) property.
+When used as a property of a document, this property is meaningful only for documents with a [DrawingSpaceType](DrawingSpaceType.md) of type Poster. This value overrides the default document width will be used as specified in the [kCDXProp_MacPrintInfo](MacPrintInfo.md) property.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 When used as a property of a document, the default document width will be used as specified in the [kCDXProp_MacPrintInfo](MacPrintInfo.md) property. When used for other objects, the width will be assumed to be zero.
 

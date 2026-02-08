@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_Tail Property
 ## TLC_Tail Property
 
 | CDXML Name: | Tail |
@@ -10,11 +9,11 @@ CDX Format Specification: TLC_Tail Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The length of the "tail" of an individual spot.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The spot will be assumed to have no tail (it will be drawn as an undistorted ellipsoid).
 

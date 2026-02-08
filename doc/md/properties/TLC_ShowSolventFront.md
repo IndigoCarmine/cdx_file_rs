@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_ShowSolventFront Property
 ## TLC_ShowSolventFront Property
 
 | CDXML Name: | ShowSolventFront |
@@ -10,11 +9,11 @@ CDX Format Specification: TLC_ShowSolventFront Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Show the solvent front line near the top of the TLC Plate if non-zero.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The solvent front will not be shown.
 

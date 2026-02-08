@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_ShowSideTicks Property
 ## TLC_ShowSideTicks Property
 
 | CDXML Name: | ShowSideTicks |

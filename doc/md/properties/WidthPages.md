@@ -1,4 +1,3 @@
-CDX Format Specification: WidthPages Property
 ## WidthPages Property
 
 | CDXML Name: | WidthPages |
@@ -10,13 +9,13 @@ CDX Format Specification: WidthPages Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The width of the document in pages.
 
 This property is meaningful only for documents with a [DrawingSpaceType](DrawingSpaceType.md) of type Pages.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The document is assumed to be one page wide.
 

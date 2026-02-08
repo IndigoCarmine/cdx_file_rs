@@ -1,4 +1,3 @@
-CDX Format Specification: Template_NumColumns Property
 ## Template_NumColumns Property
 
 | CDXML Name: | NumColumns |
@@ -10,7 +9,7 @@ CDX Format Specification: Template_NumColumns Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for templategrids |
 
-**Description:**  
+**Description:**
 
 The number of columns of the CDX TemplateGrid object.
 

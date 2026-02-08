@@ -1,4 +1,3 @@
-CDX Format Specification: ZOrder Property
 ## ZOrder Property
 
 | CDXML Name: | Z |
@@ -10,13 +9,13 @@ CDX Format Specification: ZOrder Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Back-to-front ordering index in 2D drawing.
 
 Items with a lower value will be ordered behind items with a higher value. ChemDraw uses this property to determine, for example, which bond is in front when two bonds cross. Note that this is a graphical property only; it can be safely omitted if a file is only intended to have chemical meaning and the exact visual display is unimportant. It can also be omitted in files where it is known that no objects overlap.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The object will be treated as if the property was present with a value of zero. That is, the object will be arranged with all other objects having a Z-ordering index of zero (those objects will be arranged among themselves randomly), and all other objects will be arranged in order, on top of them.
 

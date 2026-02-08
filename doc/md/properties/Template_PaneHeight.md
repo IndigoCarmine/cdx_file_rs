@@ -1,4 +1,3 @@
-CDX Format Specification: Template_PaneHeight Property
 ## Template_PaneHeight Property
 
 | CDXML Name: | PaneHeight |
@@ -10,7 +9,7 @@ CDX Format Specification: Template_PaneHeight Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for templategrids |
 
-**Description:**  
+**Description:**
 
 The height of the viewing window of a template grid.
 

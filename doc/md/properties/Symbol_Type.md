@@ -1,4 +1,3 @@
-CDX Format Specification: Symbol_Type Property
 ## Symbol_Type Property
 
 | CDXML Name: | SymbolType |
@@ -10,7 +9,7 @@ CDX Format Specification: Symbol_Type Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The type of symbol object.
 
@@ -35,7 +34,7 @@ This is an enumerated property. Acceptible values are shown in the following lis
 | 12 | Relative | Relative |
 | 13 | LonePair | LonePair, drawn as a solid bar rather than as two electron dots |
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The object is treated as a lone pair.
 

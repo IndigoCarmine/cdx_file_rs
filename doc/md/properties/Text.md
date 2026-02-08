@@ -1,4 +1,3 @@
-CDX Format Specification: Text Property
 ## Text Property
 
 | CDXML Name: | temp_Text |
@@ -10,7 +9,7 @@ CDX Format Specification: Text Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for text objects |
 
-**Description:**  
+**Description:**
 
 The text of a text object.
 

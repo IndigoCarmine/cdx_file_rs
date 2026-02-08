@@ -1,4 +1,3 @@
-CDX Format Specification: Window_IsZoomed Property
 ## Window_IsZoomed Property
 
 | CDXML Name: | WindowIsZoomed |

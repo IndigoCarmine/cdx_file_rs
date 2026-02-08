@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_BondOrdering Property
 ## Bond_BondOrdering Property
 
 | CDXML Name: | BondCircularOrdering |
@@ -10,7 +9,7 @@ CDX Format Specification: Bond_BondOrdering Property
 | First written/read in: | ChemDraw 6.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Ordered list of attached bond IDs.
 
@@ -18,7 +17,7 @@ This property is important for preserving stereochemistry in files that do not o
 
 This property is used only for bonds of order 2; accordingly, it may be considered either as a clockwise or counterclockwise ordering without affecting the meaning.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The ordering of bonds is not considered significant.
 

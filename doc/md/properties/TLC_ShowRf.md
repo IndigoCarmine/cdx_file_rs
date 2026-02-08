@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_ShowRf Property
 ## TLC_ShowRf Property
 
 | CDXML Name: | ShowRf |
@@ -10,11 +9,11 @@ CDX Format Specification: TLC_ShowRf Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
-Show the spot's Retention Fraction (Rf) value if non-zero..
+Show the spot's Retention Fraction (Rf) value if non-zero.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The Rf value of the spot will not be shown.
 

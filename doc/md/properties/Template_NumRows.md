@@ -1,4 +1,3 @@
-CDX Format Specification: Template_NumRows Property
 ## Template_NumRows Property
 
 | CDXML Name: | NumRows |
@@ -10,7 +9,7 @@ CDX Format Specification: Template_NumRows Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for templategrids |
 
-**Description:**  
+**Description:**
 
 The number of rows of the CDX TemplateGrid object.
 

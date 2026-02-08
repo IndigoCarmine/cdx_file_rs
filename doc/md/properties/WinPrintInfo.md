@@ -1,4 +1,3 @@
-CDX Format Specification: WinPrintInfo Property
 ## WinPrintInfo Property
 
 | CDXML Name: | WinPrintInfo |
@@ -10,11 +9,11 @@ CDX Format Specification: WinPrintInfo Property
 | First written/read in: | (not written/read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The Windows DEVMODE structure associated with the CDX document object.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read (or written) by ChemDraw, but is defined for future compatibility. There is no consequence to omitting it.
 

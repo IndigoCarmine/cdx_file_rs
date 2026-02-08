@@ -1,4 +1,3 @@
-CDX Format Specification: Bond_RestrictTopology Property
 ## Bond_RestrictTopology Property
 
 | CDXML Name: | Topology |

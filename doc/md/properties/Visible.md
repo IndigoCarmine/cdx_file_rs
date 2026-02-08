@@ -1,4 +1,3 @@
-CDX Format Specification: Visible Property
 ## Visible Property
 
 | CDXML Name: | Visible |
@@ -10,13 +9,13 @@ CDX Format Specification: Visible Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The object is visible if non-zero.
 
 Note that ChemDraw does not currently offer a general way for making an object visible again once it is made invisible. As of ChemDraw 7.0, this property is used only for [Object Tag](/web/20190327225439/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/ObjectTag.md) objects, which can be hidden and reshown.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The object will be displayed
 

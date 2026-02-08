@@ -1,4 +1,3 @@
-CDX Format Specification: TopRight Property
 ## TopRight Property
 
 | CDXML Name: | TopRight |
@@ -10,11 +9,11 @@ CDX Format Specification: TopRight Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The location of the top-right corner of a quadrilateral object, possibly in a rotated or skewed frame.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The top-right is positioned at (0, 0).
 

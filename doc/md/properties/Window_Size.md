@@ -1,4 +1,3 @@
-CDX Format Specification: Window_Size Property
 ## Window_Size Property
 
 | CDXML Name: | WindowSize |
@@ -10,13 +9,13 @@ CDX Format Specification: Window_Size Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Height and width of the document window.
 
-Until ChemDraw 7.0, if this property is present, if this property is present, the [kCDXProp_Window_Position](Window_Position.md) property must also be present
+Until ChemDraw 7.0, if this property is present, the [kCDXProp_Window_Position](Window_Position.md) property must also be present.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The window is sized appropriately for the screen.
 

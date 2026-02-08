@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_Rf Property
 ## TLC_Rf Property
 
 | CDXML Name: | Rf |
@@ -10,13 +9,13 @@ CDX Format Specification: TLC_Rf Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The Retention Factor (Rf) of an individual spot.
 
 The Retention Factor should be a decimal value between zero and one. Values less than zero or greater than one have no meaning.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The Rf value will be assigned to a default value, possibly specified by the user.
 

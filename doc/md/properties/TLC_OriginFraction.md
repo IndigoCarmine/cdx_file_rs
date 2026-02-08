@@ -1,4 +1,3 @@
-CDX Format Specification: TLC_OriginFraction Property
 ## TLC_OriginFraction Property
 
 | CDXML Name: | OriginFraction |
@@ -10,13 +9,13 @@ CDX Format Specification: TLC_OriginFraction Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The distance of the origin line from the bottom of a TLC Plate, as a fraction of the total height of the plate.
 
 The Origin Fraction should be a decimal value between zero and one. Values less than zero or greater than one have no meaning.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The origin fraction will be assigned to a default value, possibly specified by the user.
 
