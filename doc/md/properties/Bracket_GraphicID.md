@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket_GraphicID Property
 ## Bracket_GraphicID Property
 
 | CDXML Name: | GraphicID |
@@ -10,11 +9,11 @@ CDX Format Specification: Bracket_GraphicID Property
 | First written/read in: | ChemDraw 7.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The ID of a graphical object (bracket, brace, or parenthesis) associated with a Bracket Attachment.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The Bracket Attachment is not represented by an existing graphical object. It would be the responsibility of the program reading the file to create a new graphical object (bracket, etc) and position it appropriately relative to the other objects in the file.
 

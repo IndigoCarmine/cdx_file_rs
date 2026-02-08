@@ -1,4 +1,3 @@
-CDX Format Specification: CrossReference_Identifier Property
 ## CrossReference_Identifier Property
 
 | CDXML Name: | CrossReferenceIdentifier |
@@ -10,7 +9,7 @@ CDX Format Specification: CrossReference_Identifier Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | Required for cross-references. |
 
-**Description:**  
+**Description:**
 
 A unique (but otherwise random) identifier for a given Cross-Reference object.
 

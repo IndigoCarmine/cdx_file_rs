@@ -1,4 +1,3 @@
-CDX Format Specification: ChemicalWarning Property
 ## ChemicalWarning Property
 
 | CDXML Name: | Warning |
@@ -10,13 +9,13 @@ CDX Format Specification: ChemicalWarning Property
 | First written/read in: | ChemDraw 6.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 A warning concerning possible chemical problems with this object.
 
 This property stores a textual description of a warning. It is not generally expected that programs would parse this string for meaning, but rather display it verbatim if so desired.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: BondLength Property
 ## BondLength Property
 
 | CDXML Name: | BondLength |
@@ -10,22 +9,22 @@ CDX Format Specification: BondLength Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Until ChemDraw 4.5 |
 
-**Description:**  
+**Description:**
 
 The default bond length.
 
 Generally, this property is used to provide a default value for bold lines. ChemDraw uses it to determine the following:
 
-- Default bond length when drawing bonds, chains and rings by hand
+- Default bond length when drawing bonds, chains, and rings by hand
 - Default size of orbitals and electrons
 - Scale factor when pasting and placing templates
 - Space between NamedAlternativeGroups without bounding boxes (horizontal spacing is this value)
-- Space between NamedAlternativeGroups components without bounding boxes (vertical spacing is half of this value) 
-- Size of frames for NamedAlternativeGroups without bounding boxes (frames are outset from components by half of this value) 
+- Space between NamedAlternativeGroups components without bounding boxes (vertical spacing is half of this value)
+- Size of frames for NamedAlternativeGroups without bounding boxes (frames are outset from components by half of this value)
 - Spacing between reaction components without bounding boxes (horizontal spacing is this value)
 - Charge objects must be within a distance equal to half of this value if they are to be recognized as being applied to some other object
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value from the same property of a containing object will be used. That is, if this property is omitted from an object, but present for the [Document](/web/20180315141948/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Document.md), the Document's value will be used. If no value is found at all, ChemDraw will use the value from its last-used Style Sheet.
 

@@ -1,4 +1,3 @@
-CDX Format Specification: ConstraintMax Property
 ## ConstraintMax Property
 
 | CDXML Name: | ConstraintMax |
@@ -10,11 +9,11 @@ CDX Format Specification: ConstraintMax Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The maximum value of the constraint.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The value will be treated as zero.
 

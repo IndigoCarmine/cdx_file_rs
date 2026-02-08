@@ -1,4 +1,3 @@
-CDX Format Specification: BottomLeft Property
 ## BottomLeft Property
 
 | CDXML Name: | BottomLeft |
@@ -10,11 +9,11 @@ CDX Format Specification: BottomLeft Property
 | First written/read in: | ChemDraw 8.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The location of the bottom-left corner of a quadrilateral object, possibly in a rotated or skewed frame.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The bottom-left is positioned at (0, 0).
 

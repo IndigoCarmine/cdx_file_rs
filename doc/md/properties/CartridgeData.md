@@ -1,4 +1,3 @@
-CDX Format Specification: CartridgeData Property
 ## CartridgeData Property
 
 | CDXML Name: | CartridgeData |
@@ -10,7 +9,7 @@ CDX Format Specification: CartridgeData Property
 | First written/read in: | ChemDraw 9.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 Transient data used by the CambridgeSoft Oracle Cartridge.
 

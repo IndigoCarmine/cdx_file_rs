@@ -1,4 +1,3 @@
-CDX Format Specification: CrossReference_Container Property
 ## CrossReference_Container Property
 
 | CDXML Name: | CrossReferenceContainer |
@@ -10,13 +9,13 @@ CDX Format Specification: CrossReference_Container Property
 | First written/read in: | ChemDraw 7.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 An external object containing (as an embedded object) the document containing the Sequence object being referenced.
 
 This property is provided for future compatibility and is not currently used in any case by ChemDraw.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This is the empty string.
 

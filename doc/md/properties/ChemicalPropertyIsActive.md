@@ -1,4 +1,3 @@
-CDX Format Specification: ChemicalPropertyIsActive Property
 ## ChemicalPropertyIsActive Property
 
 | CDXML Name: | ChemicalPropertyIsActive |

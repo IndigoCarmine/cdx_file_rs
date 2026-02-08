@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket_LipSize Property
 ## Bracket_LipSize Property
 
 | CDXML Name: | LipSize |
@@ -10,11 +9,11 @@ CDX Format Specification: Bracket_LipSize Property
 | First written/read in: | ChemDraw 4.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The size of a bracket.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

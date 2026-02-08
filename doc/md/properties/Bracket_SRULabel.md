@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket_SRULabel Property
 ## Bracket_SRULabel Property
 
 | CDXML Name: | SRULabel |
@@ -10,13 +9,13 @@ CDX Format Specification: Bracket_SRULabel Property
 | First written/read in: | ChemDraw 7.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The label associated with a BracketedGroup that represents an SRU.
 
-This property is relevent only for objects with a [kCDXProp_Bracket_Usage](Bracket_Usage.md) of kCDXBracketUsage_SRU.
+This property is relevant only for objects with a [kCDXProp_Bracket_Usage](Bracket_Usage.md) of kCDXBracketUsage_SRU.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The label is assumed to be "n".
 

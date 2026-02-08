@@ -1,4 +1,3 @@
-CDX Format Specification: CreationProgram Property
 ## CreationProgram Property
 
 | CDXML Name: | CreationProgram |
@@ -10,13 +9,13 @@ CDX Format Specification: CreationProgram Property
 | First written/read in: | ChemDraw 4.0 / (not read) |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The name of the program, including version and platform, that created the associated CDX object. ChemDraw 4.0 uses "ChemDraw 4.0" as the value of CreationProgram.
 
 This attribute is for information only; interpretation of the file based on the value of this attribute should be avoided.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 This property is not read by ChemDraw. It is written as a courtesy only. There is no consequence to omitting it.
 

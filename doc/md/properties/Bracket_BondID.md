@@ -1,4 +1,3 @@
-CDX Format Specification: Bracket_BondID Property
 ## Bracket_BondID Property
 
 | CDXML Name: | BondID |
@@ -10,7 +9,7 @@ CDX Format Specification: Bracket_BondID Property
 | First written/read in: | ChemDraw 7.0 / (not read) |
 | Required? | Required |
 
-**Description:**  
+**Description:**
 
 The ID of a bond that crosses a Bracket Attachment.
 

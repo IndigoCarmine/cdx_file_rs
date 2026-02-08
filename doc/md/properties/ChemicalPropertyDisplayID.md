@@ -1,4 +1,3 @@
-CDX Format Specification: ChemicalPropertyDisplayID Property
 ## ChemicalPropertyDisplayID Property
 
 | CDXML Name: | ChemicalPropertyDisplayID |
@@ -10,13 +9,13 @@ CDX Format Specification: ChemicalPropertyDisplayID Property
 | First written/read in: | ChemDraw 9.0 |
 | Required? | No |
 
-**Description:**  
+**Description:**
 
 The ID of a graphical object used to display the property value.
 
 The display object is usually a [Text](/web/20160912170122/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Text.md) object.
 
-**If this property is absent:**  
+**If this property is absent:**
 
 The [Chemical Property](/web/20160912170122/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/ChemicalProperty.md) will not be associated with any display object.
 

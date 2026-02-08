@@ -1,4 +1,3 @@
-CDX Format Specification: BoundingBox Property
 ## BoundingBox Property
 
 | CDXML Name: | BoundingBox |
@@ -10,15 +9,15 @@ CDX Format Specification: BoundingBox Property
 | First written/read in: | ChemDraw 4.0 |
 | Required? | Required for pictures and spectra. Required for graphics and text until 6.0 |
 
-**Description:**  
+**Description:**
 
 The smallest rectangle that encloses the graphical representation of the object.
 
 When used in conjunction with [Graphic](/web/20160912060508/http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/Graphic.md) objects, this properly does not, in fact, represent a bounding box but rather represents a pair of points whose (*x*, *y*) values consist of the (left, top) and (right, bottom) members of the rectangle. Those two points are then used to further define the Graphic in different ways depending on the [kCDXProp_Graphic_Type](Graphic_Type.md) of the graphic. This is, obviously, an unfortunate complication to the CDX format. It will likely be resolved in a future version of ChemDraw.
 
-**If this property is absent:**  
+**If this property is absent:**
 
-If possible, a reasonable bounding box will be guessed. For example, if a bounding box is omitted for an atom label (in ChemDraw 6.0 and later), the label will be positioned based on the location of its atom. Some objects (such as atoms) are defined fully by their [2D Position](2DPosition.md), and no bounding box is necessary. Note that this propery is required for pictures and spectra, since no guess can be made about the size of those objects.
+If possible, a reasonable bounding box will be guessed. For example, if a bounding box is omitted for an atom label (in ChemDraw 6.0 and later), the label will be positioned based on the location of its atom. Some objects (such as atoms) are defined fully by their [2D Position](2DPosition.md), and no bounding box is necessary. Note that this property is required for pictures and spectra, since no guess can be made about the size of those objects.
 
 ---
 
