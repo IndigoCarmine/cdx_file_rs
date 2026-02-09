@@ -1,0 +1,8 @@
+name: Rust Analyzer MCP
+version: 0.0.1
+schema: v1
+
+mcpServers:
+  - name: rust-analyzer
+    command: rust-analyzer-mcp
+    env: {}

@@ -1,0 +1,20 @@
+# This is an example configuration file
+# To learn more, see the full config.yaml reference: https://docs.continue.dev/reference
+
+name: conf
+version: 1.0.0
+schema: v1
+
+models:
+  - title: "Qwen 2.5 Coder 7b"
+    model: "qwen2.5-coder-ctx512000"
+    provider: "ollama"
+    apiBase: "http://192.168.11.63:11434"
+
+  - title: "gemma3:12B"
+    model: "gemma3:12B"
+    provider: "ollama"
+    apiBase: "http://192.168.11.63:11434"
+
+mcpServers:
+  - use: rust/rust-analyzer
