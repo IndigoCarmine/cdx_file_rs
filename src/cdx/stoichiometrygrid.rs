@@ -8,10 +8,10 @@ pub struct StoichiometryGrid {
     pub raw_data: Option<Vec<u8>>, // For unknown/raw property
 }
 
-impl Default for StoichiometryGrid {
-    fn default() -> Self {
+impl StoichiometryGrid {
+    pub fn new(id: u32) -> Self {
         StoichiometryGrid {
-            id: 0,
+            id,
             position_2d: None,
             raw_data: None,
         }

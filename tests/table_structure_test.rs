@@ -1,13 +1,16 @@
-use cdx_file_rs::{cdx::file::{CdxFile, NodePayload}, node::Node};
+use cdx_file_rs::{
+    cdx::file::{CdxFile, NodePayload},
+    node::Node,
+};
 use std::fs;
 
 #[test]
 fn inspect_table_structure() {
     let data = fs::read("sample_cdx/ReactionAnalysis.cdx").expect("Failed to read file");
     let cdx_file = CdxFile::from_bytes(&data).expect("Failed to parse CDX");
-    
+
     println!("Inspecting ReactionAnalysis.cdx table structure:\n");
-    
+
     let root = cdx_file.tree.root();
     inspect_node(&root, 0);
 }
@@ -15,7 +18,7 @@ fn inspect_table_structure() {
 fn inspect_node(node: &dendron::Node<NodePayload>, depth: usize) {
     let indent = "  ".repeat(depth);
     let data = node.borrow_data();
-    
+
     match &*data {
         NodePayload::Document(d) => {
             println!("{}Document (id={})", indent, d.id);
@@ -37,12 +40,14 @@ fn inspect_node(node: &dendron::Node<NodePayload>, depth: usize) {
             println!("{}TextObject (id={})", indent, t.id);
             println!("{}  bounding_box: {:?}", indent, t.bounding_box);
             println!("{}  position_2d: {:?}", indent, t.position_2d);
-            let text_str = &t.text.text;
-            if !text_str.is_empty() {
-                if text_str.len() > 50 {
-                    println!("{}  text: \"{}...\"", indent, &text_str[..50]);
-                } else {
-                    println!("{}  text: \"{}\"", indent, text_str);
+            if let Some(ref cdx_str) = t.text {
+                let text_str = &cdx_str.text;
+                if !text_str.is_empty() {
+                    if text_str.len() > 50 {
+                        println!("{}  text: \"{}...\"", indent, &text_str[..50]);
+                    } else {
+                        println!("{}  text: \"{}\"", indent, text_str);
+                    }
                 }
             }
         }
@@ -80,9 +85,9 @@ fn inspect_node(node: &dendron::Node<NodePayload>, depth: usize) {
             println!("{}{:?}", indent, nodepayload);
         }
     }
-    
+
     drop(data);
-    
+
     for child in node.children() {
         inspect_node(&child, depth + 1);
     }

@@ -1,4 +1,4 @@
-use crate::cdx::values::{CDXString, Rectangle};
+use crate::{cdx::values::{BooleanImplied, CDXString, Point2d, Rectangle}};
 use serde::{Deserialize, Serialize};
 
 /// Page Object: A drawing space that divides objects into separate drawing areas
@@ -46,15 +46,15 @@ pub struct Page {
     /// The text of the header (Optional)
     pub header: Option<CDXString>,
     /// The vertical offset of the header baseline from the top (Optional)
-    pub header_position: Option<f64>,
+    pub header_position: Option<i32>,
     /// The text of the footer (Optional)
     pub footer: Option<CDXString>,
     /// The vertical offset of the footer baseline from the bottom (Optional)
-    pub footer_position: Option<f64>,
+    pub footer_position: Option<i32>,
 
     // Printing properties
     /// If present, trim marks are printed in the margins (Optional)
-    pub print_trim_marks: Option<bool>,
+    pub print_trim_marks: Option<BooleanImplied>,
     /// An array of vertical positions that subdivide a page into regions (Optional)
     pub splitter_positions: Option<Vec<u32>>,
     /// A description of the type of formatting used by the page (Optional)

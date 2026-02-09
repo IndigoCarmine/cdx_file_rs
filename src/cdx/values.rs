@@ -109,3 +109,9 @@ pub struct CDXString {
     /// The actual text content (ISO Latin-1 encoding)
     pub text: String,
 }
+
+
+
+// Boolean with implied false (just for encode/decode convenience)
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub struct BooleanImplied(pub bool);

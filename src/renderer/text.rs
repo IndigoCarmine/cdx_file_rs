@@ -25,36 +25,38 @@ impl Drawable for TextObject {
             };
 
             // Get text content from CDXString
-            let text_str = &self.text.text;
-            let style_runs = &self.text.style_runs;
+            if let Some(ref cdx_str) = self.text {
+                let text_str = &cdx_str.text;
+                let style_runs = &cdx_str.style_runs;
 
-            // If no style runs, use simple rendering with rich_text
-            if style_runs.is_empty() {
-                // Determine font size (prefer caption size, fallback to label size, then document default)
-                let font_size = if let Some(size) = self.caption_size {
-                    size as f32
-                } else if let Some(size) = self.label_size {
-                    size as f32
-                } else {
-                    ctx.default_caption_size()
-                };
+                // If no style runs, use simple rendering with rich_text
+                if style_runs.is_empty() {
+                    // Determine font size (prefer caption size, fallback to label size, then document default)
+                    let font_size = if let Some(size) = self.caption_size {
+                        size as f32
+                    } else if let Some(size) = self.label_size {
+                        size as f32
+                    } else {
+                        ctx.default_caption_size()
+                    };
 
-                // Determine text color (prefer caption color, fallback to label color, then document default)
-                let color = if let Some(idx) = self.caption_color {
-                    ctx.resolve_color_i16(Some(idx), ctx.default_caption_color())
-                } else if let Some(idx) = self.label_color {
-                    ctx.resolve_color_i16(Some(idx), ctx.default_label_color())
-                } else {
-                    ctx.default_caption_color()
-                };
+                    // Determine text color (prefer caption color, fallback to label color, then document default)
+                    let color = if let Some(idx) = self.caption_color {
+                        ctx.resolve_color_i16(Some(idx), ctx.default_caption_color())
+                    } else if let Some(idx) = self.label_color {
+                        ctx.resolve_color_i16(Some(idx), ctx.default_label_color())
+                    } else {
+                        ctx.default_caption_color()
+                    };
 
-                let span = TextSpan::new(text_str.clone(), font_size, color);
-                ctx.painter.rich_text(screen_pos, base_align, &[span]);
-                return;
+                    let span = TextSpan::new(text_str.clone(), font_size, color);
+                    ctx.painter.rich_text(screen_pos, base_align, &[span]);
+                    return;
+                }
+
+                // Render text with style runs using rich_text
+                self.draw_styled_text(ctx, text_str, style_runs, screen_pos, base_align);
             }
-
-            // Render text with style runs using rich_text
-            self.draw_styled_text(ctx, text_str, style_runs, screen_pos, base_align);
         }
     }
     fn get_bounding_box(&self) -> Option<Rectangle> {

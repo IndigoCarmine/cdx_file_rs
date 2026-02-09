@@ -51,7 +51,6 @@ macro_rules! extract_id {
             NodePayload::BracketAttachment(n) => Some(n.id),
             NodePayload::BracketedGroup(n) => Some(n.id),
             NodePayload::ChemicalProperty(n) => Some(n.id),
-            NodePayload::ColorTable(_) => None, // ColorTable has no id field
             NodePayload::Constraint(n) => Some(n.id),
             NodePayload::CrossReference(n) => Some(n.id),
             NodePayload::CrossingBond(n) => Some(n.id),
@@ -286,7 +285,6 @@ define_node_payload!(
     BracketAttachment,
     BracketedGroup,
     ChemicalProperty,
-    ColorTable,
     Constraint,
     CrossReference,
     CrossingBond,

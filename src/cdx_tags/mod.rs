@@ -17,6 +17,7 @@ pub mod graphic_tags;
 pub mod group_tag;
 pub mod named_alternative_group_tags;
 pub mod node_tags;
+pub mod object_tag_tags;
 pub mod object_tags;
 pub mod page_tags;
 pub mod reaction_scheme_tags;

@@ -9,10 +9,10 @@ mod renderer;
 use crate::cdx::file::CdxFile;
 use crate::modes::{ModeContext, ModeHandler};
 use crate::renderer::CdxRenderer;
+use cdx_file_rs::renderer::font_loader;
 use eframe::{App, egui};
 use std::cell::RefCell;
 use std::fs;
-use cdx_file_rs::renderer::font_loader;
 
 struct ModeHandlers {
     view: mode_handlers::view::ViewMode,
@@ -45,12 +45,12 @@ fn main() -> eframe::Result {
         Box::new(|cc| {
             // Load system fonts for rich text rendering
             font_loader::configure_egui_fonts(&cc.egui_ctx);
-            
+
             // Print loaded fonts info
             for info in font_loader::get_loaded_font_info() {
                 println!("{}", info);
             }
-            
+
             let app = CdxApp::default();
             Ok(Box::new(app))
         }),
@@ -176,9 +176,11 @@ impl CdxApp {
 
         // Apply magnification from document if available
         // Magnification is stored as 10 * percent (e.g., 1500 = 150%)
-        let magnification = cdx_file.get_document().ok()
+        let magnification = cdx_file
+            .get_document()
+            .ok()
             .and_then(|d| d.magnification)
-            .map(|m| m as f32 / 1000.0)  // Convert to multiplier (1500 -> 1.5)
+            .map(|m| m as f32 / 1000.0) // Convert to multiplier (1500 -> 1.5)
             .unwrap_or(1.0);
 
         // Calculate scale to fit in window with padding
@@ -232,19 +234,15 @@ impl CdxApp {
 
         if let crate::cdx::file::NodePayload::Bond(bond_obj) = &*data {
             // Get positions of begin and end nodes
-            if let (Some(begin_pos), Some(end_pos)) = (
-                node_positions.get(&bond_obj.begin),
-                node_positions.get(&bond_obj.end),
-            ) {
-                bond_positions.insert(
-                    bond_obj.id,
-                    (
-                        bond_obj.begin,
-                        bond_obj.end,
-                        begin_pos.clone(),
-                        end_pos.clone(),
-                    ),
-                );
+            if let (Some(begin_id), Some(end_id)) = (bond_obj.begin, bond_obj.end) {
+                if let (Some(begin_pos), Some(end_pos)) =
+                    (node_positions.get(&begin_id), node_positions.get(&end_id))
+                {
+                    bond_positions.insert(
+                        bond_obj.id,
+                        (begin_id, end_id, begin_pos.clone(), end_pos.clone()),
+                    );
+                }
             }
         }
 

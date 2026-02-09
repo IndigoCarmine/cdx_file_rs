@@ -14,7 +14,9 @@ pub const CDXOBJ_REACTION_STEP: u16 = 0x800E; // kCDXObj_ReactionStep: One step 
 // Reaction Step Properties
 // =======================
 
-// NOTE: `id` is implicit (UINT16) and not a CDX property constant.
+pub const CDXPROP_Z_ORDER: u16 = 0x000A; // Drawing order.
+pub const CDXPROP_VISIBLE: u16 = 0x0011; // Visibility flag.
+pub const CDXPROP_BOUNDING_BOX: u16 = 0x0204; // Bounding box.
 
 pub const CDXPROP_REACTION_STEP_ATOM_MAP: u16 = 0x0C00; // Atom mapping pairs (reactant-to-product).
 pub const CDXPROP_REACTION_STEP_REACTANTS: u16 = 0x0C01; // Ordered list of reactant IDs.

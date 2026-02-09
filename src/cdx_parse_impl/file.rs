@@ -5,6 +5,22 @@ use crate::cdx_parse_impl::tagged_object::TaggedObject;
 use crate::error::CdxError;
 
 #[macro_export]
+/// Macro to implement conversion methods for the `NodePayload` enum.
+///
+/// This macro generates two methods for the `NodePayload` implementation:
+/// - `from_raw`: Converts a `RawCdxObject` into a `NodePayload` variant based on its tag.
+///   Returns an error if the tag does not match any known variant.
+/// - `to_raw`: Converts a `NodePayload` variant back into a `RawCdxObject`.
+///
+/// # Parameters
+/// - `$ty`: A list of types that implement the `TaggedObject` trait and correspond to variants of `NodePayload`.
+///
+/// # Example
+/// ```ignore
+/// define_node_payload!(TypeA, TypeB, TypeC);
+/// ```
+///
+/// This will implement `from_raw` and `to_raw` for `NodePayload` with variants `TypeA`, `TypeB`, and `TypeC`.
 macro_rules! define_node_payload {
     (
              $( $ty:ident ),* $(,)?
@@ -16,7 +32,7 @@ macro_rules! define_node_payload {
                         <$ty as TaggedObject>::TAG =>
                             Ok(NodePayload::$ty(<$ty>::from_raw(raw)?)),
                     )*
-                    _ => Err(CdxError::Parse(format!("found unknown tag={}", raw.tag))),
+                    _ => Err(CdxError::Parse(format!("found unknown tag=0x{:x}", raw.tag))),
                 }
             }
 
@@ -38,7 +54,6 @@ define_node_payload!(
     BracketAttachment,
     BracketedGroup,
     ChemicalProperty,
-    ColorTable,
     Constraint,
     CrossReference,
     CrossingBond,

@@ -16,6 +16,9 @@ pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // kCDXObj_ObjectTag: Arbitrary metad
 
 // NOTE: `id` is implicit (UINT16) and not a CDX property constant.
 
+pub const CDXPROP_Z_ORDER: u16 = 0x000A; // Drawing order.
+pub const CDXPROP_VISIBLE: u16 = 0x0011; // Visibility flag.
+pub const CDXPROP_BOUNDING_BOX: u16 = 0x0204; // Bounding box.
 pub const CDXPROP_NAME: u16 = 0x0008; // Object name.
 
 pub const CDXPROP_FOREGROUND_COLOR: u16 = 0x0301; // Foreground color index.

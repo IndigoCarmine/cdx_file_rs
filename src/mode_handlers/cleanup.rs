@@ -65,16 +65,12 @@ impl MoleculeGraph {
                     }
                 }
                 NodePayload::Bond(b) => {
-                    adjacency
-                        .entry(b.begin)
-                        .or_insert_with(Vec::new)
-                        .push(b.end);
-                    adjacency
-                        .entry(b.end)
-                        .or_insert_with(Vec::new)
-                        .push(b.begin);
-                    let order = b.bond_order.unwrap_or(1);
-                    bond_orders.insert((b.begin.min(b.end), b.begin.max(b.end)), order);
+                    if let (Some(begin), Some(end)) = (b.begin, b.end) {
+                        adjacency.entry(begin).or_insert_with(Vec::new).push(end);
+                        adjacency.entry(end).or_insert_with(Vec::new).push(begin);
+                        let order = b.bond_order.unwrap_or(1);
+                        bond_orders.insert((begin.min(end), begin.max(end)), order);
+                    }
                 }
                 _ => {}
             }

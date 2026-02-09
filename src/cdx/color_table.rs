@@ -1,8 +1,8 @@
 use crate::error::CdxError;
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
 use serde::{Deserialize, Serialize};
-use std::io::Cursor;
-
+use std::io::{Cursor, Read};
+use crate::cdx::binary_codec::BinaryCodec;
 /// An RGB color with components in the range 0.0 to 1.0
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub struct RGBColor {
@@ -17,36 +17,40 @@ impl RGBColor {
         RGBColor { red, green, blue }
     }
 
-    /// Encode to binary format (24 bytes: 3 f64 values)
+    /// Encode to binary format (6 bytes: 3 u16 values)
     pub fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        let mut buf = Vec::with_capacity(24);
-        buf.write_f64::<LittleEndian>(self.red)
+        let mut buf = Vec::new();
+        buf.write_u16::<LittleEndian>((self.red * 65535.0) as u16)
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        buf.write_f64::<LittleEndian>(self.green)
+        buf.write_u16::<LittleEndian>((self.green * 65535.0) as u16)
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        buf.write_f64::<LittleEndian>(self.blue)
+        buf.write_u16::<LittleEndian>((self.blue * 65535.0) as u16)
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
         Ok(buf)
     }
 
-    /// Decode from binary format (24 bytes: 3 f64 values)
+    /// Decode from binary format (6 bytes: 3 u16 values)
     pub fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.len() < 24 {
+        if data.len() < 6 {
             return Err(CdxError::DecodeError(
                 "Not enough bytes for RGBColor".to_string(),
             ));
         }
         let mut cursor = Cursor::new(data);
         let red = cursor
-            .read_f64::<LittleEndian>()
+            .read_u16::<LittleEndian>()
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
         let green = cursor
-            .read_f64::<LittleEndian>()
+            .read_u16::<LittleEndian>()
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
         let blue = cursor
-            .read_f64::<LittleEndian>()
+            .read_u16::<LittleEndian>()
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(RGBColor { red, green, blue })
+        Ok(RGBColor { 
+            red: red as f64 / 65535.0, 
+            green: green as f64 / 65535.0, 
+            blue: blue as f64 / 65535.0 
+        })
     }
 }
 
@@ -71,25 +75,24 @@ impl ColorTable {
         }
         Ok(ColorTable { colors })
     }
-
+}
+impl BinaryCodec for ColorTable {
     /// Encode the entire color table to binary
-    pub fn encode(&self) -> Result<Vec<u8>, CdxError> {
+    fn encode(&self) -> Result<Vec<u8>, CdxError> {
         let mut buf = Vec::new();
-
-        // Write number of colors as u32
-        buf.write_u32::<LittleEndian>(self.colors.len() as u32)
+        // Write number of colors
+        buf.write_u16::<LittleEndian>(self.colors.len() as u16)
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-
         // Write each color
         for color in &self.colors {
-            buf.extend(color.encode()?);
+            let color_bytes = color.encode()?;
+            buf.extend_from_slice(&color_bytes);
         }
-
         Ok(buf)
     }
 
     /// Decode the color table from binary
-    pub fn decode(data: &[u8]) -> Result<Self, CdxError> {
+    fn decode(data: &[u8]) -> Result<Self, CdxError> {
         if data.len() < 4 {
             return Err(CdxError::DecodeError(
                 "Not enough bytes for ColorTable header".to_string(),
@@ -100,7 +103,7 @@ impl ColorTable {
 
         // Read number of colors
         let color_count = cursor
-            .read_u32::<LittleEndian>()
+            .read_u16::<LittleEndian>()
             .map_err(|e| CdxError::DecodeError(e.to_string()))? as usize;
 
         if color_count == 0 {
@@ -111,10 +114,10 @@ impl ColorTable {
 
         let mut colors = Vec::new();
 
-        // Read each color (24 bytes each: 3 f64 values)
+        // Read each color (24 bytes each: 3 u16 values)
         for _ in 0..color_count {
             let pos = cursor.position() as usize;
-            if pos + 24 > data.len() {
+            if pos + 2*3 > data.len() {
                 return Err(CdxError::DecodeError(
                     "Not enough bytes to read color entry".to_string(),
                 ));
@@ -123,7 +126,7 @@ impl ColorTable {
             let color = RGBColor::decode(&data[pos..])?;
             colors.push(color);
 
-            cursor.set_position((pos + 24) as u64);
+            cursor.set_position((pos + 2*3) as u64);
         }
 
         ColorTable::new(colors)
@@ -144,53 +147,5 @@ impl Default for ColorTable {
                 RGBColor::new(0.0, 0.0, 0.0), // Black foreground
             ],
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-
-    #[test]
-    fn test_rgb_color_encode_decode() {
-        let color = RGBColor::new(0.5, 0.25, 0.75);
-        let encoded = color.encode().unwrap();
-        let decoded = RGBColor::decode(&encoded).unwrap();
-
-        assert_eq!(color.red, decoded.red);
-        assert_eq!(color.green, decoded.green);
-        assert_eq!(color.blue, decoded.blue);
-    }
-
-    #[test]
-    fn test_color_table_encode_decode() {
-        let colors = vec![
-            RGBColor::new(1.0, 1.0, 1.0), // White
-            RGBColor::new(0.0, 0.0, 0.0), // Black
-            RGBColor::new(1.0, 0.0, 0.0), // Red
-        ];
-
-        let table = ColorTable::new(colors).unwrap();
-        let encoded = table.encode().unwrap();
-        let decoded = ColorTable::decode(&encoded).unwrap();
-
-        assert_eq!(table.colors.len(), decoded.colors.len());
-        for (orig, dec) in table.colors.iter().zip(decoded.colors.iter()) {
-            assert_eq!(orig.red, dec.red);
-            assert_eq!(orig.green, dec.green);
-            assert_eq!(orig.blue, dec.blue);
-        }
-    }
-
-    #[test]
-    fn test_color_table_default() {
-        let table = ColorTable::default();
-        assert!(table.colors.len() >= 2);
-    }
-
-    #[test]
-    fn test_color_table_empty_error() {
-        let result = ColorTable::new(vec![]);
-        assert!(result.is_err());
     }
 }

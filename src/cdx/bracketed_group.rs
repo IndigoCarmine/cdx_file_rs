@@ -1,3 +1,4 @@
+use crate::cdx::values::CDXString;
 use serde::{Deserialize, Serialize};
 
 /// Bracketed Group (括弧で囲まれたグループ) Object
@@ -25,7 +26,7 @@ pub struct BracketedGroup {
 
     // Labels
     /// SRU (Structural Repeat Unit) label text
-    pub bracket_sru_label: Option<String>,
+    pub bracket_sru_label: Option<CDXString>,
 }
 
 impl BracketedGroup {

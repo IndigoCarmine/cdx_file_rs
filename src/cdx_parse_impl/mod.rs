@@ -9,7 +9,6 @@ pub mod bracket_attachment;
 pub mod bracketed_group;
 pub mod cdx_string;
 pub mod chemical_property;
-pub mod color_table;
 pub mod constraint;
 pub mod cross_reference;
 pub mod crossing_bond;

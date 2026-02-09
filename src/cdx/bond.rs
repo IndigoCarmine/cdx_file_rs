@@ -7,10 +7,10 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Bond {
     pub id: u32,
-    /// Required: ID of the CDX node object at the first end of the bond
-    pub begin: u32,
-    /// Required: ID of the CDX node object at the second end of the bond
-    pub end: u32,
+    /// ID of the CDX node object at the first end of the bond (CDX_PROP_BOND_BEGIN, 0x0600)
+    pub begin: Option<u32>,
+    /// ID of the CDX node object at the second end of the bond (CDX_PROP_BOND_END, 0x0601)
+    pub end: Option<u32>,
     /// Back-to-front ordering index in 2D drawing (Optional)
     pub z_order: Option<i16>,
     /// Whether chemical warnings should be suppressed (Optional)
@@ -75,11 +75,11 @@ pub struct Bond {
 
 impl Bond {
     /// Create a new Bond with required properties
-    pub fn new(id: u32, begin: u32, end: u32) -> Self {
+    pub fn new(id: u32) -> Self {
         Bond {
             id,
-            begin,
-            end,
+            begin: None,
+            end: None,
             z_order: None,
             ignore_warnings: None,
             chemical_warning: None,

@@ -14,12 +14,21 @@ impl Drawable for Bond {
             return;
         }
 
-        let start = match _ctx.node_position(self.begin) {
+        let begin_id = match self.begin {
+            Some(id) => id,
+            None => return,
+        };
+        let end_id = match self.end {
+            Some(id) => id,
+            None => return,
+        };
+
+        let start = match _ctx.node_position(begin_id) {
             Some(pos) => pos,
             None => return,
         };
 
-        let end = match _ctx.node_position(self.end) {
+        let end = match _ctx.node_position(end_id) {
             Some(pos) => pos,
             None => return,
         };

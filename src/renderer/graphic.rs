@@ -17,15 +17,6 @@ impl Drawable for Graphic {
     fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &crate::renderer::RenderContext<P>) {
         let graphic_type = self.graphic_type.unwrap_or(GRAPHIC_TYPE_LINE);
 
-        // Debug: Log if this is an arrow
-        #[cfg(debug_assertions)]
-        if self.arrow_type.is_some() {
-            eprintln!(
-                "Drawing Graphic id={}: type={}, arrow_type={:?}, bbox={:?}",
-                self.id, graphic_type, self.arrow_type, self.bounding_box
-            );
-        }
-
         match graphic_type {
             GRAPHIC_TYPE_LINE => self.draw_line(ctx),
             GRAPHIC_TYPE_RECTANGLE => self.draw_rectangle(ctx),
@@ -62,15 +53,7 @@ impl Graphic {
                 x: bbox.right,
                 y: bbox.bottom,
             });
-
-            // Debug: Log arrow coordinates
-            #[cfg(debug_assertions)]
-            if self.arrow_type.is_some() {
-                eprintln!(
-                    "Arrow line_seg: start={:?}, end={:?}, bbox={:?}",
-                    start_pos, end_pos, bbox
-                );
-            }
+  
 
             (start_pos, end_pos)
         } else {
@@ -314,11 +297,6 @@ impl Graphic {
             (length / 5.0).min(ctx.style.arrowhead_max_screen * scale)
         };
 
-        #[cfg(debug_assertions)]
-        eprintln!(
-            "Arrowhead: size={}, arrowhead_size={:?}, scale={}, line_length={}",
-            size, self.arrowhead_size, scale, length
-        );
 
         // Arrowhead points
         let base_x = end.x - norm_x * size;
@@ -328,9 +306,6 @@ impl Graphic {
         let p1 = end;
         let p2 = BackendPoint2d::new(base_x + perp_x * side_offset, base_y + perp_y * side_offset);
         let p3 = BackendPoint2d::new(base_x - perp_x * side_offset, base_y - perp_y * side_offset);
-
-        #[cfg(debug_assertions)]
-        eprintln!("Arrowhead points: p1={:?}, p2={:?}, p3={:?}", p1, p2, p3);
 
         ctx.painter.convex_polygon(
             &[p1, p2, p3],

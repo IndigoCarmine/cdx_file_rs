@@ -8,9 +8,9 @@ use serde::{Deserialize, Serialize};
 pub struct TextObject {
     pub id: u32,
 
-    // Required properties
-    /// The text content (CDXPROP_TEXT, 0x0700) - REQUIRED
-    pub text: CDXString,
+    // Properties
+    /// The text content (CDXPROP_TEXT, 0x0700)
+    pub text: Option<CDXString>,
 
     // Optional common properties
     /// Back-to-front ordering index in 2D drawing (Optional)
@@ -72,11 +72,11 @@ pub struct TextObject {
 }
 
 impl TextObject {
-    /// Create a new Text object with required properties
-    pub fn new(id: u32, text: CDXString) -> Self {
+    /// Create a new Text object with just an ID
+    pub fn new(id: u32) -> Self {
         TextObject {
             id,
-            text,
+            text: None,
             z_order: None,
             ignore_warnings: None,
             chemical_warning: None,

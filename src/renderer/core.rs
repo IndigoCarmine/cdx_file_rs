@@ -107,7 +107,6 @@ define_node_renderer!(
     BracketAttachment,
     BracketedGroup,
     ChemicalProperty,
-    ColorTable,
     Constraint,
     CrossReference,
     CrossingBond,
@@ -646,7 +645,7 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     }
 
     pub fn default_bond_length(&self) -> f64 {
-        self.document.bond_length.unwrap_or(30.0)
+        self.document.bond_length.unwrap() as f64
     }
 
     /// Resolve a color index using document color table and fallback
@@ -702,17 +701,17 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
 
     /// Get default line width from document or use fallback
     pub fn default_line_width(&self) -> f64 {
-        self.document.line_width.unwrap_or(1.0)
+        self.document.line_width.unwrap_or(1)as f64
     }
 
     /// Get default bold width from document or use fallback
     pub fn default_bold_width(&self) -> f64 {
-        self.document.bold_width.unwrap_or(2.0)
+        self.document.bold_width.unwrap_or(2)as f64
     }
 
     /// Get default bond spacing from document or use fallback
     pub fn default_bond_spacing(&self) -> i16 {
-        self.document.bond_spacing.unwrap_or(18)
+        self.document.bond_spacing.unwrap_or(1) as i16
     }
 
     /// Get default label font size from document or use fallback

@@ -1,4 +1,4 @@
-use crate::cdx::values::{Point2d, Point3d, Rectangle};
+use crate::cdx::values::{Point2d, Point3d, Rectangle, BooleanImplied};
 use crate::error::CdxError;
 /// Binary encoding/decoding utilities for CDX values
 use byteorder::{LittleEndian, ReadBytesExt, WriteBytesExt};
@@ -122,6 +122,22 @@ impl BinaryCodec for bool {
     }
 }
 
+impl BinaryCodec for BooleanImplied {
+    fn encode(&self) -> Result<Vec<u8>, CdxError> {
+        if self.0 {
+            Ok(vec![1])
+        } else {
+            Ok(vec![])
+        }
+    }
+    fn decode(data: &[u8]) -> Result<Self, CdxError> {
+        if data.is_empty() {
+            return Ok(BooleanImplied(false));
+        }
+        Ok(BooleanImplied(true))
+    }
+}
+
 impl BinaryCodec for String {
     fn encode(&self) -> Result<Vec<u8>, CdxError> {
         Ok(self.as_bytes().to_vec())
@@ -140,58 +156,110 @@ impl BinaryCodec for Vec<u8> {
     }
 }
 
+impl BinaryCodec for Vec<u32> {
+    fn encode(&self) -> Result<Vec<u8>, CdxError> {
+        let mut buf = Vec::with_capacity(self.len() * 4);
+        for &val in self {
+            buf.write_u32::<LittleEndian>(val)
+                .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+        }
+        Ok(buf)
+    }
+    fn decode(data: &[u8]) -> Result<Self, CdxError> {
+        let mut cursor = Cursor::new(data);
+        let mut result = Vec::new();
+        while cursor.position() < data.len() as u64 {
+            result.push(
+                cursor
+                    .read_u32::<LittleEndian>()
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))?,
+            );
+        }
+        Ok(result)
+    }
+}
+
+impl BinaryCodec for Vec<i16> {
+    fn encode(&self) -> Result<Vec<u8>, CdxError> {
+        let mut buf = Vec::with_capacity(2 + self.len() * 2);
+        buf.write_u16::<LittleEndian>(self.len() as u16)
+            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+        for &val in self {
+            buf.write_i16::<LittleEndian>(val)
+                .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+        }
+        Ok(buf)
+    }
+    fn decode(data: &[u8]) -> Result<Self, CdxError> {
+        if data.len() < 2 {
+            return Ok(Vec::new());
+        }
+        let mut cursor = Cursor::new(data);
+        let count = cursor
+            .read_u16::<LittleEndian>()
+            .map_err(|e| CdxError::DecodeError(e.to_string()))? as usize;
+        let mut result = Vec::with_capacity(count);
+        for _ in 0..count {
+            if cursor.position() + 2 > data.len() as u64 {
+                break;
+            }
+            result.push(
+                cursor
+                    .read_i16::<LittleEndian>()
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))?,
+            );
+        }
+        Ok(result)
+    }
+}
+
 // Vector of u32 (for ObjectIDArray)
 pub fn encode_u32_array(data: &[u32]) -> Result<Vec<u8>, CdxError> {
-    let mut buf = Vec::with_capacity(data.len() * 4);
-    for &val in data {
-        buf.write_u32::<LittleEndian>(val)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-    }
-    Ok(buf)
+    data.to_vec().encode()
 }
 
 pub fn decode_u32_array(data: &[u8]) -> Result<Vec<u32>, CdxError> {
-    let mut cursor = Cursor::new(data);
-    let mut result = Vec::new();
-    while cursor.position() < data.len() as u64 {
-        result.push(
-            cursor
-                .read_u32::<LittleEndian>()
-                .map_err(|e| CdxError::DecodeError(e.to_string()))?,
-        );
+    Vec::<u32>::decode(data)
+}
+
+impl BinaryCodec for Vec<f64> {
+    fn encode(&self) -> Result<Vec<u8>, CdxError> {
+        let mut buf = Vec::with_capacity(self.len() * 8);
+        for &val in self {
+            buf.write_f64::<LittleEndian>(val)
+                .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+        }
+        Ok(buf)
     }
-    Ok(result)
+    fn decode(data: &[u8]) -> Result<Self, CdxError> {
+        let mut cursor = Cursor::new(data);
+        let mut result = Vec::new();
+        while cursor.position() < data.len() as u64 {
+            result.push(
+                cursor
+                    .read_f64::<LittleEndian>()
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))?,
+            );
+        }
+        Ok(result)
+    }
 }
 
 // Vector of f64 (for spectrum data points)
 pub fn encode_f64_array(data: &[f64]) -> Result<Vec<u8>, CdxError> {
-    let mut buf = Vec::with_capacity(data.len() * 8);
-    for &val in data {
-        buf.write_f64::<LittleEndian>(val)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-    }
-    Ok(buf)
+    data.to_vec().encode()
 }
 
 pub fn decode_f64_array(data: &[u8]) -> Result<Vec<f64>, CdxError> {
-    let mut cursor = Cursor::new(data);
-    let mut result = Vec::new();
-    while cursor.position() < data.len() as u64 {
-        result.push(
-            cursor
-                .read_f64::<LittleEndian>()
-                .map_err(|e| CdxError::DecodeError(e.to_string()))?,
-        );
-    }
-    Ok(result)
+    Vec::<f64>::decode(data)
 }
 
 impl BinaryCodec for Point2d {
     fn encode(&self) -> Result<Vec<u8>, CdxError> {
         // CDX format uses i32 (fixed point with 16 fractional bits)
         let mut buf = Vec::with_capacity(8);
-        let x_fixed = (self.x * 65536.0) as i32;
-        let y_fixed = (self.y * 65536.0) as i32;
+        let x_fixed = (self.x ) as i32;
+        let y_fixed = (self.y ) as i32;
         buf.write_i32::<LittleEndian>(y_fixed)
             .map_err(|e| CdxError::DecodeError(e.to_string()))?; // Note: Y comes first in CDX format
         buf.write_i32::<LittleEndian>(x_fixed)
@@ -213,8 +281,8 @@ impl BinaryCodec for Point2d {
         let x_fixed = cursor
             .read_i32::<LittleEndian>()
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        let x = x_fixed as f64 / 65536.0;
-        let y = y_fixed as f64 / 65536.0;
+        let x = x_fixed as f64;
+        let y = y_fixed as f64;
         Ok(Point2d { x, y })
     }
 }
@@ -247,6 +315,23 @@ impl BinaryCodec for Point3d {
             .read_f64::<LittleEndian>()
             .map_err(|e| CdxError::DecodeError(e.to_string()))?;
         Ok(Point3d { x, y, z })
+    }
+}
+
+impl BinaryCodec for Vec<Point3d> {
+    fn encode(&self) -> Result<Vec<u8>, CdxError> {
+        let mut buf = Vec::with_capacity(self.len() * 24);
+        for point in self {
+            buf.extend_from_slice(&point.encode()?);
+        }
+        Ok(buf)
+    }
+    fn decode(data: &[u8]) -> Result<Self, CdxError> {
+        let mut result = Vec::with_capacity(data.len() / 24);
+        for chunk in data.chunks_exact(24) {
+            result.push(Point3d::decode(chunk)?);
+        }
+        Ok(result)
     }
 }
 
@@ -317,25 +402,11 @@ impl BinaryCodec for Rectangle {
 
 // Helper functions for ObjectIDArray (Vec<u32>) - stored as little-endian u32 values
 pub fn encode_object_id_array(data: &[u32]) -> Result<Vec<u8>, CdxError> {
-    let mut buf = Vec::with_capacity(data.len() * 4);
-    for &val in data {
-        buf.write_u32::<LittleEndian>(val)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-    }
-    Ok(buf)
+    encode_u32_array(data)
 }
 
 pub fn decode_object_id_array(data: &[u8]) -> Result<Vec<u32>, CdxError> {
-    let mut cursor = Cursor::new(data);
-    let mut result = Vec::new();
-    while cursor.position() < data.len() as u64 {
-        result.push(
-            cursor
-                .read_u32::<LittleEndian>()
-                .map_err(|e| CdxError::DecodeError(e.to_string()))?,
-        );
-    }
-    Ok(result)
+    decode_u32_array(data)
 }
 
 // Helper functions for CdxString (String with limited properties)

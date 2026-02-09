@@ -1,0 +1,11 @@
+pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011;
+
+pub const CDXPROP_Z_ORDER: u16 = 0x000A;
+pub const CDXPROP_VISIBLE: u16 = 0x0011;
+pub const CDXPROP_2D_POSITION: u16 = 0x0200;
+pub const CDXPROP_BOUNDING_BOX: u16 = 0x0204;
+pub const CDXPROP_FOREGROUND_COLOR: u16 = 0x0301;
+
+pub const CDXPROP_TAG_NAME: u16 = 0x0008;
+pub const CDXPROP_TAG_TYPE: u16 = 0x1102;
+pub const CDXPROP_TAG_VALUE: u16 = 0x1101;

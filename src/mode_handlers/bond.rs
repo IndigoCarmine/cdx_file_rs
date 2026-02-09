@@ -41,20 +41,20 @@ impl BondMode {
                     if let Some(length) = doc.bond_length {
                         length
                     } else {
-                        DEFAULT_BOND_LENGTH
+                        DEFAULT_BOND_LENGTH as i32
                     }
                 } else {
-                    DEFAULT_BOND_LENGTH
+                    DEFAULT_BOND_LENGTH as i32
                 }
             } else {
-                DEFAULT_BOND_LENGTH
+                DEFAULT_BOND_LENGTH as i32
             }
         };
 
         // Scale bond length by current zoom and auto_scale
         // This ensures bonds maintain consistent visual size regardless of zoom level
         let scale = (ctx.zoom * ctx.auto_scale) as f64;
-        base_length / scale
+        base_length as f64 / scale
     }
 
     pub fn new() -> Self {
@@ -283,7 +283,9 @@ impl BondMode {
         let new_id = cdx_file.next_id();
 
         // Create a new Bond
-        let new_bond = Bond::new(new_id, begin_id, end_id);
+        let mut new_bond = Bond::new(new_id);
+        new_bond.begin = Some(begin_id);
+        new_bond.end = Some(end_id);
 
         // Find the fragment containing the begin node
         if let Some(fragment) = cdx_file.find_fragment_for_node(begin_id) {

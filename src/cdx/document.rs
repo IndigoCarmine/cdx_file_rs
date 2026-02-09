@@ -1,5 +1,5 @@
 use crate::cdx::color_table::ColorTable;
-use crate::cdx::values::{CDXString, Point2d, Rectangle};
+use crate::cdx::values::{CDXString, Point2d, Rectangle,BooleanImplied};
 use serde::{Deserialize, Serialize};
 /// Document Object: The top-level CDX object
 /// A Document is the top-level CDX object. It contains all CDX properties and objects.
@@ -44,11 +44,11 @@ pub struct Document {
     // Bond/Chain defaults
     pub chain_angle: Option<i32>,
     pub bond_spacing: Option<i16>,
-    pub bond_length: Option<f64>,
-    pub bold_width: Option<f64>,
-    pub line_width: Option<f64>,
-    pub margin_width: Option<f64>,
-    pub hash_spacing: Option<f64>,
+    pub bond_length: Option<i32>,
+    pub bold_width: Option<i32>,
+    pub line_width: Option<i32>,
+    pub margin_width: Option<i32>,
+    pub hash_spacing: Option<i32>,
 
     // Justification/Width settings
     pub caption_justification: Option<i8>,
@@ -72,7 +72,7 @@ pub struct Document {
     pub cartridge_data: Option<Vec<u8>>,
 
     // Window State
-    pub window_is_zoomed: Option<bool>,
+    pub window_is_zoomed: Option<BooleanImplied>,
     pub window_position: Option<Point2d>,
     pub window_size: Option<Point2d>,
 }
