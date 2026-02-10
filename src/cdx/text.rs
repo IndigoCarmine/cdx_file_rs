@@ -1,4 +1,4 @@
-use crate::cdx::values::{CDXString, Point2d, Rectangle};
+use crate::{cdx::values::{CDXString, Point2d, Rectangle,BooleanImplied}};
 use serde::{Deserialize, Serialize};
 
 /// Text Object: An arbitrary block of (possibly styled) text
@@ -16,7 +16,7 @@ pub struct TextObject {
     /// Back-to-front ordering index in 2D drawing (Optional)
     pub z_order: Option<i16>,
     /// Suppress chemical warnings (Optional)
-    pub ignore_warnings: Option<bool>,
+    pub ignore_warnings: Option<BooleanImplied>,
     /// Chemical warning text (Optional)
     pub chemical_warning: Option<CDXString>,
     /// Visibility flag (Optional)

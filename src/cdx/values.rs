@@ -92,7 +92,10 @@ pub struct CDXStyleRun {
     pub char_index: u16,
     /// Zero-based index to font table
     pub font_index: u16,
-    /// Font face/style (0x00=plain, 0x01=bold, 0x02=italic, 0x04=underline, etc.)
+    /// Font face/style (0x00=plain, 0x01=bold, 0x02=italic, 0x04=underline, 0x08=outline, 0x10=shadow, 0x20=subscript,
+    ///  0x40=superscript, 0x60=formula) 
+    /// Note that the subscript, superscript, and formula styles are mutually exclusive. 
+    /// The other styles may be combined by OR-ing the type codes. 
     pub font_face: u16,
     /// Font size in 20ths of a point
     pub font_size: u16,

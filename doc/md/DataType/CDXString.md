@@ -7,10 +7,6 @@
 | 0-1 | [UINT16](CDXNumeric.md) | The character at which this style starts |
 | --- | --- | --- |
 | 2-9 | [Style run](#FontStyleRun) | A struct describing this style run |
-
-| 0-1 | [UINT16](CDXNumeric.md) | The character at which this style starts |
-| --- | --- | --- |
-| 2-9 | [Style run](#FontStyleRun) | A struct describing this style run |
 | Text | The string's text written out. The string's length is implicit and determined by subtracting the length of the first two items from the total length of the CDXText object |
 
 The first two bytes of a CDXString are a UINT16 indicating the number of font style runs. If the number of font style runs is zero, the string is taken to be ISO Latin 1 with no particular font or size specified. In some cases, this may imply the use of a default text style specified elsewhere. If the number of font style runs is not zero, it is followed by that many font style runs (see below), which is then followed by string text.

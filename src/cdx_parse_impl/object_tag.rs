@@ -3,12 +3,12 @@ use crate::cdx_tags::object_tag_tags::*;
 use crate::impl_tagged_object;
 
 impl_tagged_object!(ObjectTag, CDXOBJ_OBJECT_TAG, {
-    tag_name: CDXPROP_TAG_NAME,
-    z_order: CDXPROP_Z_ORDER,
-    visible: CDXPROP_VISIBLE,
-    bounding_box: CDXPROP_BOUNDING_BOX,
-    position: CDXPROP_2D_POSITION,
-    foreground_color: CDXPROP_FOREGROUND_COLOR,
-    tag_type: CDXPROP_TAG_TYPE,
-    tag_value: CDXPROP_TAG_VALUE,
+    name: CDXPROP_NAME,
+    object_type: CDXPROP_OBJECTTAG_TYPE,
+    trackig: CDXPROP_OBJECTTAG_TRACKING,
+    oersistent: CDXPROP_OBJECTTAG_PERSISTENT,
+    value: CDXPROP_OBJECTTAG_VALUE,
+    positioning: CDXPROP_POSITIONING,
+    position_angle: CDXPROP_POSITION_ANGLE,
+    position_offset: CDXPROP_POSITION_ANGLE_OFFSET,
 });

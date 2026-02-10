@@ -26,6 +26,7 @@ macro_rules! impl_tagged_object {
                         println!("Warning: Missing property tag=0x{:x} in object tag=0x{:x}", $prop_tag, raw.tag);
                         println!("Raw object properties: {:?}", raw.get_property($prop_tag));
                     }
+                    
                 )*
                 Ok(obj)
             }

@@ -41,6 +41,7 @@ pub use super::tlc_lane::TlcLane;
 pub use super::tlc_plate::TLCPlate;
 pub use super::tlc_spot::TLCSpot;
 pub use super::unknown::*;
+use crate::cdx_parse_impl::tagged_object::TaggedObject;
 
 macro_rules! extract_id {
     ($payload:expr) => {
@@ -275,7 +276,17 @@ macro_rules! define_node_payload {
                 $ty($ty),
             )*
         }
+        impl NodePayload {
+            pub fn tag(&self) -> u16 {
+                match self {
+                    $(
+                        NodePayload::$ty(_) => <$ty as TaggedObject>::TAG,
+                    )*
+                }
+            }
+        }
     };
+
 }
 
 define_node_payload!(

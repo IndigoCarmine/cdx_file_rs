@@ -8,105 +8,55 @@ pub trait BinaryCodec: Sized {
     fn decode(data: &[u8]) -> Result<Self, CdxError>;
 }
 
-// Primitive types
-impl BinaryCodec for u8 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        Ok(vec![*self])
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.is_empty() {
-            return Err(CdxError::DecodeError("Not enough bytes for u8".to_string()));
+
+
+macro_rules! impl_binary_codec_numeric {
+    // For types that require endianness (u16, i16, u32, i32, f64)
+    ($ty:ty, $size:expr, $write_fn:ident, $read_fn:ident, $endian:ident) => {
+        impl BinaryCodec for $ty {
+            fn encode(&self) -> Result<Vec<u8>, CdxError> {
+                let mut buf = Vec::with_capacity($size);
+                buf.$write_fn::<$endian>(*self)
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+                Ok(buf)
+            }
+
+            fn decode(data: &[u8]) -> Result<Self, CdxError> {
+                let mut cursor = Cursor::new(data);
+                cursor
+                    .$read_fn::<$endian>()
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))
+            }
         }
-        Ok(data[0])
-    }
-}
+    };
+    // For types that do NOT require endianness (u8, i8)
+    ($ty:ty, $size:expr, $write_fn:ident, $read_fn:ident) => {
+        impl BinaryCodec for $ty {
+            fn encode(&self) -> Result<Vec<u8>, CdxError> {
+                let mut buf = Vec::with_capacity($size);
+                buf.$write_fn(*self)
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))?;
+                Ok(buf)
+            }
 
-impl BinaryCodec for i8 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        Ok(vec![*self as u8])
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        if data.is_empty() {
-            return Err(CdxError::DecodeError("Not enough bytes for i8".to_string()));
+            fn decode(data: &[u8]) -> Result<Self, CdxError> {
+                let mut cursor = Cursor::new(data);
+                cursor
+                    .$read_fn()
+                    .map_err(|e| CdxError::DecodeError(e.to_string()))
+            }
         }
-        Ok(data[0] as i8)
-    }
+    };
 }
 
-impl BinaryCodec for u16 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        let mut buf = Vec::with_capacity(2);
-        buf.write_u16::<LittleEndian>(*self)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(buf)
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        let mut cursor = Cursor::new(data);
-        cursor
-            .read_u16::<LittleEndian>()
-            .map_err(|e| CdxError::DecodeError(e.to_string()))
-    }
-}
+impl_binary_codec_numeric!(u8, 1, write_u8, read_u8);
+impl_binary_codec_numeric!(i8, 1, write_i8, read_i8);
+impl_binary_codec_numeric!(u16, 2, write_u16, read_u16, LittleEndian);
+impl_binary_codec_numeric!(i16, 2, write_i16, read_i16, LittleEndian);
+impl_binary_codec_numeric!(u32, 4, write_u32, read_u32, LittleEndian);
+impl_binary_codec_numeric!(i32, 4, write_i32, read_i32, LittleEndian);
+impl_binary_codec_numeric!(f64, 8, write_f64, read_f64, LittleEndian);
 
-impl BinaryCodec for i16 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        let mut buf = Vec::with_capacity(2);
-        buf.write_i16::<LittleEndian>(*self)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(buf)
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        let mut cursor = Cursor::new(data);
-        cursor
-            .read_i16::<LittleEndian>()
-            .map_err(|e| CdxError::DecodeError(e.to_string()))
-    }
-}
-
-impl BinaryCodec for u32 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        let mut buf = Vec::with_capacity(4);
-        buf.write_u32::<LittleEndian>(*self)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(buf)
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        let mut cursor = Cursor::new(data);
-        cursor
-            .read_u32::<LittleEndian>()
-            .map_err(|e| CdxError::DecodeError(e.to_string()))
-    }
-}
-
-impl BinaryCodec for i32 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        let mut buf = Vec::with_capacity(4);
-        buf.write_i32::<LittleEndian>(*self)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(buf)
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        let mut cursor = Cursor::new(data);
-        cursor
-            .read_i32::<LittleEndian>()
-            .map_err(|e| CdxError::DecodeError(e.to_string()))
-    }
-}
-
-impl BinaryCodec for f64 {
-    fn encode(&self) -> Result<Vec<u8>, CdxError> {
-        let mut buf = Vec::with_capacity(8);
-        buf.write_f64::<LittleEndian>(*self)
-            .map_err(|e| CdxError::DecodeError(e.to_string()))?;
-        Ok(buf)
-    }
-    fn decode(data: &[u8]) -> Result<Self, CdxError> {
-        let mut cursor = Cursor::new(data);
-        cursor
-            .read_f64::<LittleEndian>()
-            .map_err(|e| CdxError::DecodeError(e.to_string()))
-    }
-}
 
 impl BinaryCodec for bool {
     fn encode(&self) -> Result<Vec<u8>, CdxError> {
