@@ -14,7 +14,7 @@ impl Drawable for TextObject {
         }
 
         if let Some(ref pos) = self.position_2d {
-            let screen_pos = ctx.cdx_to_screen(pos);
+            let screen_pos = ctx.cdx_to_screen(&pos.to_backend_point());
 
             // Determine base alignment based on justification
             let base_align = match self.justification.or(self.caption_justification) {
@@ -40,15 +40,16 @@ impl Drawable for TextObject {
                         ctx.default_caption_size()
                     };
 
-                    // Determine text color (prefer caption color, fallback to label color, then document default)
-                    let color = if let Some(idx) = self.caption_color {
-                        ctx.resolve_color_i16(Some(idx), ctx.default_caption_color())
-                    } else if let Some(idx) = self.label_color {
-                        ctx.resolve_color_i16(Some(idx), ctx.default_label_color())
-                    } else {
-                        ctx.default_caption_color()
-                    };
+                    // // Determine text color (prefer caption color, fallback to label color, then document default)
+                    // let color = if let Some(idx) = self.caption_color {
+                    //     ctx.resolve_color_i16(Some(idx), ctx.default_caption_color())
+                    // } else if let Some(idx) = self.label_color {
+                    //     ctx.resolve_color_i16(Some(idx), ctx.default_label_color())
+                    // } else {
+                    //     ctx.default_caption_color()
+                    // };
 
+                    let color = super::Color::from_rgb(255,255,255,);
                     let span = TextSpan::new(text_str.clone(), font_size, color);
                     ctx.painter.rich_text(screen_pos, base_align, &[span]);
                     return;

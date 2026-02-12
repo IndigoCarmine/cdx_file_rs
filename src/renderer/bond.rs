@@ -1,7 +1,8 @@
 use crate::cdx::bond::Bond;
 use crate::cdx::values::Rectangle;
+use crate::renderer::to_points::{self, ToBackendF32};
 use crate::renderer::{
-    Drawable, RenderContext,
+    Drawable,
     backend::{Point2d as BackendPoint2d, Stroke},
 };
 
@@ -24,22 +25,23 @@ impl Drawable for Bond {
         };
 
         let start = match _ctx.node_position(begin_id) {
-            Some(pos) => pos,
+            Some(pos) => pos.to_backend_point(),
             None => return,
         };
 
         let end = match _ctx.node_position(end_id) {
-            Some(pos) => pos,
+            Some(pos) => pos.to_backend_point(),
             None => return,
         };
 
-        let p1 = _ctx.cdx_to_screen(start);
-        let p2 = _ctx.cdx_to_screen(end);
+        let p1 = _ctx.cdx_to_screen(&start);
+        let p2 = _ctx.cdx_to_screen(&end);
 
         let color = _ctx.resolve_color(self.foreground_color, _ctx.default_foreground_color());
 
-        let line_width = self.line_width.unwrap_or(_ctx.default_line_width()) as f32;
-        let stroke = Stroke::new(line_width.max(0.5), color);
+        let line_width = (self.line_width.unwrap_or(_ctx.default_line_width()) as f32).to_backend_f32();
+        let stroke = Stroke::new(line_width, color);
+
 
         let order = self.bond_order.unwrap_or(1);
 
@@ -63,7 +65,7 @@ impl Drawable for Bond {
         // - In CDX format: stored as (10 * percent), so default 18 means 1.8%
         // - In CDXML format: stored directly as percent, so 18 means 18%
         // The spacing is measured between the line segments (not from center of each line)
-        let spacing_percent_raw = self.bond_spacing.unwrap_or(_ctx.default_bond_spacing()) as f32;
+        let spacing_percent_raw = self.bond_spacing.unwrap_or(_ctx.default_bond_spacing()) as f32 / 10.0;
 
         // BondSpacingAbs takes precedence if available (per CDX specification)
         let spacing_screen = if let Some(abs_spacing) = self.bond_spacing_abs {
@@ -73,7 +75,7 @@ impl Drawable for Bond {
             // Use relative spacing: spacing_percent_raw is in CDX units (10 * percent)
             // For CDX: 180 means 18%, so divide by 1000 (= 10 * 100)
             // Calculate as percentage of bond length on screen
-            len * (spacing_percent_raw / 1000.0)
+            len * (spacing_percent_raw / 100.0)
         };
 
         if order == 2 {

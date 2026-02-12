@@ -344,22 +344,23 @@ impl<'a> CdxRenderer<'a> {
 
     /// Calculate auto-scale factor to fit document bounds within window
     /// Returns (scale, center_offset)
-    fn calculate_auto_scale(&self, node_positions: &HashMap<u32, CdxPoint2d>) -> (f32, egui::Vec2) {
+    pub fn calculate_auto_scale(&self, node_positions: &HashMap<u32, CdxPoint2d>) -> (f32, egui::Vec2) {
         if node_positions.is_empty() {
             return (1.0, egui::Vec2::ZERO);
         }
 
-        // Find bounding box of all nodes
+        // Find bounding box of all nodes (apply to_backend_point for scaling)
         let mut min_x = f64::INFINITY;
         let mut max_x = f64::NEG_INFINITY;
         let mut min_y = f64::INFINITY;
         let mut max_y = f64::NEG_INFINITY;
 
         for pos in node_positions.values() {
-            min_x = min_x.min(pos.x);
-            max_x = max_x.max(pos.x);
-            min_y = min_y.min(pos.y);
-            max_y = max_y.max(pos.y);
+            let backend_pos = pos.to_backend_point();
+            min_x = min_x.min(backend_pos.x);
+            max_x = max_x.max(backend_pos.x);
+            min_y = min_y.min(backend_pos.y);
+            max_y = max_y.max(backend_pos.y);
         }
 
         let doc_width = max_x - min_x;
@@ -551,6 +552,7 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
     /// - With parent_offset=(50, 50):
     ///   CDX(100, 100) → Screen(550, 450) [offset applied before scaling]
     pub fn cdx_to_screen(&self, cdx_pos: &CdxPoint2d) -> BackendPoint2d {
+        let cdx_pos = cdx_pos;
         let scale = self.zoom * self.auto_scale;
         // Apply parent offset to the CDX position
         let adjusted_x = cdx_pos.x + self.parent_offset.x;

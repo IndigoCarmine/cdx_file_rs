@@ -9,6 +9,7 @@ mod renderer;
 use crate::cdx::file::CdxFile;
 use crate::modes::{ModeContext, ModeHandler};
 use crate::renderer::CdxRenderer;
+use crate::renderer::to_points::ToBackendF32;
 use cdx_file_rs::renderer::font_loader;
 use eframe::{App, egui};
 use std::cell::RefCell;
@@ -108,11 +109,16 @@ impl CdxApp {
                         self.error = None;
                         self.reset_view();
 
-                        // Calculate center offset for auto-scaling
+                        // Calculate center offset and auto-scale using CdxRenderer
                         if let Some(ref cdx_file) = *self.cdx_file.borrow() {
-                            let (offset, scale) = self.calculate_center_offset(cdx_file);
-                            self.center_offset = offset;
-                            self.auto_scale = scale;
+                            let mut node_positions: std::collections::HashMap<u32, crate::cdx::values::Point2d> = std::collections::HashMap::new();
+                            self.collect_node_positions(&cdx_file.tree.root(), &mut node_positions);
+                            // window size: 1200x800 (fixed)
+                            let window_size = egui::Vec2::new(1200.0, 800.0);
+                            let renderer = crate::renderer::CdxRenderer::new(1.0, egui::Vec2::ZERO, cdx_file, window_size);
+                            let (auto_scale, center_offset) = renderer.calculate_auto_scale(&node_positions);
+                            self.center_offset = center_offset;
+                            self.auto_scale = auto_scale;
                         }
                     }
                     Err(e) => self.error = Some(format!("Failed to parse CDX: {}", e)),
@@ -128,83 +134,7 @@ impl CdxApp {
         // center_offset remains as calculated when file was loaded
     }
 
-    fn calculate_center_offset(&self, cdx_file: &CdxFile) -> (egui::Vec2, f32) {
-        let mut node_positions: std::collections::HashMap<u32, crate::cdx::values::Point2d> =
-            std::collections::HashMap::new();
-
-        // Collect all node positions
-        self.collect_node_positions(&cdx_file.tree.root(), &mut node_positions);
-
-        // Calculate bounds from node positions (for centering)
-        let mut min_x = f64::INFINITY;
-        let mut max_x = f64::NEG_INFINITY;
-        let mut min_y = f64::INFINITY;
-        let mut max_y = f64::NEG_INFINITY;
-
-        for pos in node_positions.values() {
-            min_x = min_x.min(pos.x);
-            max_x = max_x.max(pos.x);
-            min_y = min_y.min(pos.y);
-            max_y = max_y.max(pos.y);
-        }
-
-        // Get document dimensions - priority order:
-        // 1. First Page's width/height properties (most reliable for ChemDraw 6.0+)
-        // 2. First Page's bounding_box
-        // 3. Document's bounding_box (legacy, ChemDraw < 6.0)
-        // 4. Calculated from node positions (fallback)
-        let (doc_width, doc_height) = if let Some(page) = cdx_file.get_first_page() {
-            // Try Page's explicit width/height first
-            if let (Some(w), Some(h)) = (page.width, page.height) {
-                (w, h)
-            } else if let Some(bb) = page.bounding_box {
-                ((bb.right - bb.left) as f64, (bb.bottom - bb.top) as f64)
-            } else if let Some(bb) = cdx_file.get_document().ok().and_then(|d| d.bounding_box) {
-                ((bb.right - bb.left) as f64, (bb.bottom - bb.top) as f64)
-            } else {
-                (max_x - min_x, max_y - min_y)
-            }
-        } else if let Some(bb) = cdx_file.get_document().ok().and_then(|d| d.bounding_box) {
-            ((bb.right - bb.left) as f64, (bb.bottom - bb.top) as f64)
-        } else {
-            (max_x - min_x, max_y - min_y)
-        };
-
-        if doc_width <= 0.0 || doc_height <= 0.0 {
-            return (egui::Vec2::ZERO, 1.0);
-        }
-
-        // Apply magnification from document if available
-        // Magnification is stored as 10 * percent (e.g., 1500 = 150%)
-        let magnification = cdx_file
-            .get_document()
-            .ok()
-            .and_then(|d| d.magnification)
-            .map(|m| m as f32 / 1000.0) // Convert to multiplier (1500 -> 1.5)
-            .unwrap_or(1.0);
-
-        // Calculate scale to fit in window with padding
-        let padding = 50.0;
-        let available_width = 1200.0 - padding * 2.0; // window width
-        let available_height = 800.0 - padding * 2.0; // window height
-
-        let scale_x = available_width / doc_width as f32;
-        let scale_y = available_height / doc_height as f32;
-        let auto_scale = scale_x.min(scale_y) * magnification;
-
-        // Calculate center offset
-        let doc_center_x = ((min_x + max_x) / 2.0) as f32;
-        let doc_center_y = ((min_y + max_y) / 2.0) as f32;
-        let window_center_x = 1200.0 / 2.0;
-        let window_center_y = 800.0 / 2.0;
-
-        let offset = egui::Vec2::new(
-            window_center_x - doc_center_x * auto_scale,
-            window_center_y + doc_center_y * auto_scale,
-        );
-
-        (offset, auto_scale)
-    }
+    // calculate_center_offsetは不要なので削除
 
     fn collect_node_positions(
         &self,

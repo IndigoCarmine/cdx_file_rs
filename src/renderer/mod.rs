@@ -56,3 +56,5 @@ pub mod annotation;
 pub mod unknown;
 pub mod seg_datum;
 pub mod stoichiometrygrid;
+pub mod to_points;
+pub mod scaled_objects;

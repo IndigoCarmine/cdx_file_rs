@@ -1,8 +1,9 @@
 use crate::cdx::file::NodePayload;
 use crate::modes::{ModeContext, ModeHandler};
 use crate::renderer::element_to_symbol;
+use cdx_file_rs::renderer::to_points::ToBackendF32;
 use dendron::Node;
-use eframe::egui;
+use eframe::egui::{self, Pos2};
 
 pub struct DebugMode {
     hovered_object_info: Option<ObjectInfo>,
@@ -296,6 +297,31 @@ impl DebugMode {
             }
         }
     }
+
+
+    
+
+    fn drawbox(tree: &dendron::Node<NodePayload>, ctx: &ModeContext, painter: &egui::Painter) {
+        let cdx_borrow = ctx.cdx_file.borrow();
+        let Some(cdx_file) = cdx_borrow.as_ref() else {
+            return;
+        };
+        
+        for object in tree.children() {
+            if let Some(boundingbox) = object.borrow_data().get_bounding_box() {
+                let rect_backend = boundingbox.to_backend_rect();
+                let top_left = ctx.cdx_to_screen(
+                    &crate::cdx::values::Point2d { x: rect_backend.left, y: rect_backend.top });
+                let bottom_right = ctx.cdx_to_screen(
+                    &crate::cdx::values::Point2d { x: rect_backend.right, y: rect_backend.bottom });
+
+                let rect = egui::Rect::from_min_max(top_left, bottom_right);
+                painter.rect_stroke(rect, 0.0, egui::Stroke::new(1.0, egui::Color32::LIGHT_GRAY));
+            }
+
+            DebugMode::drawbox(&object, ctx, painter);
+        }
+    }   
 }
 
 impl ModeHandler for DebugMode {
@@ -318,19 +344,21 @@ impl ModeHandler for DebugMode {
 
     fn handle_drag_end(&mut self, _ctx: &mut ModeContext) {}
 
+
     fn handle_hover(&self, ctx: &ModeContext, painter: &egui::Painter) {
         let cdx_borrow = ctx.cdx_file.borrow();
         let Some(cdx_file) = cdx_borrow.as_ref() else {
             return;
         };
+        
+        // draw bounding box for all objects
+        DebugMode::drawbox(&cdx_file.tree.root(), ctx, painter);
+    
 
         // Get hovered object
         let hovered = self.get_object_at_position(ctx, cdx_file);
 
-        // Draw bounding boxes
-        if let Some(ref selected) = self.selected_object_info {
-            self.draw_bounding_box(ctx, painter, selected, egui::Color32::RED);
-        }
+
 
         if let Some(ref hovered_info) = hovered {
             self.draw_bounding_box(ctx, painter, hovered_info, egui::Color32::YELLOW);

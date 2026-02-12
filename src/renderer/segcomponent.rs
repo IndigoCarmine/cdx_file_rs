@@ -14,7 +14,9 @@ impl Drawable for SegComponent {
         node: &dendron::Node<crate::cdx::file::NodePayload>,
     ) {
         let bbox = ctx.accumulate_children_bounding_box(node);
+        
         if let Some(bbox_inner) = bbox {
+            let bbox = bbox_inner.to_backend_rect();
             let screen_rect = ctx.cdx_rect_to_screen(&bbox_inner);
             ctx.painter
                 .rect_stroke(screen_rect, 0.0, ctx.default_stroke());
