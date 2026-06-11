@@ -362,11 +362,16 @@ impl AbstractPainter for ImagePngBackend {
             Align::Right => pos.x - total_width,
         };
 
-        // Calculate base Y position based on vertical alignment
+        // Calculate base Y position based on vertical alignment.
+        // VerticalAlign::Bottom means "alphabetic baseline at pos.y".
+        // draw_text_mut expects y = top of ascent, so subtract the font's ascent.
         let base_y = match align.y {
             VerticalAlign::Top => pos.y,
             VerticalAlign::Center => pos.y - first_span_height / 2.0,
-            VerticalAlign::Bottom => pos.y - first_span_height,
+            VerticalAlign::Bottom => {
+                let scale = PxScale::from(spans[0].font_size);
+                pos.y - self.font.as_scaled(scale).ascent()
+            }
         };
 
         // Draw each span

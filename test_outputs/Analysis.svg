@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
   <rect x="0" y="0" width="800" height="600" fill="rgb(255,255,255)" />
-  <text x="521.4164" y="143.68423" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">S</text>
-  <text x="518.41766" y="65.76722" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">O</text>
-  <text x="585.8962" y="182.64183" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">OH</text>
+  <text x="521.4164" y="143.68423" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
+  <text x="518.41766" y="65.76722" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
+  <text x="585.8962" y="182.64183" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">OH</text>
   <line x1="134.56343" y1="278.41583" x2="134.56343" y2="356.27878" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
   <line x1="148.57877" y1="290.09528" x2="148.57877" y2="344.59933" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
   <line x1="134.56343" y1="356.27878" x2="202.0915" y2="395.23727" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
@@ -26,13 +26,13 @@
   <line x1="539.46155" y1="122.581726" x2="539.46155" y2="44.66472" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
   <line x1="525.43646" y1="110.89417" x2="525.43646" y2="56.352264" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
   <line x1="539.46155" y1="122.581726" x2="606.94006" y2="161.53932" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <text x="-13.934326" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Chemical formula: </text>
-  <text x="570.4435" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">C</text>
-  <text x="602.90894" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">12</text>
-  <text x="648.36053" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">H</text>
-  <text x="680.826" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">10</text>
-  <text x="726.2776" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">O</text>
-  <text x="758.74304" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">2</text>
-  <text x="781.4689" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">S</text>
-  <text x="75.34564" y="551.05176" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Exact mass: 218.0402</text>
+  <text x="-13.934326" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">Chemical formula: </text>
+  <text x="570.4435" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">C</text>
+  <text x="602.90894" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">12</text>
+  <text x="648.36053" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">H</text>
+  <text x="680.826" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">10</text>
+  <text x="726.2776" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
+  <text x="758.74304" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">2</text>
+  <text x="781.4689" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
+  <text x="75.34564" y="551.05176" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">Exact mass: 218.0402</text>
 </svg>

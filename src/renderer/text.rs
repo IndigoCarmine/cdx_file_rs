@@ -16,12 +16,14 @@ impl Drawable for TextObject {
         if let Some(ref pos) = self.position_2d {
             let screen_pos = ctx.cdx_to_screen(&pos.to_backend_point());
 
-            // Determine base alignment based on justification
+            // Determine base alignment based on justification.
+            // CDX position_2d.y is the alphabetic baseline (not the em-box center),
+            // so use VerticalAlign::Bottom which maps to dominant-baseline="alphabetic" in SVG.
             let base_align = match self.justification.or(self.caption_justification) {
-                Some(0) => Align2::LEFT_CENTER,   // Left
-                Some(1) => Align2::CENTER_CENTER, // Center
-                Some(2) => Align2::RIGHT_CENTER,  // Right
-                _ => Align2::LEFT_CENTER,         // Default to left
+                Some(0) => Align2::LEFT_BOTTOM,   // Left
+                Some(1) => Align2::CENTER_BOTTOM, // Center
+                Some(2) => Align2::RIGHT_BOTTOM,  // Right
+                _ => Align2::LEFT_BOTTOM,         // Default to left
             };
 
             // Get text content from CDXString

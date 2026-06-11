@@ -231,7 +231,7 @@ impl AbstractPainter for SvgBackend {
         let dominant_baseline = match align.y {
             VerticalAlign::Top => "hanging",
             VerticalAlign::Center => "middle",
-            VerticalAlign::Bottom => "baseline",
+            VerticalAlign::Bottom => "alphabetic",
         };
 
         // Draw each span

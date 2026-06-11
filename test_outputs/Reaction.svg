@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
   <rect x="0" y="0" width="800" height="600" fill="rgb(255,255,255)" />
-  <text x="250.78592" y="230.62761" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">S</text>
-  <text x="248.99695" y="184.14444" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">O</text>
+  <text x="250.78592" y="230.62761" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
+  <text x="248.99695" y="184.14444" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
   <line x1="20.00003" y1="311.00482" x2="20.00003" y2="357.4557" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="28.361187" y1="317.97244" x2="28.361187" y2="350.48807" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="20.00003" y1="357.4557" x2="60.28543" y2="380.69727" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
@@ -25,8 +25,8 @@
   <line x1="261.55115" y1="218.03842" x2="301.80432" y2="241.28001" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="261.55115" y1="218.03842" x2="261.55115" y2="171.55527" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="253.18417" y1="211.06595" x2="253.18417" y2="178.52774" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
-  <text x="728.9816" y="230.59534" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">S</text>
-  <text x="727.1926" y="184.14444" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">O</text>
+  <text x="728.9816" y="230.59534" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
+  <text x="727.1926" y="184.14444" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
   <line x1="498.22797" y1="311.00482" x2="498.22797" y2="357.4557" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="506.5891" y1="317.97244" x2="506.5891" y2="350.48807" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="498.22797" y1="357.4557" x2="538.48114" y2="380.69727" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
@@ -50,8 +50,8 @@
   <line x1="739.7468" y1="218.00616" x2="780" y2="241.24774" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="739.7468" y1="218.00616" x2="739.7468" y2="171.55527" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <line x1="731.3857" y1="211.03853" x2="731.3857" y2="178.5229" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
-  <text x="131.62422" y="434.92767" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">(I)</text>
-  <text x="609.8199" y="434.92767" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">(I)</text>
+  <text x="131.62422" y="434.92767" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">(I)</text>
+  <text x="609.8199" y="434.92767" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">(I)</text>
   <line x1="351.03128" y1="269.33133" x2="448.51685" y2="269.33133" stroke="rgb(0,0,0)" stroke-width="1.9367695" stroke-linecap="round" />
   <polygon points="448.51685,269.33133 416.02167,282.3294 416.02167,256.33325" fill="rgb(0,0,0)" />
 </svg>
