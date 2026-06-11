@@ -1,38 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
-  <rect x="0" y="0" width="800" height="600" fill="rgb(255,255,255)" />
-  <text x="521.4164" y="143.68423" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
-  <text x="518.41766" y="65.76722" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
-  <text x="585.8962" y="182.64183" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">OH</text>
-  <line x1="134.56343" y1="278.41583" x2="134.56343" y2="356.27878" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="148.57877" y1="290.09528" x2="148.57877" y2="344.59933" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="134.56343" y1="356.27878" x2="202.0915" y2="395.23727" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="202.0915" y1="395.23727" x2="269.56552" y2="356.27878" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="205.20007" y1="377.24817" x2="252.43188" y2="349.97723" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="269.56552" y1="356.27878" x2="269.56552" y2="278.41583" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="269.56552" y1="278.41583" x2="202.0915" y2="239.45734" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="252.43188" y1="284.71738" x2="205.20007" y2="257.44644" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="202.0915" y1="239.45734" x2="134.56343" y2="278.41583" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="269.56552" y1="278.41583" x2="337.03952" y2="239.45734" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="337.03952" y1="239.45734" x2="404.51352" y2="278.41583" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="354.17316" y1="233.15579" x2="401.40497" y2="260.42673" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="404.51352" y1="278.41583" x2="471.98752" y2="239.45734" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="471.98752" y1="239.45734" x2="471.98752" y2="161.54024" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="457.96243" y1="227.76978" x2="457.96243" y2="173.2278" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="471.98752" y1="161.54024" x2="404.51352" y2="122.581726" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="404.51352" y1="122.581726" x2="337.03952" y2="161.54024" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="401.40497" y1="140.57083" x2="354.17316" y2="167.84178" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="337.03952" y1="161.54024" x2="337.03952" y2="239.45734" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="471.98752" y1="161.54024" x2="539.46155" y2="122.581726" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="539.46155" y1="122.581726" x2="539.46155" y2="44.66472" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="525.43646" y1="110.89417" x2="525.43646" y2="56.352264" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <line x1="539.46155" y1="122.581726" x2="606.94006" y2="161.53932" stroke="rgb(0,0,0)" stroke-width="3.246494" stroke-linecap="round" />
-  <text x="-13.934326" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">Chemical formula: </text>
-  <text x="570.4435" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">C</text>
-  <text x="602.90894" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">12</text>
-  <text x="648.36053" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">H</text>
-  <text x="680.826" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">10</text>
-  <text x="726.2776" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
-  <text x="758.74304" y="497.4838" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="37.87634" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">2</text>
-  <text x="781.4689" y="486.12088" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
-  <text x="75.34564" y="551.05176" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="54.10906" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">Exact mass: 218.0402</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="768" viewBox="0 0 1024 768">
+  <rect x="0" y="0" width="1024" height="768" fill="rgb(255,255,255)" />
+  <text x="656.8324" y="197.53761" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
+  <text x="653.2554" y="104.59375" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
+  <text x="733.74756" y="244.00845" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">OH</text>
+  <line x1="195.37212" y1="358.25317" x2="195.37212" y2="451.1325" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="212.0904" y1="372.1851" x2="212.0904" y2="437.20062" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="195.37212" y1="451.1325" x2="275.92346" y2="497.60443" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="275.92346" y1="497.60443" x2="356.4103" y2="451.1325" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="279.63153" y1="476.146" x2="335.97232" y2="443.61566" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="356.4103" y1="451.1325" x2="356.4103" y2="358.25317" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="356.4103" y1="358.25317" x2="275.92346" y2="311.78122" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="335.97232" y1="365.77002" x2="279.63153" y2="333.23965" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="275.92346" y1="311.78122" x2="195.37212" y2="358.25317" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="356.4103" y1="358.25317" x2="436.89716" y2="311.78122" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="436.89716" y1="311.78122" x2="517.384" y2="358.25317" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="457.33514" y1="304.26437" x2="513.6759" y2="336.79474" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="517.384" y1="358.25317" x2="597.87085" y2="311.78122" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="597.87085" y1="311.78122" x2="597.87085" y2="218.83728" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="581.1409" y1="297.83963" x2="581.1409" y2="232.77887" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="597.87085" y1="218.83728" x2="517.384" y2="172.36534" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="517.384" y1="172.36534" x2="436.89716" y2="218.83728" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="513.6759" y1="193.82376" x2="457.33514" y2="226.35411" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="436.89716" y1="218.83728" x2="436.89716" y2="311.78122" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="597.87085" y1="218.83728" x2="678.35767" y2="172.36534" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="678.35767" y1="172.36534" x2="678.35767" y2="79.421486" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="661.62775" y1="158.42377" x2="661.62775" y2="93.36306" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <line x1="678.35767" y1="172.36534" x2="758.85" y2="218.8362" stroke="rgb(0,0,0)" stroke-width="3.8726032" stroke-linecap="round" />
+  <text x="18.235535" y="606.01556" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">Chemical formula: </text>
+  <text x="715.31476" y="606.01556" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">C</text>
+  <text x="754.0414" y="619.5699" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="45.18106" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">12</text>
+  <text x="808.25867" y="606.01556" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">H</text>
+  <text x="846.9853" y="619.5699" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="45.18106" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">10</text>
+  <text x="901.2026" y="606.01556" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">O</text>
+  <text x="939.9292" y="619.5699" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="45.18106" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">2</text>
+  <text x="967.03784" y="606.01556" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">S</text>
+  <text x="124.733765" y="683.4688" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="64.54437" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="alphabetic">Exact mass: 218.0402</text>
 </svg>

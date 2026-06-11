@@ -33,21 +33,29 @@ pub struct ModeContext<'a> {
 }
 
 impl<'a> ModeContext<'a> {
-    /// Convert CDX coordinates to screen coordinates
+    /// Convert CDX coordinates to screen coordinates.
+    /// cdx_pos stores raw CDX fixed-point values (i32 as f64, must divide by 65536 to get CDX pts).
     pub fn cdx_to_screen(&self, cdx_pos: &Point2d) -> egui::Pos2 {
         let scale = self.zoom * self.auto_scale;
+        // Convert raw fixed-point to CDX pts before applying scale
+        let cdx_pts_x = cdx_pos.x / 65536.0;
+        let cdx_pts_y = cdx_pos.y / 65536.0;
         egui::Pos2 {
-            x: self.center_offset.x + self.offset.x + (cdx_pos.x as f32 * scale),
-            y: self.center_offset.y + self.offset.y + (cdx_pos.y as f32 * scale), // CDX Y increases downward (same as screen)
+            x: self.center_offset.x + self.offset.x + (cdx_pts_x as f32 * scale),
+            y: self.center_offset.y + self.offset.y + (cdx_pts_y as f32 * scale),
         }
     }
 
-    /// Convert screen coordinates to CDX coordinates
+    /// Convert screen coordinates to CDX raw fixed-point coordinates.
+    /// Returns raw CDX fixed-point values (CDX pts * 65536) for storage in position_2d.
     pub fn screen_to_cdx(&self, screen_pos: egui::Pos2) -> Point2d {
         let scale = self.zoom * self.auto_scale;
+        // (screen - origin) / scale → CDX pts; * 65536 → raw fixed-point for position_2d storage
+        let cdx_pts_x = (screen_pos.x - self.center_offset.x - self.offset.x) / scale;
+        let cdx_pts_y = (screen_pos.y - self.center_offset.y - self.offset.y) / scale;
         Point2d {
-            x: ((screen_pos.x - self.center_offset.x - self.offset.x) / scale) as f64,
-            y: ((screen_pos.y - self.center_offset.y - self.offset.y) / scale) as f64, // CDX Y increases downward (same as screen)
+            x: (cdx_pts_x as f64) * 65536.0,
+            y: (cdx_pts_y as f64) * 65536.0,
         }
     }
 

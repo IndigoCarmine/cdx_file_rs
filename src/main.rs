@@ -109,17 +109,8 @@ impl CdxApp {
                         self.error = None;
                         self.reset_view();
 
-                        // Calculate center offset and auto-scale using CdxRenderer
-                        if let Some(ref cdx_file) = *self.cdx_file.borrow() {
-                            let mut node_positions: std::collections::HashMap<u32, crate::cdx::values::Point2d> = std::collections::HashMap::new();
-                            self.collect_node_positions(&cdx_file.tree.root(), &mut node_positions);
-                            // window size: 1200x800 (fixed)
-                            let window_size = egui::Vec2::new(1200.0, 800.0);
-                            let renderer = crate::renderer::CdxRenderer::new(1.0, egui::Vec2::ZERO, cdx_file, window_size);
-                            let (auto_scale, center_offset) = renderer.calculate_auto_scale(&node_positions);
-                            self.center_offset = center_offset;
-                            self.auto_scale = auto_scale;
-                        }
+                        // auto_scale and center_offset will be recalculated each frame
+                        // using the actual panel rect size, so no pre-calculation needed here.
                     }
                     Err(e) => self.error = Some(format!("Failed to parse CDX: {}", e)),
                 }
@@ -277,6 +268,19 @@ impl eframe::App for CdxApp {
 
                     (node_positions, bond_positions)
                 };
+
+                // Recalculate auto_scale and center_offset from the actual panel size each frame.
+                // This fixes the misalignment caused by using a hardcoded 1200×800 at load time
+                // when the CentralPanel is actually smaller (top panel subtracts height).
+                {
+                    let cdx_borrow = self.cdx_file.borrow();
+                    let cdx_file = cdx_borrow.as_ref().unwrap();
+                    let window_size = egui::Vec2::new(rect.width(), rect.height());
+                    let renderer = CdxRenderer::new(1.0, egui::Vec2::ZERO, cdx_file, window_size);
+                    let (auto_scale, center_offset) = renderer.calculate_auto_scale(&node_positions);
+                    self.center_offset = center_offset;
+                    self.auto_scale = auto_scale;
+                }
 
                 // Handle mode-specific input FIRST (before borrowing for renderer)
                 // This allows mode handlers to mutably borrow cdx_file

@@ -31,30 +31,18 @@ pub struct BondMode {
 }
 
 impl BondMode {
-    /// Get default bond length from Document object (fallback to constant if missing)
-    /// The bond length is scaled by current zoom and auto_scale to maintain consistent visual size
+    /// Get default bond length in raw CDX fixed-point units (same units as position_2d).
+    /// doc.bond_length is already a raw i32; DEFAULT_BOND_LENGTH is in CDX pts and is converted.
     fn get_default_bond_length(&self, ctx: &ModeContext) -> f64 {
-        let base_length = {
-            let cdx_borrow = ctx.cdx_file.borrow();
-            if let Some(cdx_file) = cdx_borrow.as_ref() {
-                if let Ok(doc) = cdx_file.get_document() {
-                    if let Some(length) = doc.bond_length {
-                        length
-                    } else {
-                        DEFAULT_BOND_LENGTH as i32
-                    }
-                } else {
-                    DEFAULT_BOND_LENGTH as i32
+        let cdx_borrow = ctx.cdx_file.borrow();
+        if let Some(cdx_file) = cdx_borrow.as_ref() {
+            if let Ok(doc) = cdx_file.get_document() {
+                if let Some(length) = doc.bond_length {
+                    return length as f64; // already raw fixed-point
                 }
-            } else {
-                DEFAULT_BOND_LENGTH as i32
             }
-        };
-
-        // Scale bond length by current zoom and auto_scale
-        // This ensures bonds maintain consistent visual size regardless of zoom level
-        let scale = (ctx.zoom * ctx.auto_scale) as f64;
-        base_length as f64 / scale
+        }
+        DEFAULT_BOND_LENGTH * 65536.0 // convert CDX pts default to raw fixed-point
     }
 
     pub fn new() -> Self {
@@ -320,9 +308,10 @@ impl BondMode {
     /// Move a node to a new position
     fn move_node(&self, ctx: &ModeContext, node_id: u32, delta: egui::Vec2) {
         let scale = ctx.zoom * ctx.auto_scale;
+        // delta (screen px) → CDX pts → raw fixed-point (multiply by 65536)
         let cdx_delta = Point2d {
-            x: (delta.x / scale) as f64,
-            y: (delta.y / scale) as f64, // CDX Y increases downward (same as screen)
+            x: (delta.x / scale) as f64 * 65536.0,
+            y: (delta.y / scale) as f64 * 65536.0,
         };
 
         let mut cdx_borrow = ctx.cdx_file.borrow_mut();
