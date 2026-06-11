@@ -1,18 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
   <rect x="0" y="0" width="800" height="600" fill="rgb(255,255,255)" />
-  <circle cx="157.52783" cy="159.99976" r="10" fill="rgb(255,255,255)" />
-  <circle cx="157.52783" cy="440" r="10" fill="rgb(255,255,255)" />
-  <circle cx="400" cy="579.99976" r="10" fill="rgb(255,255,255)" />
-  <circle cx="642.47217" cy="440" r="10" fill="rgb(255,255,255)" />
-  <circle cx="642.47217" cy="159.99976" r="10" fill="rgb(255,255,255)" />
-  <circle cx="400" cy="19.999756" r="10" fill="rgb(255,255,255)" />
-  <line x1="157.52783" y1="159.99976" x2="157.52783" y2="440" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="107.127785" y1="159.99976" x2="107.127785" y2="440" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="157.52783" y1="440" x2="400" y2="579.99976" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="400" y1="579.99976" x2="642.47217" y2="440" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="425.19995" y1="623.6448" x2="667.6721" y2="483.645" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="642.47217" y1="440" x2="642.47217" y2="159.99976" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="642.47217" y1="159.99976" x2="400" y2="19.999756" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="667.6722" y1="116.35477" x2="425.2" y2="-23.645237" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="400" y1="19.999756" x2="157.52783" y2="159.99976" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
+  <line x1="157.52783" y1="159.99976" x2="157.52783" y2="440" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="207.92789" y1="201.99979" x2="207.92789" y2="397.99997" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="157.52783" y1="440" x2="400" y2="579.99976" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="400" y1="579.99976" x2="642.47217" y2="440" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="411.17087" y1="515.3548" x2="580.90137" y2="417.35498" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="642.47217" y1="440" x2="642.47217" y2="159.99976" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="642.47217" y1="159.99976" x2="400" y2="19.999756" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="580.9013" y1="182.64474" x2="411.1708" y2="84.644745" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
+  <line x1="400" y1="19.999756" x2="157.52783" y2="159.99976" stroke="rgb(0,0,0)" stroke-width="11.666488" stroke-linecap="round" />
 </svg>

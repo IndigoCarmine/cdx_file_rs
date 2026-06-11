@@ -14,7 +14,7 @@ pub use egui_backend::EguiBackend;
 pub use svg_backend::SvgBackend;
 pub use png_backend::PngBackend;
 pub use image_png_backend::ImagePngBackend;
-pub use export_utils::{RenderExportOptions, export_to_svg, export_to_png, render_to_svg};
+pub use export_utils::{RenderExportOptions, export_to_svg, export_to_png, export_to_png_debug, render_to_svg};
 pub use core::{CdxRenderer, Drawable, RenderContext, RenderStyle, element_to_symbol};
 pub use font_loader::{configure_egui_fonts, get_egui_font_family, get_loaded_font_info};
 

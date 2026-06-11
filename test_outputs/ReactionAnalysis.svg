@@ -1,116 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
   <rect x="0" y="0" width="800" height="600" fill="rgb(255,255,255)" />
-  <circle cx="20.00003" cy="334.87854" r="10" fill="rgb(255,255,255)" />
-  <circle cx="20.00003" cy="381.3294" r="10" fill="rgb(255,255,255)" />
-  <circle cx="60.28543" cy="404.57098" r="10" fill="rgb(255,255,255)" />
-  <circle cx="100.538574" cy="381.3294" r="10" fill="rgb(255,255,255)" />
-  <circle cx="100.538574" cy="334.87854" r="10" fill="rgb(255,255,255)" />
-  <circle cx="60.28543" cy="311.63693" r="10" fill="rgb(255,255,255)" />
-  <circle cx="140.79172" cy="311.63693" r="10" fill="rgb(255,255,255)" />
-  <circle cx="181.04486" cy="334.87854" r="10" fill="rgb(255,255,255)" />
-  <circle cx="221.298" cy="311.63693" r="10" fill="rgb(255,255,255)" />
-  <circle cx="221.298" cy="265.15375" r="10" fill="rgb(255,255,255)" />
-  <circle cx="181.04486" cy="241.91214" r="10" fill="rgb(255,255,255)" />
-  <circle cx="140.79172" cy="265.15375" r="10" fill="rgb(255,255,255)" />
-  <circle cx="261.55115" cy="241.91214" r="10" fill="rgb(255,255,255)" />
-  <text x="258.55115" y="241.91214" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">S</text>
-  <text x="250.78592" y="254.50133" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">S</text>
-  <circle cx="301.80432" cy="265.15375" r="10" fill="rgb(255,255,255)" />
-  <circle cx="261.55115" cy="195.42899" r="10" fill="rgb(255,255,255)" />
-  <text x="258.55115" y="195.42899" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">O</text>
-  <text x="248.99695" y="208.01816" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">O</text>
-  <line x1="20.00003" y1="334.87854" x2="20.00003" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="11.638874" y1="334.87854" x2="11.638874" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="20.00003" y1="381.3294" x2="60.28543" y2="404.57098" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="60.28543" y1="404.57098" x2="100.538574" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="64.46892" y1="411.81656" x2="104.72206" y2="388.57498" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="100.538574" y1="381.3294" x2="100.538574" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="100.538574" y1="334.87854" x2="60.28543" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="104.72206" y1="327.63297" x2="64.46892" y2="304.39136" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="60.28543" y1="311.63693" x2="20.00003" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="100.538574" y1="334.87854" x2="140.79172" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="140.79172" y1="311.63693" x2="181.04486" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="136.60823" y1="318.8825" x2="176.86137" y2="342.1241" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="181.04486" y1="334.87854" x2="221.298" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="221.298" y1="311.63693" x2="221.298" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="229.66498" y1="311.63693" x2="229.66498" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="221.298" y1="265.15375" x2="181.04486" y2="241.91214" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="181.04486" y1="241.91214" x2="140.79172" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="176.86137" y1="234.66658" x2="136.60823" y2="257.90817" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="140.79172" y1="265.15375" x2="140.79172" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="221.298" y1="265.15375" x2="261.55115" y2="241.91214" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="261.55115" y1="241.91214" x2="301.80432" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="261.55115" y1="241.91214" x2="261.55115" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="269.91812" y1="241.91214" x2="269.91812" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <circle cx="498.22797" cy="334.87854" r="10" fill="rgb(255,255,255)" />
-  <circle cx="498.22797" cy="381.3294" r="10" fill="rgb(255,255,255)" />
-  <circle cx="538.48114" cy="404.57098" r="10" fill="rgb(255,255,255)" />
-  <circle cx="578.73425" cy="381.3294" r="10" fill="rgb(255,255,255)" />
-  <circle cx="578.73425" cy="334.87854" r="10" fill="rgb(255,255,255)" />
-  <circle cx="538.48114" cy="311.63693" r="10" fill="rgb(255,255,255)" />
-  <circle cx="618.9874" cy="311.6046" r="10" fill="rgb(255,255,255)" />
-  <circle cx="659.24054" cy="334.84625" r="10" fill="rgb(255,255,255)" />
-  <circle cx="699.4937" cy="311.6046" r="10" fill="rgb(255,255,255)" />
-  <circle cx="699.4937" cy="265.15375" r="10" fill="rgb(255,255,255)" />
-  <circle cx="659.24054" cy="241.91214" r="10" fill="rgb(255,255,255)" />
-  <circle cx="618.9874" cy="265.15375" r="10" fill="rgb(255,255,255)" />
-  <circle cx="739.7468" cy="241.87988" r="10" fill="rgb(255,255,255)" />
-  <text x="736.7468" y="241.87988" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">S</text>
-  <text x="728.9816" y="254.46906" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">S</text>
-  <circle cx="780" cy="265.12146" r="10" fill="rgb(255,255,255)" />
-  <circle cx="739.7468" cy="195.42899" r="10" fill="rgb(255,255,255)" />
-  <text x="736.7468" y="195.42899" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="10" text-anchor="start" dominant-baseline="middle">O</text>
-  <text x="727.1926" y="208.01816" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">O</text>
-  <line x1="498.22797" y1="334.87854" x2="498.22797" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="489.86682" y1="334.87854" x2="489.86682" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="498.22797" y1="381.3294" x2="538.48114" y2="404.57098" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="538.48114" y1="404.57098" x2="578.73425" y2="381.3294" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="542.6646" y1="411.81656" x2="582.9177" y2="388.57498" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="578.73425" y1="381.3294" x2="578.73425" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="578.73425" y1="334.87854" x2="538.48114" y2="311.63693" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="582.9177" y1="327.63297" x2="542.6646" y2="304.39136" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="538.48114" y1="311.63693" x2="498.22797" y2="334.87854" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="578.73425" y1="334.87854" x2="618.9874" y2="311.6046" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="618.9874" y1="311.6046" x2="659.24054" y2="334.84625" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="614.80396" y1="318.8502" x2="655.05707" y2="342.09183" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="659.24054" y1="334.84625" x2="699.4937" y2="311.6046" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="699.4937" y1="311.6046" x2="699.4937" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="707.85486" y1="311.6046" x2="707.85486" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="699.4937" y1="265.15375" x2="659.24054" y2="241.91214" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="659.24054" y1="241.91214" x2="618.9874" y2="265.15375" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="655.05707" y1="234.66658" x2="614.80396" y2="257.90817" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="618.9874" y1="265.15375" x2="618.9874" y2="311.6046" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="699.4937" y1="265.15375" x2="739.7468" y2="241.87988" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="739.7468" y1="241.87988" x2="780" y2="265.12146" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="739.7468" y1="241.87988" x2="739.7468" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="748.108" y1="241.87988" x2="748.108" y2="195.42899" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <line x1="351.03125" y1="293.20505" x2="448.51685" y2="293.20505" stroke="rgb(0,0,0)" stroke-width="1" stroke-linecap="round" />
-  <polygon points="448.51685,293.20505 416.02164,306.20313 416.02164,280.20697" fill="rgb(0,0,0)" />
-  <text x="-49.531097" y="546.40924" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Formula</text>
-  <text x="-49.531097" y="594.8292" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">MW</text>
-  <text x="-49.531097" y="643.2492" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Limiting?</text>
-  <text x="-49.531097" y="691.6692" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Equivalents</text>
-  <text x="-49.531097" y="740.0891" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Sample Mass</text>
-  <text x="-49.531097" y="788.50916" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">%Weight</text>
-  <text x="-49.531097" y="836.9291" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Molarity</text>
-  <text x="-49.531097" y="885.3491" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Density</text>
-  <text x="-49.531097" y="933.76904" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Volume</text>
-  <text x="-49.531097" y="982.1891" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Reactant Moles</text>
-  <text x="-49.531097" y="1030.609" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Reactant Mass</text>
-  <text x="424.4198" y="546.40924" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Formula</text>
-  <text x="424.4198" y="594.8292" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">MW</text>
-  <text x="424.4198" y="643.2492" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Equivalents</text>
-  <text x="424.4198" y="691.6692" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">%Completion</text>
-  <text x="424.4198" y="740.0891" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Expected Mass</text>
-  <text x="424.4198" y="788.50916" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Expected Moles</text>
-  <text x="424.4198" y="836.9291" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Measured Mass</text>
-  <text x="424.4198" y="885.3491" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Purity</text>
-  <text x="424.4198" y="933.76904" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Product Mass</text>
-  <text x="424.4198" y="982.1891" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Product Moles</text>
-  <text x="424.4198" y="1030.609" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">%Yield</text>
-  <text x="222.91196" y="546.40924" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">C13H12OS</text>
-  <text x="222.91196" y="594.8292" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">216.30</text>
-  <text x="222.91196" y="643.2492" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">Yes</text>
-  <text x="702.0277" y="546.40924" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">C13H12OS</text>
-  <text x="702.0277" y="594.8292" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="32.279984" text-anchor="start" dominant-baseline="middle">216.30</text>
+  <text x="302.75027" y="68.15205" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">S</text>
+  <text x="301.58282" y="37.817833" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">O</text>
+  <line x1="152.14284" y1="120.605" x2="152.14284" y2="150.91817" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="157.59921" y1="125.15198" x2="157.59921" y2="146.37119" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="152.14284" y1="150.91817" x2="178.4325" y2="166.08527" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="178.4325" y1="166.08527" x2="204.7011" y2="150.91817" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="179.64272" y1="159.08185" x2="198.03073" y2="148.46489" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="204.7011" y1="150.91817" x2="204.7011" y2="120.605" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="204.7011" y1="120.605" x2="178.4325" y2="105.4379" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="198.03073" y1="123.05829" x2="179.64272" y2="112.44131" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="178.4325" y1="105.4379" x2="152.14284" y2="120.605" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="204.7011" y1="120.605" x2="230.9697" y2="105.4379" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="230.9697" y1="105.4379" x2="257.2383" y2="120.605" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="237.64006" y1="102.98461" x2="256.02808" y2="113.60159" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="257.2383" y1="120.605" x2="283.5069" y2="105.4379" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="283.5069" y1="105.4379" x2="283.5069" y2="75.103645" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="278.04672" y1="100.88776" x2="278.04672" y2="79.65378" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="283.5069" y1="75.103645" x2="257.2383" y2="59.93654" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="257.2383" y1="59.93654" x2="230.9697" y2="75.103645" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="256.02808" y1="66.93995" x2="237.64006" y2="77.55693" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="230.9697" y1="75.103645" x2="230.9697" y2="105.4379" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="283.5069" y1="75.103645" x2="309.7755" y2="59.93654" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="309.7755" y1="59.93654" x2="336.0441" y2="75.103645" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="309.7755" y1="59.93654" x2="309.7755" y2="29.60233" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="304.31537" y1="55.386406" x2="304.31537" y2="34.15246" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <text x="614.8136" y="68.131" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">S</text>
+  <text x="613.6462" y="37.817833" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">O</text>
+  <line x1="464.22726" y1="120.605" x2="464.22726" y2="150.91817" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="469.68362" y1="125.15198" x2="469.68362" y2="146.37119" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="464.22726" y1="150.91817" x2="490.49585" y2="166.08527" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="490.49585" y1="166.08527" x2="516.76447" y2="150.91817" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="491.70605" y1="159.08185" x2="510.0941" y2="148.46489" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="516.76447" y1="150.91817" x2="516.76447" y2="120.605" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="516.76447" y1="120.605" x2="490.49585" y2="105.4379" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="510.0941" y1="123.05829" x2="491.70605" y2="112.44131" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="490.49585" y1="105.4379" x2="464.22726" y2="120.605" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="516.76447" y1="120.605" x2="543.0331" y2="105.41681" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="543.0331" y1="105.41681" x2="569.30164" y2="120.58395" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="549.7035" y1="102.96354" x2="568.09143" y2="113.580536" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="569.30164" y1="120.58395" x2="595.57025" y2="105.41681" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="595.57025" y1="105.41681" x2="595.57025" y2="75.103645" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="590.1139" y1="100.869835" x2="590.1139" y2="79.65062" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="595.57025" y1="75.103645" x2="569.30164" y2="59.93654" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="569.30164" y1="59.93654" x2="543.0331" y2="75.103645" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="568.09143" y1="66.93994" x2="549.7035" y2="77.55692" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="543.0331" y1="75.103645" x2="543.0331" y2="105.41681" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="595.57025" y1="75.103645" x2="621.83887" y2="59.91549" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="621.83887" y1="59.91549" x2="648.1075" y2="75.082596" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="621.83887" y1="59.91549" x2="621.83887" y2="29.60233" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="616.3825" y1="55.368515" x2="616.3825" y2="34.149303" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <line x1="368.16888" y1="93.409515" x2="431.7865" y2="93.409515" stroke="rgb(0,0,0)" stroke-width="1.2639068" stroke-linecap="round" />
+  <polygon points="431.7865,93.409515 410.58063,101.89186 410.58063,84.92717" fill="rgb(0,0,0)" />
+  <rect x="106.767876" y="239.16127" width="177.79227" height="340.83875" fill="none" stroke="rgb(0,0,0)" stroke-width="1.2639068" />
+  <text x="106.767876" y="258.6468" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Formula</text>
+  <text x="106.767876" y="290.24496" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">MW</text>
+  <text x="106.767876" y="321.8431" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Limiting?</text>
+  <text x="106.767876" y="353.44125" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Equivalents</text>
+  <text x="106.767876" y="385.0394" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Sample Mass</text>
+  <text x="106.767876" y="416.63757" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">%Weight</text>
+  <text x="106.767876" y="448.23572" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Molarity</text>
+  <text x="106.767876" y="479.83386" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Density</text>
+  <text x="106.767876" y="511.432" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Volume</text>
+  <text x="106.767876" y="543.03015" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Reactant Moles</text>
+  <text x="106.767876" y="574.62836" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Reactant Mass</text>
+  <rect x="416.06113" y="239.16127" width="181.16275" height="340.83875" fill="none" stroke="rgb(0,0,0)" stroke-width="1.2639068" />
+  <text x="416.06113" y="258.6468" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Formula</text>
+  <text x="416.06113" y="290.24496" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">MW</text>
+  <text x="416.06113" y="321.8431" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Equivalents</text>
+  <text x="416.06113" y="353.44125" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">%Completion</text>
+  <text x="416.06113" y="385.0394" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Expected Mass</text>
+  <text x="416.06113" y="416.63757" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Expected Moles</text>
+  <text x="416.06113" y="448.23572" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Measured Mass</text>
+  <text x="416.06113" y="479.83386" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Purity</text>
+  <text x="416.06113" y="511.432" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Product Mass</text>
+  <text x="416.06113" y="543.03015" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">Product Moles</text>
+  <text x="416.06113" y="574.62836" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">%Yield</text>
+  <rect x="284.56015" y="239.16127" width="127.55118" height="340.83875" fill="none" stroke="rgb(0,0,0)" stroke-width="1.2639068" />
+  <text x="284.56015" y="258.6468" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="bold" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">C13H12OS</text>
+  <text x="284.56015" y="290.24496" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">216.30</text>
+  <text x="284.56015" y="321.8431" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="bold" font-style="italic" text-decoration="none" text-anchor="start" dominant-baseline="middle">Yes</text>
+  <rect x="597.2239" y="239.16127" width="127.55121" height="340.83875" fill="none" stroke="rgb(0,0,0)" stroke-width="1.2639068" />
+  <text x="597.2239" y="258.6468" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="bold" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">C13H12OS</text>
+  <text x="597.2239" y="290.24496" fill="rgb(0,0,0)" font-family="Arial, sans-serif" font-size="21.065435" font-weight="normal" font-style="normal" text-decoration="none" text-anchor="start" dominant-baseline="middle">216.30</text>
 </svg>

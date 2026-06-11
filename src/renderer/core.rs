@@ -650,16 +650,17 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         self.document.bond_length.unwrap() as f64
     }
 
-    /// Resolve a color index using document color table and fallback
+    /// Resolve a color index using document color table and fallback.
+    /// Color index 0 is the CDX convention for "use document default" (same as None).
     pub fn resolve_color(&self, color_index: Option<u16>, default: BackendColor) -> BackendColor {
         match color_index {
+            Some(0) | None => default,
             Some(idx) => self
                 .document
                 .get_color_table()
                 .and_then(|ct| ct.get(idx as usize))
                 .map(|c| c.to_backend_color())
                 .unwrap_or(default),
-            None => default,
         }
     }
 
@@ -701,19 +702,23 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
         }
     }
 
-    /// Get default line width from document or use fallback
+    /// Get default line width from document or use fallback.
+    /// Returns raw CDX fixed-point value (divide by 65536 to get CDX pts).
+    /// Default 32768 = 0.5 CDX pt (≈ 0.5 pt at 72 dpi).
     pub fn default_line_width(&self) -> f64 {
-        self.document.line_width.unwrap_or(1)as f64
+        self.document.line_width.unwrap_or(32768) as f64
     }
 
-    /// Get default bold width from document or use fallback
+    /// Get default bold width from document or use fallback.
+    /// Returns raw CDX fixed-point value (divide by 65536 to get CDX pts).
     pub fn default_bold_width(&self) -> f64 {
-        self.document.bold_width.unwrap_or(2)as f64
+        self.document.bold_width.unwrap_or(65536) as f64
     }
 
-    /// Get default bond spacing from document or use fallback
+    /// Get default bond spacing from document or use fallback.
+    /// CDX stores bond spacing as 10 × percent; 180 = 18% of bond length (ChemDraw default).
     pub fn default_bond_spacing(&self) -> i16 {
-        self.document.bond_spacing.unwrap_or(1) as i16
+        self.document.bond_spacing.unwrap_or(180) as i16
     }
 
     /// Get default label font size from document or use fallback
@@ -754,7 +759,7 @@ impl<'a, P: AbstractPainter> RenderContext<'a, P> {
 
     pub fn default_stroke(&self) -> super::backend::Stroke {
         use super::backend::Stroke;
-        let width = self.cdx_length_to_screen(self.default_line_width());
+        let width = self.cdx_length_to_screen(self.default_line_width() / 65536.0);
         Stroke::new(width, self.default_foreground_color())
     }
 

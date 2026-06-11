@@ -33,37 +33,32 @@ impl Graphic {
         use crate::cdx::values::Point2d;
 
         let (start, end) = if let (Some(head), Some(tail)) = (&self.head_3d, &self.tail_3d) {
-            // Use 3D coordinates
-            let start_pos = ctx.cdx_to_screen(&Point2d {
-                x: head.x,
-                y: head.y,
-            });
-            let end_pos = ctx.cdx_to_screen(&Point2d {
-                x: tail.x,
-                y: tail.y,
-            });
+            // 3D points are IEEE-754 doubles already in CDX pts (no /65536 needed)
+            let start_pos = ctx.cdx_to_screen(&Point2d { x: head.x, y: head.y });
+            let end_pos = ctx.cdx_to_screen(&Point2d { x: tail.x, y: tail.y });
             (start_pos, end_pos)
         } else if let Some(bbox) = &self.bounding_box {
-            // Use bounding box: top-left to bottom-right
+            // bounding_box stores raw CDX fixed-point integers; divide by 65536 → CDX pts
             let start_pos = ctx.cdx_to_screen(&Point2d {
-                x: bbox.left,
-                y: bbox.top,
+                x: bbox.left / 65536.0,
+                y: bbox.top / 65536.0,
             });
             let end_pos = ctx.cdx_to_screen(&Point2d {
-                x: bbox.right,
-                y: bbox.bottom,
+                x: bbox.right / 65536.0,
+                y: bbox.bottom / 65536.0,
             });
-  
-
             (start_pos, end_pos)
         } else {
-            return; // No position data
+            return;
         };
 
-        use crate::renderer::backend::{Stroke, Color as BackendColor};
-        
+        use crate::renderer::backend::Stroke;
+
         let color = self.get_color(ctx);
-        let stroke = Stroke::new(self.get_line_width() as f32, color);
+        // line_width is a raw CDX fixed-point (÷65536 = CDX pts); apply auto_scale → px
+        let raw_lw = self.line_width.unwrap_or_else(|| ctx.default_line_width());
+        let line_width_px = ctx.cdx_length_to_screen(raw_lw / 65536.0);
+        let stroke = Stroke::new(line_width_px, color);
 
         ctx.painter.line_segment(start, end, stroke);
 

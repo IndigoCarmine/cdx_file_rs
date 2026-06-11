@@ -3,7 +3,7 @@
 /// This module provides an AbstractPainter implementation for PNG rendering
 /// using the `image`, `imageproc`, and `ab_glyph` crates.
 use super::backend::*;
-use ab_glyph::{Font, FontRef, PxScale, ScaleFont};
+use ab_glyph::{Font, FontVec, PxScale, ScaleFont};
 use image::{Rgba, RgbaImage};
 use imageproc::drawing::{
     draw_antialiased_line_segment_mut, draw_filled_circle_mut, draw_filled_rect_mut,
@@ -23,13 +23,13 @@ fn color_to_rgba(c: Color) -> Rgba<u8> {
 const DEFAULT_FONT_DATA: &[u8] = include_bytes!("../../assets/fonts/DejaVuSansMono.ttf");
 
 /// PNG backend using image + imageproc + ab_glyph
-pub struct ImagePngBackend<'a> {
+pub struct ImagePngBackend {
     image: RefCell<RgbaImage>,
     clip_rect: Rect,
-    font: FontRef<'a>,
+    font: FontVec,
 }
 
-impl<'a> ImagePngBackend<'a> {
+impl ImagePngBackend {
     /// Create a new ImagePngBackend with the specified dimensions and background color
     pub fn new(width: u32, height: u32, background: Color) -> Self {
         let mut image = RgbaImage::new(width, height);
@@ -40,8 +40,8 @@ impl<'a> ImagePngBackend<'a> {
             *pixel = bg;
         }
 
-        let font =
-            FontRef::try_from_slice(DEFAULT_FONT_DATA).expect("Failed to load embedded font");
+        let font = FontVec::try_from_vec(DEFAULT_FONT_DATA.to_vec())
+            .expect("Failed to load embedded font");
 
         ImagePngBackend {
             image: RefCell::new(image),
@@ -53,13 +53,8 @@ impl<'a> ImagePngBackend<'a> {
         }
     }
 
-    /// Create with a custom font
-    pub fn with_font(
-        width: u32,
-        height: u32,
-        background: Color,
-        font_data: &'a [u8],
-    ) -> Option<Self> {
+    /// Create with a custom font from owned data
+    pub fn with_font(width: u32, height: u32, background: Color, font_data: Vec<u8>) -> Option<Self> {
         let mut image = RgbaImage::new(width, height);
         let bg = color_to_rgba(background);
 
@@ -67,7 +62,7 @@ impl<'a> ImagePngBackend<'a> {
             *pixel = bg;
         }
 
-        let font = FontRef::try_from_slice(font_data).ok()?;
+        let font = FontVec::try_from_vec(font_data).ok()?;
 
         Some(ImagePngBackend {
             image: RefCell::new(image),
@@ -207,7 +202,7 @@ impl<'a> ImagePngBackend<'a> {
     }
 }
 
-impl<'a> AbstractPainter for ImagePngBackend<'a> {
+impl AbstractPainter for ImagePngBackend {
     fn line_segment(&self, start: Point2d, end: Point2d, stroke: Stroke) {
         if stroke.width <= 0.0 {
             return;

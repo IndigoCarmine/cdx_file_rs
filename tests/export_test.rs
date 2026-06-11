@@ -1,6 +1,6 @@
 /// Test for SVG and PNG export functionality
 
-use cdx_file_rs::renderer::{export_to_png, export_to_svg, render_to_svg, RenderExportOptions};
+use cdx_file_rs::renderer::{export_to_png, export_to_png_debug, export_to_svg, render_to_svg, RenderExportOptions};
 use std::fs;
 use std::path::PathBuf;
 
@@ -120,4 +120,30 @@ fn test_svg_export_with_custom_options() {
     // Verify SVG uses custom dimensions
     assert!(svg_content.contains("width=\"1024\""));
     assert!(svg_content.contains("height=\"768\""));
+}
+
+#[test]
+fn test_png_debug_export_all() {
+    let sample_files = get_sample_cdx_files();
+
+    if sample_files.is_empty() {
+        eprintln!("No CDX files found in sample_cdx directory, skipping test");
+        return;
+    }
+
+    let options = RenderExportOptions::default();
+
+    for sample_file in &sample_files {
+        let file_stem = sample_file.file_stem().unwrap().to_str().unwrap();
+        println!("Processing debug PNG: {:?}", sample_file);
+
+        let data = fs::read(sample_file).expect("Failed to read sample file");
+        let cdx_file = cdx_file_rs::cdx::file::CdxFile::from_bytes(&data).expect("Failed to parse CDX file");
+
+        let output_path = test_output_dir().join(format!("{}.debug.png", file_stem));
+        export_to_png_debug(&cdx_file, &output_path, &options).expect("Failed to export debug PNG");
+
+        assert!(output_path.exists());
+        println!("  -> {}", output_path.display());
+    }
 }

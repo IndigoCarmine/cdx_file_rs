@@ -17,7 +17,7 @@ impl Drawable for Arrow {
             if let (Some(Point3d { x: hx, y: hy, .. }), Some(Point3d { x: tx, y: ty, .. })) =
                 (&self.head_3d, &self.tail_3d)
             {
-                // Use 3D coordinates projected to 2D (ignoring z for now)
+                // 3D points are stored as IEEE-754 doubles already in CDX pts (no /65536 needed)
                 let hp = CdxPoint2d { x: *hx, y: *hy };
                 let tp = CdxPoint2d { x: *tx, y: *ty };
                 (ctx.cdx_to_screen(&hp), ctx.cdx_to_screen(&tp))
@@ -28,17 +28,18 @@ impl Drawable for Arrow {
                 bottom: y2,
             }) = &self.bounding_box
             {
-                // Use bounding box as fallback: (x1,y1) is start, (x2,y2) is end
-                let p1 = CdxPoint2d { x: *x1, y: *y1 };
-                let p2 = CdxPoint2d { x: *x2, y: *y2 };
-                (ctx.cdx_to_screen(&p1), ctx.cdx_to_screen(&p2))
+                // bounding_box (16-byte format) stores raw CDX fixed-point integers;
+                // divide by 65536 to convert to CDX pts before passing to cdx_to_screen.
+                // For a horizontal arrow: left/top = tail, right/bottom = head.
+                let tail_pt = CdxPoint2d { x: *x1 / 65536.0, y: *y1 / 65536.0 };
+                let head_pt = CdxPoint2d { x: *x2 / 65536.0, y: *y2 / 65536.0 };
+                (ctx.cdx_to_screen(&head_pt), ctx.cdx_to_screen(&tail_pt))
             } else {
-                // Not enough data to draw
                 return;
             };
 
-        // Get visual properties
-        let line_width = self.line_width.unwrap_or(ctx.default_line_width()) as f32;
+        // line_width is a raw CDX fixed-point (÷65536 = CDX pts); apply auto_scale→px
+        let line_width = ctx.cdx_length_to_screen(self.line_width.unwrap_or(ctx.default_line_width()) / 65536.0);
         let color = ctx.resolve_color(self.foreground_color, Color::BLACK);
 
         let stroke = Stroke::new(line_width, color);
@@ -48,15 +49,9 @@ impl Drawable for Arrow {
 
         // Draw arrowhead if specified
         if self.arrowhead_head.is_some() {
-            draw_arrowhead(
-                ctx,
-                head_pos,
-                tail_pos,
-                stroke,
-                self.head_size
-                    .map(|v| v as f32)
-                    .unwrap_or(ctx.style.arrowhead_size_default),
-            );
+            // Use a fixed arrowhead size proportional to bond length on screen
+            let arrowhead_px = ctx.style.arrowhead_size_default * ctx.auto_scale * ctx.zoom;
+            draw_arrowhead(ctx, head_pos, tail_pos, stroke, arrowhead_px);
         }
     }
 
