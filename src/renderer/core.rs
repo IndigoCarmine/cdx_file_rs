@@ -100,6 +100,20 @@ macro_rules! define_node_renderer {
     };
 }
 
+impl NodePayload {
+    /// Returns the render layer for Z-ordering:
+    ///   0 = bonds, arrows, graphics (drawn first)
+    ///   1 = atom background circles (occlude bonds at junctions)
+    ///   2 = atom text labels (drawn last, on top)
+    pub fn render_layer(&self) -> u8 {
+        match self {
+            NodePayload::Node(_) => 1,
+            NodePayload::TextObject(_) => 2,
+            _ => 0,
+        }
+    }
+}
+
 define_node_renderer!(
     Arrow,
     Bond,
@@ -278,26 +292,30 @@ impl<'a> CdxRenderer<'a> {
         painter.rect_filled(rect, 0.0, bg_color);
 
         let root = tree.root();
-        self.render(root, &ctx);
+        // Three-pass rendering for correct Z-order:
+        //   layer 0 = bonds / graphics / arrows (drawn first, beneath everything)
+        //   layer 1 = atom background circles (occludes bond lines at junctions)
+        //   layer 2 = atom text labels (drawn on top)
+        for layer in 0u8..=2 {
+            self.render_pass(root.clone(), &ctx, layer);
+        }
     }
 
-    fn render<P: AbstractPainter>(
+    fn render_pass<P: AbstractPainter>(
         &self,
         root: Node<crate::cdx::file::NodePayload>,
         ctx: &RenderContext<P>,
+        layer: u8,
     ) {
         let data = root.borrow_data();
 
-        // Draw the current object with its parent's context and node reference
-        // Using draw_with_node allows objects like Table to access their children for grid rendering
-        data.draw_with_node(ctx, &root);
+        if data.render_layer() == layer {
+            data.draw_with_node(ctx, &root);
+        }
 
-        // // Check if this object defines a coordinate offset for its children
-        // // Currently only Page objects with BoundsInParent need this
-        let child_ctx; // Declare outside to avoid lifetime issues
+        let child_ctx;
         let ctx_ref: &RenderContext<P> = if let NodePayload::Page(page) = &*data {
             if let Some(bounds) = &page.bounds_in_parent {
-                // Create a child context with offset from the parent's top-left corner
                 let offset = CdxPoint2d {
                     x: bounds.left,
                     y: bounds.top,
@@ -311,9 +329,8 @@ impl<'a> CdxRenderer<'a> {
             ctx
         };
 
-        // Render children with potentially modified context
         for child in root.children() {
-            self.render(child, ctx_ref);
+            self.render_pass(child, ctx_ref, layer);
         }
     }
 

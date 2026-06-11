@@ -186,8 +186,10 @@ fn render_to_backend<P: crate::renderer::backend::AbstractPainter>(
         auto_scale,
     );
 
-    // Render the tree
-    render_tree(root, &ctx);
+    // Three-pass rendering for correct Z-order (same as App renderer)
+    for layer in 0u8..=2 {
+        render_tree(root.clone(), &ctx, layer);
+    }
 
     Ok(())
 }
@@ -386,29 +388,23 @@ fn collect_node_positions(root: Node<NodePayload>, node_positions: &mut HashMap<
     }
 }
 
-/// Recursively render the tree
+/// Recursively render the tree for a single Z-order layer.
+/// layer 0 = bonds/graphics, layer 1 = atom background circles, layer 2 = text labels.
 fn render_tree<P: crate::renderer::backend::AbstractPainter>(
     root: Node<NodePayload>,
     ctx: &RenderContext<P>,
+    layer: u8,
 ) {
     let data = root.borrow_data();
 
-    // SegComponent draws its column border via draw_with_node (needs children for bbox).
-    // All other types use draw().
-    match &*data {
-        NodePayload::SegComponent(_) => {
-            data.draw_with_node(ctx, &root);
-        }
-        _ => {
-            data.draw(ctx);
-        }
+    if data.render_layer() == layer {
+        data.draw_with_node(ctx, &root);
     }
 
     // Check if this object defines a coordinate offset for its children
     let child_ctx;
     let ctx_ref: &RenderContext<P> = if let NodePayload::Page(page) = &*data {
         if let Some(bounds) = &page.bounds_in_parent {
-            // Create a child context with offset from the parent's top-left corner
             let offset = CdxPoint2d {
                 x: bounds.left,
                 y: bounds.top,
@@ -422,8 +418,7 @@ fn render_tree<P: crate::renderer::backend::AbstractPainter>(
         ctx
     };
 
-    // Render children with potentially modified context
     for child in root.children() {
-        render_tree(child, ctx_ref);
+        render_tree(child, ctx_ref, layer);
     }
 }

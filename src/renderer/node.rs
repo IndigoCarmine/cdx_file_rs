@@ -1,41 +1,47 @@
+use crate::cdx::file::NodePayload;
 use crate::cdx::node::Node;
-use crate::renderer::{Drawable, RenderContext, element_to_symbol, backend::Color};
-use crate::renderer::backend::{Point2d as BackendPoint2d, TextSpan, Align2};
+use crate::renderer::backend::Color;
+use crate::renderer::{Drawable, RenderContext};
 
 impl Drawable for Node {
-    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, ctx: &RenderContext<P>) {
-        // if let Some(ref pos) = self.position_2d {
-        //     let screen_pos = ctx.cdx_to_screen(pos);
-        //     let radius = ctx.style.default_atom_radius;
+    fn draw<P: crate::renderer::backend::AbstractPainter>(&self, _ctx: &RenderContext<P>) {
+        // Atom rendering is handled by draw_with_node (needs child inspection).
+    }
 
-        //     // Determine color - use object color or fallback to document foreground color
-        //     let forground_color =
-        //         ctx.resolve_color(self.foreground_color, ctx.default_foreground_color());
-        //     let background_color =
-        //         ctx.resolve_color_i16(self.background_color, ctx.default_background_color());
+    /// Draw a white background circle at the atom position when a TextObject child exists.
+    /// Called in layer 1 (between bonds and text labels) to occlude bond lines at junctions.
+    fn draw_with_node<P: crate::renderer::backend::AbstractPainter>(
+        &self,
+        ctx: &RenderContext<P>,
+        node: &dendron::Node<NodePayload>,
+    ) {
+        // Find the first TextObject child to determine font size for circle radius
+        let font_size_pts = node.children().find_map(|child| {
+            if let NodePayload::TextObject(t) = &*child.borrow_data() {
+                // Prefer style run font size, then label_size, then caption_size
+                if let Some(ref cdx_str) = t.text {
+                    if let Some(run) = cdx_str.style_runs.first() {
+                        return Some(run.font_size as f32 / 20.0);
+                    }
+                }
+                t.label_size
+                    .map(|s| s as f32 / 20.0)
+                    .or_else(|| t.caption_size.map(|s| s as f32 / 20.0))
+            } else {
+                None
+            }
+        });
 
-        //     // Draw circle for atom
-        //     ctx.painter.circle_filled(screen_pos, radius, background_color);
+        let Some(font_size_pts) = font_size_pts else {
+            return; // No text label → no circle needed
+        };
 
-        //     // Draw element label
-        //     if let Some(element) = self.element {
-        //         let label = element_to_symbol(element);
-        //         let span = TextSpan::new(label, ctx.default_label_size(), forground_color);
-        //         ctx.painter.rich_text(screen_pos, Align2::CENTER_CENTER, &[span]);
-        //     }
-
-        //     // Draw charge if present
-        //     if let Some(charge) = self.charge {
-        //         if charge != 0 {
-        //             let charge_str = format!("{:+}", charge);
-        //             let charge_pos = BackendPoint2d::new(
-        //                 screen_pos.x + radius + ctx.style.charge_label_offset,
-        //                 screen_pos.y - radius - ctx.style.charge_label_offset,
-        //             );
-        //             let span = TextSpan::new(charge_str, ctx.style.charge_label_size, Color::RED);
-        //             ctx.painter.rich_text(charge_pos, Align2::CENTER_CENTER, &[span]);
-        //         }
-        //     }
-        // }
+        if let Some(ref pos) = self.position_2d {
+            let cdx_pos = pos.to_backend_point();
+            let screen_pos = ctx.cdx_to_screen(&cdx_pos);
+            // Radius covers the capital-letter height (≈ 0.7× font size) plus a small margin
+            let radius = font_size_pts * ctx.zoom * ctx.auto_scale * 0.75;
+            ctx.painter.circle_filled(screen_pos, radius, Color::WHITE);
+        }
     }
 }
