@@ -764,6 +764,7 @@ dependencies = [
  "imageproc",
  "indexmap",
  "paste",
+ "quick-xml 0.38.4",
  "resvg",
  "rfd",
  "serde",
