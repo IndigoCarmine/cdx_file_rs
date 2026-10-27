@@ -4,16 +4,25 @@
 //!
 //! An element is an object (`<n>` is a Node, `<step>` a ReactionStep); an attribute is a
 //! property, its text converted to the property's binary value as the CDX specification lays it
-//! out. The element and attribute names, tags and value types come from the specification pages
-//! in `doc/md`, gathered into [`table`] by `tools/gen_cdxml_table.py`. A few properties are not
-//! plain attributes and are handled here:
+//! out. The element and attribute names, tags, value types and value names come from ChemDraw's
+//! own sources (with `doc/md` filling gaps), gathered into [`table`] by
+//! `tools/gen_cdxml_table.py`. A few properties are not plain attributes and are handled here:
 //!
 //! - the document's `<colortable>` and `<fonttable>` children are its ColorTable (0x0300) and
 //!   FontTable (0x0100) properties;
 //! - a `<t>`'s `<s>` children are its Text property (0x0700): one style run per `<s>`. Text
-//!   is Latin-1 there; text with characters Latin-1 has not (Δ, β) also gets the UTF-8 Text
-//!   property (0x0709), which writing prefers;
-//! - a bond's `Order` is a list of names (`1`, `1.5`, `dative`, …) for a bit mask.
+//!   is Latin-1 there, so like ChemDraw the text also gets the UTF-8 Text property (0x0709),
+//!   which writing prefers;
+//! - some attributes are in other units than their binary value (`ChainAngle` in degrees,
+//!   `BondSpacing` in percent, `LineHeight` in points or `auto`): see [`conversion`];
+//! - `<represent attribute=".." object=".."/>` children are their parent's RepresentsProperty
+//!   (0x000E);
+//! - `LabelFont`, `LabelSize`, `LabelFace` and `LabelColor` are one LabelStyle property (0x080A)
+//!   in binary CDX, and the `Caption…` ones one CaptionStyle (0x080B);
+//! - a bond's `Order`, a graphic's `OvalType` and the like are sets of flags, written as their
+//!   names separated by spaces (`1 2`, `Circle Filled`);
+//! - an object tag's `Value` and a stoichiometry datum's `SGDataValue` are a number or a string
+//!   as the object's `TagType` / `SGDataType` says.
 //!
 //! What has no entry in the table (a newer ChemDraw's attributes, an object this crate does not
 //! know) is left out and reported in the warnings, not an error: what can be read is read.
@@ -57,6 +66,23 @@ pub(crate) enum Kind {
     CurvePoints,
     /// A UINT16 count, then that many (x, y, z) points.
     CurvePoints3D,
+    /// An INT16 count (negative for a `NOT` list), then that many INT16 atomic numbers.
+    ElementList,
+    /// An INT16 count (negative for a `NOT` list), then for each name a UINT16 length (the name's
+    /// plus 2), a UINT16 style count of 0 and the name.
+    GenericList,
+    /// A UINT16 count, then that many INT16s; CDXML writes only the values.
+    Int16ListWithCounts,
+    /// Bytes; CDXML writes them in hex.
+    Unformatted,
+    /// Bytes; CDXML writes them in base64.
+    Base64,
+    /// Text without the CDXString style-run count.
+    RawString,
+    /// FLOAT64, INT32 or CDXString as the object's TagType says.
+    TagValue,
+    /// FLOAT64, or text when the object's SGDataType is String.
+    SgValue,
 }
 
 const TAG_DOCUMENT: u16 = 0x8000;
@@ -66,29 +92,22 @@ const PROP_COLOR_TABLE: u16 = 0x0300;
 const PROP_TEXT: u16 = 0x0700;
 /// A Text object's text in UTF-8, with the Text property's style runs (char positions).
 const PROP_UTF8_TEXT: u16 = 0x0709;
-const PROP_BOND_ORDER: u16 = 0x0600;
+const PROP_REPRESENTS: u16 = 0x000E;
+const PROP_LABEL_STYLE: u16 = 0x080A;
+const PROP_CAPTION_STYLE: u16 = 0x080B;
+const PROP_TAG_TYPE: u16 = 0x0D00;
+const PROP_SG_DATA_TYPE: u16 = 0x1200;
+/// The color a LabelStyle or CaptionStyle has when CDXML does not give one: the foreground.
+const DEFAULT_STYLE_COLOR: f64 = 3.0;
+/// SGDataType String.
+const SG_DATA_TYPE_STRING: i64 = 4;
+/// The attributes of a LabelStyle or CaptionStyle: font, face, size, color, in its byte order.
+const STYLES: &[(u16, [&str; 4])] = &[
+    (PROP_LABEL_STYLE, ["LabelFont", "LabelFace", "LabelSize", "LabelColor"]),
+    (PROP_CAPTION_STYLE, ["CaptionFont", "CaptionFace", "CaptionSize", "CaptionColor"]),
+];
 /// One point in CDX coordinate units.
 const POINT: f64 = 65536.0;
-
-/// Bond order names and their bits (kCDXBondOrder_*).
-const BOND_ORDERS: &[(&str, u16)] = &[
-    ("1", 0x0001),
-    ("2", 0x0002),
-    ("3", 0x0004),
-    ("4", 0x0008),
-    ("5", 0x0010),
-    ("6", 0x0020),
-    ("0.5", 0x0040),
-    ("1.5", 0x0080),
-    ("2.5", 0x0100),
-    ("3.5", 0x0200),
-    ("4.5", 0x0400),
-    ("5.5", 0x0800),
-    ("dative", 0x1000),
-    ("ionic", 0x2000),
-    ("hydrogen", 0x4000),
-    ("threecenter", 0x8000),
-];
 
 /// Font character sets (CDXCharSet, Windows code pages) and their CDXML names.
 const CHARSETS: &[(u16, &str)] = &[
@@ -170,6 +189,13 @@ pub fn parse_cdxml_with_warnings(xml: &str) -> Result<CdxmlRead, CdxError> {
                     }
                     ("s", Some(Open::Object(t))) if t.tag == TAG_TEXT => {
                         Some(Open::Run(text_defaults.run(&attrs), String::new()))
+                    }
+                    ("represent", Some(Open::Object(o))) => {
+                        represent(o, &attrs, &mut warnings);
+                        if !empty {
+                            skipping = 1;
+                        }
+                        None
                     }
                     (_, Some(Open::Object(_))) => match table::OBJECTS.iter().find(|(n, _)| *n == name) {
                         Some(&(_, tag)) => Some(Open::Object(object(tag, &name, &attrs, &mut warnings))),
@@ -300,7 +326,8 @@ fn close(stack: &mut Vec<Open>, document: &mut Option<RawCdxObject>) {
             let mut v = (colors.len() as u16).to_le_bytes().to_vec();
             for c in colors {
                 for x in c {
-                    v.extend_from_slice(&((x.clamp(0.0, 1.0) * 65535.0).round() as u16).to_le_bytes());
+                    // ChemDraw keeps 8 bits of each component, repeated in both bytes.
+                    v.extend_from_slice(&((x.clamp(0.0, 1.0) * 255.0).round() as u16 * 257).to_le_bytes());
                 }
             }
             parent.set_property(PROP_COLOR_TABLE, v);
@@ -323,8 +350,7 @@ fn close(stack: &mut Vec<Open>, document: &mut Option<RawCdxObject>) {
     }
 }
 
-/// Add a style run and its characters to a Text object's Text property (and its UTF-8 Text
-/// property, when the text needs one).
+/// Add a style run and its characters to a Text object's Text and UTF-8 Text properties.
 fn append_run(t: &mut RawCdxObject, run: Run, chars: &str) {
     let (mut runs, bytes) = t.get_property(PROP_TEXT).map(|v| split_cdx_string(v)).unwrap_or_default();
     let mut text = match t.get_property(PROP_UTF8_TEXT) {
@@ -345,10 +371,9 @@ fn append_run(t: &mut RawCdxObject, run: Run, chars: &str) {
         v.extend(bytes);
         v
     };
+    // ChemDraw writes both, whatever the text.
     t.set_property(PROP_TEXT, cdx_string(latin1(&text)));
-    if text.chars().any(|c| c as u32 >= 0x100) {
-        t.set_property(PROP_UTF8_TEXT, cdx_string(text.into_bytes()));
-    }
+    t.set_property(PROP_UTF8_TEXT, cdx_string(text.into_bytes()));
 }
 
 /// A CDXString's style runs and its bytes.
@@ -366,21 +391,42 @@ fn split_cdx_string(v: &[u8]) -> (Vec<(u16, Run)>, Vec<u8>) {
 
 /// An object, its id and the properties its attributes give.
 fn object(tag: u16, element: &str, attrs: &[(String, String)], warnings: &mut Vec<String>) -> RawCdxObject {
-    let id = attr(attrs, "id").and_then(|v| v.parse().ok()).unwrap_or(0);
+    // An id that is not a number gets a new one, like a missing id.
+    let id = match attr(attrs, "id") {
+        Some(v) => v.trim().parse().unwrap_or_else(|_| {
+            warnings.push(format!("<{element}> id=\"{v}\" is not a number, given a new id"));
+            0
+        }),
+        None => 0,
+    };
     let mut obj = RawCdxObject::new(tag, id);
+    for &(ptag, names) in STYLES {
+        if names.iter().any(|n| attr(attrs, n).is_some()) {
+            match font_style(attrs, names) {
+                Ok(v) => obj.add_property(ptag, v),
+                Err(why) => warnings.push(format!("<{element}> {}: {why}, left out", names.join("/"))),
+            }
+        }
+    }
     for (name, value) in attrs {
-        if name == "id" {
+        if name == "id" || STYLES.iter().any(|(_, names)| names.contains(&name.as_str())) {
             continue;
         }
-        let encoded = if name == "Order" && tag == 0x8005 {
-            bond_order(value).map(|v| Some((PROP_BOND_ORDER, v)))
-        } else {
-            match table::PROPERTIES.iter().find(|p| p.0 == name) {
-                Some(&(_, ptag, kind, names)) => encode(kind, names, value).map(|v| v.map(|v| (ptag, v))),
-                None => {
-                    warnings.push(format!("<{element}> attribute {name} not known, left out"));
-                    continue;
+        let encoded = match table::PROPERTIES.iter().find(|p| p.0 == name) {
+            Some(&(_, ptag, kind, names)) => {
+                // TagValue and SgValue: the type is the value of another attribute.
+                let kind = resolve_kind(kind, |t| {
+                    let &(other, _, k, names) = table::PROPERTIES.iter().find(|p| p.1 == t)?;
+                    sized_int(&encode(k, names, attr(attrs, other)?).ok()??, true)
+                });
+                match kind {
+                    Some(kind) => encode_converted(tag, ptag, kind, names, value).map(|v| v.map(|v| (ptag, v))),
+                    None => Err("its type is not given".to_string()),
                 }
+            }
+            None => {
+                warnings.push(format!("<{element}> attribute {name} not known, left out"));
+                continue;
             }
         };
         match encoded {
@@ -390,6 +436,192 @@ fn object(tag: u16, element: &str, attrs: &[(String, String)], warnings: &mut Ve
         }
     }
     obj
+}
+
+/// A LabelStyle or CaptionStyle from its four attributes. What is not given has ChemDraw's
+/// default: no font (0xFFFF), plain face, size 0 and the foreground color (3), which ChemDraw
+/// leaves out of CDXML.
+fn font_style(attrs: &[(String, String)], names: [&str; 4]) -> Result<Vec<u8>, String> {
+    let num = |k: &str, default: f64| -> Result<f64, String> {
+        attr(attrs, k).map_or(Ok(default), |v| v.trim().parse::<f64>().map_err(|_| format!("{k}={v} is not a number")))
+    };
+    let [font, face, size, color] = names;
+    let mut v = Vec::with_capacity(8);
+    for x in [num(font, 65535.0)?, num(face, 0.0)?, num(size, 0.0)? * 20.0, num(color, DEFAULT_STYLE_COLOR)?] {
+        v.extend_from_slice(&(x.round().clamp(0.0, 65535.0) as u16).to_le_bytes());
+    }
+    Ok(v)
+}
+
+/// A `<represent>`: another (object, property) pair the object stands for.
+fn represent(o: &mut RawCdxObject, attrs: &[(String, String)], warnings: &mut Vec<String>) {
+    let object = attr(attrs, "object").and_then(|v| v.trim().parse::<u32>().ok());
+    let property = attr(attrs, "attribute").and_then(|a| table::PROPERTIES.iter().find(|p| p.0 == a)).map(|p| p.1);
+    let (Some(object), Some(property)) = (object, property) else {
+        warnings.push(format!("<represent> {attrs:?} of object {} could not be read, left out", o.id));
+        return;
+    };
+    let mut v = o.get_property(PROP_REPRESENTS).cloned().unwrap_or_default();
+    v.extend_from_slice(&object.to_le_bytes());
+    v.extend_from_slice(&property.to_le_bytes());
+    o.set_property(PROP_REPRESENTS, v);
+}
+
+/// How an attribute's CDXML text differs from its binary value, beyond the value's type.
+#[derive(Clone, Copy)]
+enum Convert {
+    /// Binary is the CDXML number times this.
+    Scale(f64),
+    /// CDXML points, binary 1/20 points; or `auto` (1) or `variable` (0).
+    LineHeight,
+    /// A whole charge is an INT8; a fractional one an INT32 in 1/2^24.
+    Charge,
+}
+
+/// The conversion ChemDraw applies to an attribute (CDXDocument.cpp, CDXGraphicObject.cpp, ...).
+fn conversion(ptag: u16) -> Option<Convert> {
+    Some(match ptag {
+        // ChainAngle, PositioningAngle, Membrane start/end angle: degrees, binary degrees * 65536.
+        0x0803 | 0x0D07 | 0x0AC9 | 0x0ACA => Convert::Scale(65536.0),
+        // BondSpacing (percent of bond length, binary tenths) and an arc's AngularSize.
+        0x0804 | 0x0A21 => Convert::Scale(10.0),
+        // LineHeight, LabelLineHeight, CaptionLineHeight.
+        0x0702 | 0x0706 | 0x0707 => Convert::LineHeight,
+        0x0421 => Convert::Charge,
+        _ => return None,
+    })
+}
+
+/// The kind a property of one object has where it differs from the property's usual kind.
+fn kind_for(object: u16, ptag: u16, kind: Kind) -> Kind {
+    match (object, ptag) {
+        // An object tag's Name is read as plain text (CDXObjectTag.cpp).
+        (0x8011, 0x0008) => Kind::RawString,
+        // A chemical property's types are a list of UINT32 (CDXChemicalProperty.cpp).
+        (0x8020, 0x0BB0) => Kind::ObjectIdArray,
+        _ => kind,
+    }
+}
+
+fn encode_converted(object: u16, ptag: u16, kind: Kind, names: &[(i32, &str)], value: &str) -> Result<Option<Vec<u8>>, String> {
+    let kind = kind_for(object, ptag, kind);
+    let number = || value.trim().parse::<f64>().map_err(|_| "not a number".to_string());
+    if table::FLAGS.contains(&ptag) {
+        // A bit pattern in the property's width: threecenter (0x8000) fits an INT16 Order.
+        let width = match kind {
+            Kind::I8 | Kind::U8 => 1,
+            Kind::I16 | Kind::U16 => 2,
+            _ => 4,
+        };
+        return Ok(Some(flags(names, value)?.to_le_bytes()[..width].to_vec()));
+    }
+    match conversion(ptag) {
+        None => encode(kind, names, value),
+        Some(Convert::Scale(f)) => encode(kind, &[], &(number()? * f).round().to_string()),
+        Some(Convert::LineHeight) => match value.trim() {
+            "auto" => encode(kind, &[], "1"),
+            "variable" => encode(kind, &[], "0"),
+            _ => encode(kind, &[], &(number()? * 20.0).round().to_string()),
+        },
+        Some(Convert::Charge) => {
+            let c = number()?;
+            if c.fract() == 0.0 {
+                encode(Kind::I8, &[], &c.to_string())
+            } else {
+                encode(Kind::I32, &[], &(c * 16777216.0).round().to_string())
+            }
+        }
+    }
+}
+
+fn decode_converted(object: u16, ptag: u16, kind: Kind, names: &[(i32, &str)], v: &[u8]) -> Option<String> {
+    let kind = kind_for(object, ptag, kind);
+    if table::FLAGS.contains(&ptag) {
+        let all = (1i64 << (8 * v.len().min(4))) - 1;
+        return Some(match sized_int(v, false)? {
+            bits if bits == all => "any".to_string(),
+            bits => flag_names(names, bits),
+        });
+    }
+    match conversion(ptag) {
+        None => decode(kind, names, v),
+        Some(Convert::Scale(f)) => Some(fmt(sized_int(v, true)? as f64 / f, 4)),
+        Some(Convert::LineHeight) => Some(match sized_int(v, true)? {
+            1 => "auto".to_string(),
+            0 => "variable".to_string(),
+            n => fmt(n as f64 / 20.0, 2),
+        }),
+        Some(Convert::Charge) => Some(match v.len() {
+            1 => sized_int(v, true)?.to_string(),
+            _ => fmt(sized_int(v, true)? as f64 / 16777216.0, 4),
+        }),
+    }
+}
+
+/// A set of flags from their names (`Circle Filled`; a bond Order `1 2`), or `any` for all.
+fn flags(names: &[(i32, &str)], value: &str) -> Result<i64, String> {
+    if value.trim() == "any" {
+        return Ok(-1);
+    }
+    value.split_whitespace().try_fold(0i64, |bits, token| {
+        let bit = match names.iter().find(|(_, n)| *n == token) {
+            Some(&(b, _)) => b as i64,
+            None => token.parse::<i64>().map_err(|_| format!("unknown flag {token}"))?,
+        };
+        Ok(bits | bit)
+    })
+}
+
+/// The names of a set of flags: the one name for the whole value if there is one, else the name
+/// of each flag set.
+fn flag_names(names: &[(i32, &str)], value: i64) -> String {
+    if let Some((_, n)) = names.iter().find(|(v, _)| *v as i64 == value) {
+        return n.to_string();
+    }
+    let mut out: Vec<String> = Vec::new();
+    let mut rest = value;
+    for &(v, n) in names {
+        let v = v as i64;
+        if v > 0 && v & (v - 1) == 0 && rest & v != 0 {
+            out.push(n.to_string());
+            rest &= !v;
+        }
+    }
+    if rest != 0 {
+        out.push(rest.to_string());
+    }
+    out.join(" ")
+}
+
+/// The kind a value whose type depends on another property has; `other` gives that property's
+/// value. `None` when that property is missing or names no type.
+fn resolve_kind(kind: Kind, other: impl Fn(u16) -> Option<i64>) -> Option<Kind> {
+    Some(match kind {
+        Kind::TagValue => match other(PROP_TAG_TYPE)? {
+            1 => Kind::F64,
+            2 => Kind::I32,
+            3 => Kind::String,
+            _ => return None,
+        },
+        Kind::SgValue => match other(PROP_SG_DATA_TYPE) {
+            Some(SG_DATA_TYPE_STRING) => Kind::RawString,
+            _ => Kind::F64,
+        },
+        k => k,
+    })
+}
+
+/// A little-endian integer of 1, 2 or 4 bytes.
+fn sized_int(v: &[u8], signed: bool) -> Option<i64> {
+    Some(match (v.len(), signed) {
+        (1, true) => v[0] as i8 as i64,
+        (1, false) => v[0] as i64,
+        (2, true) => i16::from_le_bytes([v[0], v[1]]) as i64,
+        (2, false) => u16::from_le_bytes([v[0], v[1]]) as i64,
+        (4, true) => i32::from_le_bytes([v[0], v[1], v[2], v[3]]) as i64,
+        (4, false) => u32::from_le_bytes([v[0], v[1], v[2], v[3]]) as i64,
+        _ => return None,
+    })
 }
 
 /// The element's attributes, unescaped.
@@ -439,18 +671,6 @@ fn charset_code(name: &str) -> u16 {
         .unwrap_or(0)
 }
 
-fn bond_order(value: &str) -> Result<Vec<u8>, String> {
-    let mut bits = 0u16;
-    for token in value.split_whitespace() {
-        bits |= BOND_ORDERS
-            .iter()
-            .find(|(n, _)| *n == token)
-            .map(|&(_, b)| b)
-            .ok_or_else(|| format!("unknown bond order {token}"))?;
-    }
-    Ok(bits.to_le_bytes().to_vec())
-}
-
 /// An attribute's binary value. `None` for an implied boolean that is not set.
 fn encode(kind: Kind, names: &[(i32, &str)], value: &str) -> Result<Option<Vec<u8>>, String> {
     let int = || -> Result<i64, String> {
@@ -477,7 +697,8 @@ fn encode(kind: Kind, names: &[(i32, &str)], value: &str) -> Result<Option<Vec<u
         Kind::U32 | Kind::ObjectId => (fits(int()?, 0, u32::MAX as i64)? as u32).to_le_bytes().to_vec(),
         Kind::F64 => value.trim().parse::<f64>().map_err(|_| "not a number".to_string())?.to_le_bytes().to_vec(),
         Kind::Bool => vec![u8::from(yes(value)?)],
-        Kind::BoolImplied => return Ok(yes(value)?.then(Vec::new)),
+        // ChemDraw writes these as one byte, 1 or 0, though absent means no and present yes.
+        Kind::BoolImplied => vec![u8::from(yes(value)?)],
         Kind::Coordinate => coord(*nums()?.first().ok_or("empty")?).to_vec(),
         Kind::Point2D => match nums()?[..] {
             [x, y, ..] => [coord(y), coord(x)].concat(),
@@ -526,6 +747,42 @@ fn encode(kind: Kind, names: &[(i32, &str)], value: &str) -> Result<Option<Vec<u
             }
             v
         }
+        Kind::ElementList | Kind::GenericList => {
+            let (negative, items) = match value.trim().strip_prefix("NOT") {
+                Some(rest) => (true, rest),
+                None => (false, value),
+            };
+            let items: Vec<&str> = items.split_whitespace().collect();
+            let count = items.len() as i16;
+            let mut v = (if negative { -count } else { count }).to_le_bytes().to_vec();
+            for item in items {
+                if kind == Kind::ElementList {
+                    let z = item.parse::<i16>().map_err(|_| format!("{item} is not an atomic number"))?;
+                    v.extend_from_slice(&z.to_le_bytes());
+                } else {
+                    let name = latin1(item);
+                    v.extend_from_slice(&(name.len() as u16 + 2).to_le_bytes());
+                    v.extend_from_slice(&0u16.to_le_bytes());
+                    v.extend(name);
+                }
+            }
+            v
+        }
+        Kind::Int16ListWithCounts => {
+            let n = value
+                .split_whitespace()
+                .map(|t| t.parse::<i16>().map_err(|_| format!("{t} is not an INT16")))
+                .collect::<Result<Vec<_>, _>>()?;
+            let mut v = (n.len() as u16).to_le_bytes().to_vec();
+            for x in n {
+                v.extend_from_slice(&x.to_le_bytes());
+            }
+            v
+        }
+        Kind::Unformatted => hex_bytes(value)?,
+        Kind::Base64 => base64_bytes(value)?,
+        Kind::RawString => latin1(&value.replace('\n', "\r")),
+        Kind::TagValue | Kind::SgValue => return Err("its type is not given".into()),
     };
     Ok(Some(v))
 }
@@ -578,22 +835,45 @@ fn write_object(out: &mut String, obj: &RawCdxObject, depth: usize, warnings: &m
             PROP_FONT_TABLE => write_fonts(&mut inner, &p.value, depth + 1),
             PROP_TEXT if obj.tag == TAG_TEXT => write_runs(&mut inner, &p.value, obj.get_property(PROP_UTF8_TEXT)),
             PROP_UTF8_TEXT if obj.tag == TAG_TEXT => {}
-            PROP_BOND_ORDER if obj.tag == 0x8005 => {
-                let bits = u16::from_le_bytes([p.value.first().copied().unwrap_or(1), p.value.get(1).copied().unwrap_or(0)]);
-                let names: Vec<&str> = BOND_ORDERS.iter().filter(|(_, b)| bits & b != 0).map(|(n, _)| *n).collect();
-                out.push_str(&format!(" Order=\"{}\"", names.join(" ")));
+            PROP_REPRESENTS => {
+                for r in p.value.chunks_exact(6) {
+                    let object = u32::from_le_bytes([r[0], r[1], r[2], r[3]]);
+                    let tag = u16::from_le_bytes([r[4], r[5]]);
+                    match table::PROPERTIES.iter().find(|q| q.1 == tag) {
+                        Some(q) => inner.push_str(&format!(
+                            "{} <represent attribute=\"{}\" object=\"{object}\"/>\n",
+                            " ".repeat(depth),
+                            q.0
+                        )),
+                        None => warnings.push(format!("<{name} id={}> represents property 0x{tag:04X}, which has no CDXML name, left out", obj.id)),
+                    }
+                }
             }
-            // A tag can name different properties of different objects (0x0209 is TopLeft,
-            // a 2D point, and an arrow's Center3D): the one whose size the value has.
-            tag => match table::PROPERTIES
-                .iter()
-                .filter(|q| q.1 == tag)
-                .min_by_key(|q| fixed_size(q.2).map_or(1, |n| usize::from(n != p.value.len()) * 2))
-            {
-                Some(&(attr_name, _, kind, names)) => match decode(kind, names, &p.value) {
-                    Some(v) => out.push_str(&format!(" {attr_name}=\"{}\"", escape(&v))),
-                    None => warnings.push(format!("<{name} id={}> {attr_name}: value could not be read, left out", obj.id)),
-                },
+            PROP_LABEL_STYLE | PROP_CAPTION_STYLE if p.value.len() == 8 => {
+                let names = STYLES.iter().find(|(t, _)| *t == p.tag).map(|(_, n)| n).unwrap();
+                let u = |i: usize| u16::from_le_bytes([p.value[i * 2], p.value[i * 2 + 1]]);
+                let (font, face, size, color) = (u(0), u(1), u(2), u(3));
+                if font != u16::MAX {
+                    out.push_str(&format!(" {}=\"{font}\"", names[0]));
+                }
+                if face != 0 {
+                    out.push_str(&format!(" {}=\"{face}\"", names[1]));
+                }
+                if size != 0 {
+                    out.push_str(&format!(" {}=\"{}\"", names[2], fmt(size as f64 / 20.0, 2)));
+                }
+                if color as f64 != DEFAULT_STYLE_COLOR {
+                    out.push_str(&format!(" {}=\"{color}\"", names[3]));
+                }
+            }
+            tag => match table::PROPERTIES.iter().find(|q| q.1 == tag) {
+                Some(&(attr_name, _, kind, names)) => {
+                    let kind = resolve_kind(kind, |t| obj.get_property(t).and_then(|v| sized_int(v, true)));
+                    match kind.and_then(|kind| decode_converted(obj.tag, tag, kind, names, &p.value)) {
+                        Some(v) => out.push_str(&format!(" {attr_name}=\"{}\"", escape(&v))),
+                        None => warnings.push(format!("<{name} id={}> {attr_name}: value could not be read, left out", obj.id)),
+                    }
+                }
                 None => warnings.push(format!("<{name} id={}> property 0x{tag:04X} has no CDXML name, left out", obj.id)),
             },
         }
@@ -623,7 +903,8 @@ fn write_colors(out: &mut String, v: &[u8], depth: usize) {
     out.push_str(&format!("{pad}<colortable>\n"));
     for k in 0..u(0) as usize {
         let at = 2 + k * 6;
-        let c = |i| fmt(u(at + i) as f64 / 65535.0, 3);
+        // Enough places to read back the same 16 bits.
+        let c = |i| fmt(u(at + i) as f64 / 65535.0, 6);
         out.push_str(&format!("{pad} <color r=\"{}\" g=\"{}\" b=\"{}\"/>\n", c(0), c(2), c(4)));
     }
     out.push_str(&format!("{pad}</colortable>\n"));
@@ -670,18 +951,48 @@ fn write_runs(out: &mut String, v: &[u8], utf8: Option<&Vec<u8>>) {
     }
 }
 
-/// The byte length of a value of this kind, when it has only one.
-fn fixed_size(kind: Kind) -> Option<usize> {
-    match kind {
-        Kind::I8 | Kind::U8 | Kind::Bool => Some(1),
-        Kind::I16 | Kind::U16 => Some(2),
-        Kind::I32 | Kind::U32 | Kind::ObjectId | Kind::Coordinate => Some(4),
-        Kind::F64 | Kind::Point2D => Some(8),
-        Kind::Point3D => Some(12),
-        Kind::Rectangle => Some(16),
-        Kind::BoolImplied => Some(0),
-        _ => None,
+fn hex_bytes(value: &str) -> Result<Vec<u8>, String> {
+    let digits: Vec<u8> = value.bytes().filter(|b| !b.is_ascii_whitespace()).collect();
+    if digits.len() % 2 != 0 {
+        return Err("odd number of hex digits".into());
     }
+    digits
+        .chunks(2)
+        .map(|p| u8::from_str_radix(std::str::from_utf8(p).unwrap_or("?"), 16).map_err(|_| "not hex".to_string()))
+        .collect()
+}
+
+const BASE64: &[u8; 64] = b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+fn base64(v: &[u8]) -> String {
+    let mut out = String::with_capacity(v.len().div_ceil(3) * 4);
+    for c in v.chunks(3) {
+        let n = (c[0] as u32) << 16 | (*c.get(1).unwrap_or(&0) as u32) << 8 | *c.get(2).unwrap_or(&0) as u32;
+        for k in 0..4 {
+            if k <= c.len() {
+                out.push(BASE64[(n >> (18 - 6 * k) & 63) as usize] as char);
+            } else {
+                out.push('=');
+            }
+        }
+    }
+    out
+}
+
+fn base64_bytes(value: &str) -> Result<Vec<u8>, String> {
+    let mut out = Vec::new();
+    let (mut acc, mut bits) = (0u32, 0);
+    for b in value.bytes().filter(|b| !b.is_ascii_whitespace() && *b != b'=') {
+        let d = BASE64.iter().position(|&c| c == b).ok_or("not base64")? as u32;
+        acc = acc << 6 | d;
+        bits += 6;
+        if bits >= 8 {
+            bits -= 8;
+            out.push((acc >> bits) as u8);
+            acc &= (1 << bits) - 1;
+        }
+    }
+    Ok(out)
 }
 
 /// A property's CDXML text, or `None` when its bytes do not hold the value its type needs.
@@ -691,15 +1002,14 @@ fn decode(kind: Kind, names: &[(i32, &str)], v: &[u8]) -> Option<String> {
     let pt = |i: usize| i32_at(i).map(|c| fmt(c as f64 / POINT, 6));
     let named = |n: i64| names.iter().find(|(v, _)| *v as i64 == n).map_or(n.to_string(), |(_, s)| s.to_string());
     Some(match kind {
-        Kind::I8 => named(*v.first()? as i8 as i64),
-        Kind::U8 => named(*v.first()? as i64),
-        Kind::I16 => named(i16::from_le_bytes(v.get(..2)?.try_into().ok()?) as i64),
-        Kind::U16 => named(u16::from_le_bytes(v.get(..2)?.try_into().ok()?) as i64),
-        Kind::I32 => named(i32_at(0)? as i64),
-        Kind::U32 | Kind::ObjectId => named(u32::from_le_bytes(v.get(..4)?.try_into().ok()?) as i64),
+        // Integers are read at the size they were written, as ChemDraw does (GetINT(size)):
+        // it writes some INT16 properties in one byte.
+        Kind::I8 | Kind::I16 | Kind::I32 => named(sized_int(v, true)?),
+        Kind::U8 | Kind::U16 | Kind::U32 | Kind::ObjectId => named(sized_int(v, false)?),
         Kind::F64 => fmt(f64::from_le_bytes(v.get(..8)?.try_into().ok()?), 6),
-        Kind::Bool => if *v.first()? != 0 { "yes" } else { "no" }.to_string(),
-        Kind::BoolImplied => "yes".to_string(),
+        // ChemDraw writes some booleans that are set with no bytes.
+        Kind::Bool => if v.first() == Some(&0) { "no" } else { "yes" }.to_string(),
+        Kind::BoolImplied => if v.first() == Some(&0) { "no" } else { "yes" }.to_string(),
         Kind::Coordinate => pt(0)?,
         Kind::Point2D => format!("{} {}", pt(4)?, pt(0)?),
         Kind::Point3D => format!("{} {} {}", pt(0)?, pt(4)?, pt(8)?),
@@ -723,6 +1033,37 @@ fn decode(kind: Kind, names: &[(i32, &str)], v: &[u8]) -> Option<String> {
             let n = u16::from_le_bytes(v.get(..2)?.try_into().ok()?) as usize;
             (0..n * 3).map(|k| pt(2 + k * 4)).collect::<Option<Vec<_>>>()?.join(" ")
         }
+        Kind::ElementList | Kind::GenericList => {
+            let count = i16::from_le_bytes(v.get(..2)?.try_into().ok()?);
+            let mut items = Vec::new();
+            let mut at = 2;
+            for _ in 0..count.unsigned_abs() {
+                if kind == Kind::ElementList {
+                    items.push(i16::from_le_bytes(v.get(at..at + 2)?.try_into().ok()?).to_string());
+                    at += 2;
+                } else {
+                    let len = u16::from_le_bytes(v.get(at..at + 2)?.try_into().ok()?) as usize;
+                    let styles = u16::from_le_bytes(v.get(at + 2..at + 4)?.try_into().ok()?) as usize;
+                    let start = at + 4 + styles * 10;
+                    let end = at + 2 + len;
+                    items.push(v.get(start..end)?.iter().map(|&b| b as char).collect());
+                    at = end;
+                }
+            }
+            let list = items.join(" ");
+            if count < 0 { format!("NOT {list}") } else { list }
+        }
+        Kind::Int16ListWithCounts => {
+            let n = u16::from_le_bytes(v.get(..2)?.try_into().ok()?) as usize;
+            (0..n)
+                .map(|k| Some(i16::from_le_bytes(v.get(2 + k * 2..4 + k * 2)?.try_into().ok()?).to_string()))
+                .collect::<Option<Vec<_>>>()?
+                .join(" ")
+        }
+        Kind::Unformatted => v.iter().map(|b| format!("{b:02X}")).collect(),
+        Kind::Base64 => base64(v),
+        Kind::RawString => v.iter().map(|&b| if b == b'\r' { '\n' } else { b as char }).collect(),
+        Kind::TagValue | Kind::SgValue => return None,
     })
 }
 

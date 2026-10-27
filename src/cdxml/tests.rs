@@ -116,8 +116,10 @@ fn what_is_not_known_is_a_warning() {
     let read = parse_cdxml_with_warnings(xml).unwrap();
     assert!(read.warnings.iter().any(|w| w.contains("Mystery")));
     assert!(read.warnings.iter().any(|w| w.contains("gizmo")));
-    assert!(read.warnings.iter().any(|w| w.contains("LineHeight")));
+    assert!(!read.warnings.iter().any(|w| w.contains("LineHeight")), "{:?}", read.warnings);
     assert!(find(&read.document, 10).is_none(), "an unknown element's children are left out with it");
+    // LineHeight="auto" is the automatic line height, 1.
+    assert_eq!(find(&read.document, 2).unwrap().get_property(0x0702), Some(&vec![1, 0]));
     let (_, text) = split_cdx_string(find(&read.document, 2).unwrap().get_property(PROP_TEXT).unwrap());
     assert_eq!(text, b"A&B?", "entities resolved; what Latin-1 cannot hold is ?");
 }
@@ -193,4 +195,98 @@ fn text_latin1_cannot_hold_keeps_its_utf8() {
     assert!(written.contains(">Δ, 80 °C</s>"), "{written}");
     assert!(written.contains("face=\"32\" color=\"0\">2</s>"), "{written}");
     assert_same(&doc, &parse_cdxml(&written).unwrap());
+}
+
+#[test]
+fn flags_are_sets_of_names() {
+    let xml = r#"<CDXML><page id="1"><fragment id="2"><n id="3"/><n id="4"/>
+        <b id="5" B="3" E="4" Order="1 2"/><b id="6" B="3" E="4" Order="any"/><b id="7" B="3" E="4" Order="threecenter"/></fragment>
+        <graphic id="8" GraphicType="Oval" OvalType="Circle Filled"/></page></CDXML>"#;
+    let read = parse_cdxml_with_warnings(xml).unwrap();
+    assert!(read.warnings.is_empty(), "{:?}", read.warnings);
+    let doc = read.document;
+    assert_eq!(find(&doc, 5).unwrap().get_property(0x0600).unwrap(), &0x0003u16.to_le_bytes().to_vec());
+    assert_eq!(find(&doc, 6).unwrap().get_property(0x0600).unwrap(), &0xFFFFu16.to_le_bytes().to_vec());
+    assert_eq!(find(&doc, 8).unwrap().get_property(0x0A04).unwrap(), &(1u16 | 4).to_le_bytes().to_vec());
+    let written = write_cdxml(&doc);
+    for s in ["Order=\"1 2\"", "Order=\"any\"", "Order=\"threecenter\"", "OvalType=\"Circle Filled\""] {
+        assert!(written.contains(s), "{s} in {written}");
+    }
+}
+
+/// Read, check there were no warnings, write and read back to the same tree.
+fn read_clean(xml: &str) -> RawCdxObject {
+    let read = parse_cdxml_with_warnings(xml).unwrap();
+    assert!(read.warnings.is_empty(), "{:?}", read.warnings);
+    let written = write_cdxml(&read.document);
+    assert_same(&read.document, &parse_cdxml(&written).unwrap());
+    read.document
+}
+
+#[test]
+fn element_and_generic_lists_count_negative_for_not() {
+    let doc = read_clean(r#"<CDXML><page id="1"><fragment id="2"><n id="3" NodeType="ElementList" ElementList="NOT 6 7 8"/><n id="4" NodeType="GenericNickname" GenericList="R X"/></fragment></page></CDXML>"#);
+    let i16s = |v: &[u8]| v.chunks(2).map(|b| i16::from_le_bytes([b[0], b[1]])).collect::<Vec<_>>();
+    assert_eq!(i16s(find(&doc, 3).unwrap().get_property(0x0403).unwrap()), [-3, 6, 7, 8]);
+    // Count, then each name with its length (+2) and no style runs.
+    assert_eq!(find(&doc, 4).unwrap().get_property(0x0441).unwrap(), &[2, 0, 3, 0, 0, 0, b'R', 3, 0, 0, 0, b'X']);
+}
+
+#[test]
+fn represent_elements_are_the_represents_property() {
+    let doc = read_clean(r#"<CDXML><page id="1"><fragment id="2"><n id="3" Charge="1"><t id="4"><s font="3" size="10" face="0">+</s><represent attribute="Charge" object="3"/></t></n></fragment></page></CDXML>"#);
+    // The object's id, then the property's tag (Charge, 0x0421).
+    assert_eq!(find(&doc, 4).unwrap().get_property(0x000E).unwrap(), &[3, 0, 0, 0, 0x21, 0x04]);
+}
+
+#[test]
+fn label_and_caption_attributes_are_one_style_each() {
+    let doc = read_clean(r#"<CDXML LabelFont="3" LabelSize="10" LabelFace="96" CaptionFont="4" CaptionSize="12.5"/>"#);
+    let u16s = |v: &[u8]| v.chunks(2).map(|b| u16::from_le_bytes([b[0], b[1]])).collect::<Vec<_>>();
+    // font, face, size in 1/20 point, color (the foreground, 3, when not given).
+    assert_eq!(u16s(doc.get_property(0x080A).unwrap()), [3, 96, 200, 3]);
+    assert_eq!(u16s(doc.get_property(0x080B).unwrap()), [4, 0, 250, 3]);
+    assert!(doc.get_property(0x081A).is_none(), "no separate LabelFont property");
+}
+
+#[test]
+fn attributes_in_other_units_are_converted() {
+    let doc = read_clean(r#"<CDXML ChainAngle="120" BondSpacing="18"><page id="1"><t id="2" LineHeight="auto"/><t id="3" LineHeight="12"/><fragment id="4"><n id="5" Charge="-2"/><n id="6" Charge="0.5"/></fragment></page></CDXML>"#);
+    assert_eq!(doc.get_property(0x0803).unwrap(), &(120 * 65536i32).to_le_bytes().to_vec());
+    assert_eq!(doc.get_property(0x0804).unwrap(), &180i16.to_le_bytes().to_vec());
+    assert_eq!(find(&doc, 2).unwrap().get_property(0x0702).unwrap(), &1u16.to_le_bytes().to_vec());
+    assert_eq!(find(&doc, 3).unwrap().get_property(0x0702).unwrap(), &240u16.to_le_bytes().to_vec());
+    assert_eq!(find(&doc, 5).unwrap().get_property(0x0421).unwrap(), &vec![0xFE]);
+    assert_eq!(find(&doc, 6).unwrap().get_property(0x0421).unwrap(), &(1i32 << 23).to_le_bytes().to_vec());
+    let written = write_cdxml(&doc);
+    for s in ["ChainAngle=\"120\"", "BondSpacing=\"18\"", "LineHeight=\"auto\"", "LineHeight=\"12\"", "Charge=\"-2\"", "Charge=\"0.5\""] {
+        assert!(written.contains(s), "{s} in {written}");
+    }
+}
+
+#[test]
+fn values_typed_by_another_attribute() {
+    let doc = read_clean(r#"<CDXML><page id="1"><objecttag id="2" TagType="Double" Name="mass" Value="12.5"/><objecttag id="3" TagType="String" Name="label" Value="abc"/>
+        <stoichiometrygrid id="4"><sgcomponent id="5"><sgdatum id="6" SGDataType="4" SGDataValue="MW"/><sgdatum id="7" SGDataType="3" SGDataValue="216.5"/></sgcomponent></stoichiometrygrid></page></CDXML>"#);
+    assert_eq!(find(&doc, 2).unwrap().get_property(0x0D05).unwrap(), &12.5f64.to_le_bytes().to_vec());
+    // An object tag's string Value is a CDXString; its Name plain text.
+    assert_eq!(find(&doc, 3).unwrap().get_property(0x0D05).unwrap(), &[0, 0, b'a', b'b', b'c']);
+    assert_eq!(find(&doc, 3).unwrap().get_property(0x0008).unwrap(), b"label");
+    assert_eq!(find(&doc, 6).unwrap().get_property(0x1202).unwrap(), b"MW");
+    assert_eq!(find(&doc, 7).unwrap().get_property(0x1202).unwrap(), &216.5f64.to_le_bytes().to_vec());
+}
+
+#[test]
+fn binary_data_is_hex_or_base64() {
+    let doc = read_clean(r#"<CDXML MacPrintInfo="00FF10"><page id="1"><embeddedobject id="2" CompressedOLEObject="AAEC/w=="/></page></CDXML>"#);
+    assert_eq!(doc.get_property(0x0800).unwrap(), &[0x00, 0xFF, 0x10]);
+    let tag = table::PROPERTIES.iter().find(|p| p.0 == "CompressedOLEObject").unwrap().1;
+    assert_eq!(find(&doc, 2).unwrap().get_property(tag).unwrap(), &[0, 1, 2, 0xFF]);
+}
+
+#[test]
+fn an_id_that_is_not_a_number_is_a_warning() {
+    let read = parse_cdxml_with_warnings(r#"<CDXML><page id="p1"/></CDXML>"#).unwrap();
+    assert!(read.warnings.iter().any(|w| w.contains("id=\"p1\"")), "{:?}", read.warnings);
+    assert_ne!(read.document.children[0].id, 0);
 }
