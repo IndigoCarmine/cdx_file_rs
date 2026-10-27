@@ -210,7 +210,9 @@ python tools/gen_cdxml_table.py tools/data/chemdraw/chemdraw > src/cdxml/table.r
 
 ## ライセンス
 
-このプロジェクトは[GNU Lesser General Public License v3.0](LICENSE)（LGPL-3.0）の下でライセンスされています。
+このプロジェクトは [GNU General Public License バージョン 2、または（任意で）それ以降のバージョン](LICENSE)（GPL-2.0-or-later）の下でライセンスされています。
+
+`src/cdxml/table.rs` は ChemDraw のファイル形式のソース（[Glysade/chemdraw](https://github.com/Glysade/chemdraw)）から生成しています。このソースは BSD 3-Clause ライセンス（Copyright (c) 1986-2025, CambridgeSoft Corp, Revvity Inc and others）で公開されています。
 
 ## コントリビューション
 
