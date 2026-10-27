@@ -3,8 +3,9 @@
 <!-- A hand-written two-row, two-step scheme in the form ChemDraw 26 writes one:
      row 1  (I) -i)-> (II)      the arrow a graphic superseded by an arrow object, its step and
                                  the labels' chemical properties given;
-     row 2  (II) -ii)-> 4/(III)  no step: the arrow text is found over the shaft, and the bold "4"
-                                 is a free text just above the label "(III)".
+     row 2  (II) -ii)-> 4/(III)  its "(II)" placed well below the structure, so only its chemical
+                                 property ties it there; no step: the arrow text is found over the
+                                 shaft, and the bold "4" is a free text just above the label "(III)".
      (II) carries a nickname node (TEG) with its own fragment, as ChemDraw writes one. -->
 <CDXML BondLength="14.40" LabelFont="3" LabelSize="10" LabelFace="96" CaptionFont="3" CaptionSize="10">
 <colortable><color r="1" g="1" b="1"/><color r="0" g="0" b="0"/></colortable>
@@ -29,7 +30,7 @@
 <n id="72" p="114.40 200" Z="12"/>
 <b id="73" B="71" E="72" Order="2" Z="13"/>
 </fragment>
-<t id="80" p="100 225" BoundingBox="98 216 112 227" Z="14"><s font="3" size="10" color="0">(II)</s></t>
+<t id="80" p="100 259" BoundingBox="98 250 112 261" Z="14"><s font="3" size="10" color="0">(II)</s></t>
 <graphic id="90" BoundingBox="220 200 140 200" Z="15" GraphicType="Line" ArrowType="FullHead" HeadSize="2250"/>
 <t id="92" p="175 192" BoundingBox="175 184 183 194" Z="16"><s font="3" size="10" color="0">ii)</s></t>
 <fragment id="100" BoundingBox="250 200 264.40 200">
