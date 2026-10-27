@@ -22,13 +22,13 @@ pub const CDXOBJ_REACTION_STEP: u16 = 0x800E; // One step of a reaction.
 pub const CDXOBJ_SPECTRUM: u16 = 0x8010; // Spectral plot.
 pub const CDXOBJ_SEQUENCE: u16 = 0x8013; // Member of an ordered sequence.
 pub const CDXOBJ_CROSS_REFERENCE: u16 = 0x8014; // Link to a sequence.
-pub const CDXOBJ_BORDER: u16 = 0x8020; // Border definition.
-pub const CDXOBJ_GEOMETRY: u16 = 0x8021; // Geometrical relationship.
-pub const CDXOBJ_CONSTRAINT: u16 = 0x8022; // Distance or angle constraint.
-pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // TLC plate object.
+pub const CDXOBJ_BORDER: u16 = 0x801A; // Border definition.
+pub const CDXOBJ_GEOMETRY: u16 = 0x801B; // Geometrical relationship.
+pub const CDXOBJ_CONSTRAINT: u16 = 0x801C; // Distance or angle constraint.
+pub const CDXOBJ_TLC_PLATE: u16 = 0x801D; // TLC plate object.
 pub const CDXOBJ_SPLITTER: u16 = 0x8015; // Horizontal page splitter.
-pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8026; // Chemical/physical property annotation.
-pub const CDXOBJ_ARROW: u16 = 0x8027; // Line or arc with optional arrowheads.
+pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8020; // Chemical/physical property annotation.
+pub const CDXOBJ_ARROW: u16 = 0x8021; // Line or arc with optional arrowheads.
 
 // =======================
 // Page Properties

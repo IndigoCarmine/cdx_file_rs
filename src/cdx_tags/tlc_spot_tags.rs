@@ -3,7 +3,6 @@
 // =======================
 
 // In the document, this is 0x8025. But actual TLCSpot objects seem to use 0x801F (probably?)
-// pub const CDXOBJ_TLC_SPOT: u16 = 0x8025; // kCDXObj_TLCSpot: Individual spot on a TLC lane.
 pub const CDXOBJ_TLC_SPOT: u16 = 0x801F; // kCDXObj_TLCSpot: Individual spot on a TLC lane.
 
 // =======================

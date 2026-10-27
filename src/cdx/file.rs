@@ -40,7 +40,6 @@ pub use super::text::TextObject;
 pub use super::tlc_lane::TlcLane;
 pub use super::tlc_plate::TLCPlate;
 pub use super::tlc_spot::TLCSpot;
-pub use super::unknown::*;
 use crate::cdx_parse_impl::tagged_object::TaggedObject;
 
 macro_rules! extract_id {
@@ -82,10 +81,6 @@ macro_rules! extract_id {
             NodePayload::StoichiometryGrid(n) => Some(n.id),
             NodePayload::SegComponent(n) => Some(n.id),
             NodePayload::SegDatum(n) => Some(n.id),
-            NodePayload::UnknownObject802B(n) => Some(n.id),
-            NodePayload::UnknownObject801D(n) => Some(n.id),
-            NodePayload::UnknownObject801E(n) => Some(n.id),
-            NodePayload::UnknownObject801F(n) => Some(n.id),
         }
     };
 }
@@ -322,12 +317,8 @@ define_node_payload!(
     TlcLane,
     TLCPlate,
     TLCSpot,
-    UnknownObject802B,
-    UnknownObject801D,
     SegComponent,
     SegDatum,
-    UnknownObject801E,
-    UnknownObject801F,
     Annotation,
     StoichiometryGrid,
 );

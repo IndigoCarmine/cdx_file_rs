@@ -77,11 +77,11 @@ SUPPLEMENT = {
     "CornerRadius": (0x0A3C, "INT16", []),
     "FrameType": (0x0A3D, "INT16", []),
 }
-# Object tags from CDXConstants.h (and src/cdx_tags/object_tags.rs). The Arrow page is missing,
-# and the stoichiometry grid pages give tags that belong to Constraint and the TLC objects; those
-# objects are left out rather than written under another object's tag.
-SUPPLEMENT_OBJECTS = {"constraint": 0x8022, "tlcplate": 0x8023, "tlclane": 0x8024, "tlcspot": 0x8025,
-                      "chemicalproperty": 0x8026, "arrow": 0x8027}
+# Object tags from ChemDraw's CDXConstants.h, which the doc pages get wrong or leave out.
+SUPPLEMENT_OBJECTS = {"border": 0x801A, "geometry": 0x801B, "constraint": 0x801C, "tlcplate": 0x801D,
+                      "tlclane": 0x801E, "tlcspot": 0x801F, "chemicalproperty": 0x8020, "arrow": 0x8021,
+                      "stoichiometrygrid": 0x8022, "sgcomponent": 0x8023, "sgdatum": 0x8024,
+                      "annotation": 0x802B}
 
 # CDX data type -> the Rust `Kind` variant that encodes it.
 KINDS = {

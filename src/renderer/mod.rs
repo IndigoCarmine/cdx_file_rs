@@ -53,7 +53,6 @@ pub mod tlc_lane;
 pub mod tlc_plate;
 pub mod tlc_spot;
 pub mod annotation;
-pub mod unknown;
 pub mod seg_datum;
 pub mod stoichiometrygrid;
 pub mod to_points;

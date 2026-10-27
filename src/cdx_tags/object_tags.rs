@@ -28,23 +28,23 @@ pub const CDXOBJ_CROSSING_BOND: u16 = 0x8019; // kCDXObj_CrossingBond
 pub const CDXOBJ_TABLE: u16 = 0x8016; // kCDXObj_Table
 pub const CDXOBJ_TEMPLATE_GRID: u16 = 0x800B; // kCDXObj_TemplateGrid
 pub const CDXOBJ_SPLITTER: u16 = 0x8015; // kCDXObj_Splitter
-pub const CDXOBJ_BORDER: u16 = 0x8020; // kCDXObj_Border
-pub const CDXOBJ_GEOMETRY: u16 = 0x8021; // kCDXObj_Geometry
-pub const CDXOBJ_CONSTRAINT: u16 = 0x8022; // kCDXObj_Constraint
+pub const CDXOBJ_BORDER: u16 = 0x801A; // kCDXObj_Border
+pub const CDXOBJ_GEOMETRY: u16 = 0x801B; // kCDXObj_Geometry
+pub const CDXOBJ_CONSTRAINT: u16 = 0x801C; // kCDXObj_Constraint
 
 // Reaction-related objects
 pub const CDXOBJ_REACTION_SCHEME: u16 = 0x800D; // kCDXObj_ReactionScheme
 pub const CDXOBJ_REACTION_STEP: u16 = 0x800E; // kCDXObj_ReactionStep
-pub const CDXOBJ_ARROW: u16 = 0x8027; // kCDXObj_Arrow
+pub const CDXOBJ_ARROW: u16 = 0x8021; // kCDXObj_Arrow
 
 // Spectra and analytical objects
 pub const CDXOBJ_SPECTRUM: u16 = 0x8010; // kCDXObj_Spectrum
-pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8026; // kCDXObj_ChemicalProperty
+pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8020; // kCDXObj_ChemicalProperty
 
 // TLC-related objects
-pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // kCDXObj_TLCPlate
-pub const CDXOBJ_TLC_LANE: u16 = 0x8024; // kCDXObj_TLCLane
-pub const CDXOBJ_TLC_SPOT: u16 = 0x8025; // kCDXObj_TLCSpot
+pub const CDXOBJ_TLC_PLATE: u16 = 0x801D; // kCDXObj_TLCPlate
+pub const CDXOBJ_TLC_LANE: u16 = 0x801E; // kCDXObj_TLCLane
+pub const CDXOBJ_TLC_SPOT: u16 = 0x801F; // kCDXObj_TLCSpot
 
 // Reference and annotation objects
 pub const CDXOBJ_REGISTRY_NUMBER: u16 = 0x800C; // kCDXObj_RegistryNumber

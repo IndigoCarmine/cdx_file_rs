@@ -43,7 +43,7 @@ fn a_multi_step_scheme_reads_its_steps_arrows_and_labels() {
     let page = &doc.children[0];
     assert_eq!(page.tag, 0x8001);
     let top = |tag| page.children.iter().filter(|c| c.tag == tag).count();
-    assert_eq!((top(0x8003), top(0x8006), top(0x8007), top(0x8027), top(0x800D), top(0x8026)), (4, 7, 2, 1, 1, 4));
+    assert_eq!((top(0x8003), top(0x8006), top(0x8007), top(0x8021), top(0x800D), top(0x8020)), (4, 7, 2, 1, 1, 4));
     assert_eq!(count(doc, 0x800E), 1);
 
     // The step: (I) to (II) over the arrow drawn as graphic 30, "i)" above it.

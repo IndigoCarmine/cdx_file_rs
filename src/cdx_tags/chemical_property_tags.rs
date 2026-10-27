@@ -2,7 +2,7 @@
 // Chemical Property Object
 // =======================
 
-pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8026; // kCDXObj_ChemicalProperty: Physical/chemical property annotation.
+pub const CDXOBJ_CHEMICAL_PROPERTY: u16 = 0x8020; // kCDXObj_ChemicalProperty: Physical/chemical property annotation.
 
 // =======================
 // Chemical Property Subobjects

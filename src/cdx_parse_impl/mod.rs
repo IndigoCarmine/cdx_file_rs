@@ -44,5 +44,4 @@ pub mod text;
 pub mod tlc_lane;
 pub mod tlc_plate;
 pub mod tlc_spot;
-pub mod unknown;
 pub mod writer;

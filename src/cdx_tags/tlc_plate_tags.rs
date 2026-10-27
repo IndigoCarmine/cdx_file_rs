@@ -4,7 +4,6 @@
 
 
 // In the document, this is 0x8023. But actual TLCPlate objects seem to use 0x801D (probably?)
-// pub const CDXOBJ_TLC_PLATE: u16 = 0x8023; // kCDXObj_TLCPlate: Thin Layer Chromatography plate.
 pub const CDXOBJ_TLC_PLATE: u16 = 0x801D; // kCDXObj_TLCPlate: Thin Layer Chromatography plate.
 
 // =======================
@@ -12,7 +11,7 @@ pub const CDXOBJ_TLC_PLATE: u16 = 0x801D; // kCDXObj_TLCPlate: Thin Layer Chroma
 // =======================
 
 pub const CDXOBJ_OBJECT_TAG: u16 = 0x8011; // Arbitrary metadata tag.
-pub const CDXOBJ_TLC_LANE: u16 = 0x8024; // TLC lane (vertical series of spots).
+pub const CDXOBJ_TLC_LANE: u16 = 0x801E; // TLC lane (vertical series of spots).
 
 // =======================
 // TLC Plate Properties

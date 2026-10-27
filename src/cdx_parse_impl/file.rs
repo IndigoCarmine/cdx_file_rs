@@ -84,10 +84,6 @@ define_node_payload!(
     StoichiometryGrid,
     SegDatum,
     SegComponent,
-    UnknownObject802B,
-    UnknownObject801D,
-    UnknownObject801E,
-    UnknownObject801F,
 );
 
 use dendron;

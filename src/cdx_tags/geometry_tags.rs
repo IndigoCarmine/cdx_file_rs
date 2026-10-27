@@ -2,7 +2,7 @@
 // Geometry Object
 // =======================
 
-pub const CDXOBJ_GEOMETRY: u16 = 0x8021; // kCDXObj_Geometry: A geometrical relationship between one or more objects.
+pub const CDXOBJ_GEOMETRY: u16 = 0x801B; // kCDXObj_Geometry: A geometrical relationship between one or more objects.
 
 // =======================
 // Geometry Properties

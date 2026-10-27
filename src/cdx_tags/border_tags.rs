@@ -1,6 +1,6 @@
 // Border object tags
 
-pub const CDXOBJ_BORDER: u16 = 0x8020;
+pub const CDXOBJ_BORDER: u16 = 0x801A;
 
 // Border property tags (from specification)
 pub const CDXPROP_FOREGROUND_COLOR: u16 = 0x0301;

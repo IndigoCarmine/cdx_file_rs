@@ -1,7 +1,7 @@
 // Arrow (矢印) object tags
 
 // Object tag
-pub const CDXOBJ_ARROW: u16 = 0x8027;
+pub const CDXOBJ_ARROW: u16 = 0x8021;
 
 // Arrow property tags
 pub const CDXPROP_2D_BOUNDS: u16 = 0x0B61;

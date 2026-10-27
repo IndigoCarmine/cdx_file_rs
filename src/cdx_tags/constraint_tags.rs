@@ -2,8 +2,7 @@
 // Constraint Object
 // =======================
 
-// pub const CDXOBJ_CONSTRAINT: u16 = 0x8022; // kCDXObj_Constraint: Distance or angle constraint.
-pub const CDXOBJ_CONSTRAINT: u16 = 0xFFFF; // kCDXObj_Constraint: Distance or angle constraint.
+pub const CDXOBJ_CONSTRAINT: u16 = 0x801C; // kCDXObj_Constraint: Distance or angle constraint.
 // =======================
 // Constraint Subobjects
 // =======================
