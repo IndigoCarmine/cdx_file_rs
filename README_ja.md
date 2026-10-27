@@ -189,6 +189,14 @@ cargo run --release
 cargo test
 ```
 
+CDXML 読み込みは RDKit の CDXML テストファイルでテストします。データはコミットしていないので、
+取得してから（`tests/data/rdkit/` に shallow + sparse clone、git 管理外）実行します:
+
+```bash
+./scripts/fetch_rdkit_testdata.sh   # Windows では scripts/fetch_rdkit_testdata.ps1
+cargo test --test rdkit_cdxml_test -- --ignored --nocapture
+```
+
 ## ライセンス
 
 このプロジェクトは[GNU Lesser General Public License v3.0](LICENSE)（LGPL-3.0）の下でライセンスされています。

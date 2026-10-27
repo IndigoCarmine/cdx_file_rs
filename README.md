@@ -189,6 +189,14 @@ cargo run --release
 cargo test
 ```
 
+CDXML reading is tested against RDKit's CDXML test files. They are not committed;
+fetch them (shallow sparse clone into `tests/data/rdkit/`, git-ignored) and run:
+
+```bash
+./scripts/fetch_rdkit_testdata.sh   # or scripts/fetch_rdkit_testdata.ps1 on Windows
+cargo test --test rdkit_cdxml_test -- --ignored --nocapture
+```
+
 ## License
 
 This project is licensed under the [GNU Lesser General Public License v3.0](LICENSE) (LGPL-3.0).

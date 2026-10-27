@@ -7,6 +7,7 @@ pub mod bond;
 pub mod border;
 pub mod bracket_attachment;
 pub mod bracketed_group;
+pub mod cdxml;
 pub mod cdx_string;
 pub mod chemical_property;
 pub mod constraint;
