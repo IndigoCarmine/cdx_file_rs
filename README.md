@@ -233,7 +233,7 @@ wrote as `sample_cdx/X.cdx`.
 
 ## License
 
-This project is licensed under the [GNU General Public License, version 2 or (at your option) any later version](LICENSE) (GPL-2.0-or-later).
+This project is licensed under the either of [MIT](LICENSE-MIT) or [Apache-2.0](LICENSE-APACHE), at your option (MIT OR Apache-2.0).
 
 `src/cdxml/table.rs` is generated from ChemDraw's file-format sources
 ([Glysade/chemdraw](https://github.com/Glysade/chemdraw)), which are released under the BSD 3-Clause
