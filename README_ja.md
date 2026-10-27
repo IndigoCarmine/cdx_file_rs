@@ -194,7 +194,18 @@ CDXML 読み込みは RDKit の CDXML テストファイルでテストします
 
 ```bash
 ./scripts/fetch_rdkit_testdata.sh   # Windows では scripts/fetch_rdkit_testdata.ps1
-cargo test --test rdkit_cdxml_test -- --ignored --nocapture
+cargo test --test rdkit_cdxml_test -- --nocapture
+```
+
+全ファイルについて「読める・書き出して読み直すと同じになる・ChemDraw 自身のソースでも読めないもの以外は何も落とさない」ことを確認します。
+`tests/cdxml_cdx_pairs_test.rs` は `sample_cdxml/X.cdxml` が ChemDraw の保存した `sample_cdx/X.cdx` と同じ内容に読めることを確認します。
+
+CDXML の要素名・属性名・タグ・値の型・列挙名は ChemDraw 自身のファイル形式ソース
+（https://github.com/Glysade/chemdraw, BSD-3）から `src/cdxml/table.rs` に生成しています。再生成:
+
+```bash
+./scripts/fetch_chemdraw_sdk.sh     # Windows では scripts/fetch_chemdraw_sdk.ps1（tools/data/chemdraw/ へ）
+python tools/gen_cdxml_table.py tools/data/chemdraw/chemdraw > src/cdxml/table.rs
 ```
 
 ## ライセンス

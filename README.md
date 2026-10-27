@@ -10,6 +10,7 @@ A Rust library for reading, writing, and rendering ChemDraw CDX files.
 
 - **Read** CDX files and parse their hierarchical structure
 - **Write** CDX files from parsed data structures
+- **Read and write CDXML**, ChemDraw's XML form, into the same object tree
 - **Render** chemical structures using the built-in viewer
 
 ## Features
@@ -81,6 +82,34 @@ fn main() -> std::io::Result<()> {
 
     Ok(())
 }
+```
+
+### Reading and writing CDXML
+
+CDXML reads into the same raw object tree as binary CDX, so everything that works on a CDX
+file works on a CDXML file:
+
+```rust
+use cdx_file_rs::cdx::file::CdxFile;
+use cdx_file_rs::cdxml::{parse_cdxml_with_warnings, write_cdxml};
+
+let bytes = std::fs::read("sample_cdxml/benzene.cdxml")?;
+let file = CdxFile::from_cdx_or_cdxml(&bytes)?; // either format, by content
+let xml = file.to_cdxml()?;
+
+// The raw tree, with what could not be read (unknown elements or attributes):
+let read = parse_cdxml_with_warnings(&std::fs::read_to_string("sample_cdxml/benzene.cdxml")?)?;
+let again = write_cdxml(&read.document);
+```
+
+The element and attribute names, tags, value types and value names come from ChemDraw's own
+file-format sources (https://github.com/Glysade/chemdraw, BSD-3), gathered into
+`src/cdxml/table.rs`. To regenerate it:
+
+```bash
+./scripts/fetch_chemdraw_sdk.sh     # or scripts/fetch_chemdraw_sdk.ps1; into tools/data/chemdraw/
+python tools/gen_cdxml_table.py tools/data/chemdraw/chemdraw > src/cdxml/table.rs
+python tools/gen_cdxml_table.py tools/data/chemdraw/chemdraw --check   # what is left out, and why
 ```
 
 ### Converting to high-level Node representation
@@ -189,13 +218,18 @@ cargo run --release
 cargo test
 ```
 
-CDXML reading is tested against RDKit's CDXML test files. They are not committed;
-fetch them (shallow sparse clone into `tests/data/rdkit/`, git-ignored) and run:
+CDXML reading is tested against RDKit's CDXML test files (every file read, written and read
+back the same, and nothing left out but what ChemDraw's own sources cannot read either). They
+are not committed; fetch them (shallow sparse clone into `tests/data/rdkit/`, git-ignored) and
+run:
 
 ```bash
 ./scripts/fetch_rdkit_testdata.sh   # or scripts/fetch_rdkit_testdata.ps1 on Windows
-cargo test --test rdkit_cdxml_test -- --ignored --nocapture
+cargo test --test rdkit_cdxml_test -- --nocapture
 ```
+
+`tests/cdxml_cdx_pairs_test.rs` checks that `sample_cdxml/X.cdxml` reads into what ChemDraw
+wrote as `sample_cdx/X.cdx`.
 
 ## License
 

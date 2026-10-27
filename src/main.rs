@@ -1,6 +1,7 @@
 mod cdx;
 mod cdx_parse_impl;
 mod cdx_tags;
+mod cdxml;
 mod error;
 mod mode_handlers;
 mod modes;
@@ -103,7 +104,7 @@ impl CdxApp {
     fn load_file(&mut self, path: &str) {
         match fs::read(path) {
             Ok(data) => {
-                match CdxFile::from_bytes(&data) {
+                match CdxFile::from_cdx_or_cdxml(&data) {
                     Ok(cdx) => {
                         *self.cdx_file.borrow_mut() = Some(cdx);
                         self.error = None;
@@ -112,7 +113,7 @@ impl CdxApp {
                         // auto_scale and center_offset will be recalculated each frame
                         // using the actual panel rect size, so no pre-calculation needed here.
                     }
-                    Err(e) => self.error = Some(format!("Failed to parse CDX: {}", e)),
+                    Err(e) => self.error = Some(format!("Failed to parse CDX/CDXML: {}", e)),
                 }
             }
             Err(e) => self.error = Some(format!("Failed to read file: {}", e)),
@@ -181,7 +182,7 @@ impl eframe::App for CdxApp {
             ui.horizontal(|ui| {
                 if ui.button("📁 Open File...").clicked() {
                     if let Some(path) = rfd::FileDialog::new()
-                        .add_filter("ChemDraw CDX", &["cdx"])
+                        .add_filter("ChemDraw CDX / CDXML", &["cdx", "cdxml"])
                         .pick_file()
                     {
                         self.load_file(&path.to_string_lossy());

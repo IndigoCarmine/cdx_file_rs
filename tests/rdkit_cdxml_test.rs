@@ -4,10 +4,13 @@
 /// `scripts/fetch_rdkit_testdata.sh` (or `.ps1`). It lands in tests/data/rdkit/.
 /// Without it, only the repository's own sample_cdxml/ files are used.
 ///
-/// Run the parsing test with:
-///   cargo test --test rdkit_cdxml_test -- --ignored --nocapture
+/// See what was read and left out with:
+///   cargo test --test rdkit_cdxml_test -- --nocapture
 
 use cdx_file_rs::cdx::file::CdxFile;
+use cdx_file_rs::cdx_parse_impl::raw_nodes::RawCdxObject;
+use cdx_file_rs::cdxml::{parse_cdxml, parse_cdxml_with_warnings, write_cdxml};
+use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
 
@@ -99,8 +102,54 @@ fn rdkit_testdata_layout() {
     println!("RDKit CDXML files: {}", files.len());
 }
 
+/// The first difference between two raw trees, if any.
+fn first_difference(a: &RawCdxObject, b: &RawCdxObject) -> Option<String> {
+    let props = |o: &RawCdxObject| o.properties.iter().map(|p| (p.tag, p.value.clone())).collect::<BTreeMap<_, _>>();
+    let at = format!("object 0x{:04X} id {}", a.tag, a.id);
+    if (a.tag, a.id) != (b.tag, b.id) || a.children.len() != b.children.len() {
+        return Some(at);
+    }
+    let (pa, pb) = (props(a), props(b));
+    if let Some(tag) = pa.keys().chain(pb.keys()).find(|t| pa.get(*t) != pb.get(*t)) {
+        return Some(format!("{at} property 0x{tag:04X}: {:02X?} then {:02X?}", pa.get(tag), pb.get(tag)));
+    }
+    a.children.iter().zip(&b.children).find_map(|(x, y)| first_difference(x, y))
+}
+
+/// A warning without the ids and values in it, to count warnings of one kind together.
+fn warning_kind(w: &str) -> String {
+    let mut out = String::new();
+    let mut in_quotes = false;
+    for c in w.chars() {
+        match c {
+            '"' => {
+                in_quotes = !in_quotes;
+                out.push(c);
+            }
+            _ if in_quotes => {}
+            c if c.is_ascii_digit() => {}
+            c => out.push(c),
+        }
+    }
+    out
+}
+
+/// Warnings expected on the corpus: what ChemDraw's own sources cannot read either.
+const EXPECTED_WARNINGS: &[&str] = &[
+    // MAY_FAIL fixtures: invalid ids, coordinates and bond orders.
+    "id=\"\" is not a number",
+    "p=\"\": foofoo is not a number",
+    "Order=\"\": unknown flag slartibartfast",
+    // Obsolete document settings (kCDXProp_Unused10/11 in CDXConstants.h).
+    "attribute ResidueZigZag not known",
+    "attribute NumberResidueBlocks not known",
+    // A newer ChemDraw's setting the sources do not name.
+    "attribute ShowPrimeLabels not known",
+    // ChemDraw 6.0 wrote LineHeight="yes" on some text.
+    "<t> LineHeight=\"\": not a number",
+];
+
 #[test]
-#[ignore = "CDXML reader not implemented yet"]
 fn parse_all_rdkit_cdxml() {
     let mut files = sample_cdxml_files();
     files.extend(rdkit_cdxml_files().unwrap_or_default());
@@ -110,13 +159,30 @@ fn parse_all_rdkit_cdxml() {
     let mut tolerated = Vec::new();
     let mut unexpected_failures = Vec::new();
     let mut unexpected_successes = Vec::new();
+    let mut warnings: BTreeMap<String, (usize, String)> = BTreeMap::new();
 
     for path in &files {
         let name = file_name(path);
-        let result = fs::read(path)
-            .map_err(|e| e.to_string())
-            .and_then(|bytes| String::from_utf8(bytes).map_err(|e| e.to_string()))
-            .and_then(|xml| CdxFile::from_cdxml_str(&xml).map_err(|e| e.to_string()));
+        let xml = match fs::read(path).map_err(|e| e.to_string()).and_then(|b| String::from_utf8(b).map_err(|e| e.to_string())) {
+            Ok(xml) => xml,
+            Err(e) => {
+                unexpected_failures.push(format!("{}: {e}", path.display()));
+                continue;
+            }
+        };
+        let result = CdxFile::from_cdxml_str(&xml).map_err(|e| e.to_string()).and_then(|_| {
+            let read = parse_cdxml_with_warnings(&xml).map_err(|e| e.to_string())?;
+            for w in &read.warnings {
+                let entry = warnings.entry(warning_kind(w)).or_insert((0, format!("{name}: {w}")));
+                entry.0 += 1;
+            }
+            // What is read writes back as CDXML that reads to the same tree.
+            let again = parse_cdxml(&write_cdxml(&read.document)).map_err(|e| format!("written CDXML: {e}"))?;
+            match first_difference(&read.document, &again) {
+                Some(d) => Err(format!("written and read back, {d} differs")),
+                None => Ok(()),
+            }
+        });
 
         match result {
             Ok(_) if MUST_FAIL.contains(&name) => unexpected_successes.push(path.display().to_string()),
@@ -137,11 +203,18 @@ fn parse_all_rdkit_cdxml() {
     for s in &unexpected_successes {
         println!("  UNEXPECTEDLY PARSED: {s}");
     }
+    let unexpected_warnings: Vec<_> =
+        warnings.iter().filter(|(kind, _)| !EXPECTED_WARNINGS.iter().any(|e| kind.contains(e))).collect();
+    for (kind, (n, example)) in &warnings {
+        println!("  warning x{n}: {kind}
+      e.g. {example}");
+    }
 
     assert!(
-        unexpected_failures.is_empty() && unexpected_successes.is_empty(),
-        "{} unexpected failures, {} unexpected successes (see output above)",
+        unexpected_failures.is_empty() && unexpected_successes.is_empty() && unexpected_warnings.is_empty(),
+        "{} unexpected failures, {} unexpected successes, {} unexpected kinds of warning (see output above)",
         unexpected_failures.len(),
-        unexpected_successes.len()
+        unexpected_successes.len(),
+        unexpected_warnings.len()
     );
 }
